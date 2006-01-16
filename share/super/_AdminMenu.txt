@@ -1,0 +1,11 @@
+{{login_status}}
+
+{{only_member
+#- {{show_history}}
+#- {{show_presen}}
+#- {{menu(wysiwyg)}}
+- {{menu(newpage)}}
+- {{menu(edit)}}
+#- {{menu(wysiwyg)}}
+}}
+# ŠÇ—ƒƒjƒ…[

@@ -1,0 +1,8 @@
+* ISBN Link
+,amazon,http://www.amazon.co.jp/exec/obidos/ASIN/#{isbn2}#{aid}/ref=nosim/
+,‹IˆÉš ‰®,http://bookweb.kinokuniya.co.jp/guest/cgi-bin/wshosea.cgi?W-ISBN=#{isbn2}
+,ˆ®‰®,http://www.netdirect.co.jp/search/ISSSchDetail.asp?ISBN=#{isbn2}
+,Šy“V,http://bsearch.rakuten.co.jp/Btitles?KEY=#{isbn2}
+,¢“c’J‹æ,http://libweb.city.setagaya.tokyo.jp/clis/search?ISBN=#{isbn2}
+,i,http://libweb.city.setagaya.tokyo.jp/clis/searchi?ISBN=#{isbn2}
+,.,http://libweb.city.setagaya.tokyo.jp/i/

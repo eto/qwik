@@ -1,0 +1,12 @@
+* qwikWebの構造
+システムの内部構造について説明しています。
+qwikWebのプラグインを開発する方法についても扱います。
+** Config, Memory
+** Request, Response
+** Session, Action
+** Site, Pages, Page
+** SiteConfig
+サイト毎の設定を扱います。
+ site.siteconfig["name"]
+という形でパラメータの名前を設定し、値を取り出します。
+値は常にStringで返されます。

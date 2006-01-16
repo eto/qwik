@@ -1,0 +1,56 @@
+<!-- -*- c++ -*- -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>test</title>
+<script type="text/javascript" src="../../jsUnit/app/jsUnitCore.js"></script>
+<script type="text/javascript" src="debug.js"></script>
+<script language="javascript">
+
+//alert("test start");
+function testSetDebug() {
+  g_debug.setDebug(false);
+  assertEquals(false, g_debug.debug_mode);
+  g_debug.setDebug(true);
+  assertEquals(true, g_debug.debug_mode);
+}
+
+function testPrint() {
+  assertEquals("", g_debug.buffer);
+  g_debug.print("t");
+  assertEquals("<tt>t</tt><br\n/>", g_debug.buffer);
+}
+
+function testFlush() {
+  g_debug.print("t");
+  g_debug.flush();
+  assertEquals("object", typeof g_debug.window);
+}
+
+function testClear() {
+  g_debug.print("t");
+  g_debug.clear();
+  assertEquals("", g_debug.buffer);
+}
+
+function testInspect() {
+//assertEquals("0", g_debug.inspect(null));
+  assertEquals("0", g_debug.inspect(0));
+  assertEquals("\"t\"", g_debug.inspect("t"));
+  var ar = [];
+  assertEquals("{}", g_debug.inspect(ar));
+  ar[0] = 1;
+  assertEquals("{0=>1}", g_debug.inspect(ar));
+}
+
+function testP() {
+  g_debug.p(0);
+  assertEquals("<tt>0</tt><br\n/>", g_debug.buffer);
+}
+
+</script>
+</head>
+<body>
+<p>test</p>
+</body>
+</html>

@@ -1,0 +1,2585 @@
+2006-01-16  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: New config public_url.  Simplify url stuff.
+	Delete public_host, public_port, public_path
+	* common-url.rb: Ditto.
+	* site-url.rb: Ditto.
+
+	* group-member.rb: Bug fix.  Update config member.
+	* group-sendmail.rb: Ditto.
+	* group-site.rb: Ditto.
+	* ml-processor.rb: Ditto.
+	* ml-session.rb: Ditto.
+	* ml-sweeper.rb: Ditto.
+
+	* act-media.rb: Refactoring.
+
+2006-01-10  Kouichirou Eto  <2005 eto.com>
+
+	* act-describe.rb: Do not show edit link.
+
+	* act-files.rb: Force download if the file are Office files.
+
+	* act-pages.rb: Show page list in surface template.
+
+	* site-resolve.rb: Do not escape title.  You can use [[C++]] now.
+	Thanks to Mr. Satoru Takabayashi.
+
+2006-01-06  Kouichirou Eto  <2005 eto.com>
+
+	* test-module-ml.rb: Change port to 9196 for testing.
+
+2006-01-06  Kouichirou Eto  <2005 eto.com>
+
+	* Update directories.
+	* Use setup.rb to install.
+	* Update CVS directory to erase unused directories.
+
+2005-12-28  Kouichirou Eto  <2005 eto.com>
+
+	* act-metadata.rb: Do not include descriptions even if public mode.
+
+	* act-metadata.rb: Refactoring.
+	* act-mdls-rss.rb: Ditto.
+
+	* action.rb: theme plugin is always OK.
+
+	* description-ja.rb: Take care of SJIS.
+
+	* qwikweb-release.rb: Debug.
+
+2005-12-20  Kouichirou Eto  <2005 eto.com>
+
+	* act-christel.rb: Refactoring.
+
+	* act-qrcode.rb: Refactoring.
+	* qrcode-view.rb: Do not test if no GD.
+
+	* act-typekey.rb: Do not test if no TypeKey.
+
+2005-12-17  Kouichirou Eto  <2005 eto.com>
+
+	* act-christel.rb: Update test case.
+
+	* common-url.rb: is_valid_url? is moved.
+
+	* act-textarea.rb: New file.
+
+	* common-pageattribute.rb: Renamed from act-pageattribute.
+
+2005-12-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-album.rb: Refactoring.
+
+	* page-files.rb (overwrite): New method.
+
+	* site-timeline.rb: Refactoring.
+
+	* act-christel.rb: New file for Christel plugin.
+
+	* act-takahashi.rb: New file for Takahashi method plugin.
+
+	* util-basic.rb: New file for basic utils.
+
+2005-12-04  Masashi Miyamura  <mimamu gmail.com>
+	
+	* act-summary.rb (Page.get_summary): change returned value.
+	
+2005-12-04  Masashi Miyamura  <mimamu gmail.com>
+
+	* act-tagsearch.rb: New file. Search tags.
+	* act-report.rb: New file. Making a report of selected pages.
+	
+2005-12-04  Kouichirou Eto  <2005 eto.com>
+
+	* act-describe.rb: Set @req.base to FrontPage.
+
+	* act-day.rb: Update.
+
+2005-12-04  Kouichirou Eto  <2005 eto.com>
+
+	* act-member.rb: New method act_member_add, act_member_list,
+	act_member_list_csv
+
+	* act-qrcode.rb: Debug.  Change .attach to .files
+
+	* config.rb: Add DebianFiles setting.
+	* ml-config.rb: Ditto.
+
+	* act-graphviz.rb: New plugin to embed a graph by grpahviz.
+	* server-memory.rb: Add graphviz support.
+	Thanks to Mr. Moriyoshi Koizumi.
+
+	* bin/*: Update LOAD_PATH line.
+
+	* act-text.rb: New method plg_pre_text
+
+2005-12-03  Kouichirou Eto  <2005 eto.com>
+
+	* typekey.rb: Get public key if there is no file.
+
+	* description-ja.rb: Debug.  Insert space for SJIS.
+
+	* common-session.rb: Make cache dir.
+
+	* db-indexer.rb: Do not test if there is no senna extention.
+
+	* ml-logger.rb: Make dir if there is no log directory.
+
+2005-12-03  Kouichirou Eto  <2005 eto.com>
+
+	* act-describe.rb: Make list for each languages.
+
+	* act-file.rb: Refactoring.
+
+	* act-pages.rb: Renamed from act-list.rb
+
+	* act-list.rb: Renamed from act-tascas.rb
+
+	* common-rewrite-plugin.rb: Rewrite plugin.
+	act-mcomment, act-table, act-schedule are also changed.
+
+	* common-backtrace.rb: Splited from common-exception.rb
+
+	* common-res.rb: Renamed from common-generate.rb
+
+	* common-plugin.rb: Show backtrace of error.
+
+	* wabisabi-get.rb (each_element): New method.
+
+2005-11-27  Kouichirou Eto  <2005 eto.com>
+
+	* act-day.rb (act_day): New method.
+
+	* act-describe.rb: Use accept_languages.
+	* description.rb: Descriptions.
+	* description-ja.rb: Descriptions for Japanese.
+
+	* act-edit.rb: Change edit menu.
+
+	* act-files.rb: Change file_del URL.
+
+	* act-map.rb: Bug fix.  Change 'EOT' to "EOT"
+	Thanks to Yoshiyuki NAKAMICHI.
+
+	* act-wysiwyg.rb: Change wyiswyg editing menu to icons.
+	* theme/i/*.gif, *.png: New icons.
+	* theme/css/base.css: Update.
+
+	* common-plain.rb: Add new JavaScript files.
+	* theme/js/prototype.js: New file.
+	* theme/js/scripticulous.js: New file.
+	* theme/js/*.js: Other 6 scripticulous releated files.
+
+	* page-images.rb: Change ' to "
+
+	* act-listedit.rb: New file.
+
+2005-11-20  Kouichirou Eto  <2005 eto.com>
+
+	* act-album.rb: Do not show album if there is no imgage.
+
+	* act-files.rb: Redirect to .theme if it begin with .theme
+
+	* common-resolve.rb: Renamed from act-resolve.rb
+
+	* common-session.rb: Renamed from act-session.rb
+
+	* common-url.rb: Renamed from act-url.rb
+
+2005-11-20  Kouichirou Eto  <2005 eto.com>
+
+	* act-describe.rb: Change describe methods.
+	Related files are also changed.
+
+	* common-surface.rb: Renamed from act-surface.rb
+
+	* act-typekey.rb: Change cache time to 100years.
+
+	* common-gettext.rb: Splited from action.rb
+
+2005-11-18  Kouichirou Eto  <2005 eto.com>
+
+	* util-pathname.rb (get): New method.
+	* util-pathname.rb (put): New method.
+	* util-pathname.rb (add): New method.
+	* util-pathname.rb (get_first): New method.
+	Related files are also changed.
+
+2005-11-18  Kouichirou Eto  <2005 eto.com>
+
+	* qrcode-view.rb: New file.  Merge qrcode-image and qrcode-html
+	check-qrcode.rb is also merged.
+
+2005-11-18  Kouichirou Eto  <2005 eto.com>
+
+	* compat/htree*: Update.
+	* compat/zip/*: Update.
+
+2005-11-18  Kouichirou Eto  <2005 eto.com>
+
+	* common-send.rb: Renamed from act-simple-send.rb
+
+	* common-notice.rb: Renamed from act-notice.rb
+	* common-notice.rb (c_notfound): New method
+
+	* test-module-session.rb (t_make_content): New method
+
+	* util-filename.rb (extname): New method
+	* util-pathname.rb (ext): New method
+
+	* common-plain.rb (generate_js): New method
+
+	* act-files.rb: Add download support.
+	* act-file.rb: ditto.
+	* act-file.rb: act-ref is merged.
+	* act-file.rb: act-icon is merged.
+
+	* util-css.rb: Renamed from css.rb
+
+	* page-files.rb (force_put): Removed.
+
+	* request-host.rb: Removed.
+
+	* wabisabi-get.rb: Merge wabisabi-attr
+
+2005-11-16  Kouichirou Eto  <2005 eto.com>
+
+	* action.rb: Change NoPathArgs to RequireNoPathArgs
+	common-condition.rb is also changed.
+
+2005-11-15  Kouichirou Eto  <2005 eto.com>
+
+	* act-tmp.rb: Aggregate under construction codes.
+
+	* common-*.rb: Moved from act-*.rb
+
+2005-11-14  Kouichirou Eto  <2005 eto.com>
+
+	* util-filename.rb: Update filename methods.
+	act-attah.rb, act-files.rb, group-site.rb, page-files.rb
+
+	* util-charset.rb: Add guess support.
+
+2005-11-11  Masashi Miyamura  <mimamu gmail.com>
+
+	* act-secdb.rb: New file. Section DB plugin.
+
+2005-11-11  Kouichirou Eto  <2005 eto.com>
+
+	* util-charset.rb: New methods for abstract charsets.
+	page_charset, xml_charset, mail_charset, etc.
+
+2005-11-09  Kouichirou Eto  <2005 eto.com>
+
+	* site-url.rb (ml_address): Change order.
+	* config.rb: Change default hostname to empty.
+
+2005-11-09  Kouichirou Eto  <2005 eto.com>
+
+	* util-charset.rb (set_charset): New method.
+	Change all charset translate methods.
+
+	* mdlb-sample.rb: New samples.
+
+	* util-sendmail.rb: Renamed from qwik-sendmail.rb
+
+	* bin/Makefile: New file.
+
+2005-11-08  Kouichirou Eto  <2005 eto.com>
+
+	* util-iconv.rb: Use set_charset.
+	* util-kconv.rb: Ditto.
+
+2005-11-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-toc.rb: You can now use "[" inside section name.
+	Thanks to Mr. Takubo Akio.
+
+2005-11-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-basic.rb: Two plugins are moved from act-plugin.rb
+	* act-exception.rb: Refactoring.
+	* util-charset.rb: New file.
+	* util-kconv.rb: Set charset using set_charset
+
+2005-11-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-mdlb-model.rb: Add a test case.
+	* util-filename.rb: Change the place of minus.
+
+2005-11-08  Kouichirou Eto  <2005 eto.com>
+
+	* util-fname.rb: Renamed to util-filename.rb
+	* util-filename.rb: Add backslash for minus
+
+2005-11-07  Kouichirou Eto  <2005 eto.com>
+
+	* request-path.rb: Set charset to @base.
+	* util-filename.rb: Accept / for the name.
+	* util-iconv.rb: Set charset
+	* util-kconv.rb: Ditto.
+
+2005-11-07  Kouichirou Eto  <2005 eto.com>
+
+	* act-files.rb: Change from fsend to send.
+
+2005-11-05  Kouichirou Eto  <2005 eto.com>
+
+	* act-files.rb: Change from fsend to send.
+	* act-attach.rb: Ditto.
+	* page-files.rb: Change to FileNotExist
+	* parser-emode.rb: Change hmark to HMARK
+	* util-filename.rb: Renamed from util-fname
+
+2005-10-31  Kouichirou Eto  <2005 eto.com>
+
+	* util-fname.rb: Change FName to Filename
+	* util-fname.rb: Accept space in filename
+	* act-modulobe-upload.rb: Ditto.
+	* page-generate.rb: Add emode support.
+	* parser-emode.rb: add emode?
+	* testunit.rb: add eq
+	* util-fname.rb: add contain_multibyte?
+
+2005-10-31  Kouichirou Eto  <2005 eto.com>
+
+	* mail-header.rb: Change sub to gsub
+
+2005-10-31  Kouichirou Eto  <2005 eto.com>
+
+	* qwik-bench.rb: Change default to www
+
+2005-10-31  Kouichirou Eto  <2005 eto.com>
+
+	* mail-header.rb: Make spaces to a space.  Thanks to Mr. Atsushi SHICHI.
+	* mail-header.rb: Change method name to get_unified_subject
+	* group-site.rb: Ditto.
+
+2005-10-28  Kouichirou Eto  <2005 eto.com>
+
+	* template/*.html: Make themes relative.
+
+2005-10-28  Kouichirou Eto  <2005 eto.com>
+
+	* qwik-bench.rb: Update.  Add args.
+
+2005-10-27  Kouichirou Eto  <2005 eto.com>
+
+	* qwik-bench.rb: New file.  Benchmark for your site.
+	* act-describe.rb: Update.
+	* act-editor.rb: Add link to SiteConfig
+	* act-editor.rb: Change js link.
+	* act-notice.rb: Ditto.
+	* act-wema.rb: Ditto.
+
+2005-10-27  Kouichirou Eto  <2005 eto.com>
+
+	* act-describe.rb: Update.
+	* act-summary.rb: Add description.
+	* act-aa.rb: Ditto.
+	* Add many descriptions.
+	* act-editor.rb: Add link to descriptions.
+	* css/base.css: Add desciption class.
+
+2005-10-27  Kouichirou Eto  <2005 eto.com>
+
+	* act-url.rb: Update.
+	* config.rb: Update.
+	* group-site.rb: Add @config for initialize
+	* ml-config.rb: Add :web_config_file
+	* periodic.rb: Add sleep 30minutes.
+	* site-url.rb: Update.
+
+2005-10-27  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: Change default_wwwroot to public_path
+	* act-media.rb: Ditto.
+	* act-url.rb: Ditto.
+	* act-mlsubmitform.rb: Change to ml_address
+	* request-host.rb: Do not use default_hostname
+	* request-webrick.rb: Ditto.
+	* server-webrick.rb: Ditto.
+	* site-config.rb: Ditto.
+	* site-url.rb: Ditto.
+	* test-module-session.rb: Ditto.
+
+2005-10-27  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: Delete default_hostname setting.
+	* request-host.rb: Ditto.
+
+2005-10-24  Kouichirou Eto  <2005 eto.com>
+
+	* data/www/_SiteConfig.txt: Reset.
+	* data/www/,members: Reset.
+	* data/www/,forward: Reset.
+	* data/www/_GroupMembers.txt: Reset.
+	* data/www/_GroupForward.txt: Reset.
+
+2005-10-20  Kouichirou Eto  <2005 eto.com>
+
+	* Makefile: Update for debug.
+	* act-attach.rb: Now they can use Japanese filename.
+	* act-files.rb: Ditto.
+	* act-simle-send.rb: Ditto.
+	* group-site.rb: Ditto.
+	* page-files.rb: Ditto.
+	* page-images.rb: Ditto.
+	* util-fname.rb: New file for encode filename.
+	* act-mlsubmitform.rb: New file for submit form.
+	* act-ref.rb: Make attach more pretty.
+	* act-save.rb: Ditto.
+	* act-editor.rb: Change order.  Do not use experimental word.
+	* site-url.rb: Change site-url mechanizm.
+	* act-hatena-point.rb: Ditto.
+	* act-media.rb: Ditto.
+	* act-metadata.rb: Ditto.
+	* act-modulobe-rss.rb: Ditto.
+	* act-translate.rb: Ditto.
+	* act-url.rb: Ditto.
+	* act-media.rb: Ditto.
+	* act-media.rb: Ditto.
+	* act-media.rb: Ditto.
+	* act-media.rb: Ditto.
+	* act-presen.rb: Make default to qwikworld
+	* action.rb: Refactoring.
+	* catalog-ja.rb: Update.
+	* config.rb: Update.
+	* group-confirm.rb: Bug fix.  Use Mail.create
+	* mail-multipart.rb: Bug fix. Update for multiline.
+	* mail-parse.rb: New method Mail.create
+	* mail.rb: Add testcase.
+	* request-host.rb: Refactoring.
+	* request-path.rb: Refactoring.
+	* request.rb: Refactoring.
+	* request-webrick.rb: Add rescue.
+	* test-module-ml.rb: Update.
+	* test-ms-jfilename.rb: New file.
+	* test-ms-quopri.rb: New file.
+
+2005-10-20  Kouichirou Eto  <2005 eto.com>
+
+	* theme/js/wysiwyg.js: Comment out alert.
+	* theme/qwikeditor/qwikeditor.css: Update. Make sidemenu absolute.
+	* theme/s5/qwikblack/pretty.css: Update.  Remake.
+	* theme/s5/qwikworld/pretty.css: Update.
+	* theme/s5/default/slides.js: Update.
+
+2005-10-11  Kouichirou Eto  <2005 eto.com>
+
+	* template.rb: Change require path.
+	* act-search.rb: Change to page_title.  Thanks to Mr. Akio Takubo.
+	* act-toc.rb: Change to w.text
+	* catalog-factory.rb: Update.
+	* parser-inline.rb: Test patch.
+
+2005-10-10  Kouichirou Eto  <2005 eto.com>
+
+	* group-config.rb: Change API for initialize.
+	* group-db.rb: Debug.  Change get method.
+	* mail-multipart.rb: Debug at get_filename
+	* mail-header.rb: Move get_filename to mail-multipart
+	* mail.rb: Add test case for Apple Mail.
+	* ml-processor.rb: Update.
+	* site-group.rb: Renamed from site-ml.rb
+	* site.rb: Add init_group_config
+
+2005-10-10  Kouichirou Eto  <2005 eto.com>
+
+	* group-config.rb: Update.
+	* ml-config.rb: Update.
+	* etc/quickml-config.rb: Make obsolete.
+
+2005-10-09  Kouichirou Eto  <2005 eto.com>
+
+	* act-getpass.rb: For English mail.
+	* act-url.rb: Bug fix. Make it integer.
+	* group-cond.rb: Moved from group-config.rb
+	* group-config.rb: Refactoring.
+	* group-db.rb: Refactoring.
+	* group-member.rb: Update.
+	* group-sweep.rb: Update.
+	* group.rb: Update.
+	* ml-config.rb: Update.
+	* site-ml.rb: Update.
+	* util-safe.rb: Add test case.
+
+2005-10-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-getpass.rb: Update messages for GetText.
+	* catalog-ja.rb: Update.
+	* gettext.rb: Update.
+	* group-db.rb: Comment out update_group_files.
+	* ml-gettext.rb: Update.
+	* site-report.rb: Update.
+
+2005-10-08  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: Update debug= test=
+	* group.rb: Update.
+
+2005-10-08  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: Add debug= test=
+	* group-db.rb: Change args for initialize.
+	* group-db.rb: New method set_site
+	* site-member.rb: Ditto.
+	* group.rb: Add set_site
+
+2005-10-07  Kouichirou Eto  <2005 eto.com>
+
+	* act-files.rb: Do not change to absolute path.
+	* act-getpass.rb: Send English mail.
+	* site-report.rb: Ditto.
+	* act-ring-invite.rb: Change sendmail args.
+	* group-config.rb: Change the place of require group.rb
+	* group-site.rb: Update.
+	* server.rb: Update.
+
+2005-10-07  Kouichirou Eto  <2005 eto.com>
+
+	* qwik-sendmail.rb: Change argments.
+	* act-getpass.rb: Ditto.
+	* site-report.rb: Ditto.
+	* farm.rb: Use $update_gruop_files to check.
+	* config.rb: Refactoring.
+	* group-config.rb: Update.
+	* group-db.rb: Update.
+	* ml-config.rb: Refactoring.
+	* ml-logger.rb: Update.
+	* ml-quickml-server.rb: Update.
+	* ml-server.rb: Update.
+	* test-module-ml.rb: Update.
+	* test-ms-confirm.rb: Update.
+	* test-ms-org.rb: Update.
+
+2005-10-06  Kouichirou Eto  <2005 eto.com>
+
+	* change $debug to $test
+
+2005-10-06  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: Refactoring.
+
+2005-10-06  Kouichirou Eto  <2005 eto.com>
+
+	* farm.rb: For update group files.
+	* group-config.rb: To use group_config in forward mode.
+	* group-config.rb: New generate method.
+	* group-db.rb: Change initial vars.
+	* group-member.rb: Update.
+	* group-sendmail.rb: Update.
+	* group.rb: Delete short_name
+	* ml-config.rb: Use ||
+	* ml-processor.rb: Update.
+	* site-member.rb: Update.
+	* theme/js/niftypp.js: Bug fix.  Thanks to Mr. TANAKA Kotaro.
+
+2005-10-05  Kouichirou Eto  <2005 eto.com>
+
+	* act-ring-invite.rb: Update.
+	* act-ring-new.rb: Update.
+	* db-berkeley.rb: Update.
+	* db-filesystem.rb: Update.
+	* group-db.rb: Change _ML_ to _Group
+	* ml-processor.rb: Update.
+	* page-wikidb.rb: Refactoring.
+	* site-member.rb: Refactoring.
+	* site-ml.rb: Update.
+
+2005-10-04  Kouichirou Eto  <2005 eto.com>
+
+	* page-wikidb.rb: Refactoring.
+	* db-berkeley.rb: Add _ML_ support
+	* db-filesystem.rb: Ditto.
+	* group-db.rb: Ditto.
+	* ml-processor.rb: Ditto.
+	* qwikweb-release.rb: Ditto.
+	* site-member.rb: Ditto.
+	* site-ml.rb: Ditto.
+	* test-ms-org.rb: Disabled.
+	* group-config.rb: Rename ml_config to group_config
+	* group-member.rb: Ditto.
+	* group-sendmail.rb: Ditto.
+	* group-site.rb: Ditto.
+	* group-sweep.rb: Ditto.
+	* group.rb: Ditto.
+	* group-cond.rb: Merged to group-config.rb
+	* group-config.rb: Ditto.
+
+2005-10-04  Kouichirou Eto  <2005 eto.com>
+
+	* act-comment.rb: Add br in the head of comment.
+	Thanks to Mr. Hiro A. Ohtsuka.
+	* group-cond.rb: Update.
+	* group-db.rb: Save and load both from pages.
+	* group-config.rb: Update.
+	* group-member.rb: Update.
+	* group-sendmail.rb: Update.
+	* group.rb: Update.
+
+2005-10-03  Kouichirou Eto  <2005 eto.com>
+
+	* tokenizer.rb: Bug fix.  Thanks to Mr. Hiro A. Ohtsuka.
+
+2005-10-03  Kouichirou Eto  <2005 eto.com>
+
+	* group-cond.rb: Update.
+	* group-config.rb: Update.
+	* group-confirm.rb: Update.
+	* group-db.rb: Update.  Store content to the pages also.
+	* group-mail.rb: Update.
+	* group-member.rb: Update.
+	* group-sendmail.rb: Update.
+	* group-site.rb: Update.
+	* group-sweep.rb: Update.
+	* group-group.rb: Update.
+	* ml-logger.rb: Do not use safe_open
+
+2005-10-02  Kouichirou Eto  <2005 eto.com>
+
+	* bin/quickml: Deleted.
+	* bin/quickmlrc: Ditto.
+	* lib/quickml/*.rb: Ditto.
+	* lib/t/Makefile: Ditto.
+	* group-cond.rb: Update.
+	* group-mail.rb: Update.
+	* group-member.rb: Update.
+	* group-processor.rb: Merged to group-member.rb
+	* group-sendmail.rb: Update.
+	* group-site.rb: Update.
+	* group-sweep.rb: Update.
+	* group.rb: Update.
+	* mail-body.rb: Update.
+	* mail-header.rb: Update.
+	* ml-processor.rb: Update.
+	* ml-session.rb: Update.
+	* ml-site.rb: Merged to group-site.rb
+
+2005-10-01  Kouichirou Eto  <2005 eto.com>
+
+	* group-cond.rb: Update.
+	* group-confirm.rb: Update.
+	* group-mail.rb: Update.
+	* group-member.rb: Update.
+	* group-processor.rb: Update.
+	* group-sendmail.rb: Update.
+	* group-sweep.rb: Update.
+	* group.rb: Update.
+	* ml-processor.rb: Update.
+
+2005-09-30  Kouichirou Eto  <2005 eto.com>
+
+	* act-metadata.rb: Delete params of plugin to delete mail address.
+	* group.rb: Move some methods to group-cond.
+	* group-member.rb: New class GroupMembers.
+	* group-confirm.rb: Adapt for GroupMembers.
+	* group-processor.rb: Ditto.
+	* ml-processor.rb: Ditto.
+	* bin/quickml: Change ruby path to /usr/bin/env ruby
+	* bin/quickml-server: Ditto.
+
+2005-09-29  Kouichirou Eto  <2005 eto.com>
+
+	* act-getpass.rb: Update.
+	* qwik-sendmail.rb: Renamed from sendmail.rb
+	* mail-header.rb: Update encode_field
+	* qwik-sendmail.rb: Delete encode_field
+
+2005-09-29  Kouichirou Eto  <2005 eto.com>
+
+	* act-getpass.rb: Use encode_field.
+	* site-report.rb: Ditto.
+	* group-mail.rb: Split into group-sendmail.rb, group-processor.rb
+	* group-processor.rb: New file.
+	* group-sendmail.rb: New file.
+	* mail-header.rb: Bug fix.  Do not add space on the bottom.
+
+2005-09-28  Kouichirou Eto  <2005 eto.com>
+
+	* mail-header.rb: Move multipart method to mail-multipart
+	* mail-multipart.rb: New file.
+	* mail-parse.rb: Renamed from mail-parse.rb
+
+2005-09-28  Kouichirou Eto  <2005 eto.com>
+
+	* group-config.rb: Update.  New class GroupConfig
+	* group-db.rb: Update.  Add dir for each
+	* group-files.rb: Renamed to group-cond.rb
+	* group-cond.rb: New file.
+	* group-mail.rb: Update for GroupConfig
+	* group-member.rb: Update to use group-db.
+	* group-sweep.rb: Update for GroupConfig.
+	* group.rb: Update for GroupDB and GroupConfig.
+	* mail-body.rb: Bug fix for method parts_join
+	* ml-processor.rb: Update for confirmation.
+	* ml-sweep.rb: Update to use ml_config_check_exist.
+	* test-make-public.rb: New method t_make_writable.
+	* test-make-public.rb: Use args for the methods.
+	* group-cond.rb: New file.
+	* group-confirm.rb: New file.
+
+2005-09-19  Kouichirou Eto  <2005 eto.com>
+
+	* group.rb: Bug fix.  Add require group-config
+	* group-mail.rb: Bug fix.  Add require ml-sendmail
+
+2005-09-19  Kouichirou Eto  <2005 eto.com>
+
+	* modulobe.rb: Update.  Change class Model to ModelFile
+	* act-modulobe-model.rb: Ditto.
+	* act-modulobe-upload.rb: Ditto.
+	* db-filesystem.rb: Add with_super
+	* page-get.rb: Do not take blank line after title.
+	* page-title.rb: Prepare to make it obsolete.
+	* pages.rb: Update.
+	* dev-bench: New file.
+	* mdlb-model.rb: New file.
+	* mdlb-sample.rb: New file.
+
+2005-09-14  Kouichirou Eto  <2005 eto.com>
+
+	* act-getpass.rb: Update.  Change message.
+	* group-db.rb: New file.  Moved from group-files
+	* group-config.rb: New file.  Moved from group-files
+	* group-files.rb: Ditto.
+	* group-member.rb: Update.  New class GroupMembers
+	* qwik-mail.rb: New file.  Moved from mail.rb
+	* mail.rb: Ditto.
+	* site-report.rb: New file.  Renamed from report.rb
+	* report.rb: Ditto.
+
+2005-09-13  Kouichirou Eto  <2005 eto.com>
+
+	* theme/qwikgreen.css: Update.  Change h3 theme.
+
+2005-09-12  Kouichirou Eto  <2005 eto.com>
+
+	* Makefile: Add test-suite-ml
+	* test-suite-ml.rb: New file.
+	* act-metadata.rb: Update test case.
+	* act-translate.rb: Add plg_translate.
+	* group-files.rb: Update.
+	* group-member.rb: Update.
+	* group-process.rb: Move to group-mail.
+	* group-sendmail.rb: Deleted.
+	* group-sweep.rb: Update.
+	* group.rb: Move to group-mail
+	* group-mail.rb: New file.
+	* ml-sweeper.rb: Update.
+	* test-module-suite.rb: Renamed from test-suite.rb
+	* util-pathname.rb: Renamed from util-path.rb
+	* util-pid.rb: Do not use safe_unlink
+
+2005-09-11  Kouichirou Eto  <2005 eto.com>
+
+	* act-metadata.rb: Add rss button.
+	* css/base.css: Ditto.
+
+2005-09-11  Kouichirou Eto  <2005 eto.com>
+
+	* request-path.rb: Add remove_quote
+
+2005-09-11  Kouichirou Eto  <2005 eto.com>
+
+	* request.rb: Split.
+	* request-webrick.rb: Ditto.
+	* request-ua.rb: Ditto.
+	* request-path.rb: Ditto.
+	* request-host.rb: Ditto.
+
+2005-09-11  Kouichirou Eto  <2005 eto.com>
+
+	* group-files.rb: Update.
+	* group-sweep.rb: Update.
+	* group.rb: Update.
+	* util-safe.rb: Update.  Set mode to "rb".
+	* group-sendmail.rb: New file.
+	* group-member.rb: New file.
+	* act-translate.rb: New file.
+
+2005-09-09  Kouichirou Eto  <2005 eto.com>
+
+	* group.rb: Rename class QuickML to Group
+
+2005-09-08  Kouichirou Eto  <2005 eto.com>
+
+	* mail-body.rb: Update. Add test case.
+	* mail-header.rb: Update. Add test case.
+	* mail.rb: Update.
+	* group.rb: Split into group-site.rb
+	* group-site.rb: New file.
+	* mail-generate.rb: New file.
+
+2005-09-06  Kouichirou Eto  <2005 eto.com>
+
+	* mail.rb: Split method.
+	* mailaddress.rb: Move class outside from module Qwik
+	* ml-mail.rb: Split into files.
+
+2005-09-05  Kouichirou Eto  <2005 eto.com>
+
+	* act-charts.rb: Update.
+	* act-interwiki.rb: Update test case.
+	* ml-mail.rb: Split.
+	* ml-quickml.rb: Split.
+	* page-images.rb: Update test case.
+
+2005-09-05  Kouichirou Eto  <2005 eto.com>
+
+	* Makefile.rb: Update.
+	* act-resolve.rb: Update.
+	* act-surface.rb: Update.
+	* act-toc.rb: Update.
+	* act-wysiwyg.rb: Update.
+	* act-farm.rb: Update.
+	* page-generate.rb: Update.
+	* parser-inline.rb: Update.
+	* parser.rb: Update.
+	* password.rb: Update.
+	* qwikweb-makesite.rb: Bug fix.  Add require config.
+	* qwikweb-watchlog.rb: Bug fix.
+	* server-memory.rb: Move passgen.
+	* site-ml.rb: Update.
+	* util-pid.rb: Move from module Qwik to toplevel.
+	* wabisabi-attr.rb: New method set_attr
+	* wabisabi-index.rb: New method index_each_tag
+	* wabisabi-template.rb: Move attr methods to wabisabi-attr
+	* act-charts.rb: New file for chart plugin.
+	* act-describe.rb: New file for description of each action.
+	* bench-s-md5.rb: Bench for md5.
+	* wabisabi-parent.rb: New file to treat wabisabi parent.
+
+2005-09-02  Kouichirou Eto  <2005 eto.com>
+
+	* act-surface.rb: Update.
+	* wabisabi-get.rb: Update.
+	* wabisabi-index.rb: Update.
+	* wabisabi-traverse.rb: Splited from wabisabi-get
+
+2005-09-02  Kouichirou Eto  <2005 eto.com>
+
+	* act-archive.rb: Update.
+	* act-attach.rb: Update.
+	* act-comment.rb: Update to make newline to br tag.
+	* act-css.rb: Update.
+	* act-editor.rb: Update.
+	* act-generate.rb: Update.
+	* act-include.rb: Update.
+	* act-interwiki.rb: Update.
+	* act-license.rb: Update.
+	* act-modulobe-model.rb: Update.
+	* act-modulobe-rss.rb: Update.
+	* act-new.rb: Update.
+	* act-plain.rb: Update.
+	* act-presen.rb: Update.
+	* act-ring-user.rb: Update.
+	* act-save.rb: Update.
+	* act-surface.rb: Renewal.  Use template index.
+	* act-tag.rb: Update.
+	* act-text.rb: Update.
+	* act-toc.rb: Update.
+	* act-wema.rb: Update.
+	* bench-session.rb: Update.
+	* farm.rb: Update.
+	* htree-to-wabisabi.rb: Update.
+	* page-generate.rb: Update.
+	* page.rb: Delete init_generate.
+	* parser-inline.rb: Update.
+	* parser.rb: Update.
+	* resolve-tdiary.rb: Update.
+	* resolve.rb: Update.
+	* site-member.rb: Update.
+	* site-resolve.rb: Update.
+	* site-url.rb: Update.
+	* site.rb: Update.
+	* template-generator.rb: Update.
+	* template.rb: Update.
+	* tokenizer-inline.rb: Update.
+	* tokenizer.rb: Update.
+	* wabisabi-attr.rb: Update.
+	* wabisabi-get.rb: Update.
+	* wabisabi-to-wiki.rb: Update.
+	* wabisabi-valid.rb: Update.
+	* act-response.rb: New file.
+	* qwikweb-tempgen.rb: Renamed from qwikweb-generate-template
+	* wabisabi-index.rb: New file.
+	* css/base.css: Update for new.
+
+2005-09-01  Kouichirou Eto  <2005 eto.com>
+
+	* act-archive.rb: Update.
+	* act-basic.rb: Update.
+	* act-book.rb: Update.
+	* act-emode.rb: Update.
+	* act-generate.rb: Update.
+	* act-html.rb: Update.
+	* act-interwiki.rb: Update.
+	* act-modulobe.rb: Removed.
+	* act-surface.rb: Update.
+	* act-webservice.rb: Update.
+	* check-act-archive.rb: Merged to act-archive.rb
+	* emode-parser.rb: Update.
+	* mail.rb: Update.
+	* resolve.rb: Update.
+	* test-ml-util.rb: Removed.
+	* act-resolve.rb: New file.
+	* page-generate.rb: New file.
+	* site-resolve.rb: New file.
+
+2005-08-30  Kouichirou Eto  <2005 eto.com>
+
+	* act-archive.rb: Add test case.
+	* act-generate.rb: Update.
+	* act-qrcode.rb: Update.
+	* act-text.rb: Update.
+
+2005-08-30  Kouichirou Eto  <2005 eto.com>
+
+	* act-archive.rb: Update.
+	* act-backup.rb: Update.
+	* act-basic.rb: Update.
+	* act-file.rb: Update.
+	* act-history.rb: Update.
+	* act-md5.rb: Update.
+	* act-metadata.rb: Update.
+	* act-new.rb: Update.
+	* act-pageattribute.rb: Update.
+	* act-presen.rb: Update.
+	* act-theme.rb: Update.
+	* act-watch.rb: Moved to act-wysiwyg.rb
+	* act-wysiwyg.rb: Update.
+	* parser-emode.rb: Renamed from emode-parser.rb
+	* ml-quickml-server.rb: Bug fix.
+	* ml-site.rb: Update.
+	* page-title.rb: Update.
+	* page-wikidb.rb: Update.
+	* page.rb: Update.
+	* pages.rb: Update.
+	* resolve-tdiary.rb: Renamed from tdiary-resolver.rb
+	* act-sitemenu.rb: Update.
+	* act-theme.rb: New file.
+	* page-get.rb: New file.
+	* page-put.rb: New file.
+	* parser-emode.rb: New file.
+	* resolve-tdiary.rb: New file.
+	* js/wysiwyg.js: Update.
+	* css/base.css: Update.
+
+2005-08-30  Kouichirou Eto  <2005 eto.com>
+
+	* Makefile: Add supporting for rubyprof.
+
+2005-08-30  Kouichirou Eto  <2005 eto.com>
+
+	* wabisabi-attr.rb: New file.
+	* act-isearch.rb: Update.
+	* bench-md5.rb: Update.
+	* bench-session.rb: Update.
+	* emode-parser.rb: Update.
+	* farm.rb: Update.
+	* html-to-wiki.rb: Deleted.  Moved to wabisabi-to-wiki.rb
+
+2005-08-28  Kouichirou Eto  <2005 eto.com>
+
+	* s5/*: Add themes.
+	* act-isearch.rb: New file.
+	* db-backup.rb: New file.
+	* db-filesystem.rb: New file.
+	* db-indexer.rb: New file.
+	* site-index.rb: New file.
+	* site-ml.rb: New file.
+	* site-pages.rb: New file.
+	* act-generate.rb: Update.
+	* act-getpass.rb: Update.
+	* act-login.rb: Update.
+	* act-metadata.rb: Update.
+	* act-new.rb: Update.
+	* act-notice.rb: Use c_relative_to_full
+	* act-redirect.rb: Update.
+	* act-surface.rb: Update.
+	* action.rb: Update.
+	* modulobe.rb: Update RSS.
+	* page-title.rb: Move PageTilte from pages.rb
+	* pages.rb: Update.
+	* report.rb: Update.
+	* resolve.rb: Update.
+	* site-config.rb: Update.
+	* site-url.rb: Update.
+	* site.rb: Update.
+	* test-module-session.rb: Add ok_title
+
+2005-08-26  Kouichirou Eto  <2005 eto.com>
+
+	* act-generate.rb: Update.
+	* act-include.rb: Update.
+	* act-metadata.rb: Update.
+	* act-notice.rb: Update.
+	* act-qrcode.rb: Update.
+	* act-tableform.rb: Update.
+	* act-wema.rb: Update.
+	* act-parser.rb: Update.
+	* plugin.rb: Update.
+	* tokenizer-inline.rb: Update.
+	* tokenizer.rb: Update.
+	* webrick.rb: Update.
+	* act-mail.rb: New file.
+	* act-text.rb: New file.
+	* webrick-server.rb: New file.
+
+2005-08-23  Kouichirou Eto  <2005 eto.com>
+
+	* ml-server.rb: Bug fix.  Change the place of include.
+
+2005-08-22  Kouichirou Eto  <2005 eto.com>
+
+	* page-images.rb: New file.
+	* page-title.rb: New file.
+	* test-ms-attach.rb: New file.
+	* test-ms-japanese.rb: New file.
+	* test-ms-post.rb: New file.
+	* util-pid.rb: New file.
+	* util-safe.rb: Renamed from ml-util-safeio.rb
+	* act-new.rb: Renamed from act-newpage.rb
+	* act-album.rb: Update.
+	* act-icon.rb: Update.
+	* act-thumbnail.rb: Update.
+	* action.rb: Update.
+	* ml-quickml.rb: Update.
+	* ml-server.rb: Update.
+	* ml-site.rb: Update.
+	* page-files.rb: Update.
+	* page.rb: Update.
+	* server.rb: Update.
+	* test-module-ml.rb: Change max_mail_length
+
+2005-08-21  Kouichirou Eto  <2005 eto.com>
+
+	* test-module-ml.rb: Update.
+
+2005-08-21  Kouichirou Eto  <2005 eto.com>
+
+	* act-redirect.rb: Update.
+	* act-time-walker.rb: Update.
+	* act-wysiwyg.rb: Update.
+	* catalog-ja.rb: Update.
+	* dev-replace.rb: Update.
+	* html-to-wabisabi.rb: Update.
+	* html-to-wiki.rb: To be removed.
+	* ml-mail.rb: Update.
+	* ml-processor.rb: Update.
+	* ml-quickml.rb: Update.
+	* ml-sendmail.rb: Update.
+	* ml-session.rb: Update.
+	* ml-site.rb: Update.
+	* ml-utils.rb: Update.
+	* page.rb: Update.
+	* sendmail.rb: Update.
+	* site-footer.rb: Update.
+	* site.rb: Update.
+	* test-ml-util.rb: Update.
+	* test-module-mock.rb: Removed.
+	* test-module-ms.rb: Removed.
+	* test-module-public.rb: Add test case.
+	* test-module-quickml.rb: Update.
+	* test-module-session.rb: Update.
+	* test-ms-basic.rb: Update.
+	* test-ms-multipart.rb: Update.
+	* test-ms-org.rb: Update.
+	* test-ms-plan.rb: Update.
+	* test-suite.rb: Update.
+	* util-string.rb: Update.
+	* mock-logger.rb: New file.
+	* mock-sendmail.rb: New file.
+	* mock-socket.rb: New file.
+	* site-theme.rb: New file.
+	* site-url.rb: New file.
+	* test-module-ml.rb: New file.
+	* test-ms-close.rb: New file.
+	* test-ms-confirm.rb: New file.
+	* test-ms-large.rb: New file.
+	* test-ms-member.rb: New file.
+	* util-integer.rb: New file.
+
+2005-08-19  Kouichirou Eto  <2005 eto.com>
+
+	* act-adminmenu.rb: Update.
+	* act-basic.rb: Add plg_com
+	* act-event.rb: Update.
+	* act-generate.rb: Add c_set_status, c_set_body
+	* act-monitor.rb: Update.
+	* act-plan.rb: Update.
+	* act-presen.rb: Add patch.
+	* act-rtedit.rb: Deleted.
+	* act-surface.rb: Add patch.
+	* act-wysiwyg.rb: Update.
+	* ml-mail.rb: Update.
+	* ml-processor.rb: Update.
+	* ml-quickml.rb: Update.
+	* ml-sendmail.rb: Update.
+	* ml-site.rb: Update.
+	* pages.rb: Update.
+	* site-event.rb: Update.
+	* test-ml-japanese.rb: Merge to ml-mail
+	* test-module-ms.rb: Update.
+	* test-ms-basic.rb: Update.
+	* util-string.rb: Add normalize_newline
+	* act-md5.rb: New file.
+	* act-save.rb: New file. Splited from act-edit.rb
+	* act-edit.rb: Ditto.
+	* act-watch.rb: New file.
+	* ml-generator.rb: New file.
+	* site-footer.rb: New file.
+	* site-plan.rb: New file.
+	* test-ms-plan.rb: New file.
+	* wabisabi-beautify.rb: New file.
+	* dev-replace: New file.  Renamed from replace.
+	* replace: Ditto.
+	* base.css: Sort order.
+	* event.js: Update.
+	* monitor.js: Update.
+	* watch.js: New file.
+
+2005-08-18  Kouichirou Eto  <2005 eto.com>
+
+	* act-event.rb: Update.
+	* site-event.rb: Update.  Add exception.
+
+2005-08-18  Kouichirou Eto  <2005 eto.com>
+
+	* s5/i18n/pretty.css: Update.
+	* act-hcomment.rb: Fix typo.
+	* act-mcomment.rb: Ditto.
+	* catalog-ja.rb: Ditto.
+	* act-presen.rb: Update.
+	* act-wysiwyg.rb: Update.
+	* act-event.rb: Implement event function.
+	* site-event.rb: Ditto.
+
+2005-08-17  Kouichirou Eto  <2005 eto.com>
+
+	* act-rtedit.rb: New file for realtime edit.
+	* check-act-monitor.rb: Test case for act-monitor.
+	* check-act-monitor2.rb: Ditto.
+	* check-server.rb: Test case for server by using open-uri.
+	* server-webrick.rb: Splited from server.rb
+	* site-monitor.rb: Renamed from sitemonitor.rb
+	* test-module-bdb.rb: Test module for bdb.
+	* test-module-server.rb: Test module for server.
+	* archive.rb: Update.
+	* act-edit.rb: Use c_nerror
+	* act-login.rb: Add userpass cookie.
+	* act-monitor.rb: Update.
+	* act-notice.rb: Use status 200 in test mode.
+	* act-presen.rb: Update.
+	* act-wysiwyg.rb: Update.
+	* qwikweb-server.rb: Add exec main in cmd mode.
+	* test-module-session.rb: Update.
+
+2005-08-16  Kouichirou Eto  <2005 eto.com>
+
+	* ml-msg-validator.rb: Renamed from ml-message-validator.rb
+	* ml-sendmail.rb: Renamed from ml-mailsender.rb
+	* ml-util-icase.rb: Splited from ml-quickml.rb
+	* sendmail.rb: Splited from mail.rb
+	* site-config.rb: Renamed from siteconfig.rb
+	* action.rb: Debug logout message.
+
+2005-08-16  Kouichirou Eto  <2005 eto.com>
+
+	* act-plugin.rb: Return "" in qwik_null
+	* check-ring.rb: Split into act-ring-*.rb
+	* act-wysiwyg.rb: Update.
+	* html-parser.rb: Renamed from htmlparser.rb
+	* html-to-wiki.rb: Renamed from htmltotext.rb
+
+2005-08-15  Kouichirou Eto  <2005 eto.com>
+
+	* qwikgreen.css: Update h3, h4, h5, h6
+	* qwikcyan.css: Update pre.
+
+2005-08-15  Kouichirou Eto  <2005 eto.com>
+
+	* plugin.rb: Renamed from act-plugin-edit.rb
+	* act-mcomment.rb: Bug fix.  Do not add \r.
+	* act-schedule.rb: Bug fix.  Do not delete plugin.
+
+2005-08-15  Kouichirou Eto  <2005 eto.com>
+
+	* act-adminmenu.rb: New file.
+	* act-pageattribute.rb: New file.
+	* berkeleydb.rb: Renamed from bdb.rb
+	* site-search.rb: Splited from act-search.rb
+	* smil-time.rb: Splited from act-smil.rb
+
+2005-08-14  Kouichirou Eto  <2005 eto.com>
+
+	* mailaddress.rb: Splited from mail.rb
+
+2005-08-13  Kouichirou Eto  <2005 eto.com>
+
+	* act-files.rb: New method ext_file_del
+	* wabisabi-table.rb: New file.  Class for prepare table edit.
+	* act-schedule.rb: Use WabisabiTable.
+	* act-table.rb: Ditto.  Renamed from act-table-edit.rb
+
+2005-08-12  Kouichirou Eto  <2005 eto.com>
+
+	* parser.rb: Do not chomp in plugin.
+	* act-schedule.rb: Update.
+
+2005-08-12  Kouichirou Eto  <2005 eto.com>
+
+	* act-counter.rb: New file.
+	* act-plan.rb: Update.
+	* act-plugin-edit.rb: Update.
+	* act-schedule.rb: Update.
+
+2005-08-11  Kouichirou Eto  <2005 eto.com>
+
+	* act-album.rb: New file for Nameraka Album plugin.
+	* act-counter.rb: Bug fix.  Use iframe.
+	* act-edit.rb: Update.
+	* act-exception.rb: Update.
+	* act-files.rb: Update.
+	* act-map.rb: Update.
+	* act-menu.rb: Update.
+	* act-modulobe-upload.rb: Update.
+	* act-plugin.rb: Update.
+	* act-sample.rb: Update.
+	* act-schedule.rb: Move to act-plan.rb
+	* act-smil.rb: Update.
+	* act-theme.rb: Update.
+	* catalog-ja.rb: Update.
+	* wabisabi-get.rb: New method each_child_with_index
+	* base.css: Update.
+
+2005-08-10  Kouichirou Eto  <2005 eto.com>
+
+	* act-table-edit.rb: New file.
+	* act-mcomment.rb: New file.
+	* act-comment.rb: Update.
+
+2005-08-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-map.rb: Add title.
+	* act-menu.rb: Remake.
+	* act-ring-catalog.rb: Remove unused message.
+	* act-ring-msg.rb: Refactoring.
+	* act-ring-user.rb: Refactoring.
+	* act-counter.rb: New file.
+	* qwikweb-js-compressor.rb: New file.
+	* css/menu.css: New file for act-menu
+	* qwikgreen.css: Update print.
+
+2005-08-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-calendar.rb: New file.
+	* act-day.rb: Update.
+	* act-ring-invite.rb: Fix.
+	* act-ring-maker.rb: Bug fix.
+	* act-ring-user.rb: Fix the test case.
+	* act-schedule.rb: The first implementation.
+
+2005-08-07  Kouichirou Eto  <2005 eto.com>
+
+	* act-ring-catalog.rb: Update.
+	* act-ring-invite.rb: Bug fix.
+	* act-ring-maker.rb: Remake.
+	* act-wysiwyg.rb: Bug fix.
+
+2005-08-07  Kouichirou Eto  <2005 eto.com>
+
+	* act-comment.rb: Use @req.start_time
+	* act-hcomment.rb: Ditto.
+	* act-list.rb: Ditto.
+	* act-wysiwyg.rb: Ditto.
+	* act-generate.rb: New method c_get_superpage
+	* act-getpass.rb: Update.
+	* act-member.rb: Ditto.
+	* action.rb: Use pre_ prefix for PRE action and extention.
+	* act-httpauth.rb: Ditto.
+	* act-login.rb: Ditto.
+	* act-logout.rb: Ditto.
+	* act-map.rb: Ditto.
+	* act-metadata.rb: Ditto.
+	* act-modulobe-rss.rb: Ditto.
+	* act-redirect.rb: Ditto.
+	* act-typekey.rb: Ditto.
+	* act-ring-catalog.rb: New method _r
+	* act-ring-common.rb: New file.
+	* act-ring-invite.rb: Add test case.
+	* act-ring-maker.rb: Update.
+	* act-ring-msg.rb: New method ext_ring_msg
+	* act-ring-new.rb: New file.
+	* act-ring-user.rb: Update.
+	* act-style.rb: Move act_css to new file.
+	* act-css.rb: Ditto.
+	* act-surface.rb: Use c_get_superpage.
+	* act-user.rb: New file.
+	* check-sfcring.rb: Rename to check-ring.rb
+	* check-ring.rb: New file.
+	* mail.rb: New method self.valid?
+	* memory.rb: Renamed to server-memory.rb
+	* server-memory.rb: Ditto.
+	* test-module-session.rb: Refactoring.
+	* theme/sfcring: Update.
+
+2005-08-05  Kouichirou Eto  <2005 eto.com>
+
+	* act-html.rb: Renamed from act-view.rb
+	* act-inlcude.rb: Update.
+	* act-license.rb: Update.
+	* act-metadata.rb: Remove version if in the test.
+	* act-plugin.rb: Update.
+	* act-sample.rb: Renamed from act-sample2.rb
+	* page.rb: Add get_tags method.
+	* parser-inline.rb: Update.
+	* parser.rb: Update.
+	* tokenizer-inline.rb: Use strscan for speed up.
+	* tokenizer.rb: Use strscan for speed up.
+	* wabisabi-generator.rb: Update.
+	* act-embed-html.rb: Renamed from act-html.rb
+	* act-hello.rb: Renamed from act-sample.rb
+	* act-ring-catarlog.rb: New file.  Store messages.
+	* act-ring-invite.rb: Renamed from act-sfcring-invite.rb
+	* act-ring-maker.rb: Renamed from act-sfcring-maker.rb
+	* act-ring-msg.rb: Renamed from act-sfcring-message.rb
+	* act-ring-user.rb: Renamed from act-sfcring-userinfo.rb
+	* act-schedule.rb: New file.
+	* act-tableform.rb: Renamed from act-sfcring-form.rb
+	* act-tag.rb: New file.
+	* bench-large-table.rb: New benchmark.
+	* qwikweb-release.rb: Renamed from make-release.rb
+	* act-map.rb: Clear footer.
+
+2005-08-02  Kouichirou Eto  <2005 eto.com>
+
+	* act-webservice.rb: Renamed from act-external-service.rb
+	* htmlparser.rb: Make method to class method.
+	* ml-mail.rb: Update.
+	* ml-mailsender.rb: Update.
+	* ml-session.rb: Update.
+	* test-ml-session.rb: Update.
+	* test-submit-html-mail.rb: New file.
+	* test-module-mock.rb: Renamed from test-ml-mockobject.rb
+
+2005-08-01  Kouichirou Eto  <2005 eto.com>
+
+	* act-map.rb: Debug.
+	* act-modulobe-rss.rb: Update.
+	* Makefile: Add realclean.
+	* bench-*.rb: Refactoring.
+	* ml-mail.rb QuickML::Mail#filename: Debug.
+	* ml-mail.rb: Refactoring.
+	* ml-mailsender.rb: Refactoring.
+	* ml-mail.rb: Update.
+
+2005-07-29  Kouichirou Eto  <2005 eto.com>
+
+	* act-modulobe-rss.rb: Update.
+
+2005-07-28  Kouichirou Eto  <2005 eto.com>
+
+	* act-metadata.rb: Update.
+	* act-modulobe-list.rb: Update.
+	* modulobe.rb: Update.
+	* site.rb: Add cache.
+
+2005-07-26  Kouichirou Eto  <2005 eto.com>
+
+	* site.rb: Change siteurl method.
+
+2005-07-26  Kouichirou Eto  <2005 eto.com>
+
+	* act-menu.rb: New file.
+	* wabisabi-set.rb: New file.
+	* act-license.rb: New file.
+	* act-basic-plugin.rb: Move null and test to act-plugin
+	* act-plugin.rb: Ditto.
+	* wabisabi-get.rb: New method attr
+	* base.css: Add license.
+	* modulobe.rb: New file.
+	* act-modulobe-upload.rb: New file.
+	* act-modulobe-list.rb: New file.
+	* act-modulobe-model.rb: New file.
+	* act-login.rb: Add _LoginMessage function.
+
+2005-07-22  Kouichirou Eto  <2005 eto.com>
+
+	* act-login.rb: Try to renew login process.  But get back to original.
+	* act-session.rb: Refactoring.
+	* action.rb: Add site, page query setting.
+
+2005-07-21  Kouichirou Eto  <2005 eto.com>
+
+	* site.rb: Reconfig site title.
+	* config.rb: New method version
+	* test-module-session.rb: Set time to 0 in t_site_open
+	* act-metadata.rb: Update.
+
+2005-07-19  Kouichirou Eto  <2005 eto.com>
+
+	* act-license.rb: New file.  Show License.
+	* act-modulobe.rb: Add RSS function.
+	* action.rb: Reformat PRE_ACTION and PRE_EXT
+	* wabisabi-format-xml.rb: Add XMLDecl function.
+	* ext/xmlformatter.c: Ditto.
+	* action.rb: Change initialize.
+	* config.rb: New method server_name.
+
+2005-07-18  Kouichirou Eto  <2005 eto.com>
+
+	* resolver.rb: New method self.resolve
+	* tdiary-resolver.rb: Ditto.
+	* act-map.rb: Update.
+
+2005-07-17  Kouichirou Eto  <2005 eto.com>
+
+	* act-maps.rb: Renamed to act-map.rb
+	* act-map.rb: Update.  New method act_map.
+	* action.rb: Add "map" to PRE_ACTION.
+	* config.rb: Refactoring.
+	* util-csv-tokenizer.rb: Renamed from csv.rb
+	* typekey.rb: Add test case.
+
+2005-07-15  Kouichirou Eto  <2005 eto.com>
+
+	* ext/xmlformatter.c: Add CDATA notation.
+	* ext/xmlformatter.c: Do not escape in comment and CDATA.
+	* wabisabi-format-xml.rb: Ditto.
+	* act-generate.rb: New method c_tokeinze.
+	* act-media.rb: Merge media.rb
+	* media.rb: Ditto.
+	* act-smil.rb: Merge smil.rb
+	* smil.rb: Ditto.
+	* format-xml.rb: Rename to wabisabi-format-xml.rb
+	* qwikweb-watcklog.rb: Add tail.
+	* tail.rb: New file.
+	* act-maps.rb: New file.
+
+2005-07-14  Kouichirou Eto  <2005 eto.com>
+
+	* qwikborder.css: Show pre in small size. Change h3 style.
+	* qwikgreen.css: Ditto.
+	* qwikgreen.css: Change header style.
+
+2005-07-12  Kouichirou Eto  <2005 eto.com>
+
+	* act-exception.rb: Preserve test and debug mode.
+	* act-plugin.rb: Ditto.
+	* act-modulobe.rb: Ditto.
+	* act-file.rb: New plugin imgfile.
+
+2005-07-11  Kouichirou Eto  <2005 eto.com>
+
+	* act-files.rb: Move thumnail methods to act-thumbnail.
+	* act-thumbnail.rb: Ditto.
+	* act-ref.rb: Ditto.
+	* act-modulobe.rb: Update.
+	* act-plugin.rb: Show errors in debug mode.
+	* cmd_backup.rb: moved to qwikweb-backup.rb
+	* Refactoring bin commands.
+	* bin/qwikweb-watchlog: New file.
+	* tokenizer-inline.rb: Add a test.
+	* parser-inline.rb: Ditto.
+	* parser.rb: Ditto.
+	* server.rb: Add imitate Apache hach.
+	* response.rb: Ditto.
+
+2005-07-08  Kouichirou Eto  <2005 eto.com>
+
+	* tokenizer-inline.rb: Bug fix for SJIS bug.
+	* parser-inline.rb: Add test case.
+	* parser.rb: Ditto.
+	* act-modulobe.rb: New class. Modulobe::Model, Modulobe::ModelList.
+	* page.rb: Add new instance variables.  @files, @cache
+	* site.rb: New method setup_files. Cache files in the page.
+
+2005-07-07  Kouichirou Eto  <2005 eto.com>
+
+	* act-modulobe.rb: Update.
+	* htree-to-wabisabi.rb: Refactoring.
+	* wabisabi-get.rb: Refactoring.
+
+2005-07-06  Kouichirou Eto  <2005 eto.com>
+
+	* act-modulobe.rb: Update.
+	* ml-gettext.rb: Bug fix.
+	* page-files.rb: Add time arg.
+	* quickml-message.ja: Add obsolete notice.
+
+2005-07-05  Kouichirou Eto  <2005 eto.com>
+
+	* act-modulobe.rb: Update.
+	* catalog-ja.rb: Update.  Refactoring.
+	* page-files.rb: Change ALLOWABLE CHARACTERS.
+
+2005-07-05  Kouichirou Eto  <2005 eto.com>
+
+	* parser-inline.rb: Bug fix for SJIS bug.
+	* act-file.rb: In method plg_file, add arg for pagename.
+
+2005-07-05  Kouichirou Eto  <2005 eto.com>
+
+	* pages.rb: New file.  Splited from page.rb
+	* page.rb: Ditto.
+	* site-timeline.rb: New file. Splited from act-time-walker.rb
+	* test-module-public.rb: New file.  Splited from test-module-quickml.rb
+	* act-attach.rb: Move test code to response.rb
+	* response.rb: Ditto.
+	* act-backup.rb: Update.
+	* act-day.rb: Update.
+	* page.rb: New method put_with_md5
+	* act-edit.rb: Ditto.
+	* act-hcomment.rb: Ditto.
+	* act-editor.rb: Update.  Use files_form
+	* act-file.rb: Update convert usage.
+	* act-files.rb: Update.  New method plg_files_form.
+	* act-media.rb: Update.
+	* act-modulobe.rb: New method plg_modulobe_files_form,
+	ext_modulobe_files_upload
+	* act-plain.rb: Update test code.
+	* act-ref.rb: Update.  Delete a test case.
+	* act-simple-send.rb: Refactoring. 
+	* act-surface.rb: New method surface_generate.
+	* act-thumbnail.rb: Update.
+	* act-time-walker.rb: Update.
+	* backupdb.rb: Update.
+	* emode-parsre.rb: Update. Make it class method.
+	* fsdb.rb: Update.
+	* ml-site.rb: Update.
+	* page-files.rb: Update.
+	* sitemember.rb: Update.
+	* theme/css/base.css: Update delete color.
+	* supte/TextFormat.txt: Add description for header.
+	* supte/_PageAttribute.txt: Delete show_files plugin.
+
+2005-06-28  Kouichirou Eto  <2005 eto.com>
+
+	* act-ref.rb, act-thumbnail.rb: Disable thumbnail in ref.
+
+2005-06-28  Kouichirou Eto  <2005 eto.com>
+
+	* theme/modulobe: Update.
+	* act-day.rb: New file.  Show pages by day.
+	* act-modulobe.rb: Update.
+	* act-surface.rb: Update.  Bug fix for prefix of JS.
+	* act-time-walker.rb: Refactoring.
+	* action.rb: Move to new page from not found page.
+	* backupdb.rb: New method each.
+
+2005-06-27  Kouichirou Eto  <2005 eto.com>
+
+	* act-surface.rb: add print for media.
+	* act-modulobe.rb: New file.  Onlye for modulobe.com.
+
+2005-06-27  Kouichirou Eto  <2005 eto.com>
+
+	* act-plain.rb, act-surface.rb, act-view.rb, generator-plain.rb,
+	generator-view.rb: Refactoring. 
+	* act-themplate.rb: Delete test codes.
+	* act-toc.rb: add require
+	* theme/modulobe: New theme.
+
+2005-06-24  Kouichirou Eto  <2005 eto.com>
+
+	* I applied the newest code to qwik.jp server.
+
+2005-06-21  Kouichirou Eto  <2005 eto.com>
+
+	* act-monta.rb: New file for monta plugin.
+	* act-interwiki.rb, act-plugin.rb, act-sample2.rb, parser.rb,
+	resolve.rb, tokenizer.rb: Change plugin args.
+
+2005-06-06  Kouichirou Eto  <2005 eto.com>
+
+	* act-time-walker.rb: New file.
+	* test-ml-mockobject.rb, test-submit-forward.rb: New files.
+	* act-backup.rb: Move plg_page_link.
+	* act-basic-plugin.rb: Ditto.
+	* act-files.rb: Update.
+	* act-history.rb: Debug.
+	* act-list.rb: Do not show more if the pages are under the max.
+	* act-search.rb: Update.
+	* ml-mail.rb: New method generate.  Refacctoring.
+	* ml-session.rb: Update.
+	* js/debugwindow.js: Update.
+	* js/history.js: Debug.
+
+2005-06-01  Kouichirou Eto  <2005 eto.com>
+
+	* act-list.rb: Show "more.." only if the list is exceeded.
+	* act-search.rb: Enhance search function.
+
+2005-05-20  Kouichirou Eto  <2005 eto.com>
+
+	* .cvsignore, Makefile: Update.
+	* act-basic-plugin.rb: Update.
+	* act-list.rb: New method plg_title_list
+	* cmd-makesite.rb, cmd-adduser.rb: Moved to farm.rb
+	* farm.rb: Ditto.
+	* cmd-ingen.rb, cmd-showpasswd.rb: Moved to password.rb
+	* password.rb: Ditto. Add a test case for generation_inc.
+	* config.rb: Update.
+	* logger.rb: Update.
+	* resolve.rb: Update.
+	* server.rb: Update.
+	* servlet.rb: Moved to server.rb
+	* test-module-session.rb: Update.
+	* test-suite.rb: Update.
+	* testunit.rb: New file.
+
+2005-05-18  Kouichirou Eto  <2005 eto.com>
+
+	* bin/qwikweb-backup.rb: Move body to cmd_backup.rb
+	* cmd_backup.rb.rb: Ditto.
+	* bin/qwikweb-server.rb: Move QwikWebServer.main to Server
+	* server.rb: Ditto.
+	* config.rb: Refactoring.
+	* test-server.rb, server.rb: Move test case to server.rb
+
+2005-05-17  Kouichirou Eto  <2005 eto.com>
+
+	* test-suite.rb: Use optparse.
+	* fsdb.rb: Sort in each.
+	* Makefile: Update.
+
+2005-05-14  Kouichirou Eto  <2005 eto.com>
+
+	* test-suite.rb: New file.
+
+2005-05-10  Kouichirou Eto  <2005 eto.com>
+
+	* test-suite-basic.rb, test-suite-all.rb: Renamed from
+	test-all.rb, test-testall.rb
+	* Makefile: Update.
+	* catalog-factory.rb: Make path to fullpath.
+	* ml-mail.rb: New method self.create
+	* ml-mailsender.rb: New method self.send_mail moved from Mail
+	* ml-mailsender.rb: New class DummyTCPSocket, add test cases.
+	* ml-processor.rb: Bug fix.
+	* ml-quickml.rb: Do not add elapsed sec. in test.
+	* ml-session.rb: Add test cases.
+	* ml-site.rb: Add a condition.
+	* ml-util-safeio.rb: New module SafeGetsModule
+	* qp.rb: Add $stdout to print
+
+2005-05-08  Kouichirou Eto  <2005 eto.com>
+
+	* test-ml-quickml.rb: New file.  Under construction.
+	* act-qrcode.rb: Remove a test case.
+	* check-act-archive.rb: Remove test cases.
+	* check-ext-css.rb: Do not test external css.
+	* ml-processor.rb: Remove a comment.
+	* ml-server.rb: Change the order of the methods.
+	* ml-session.rb: Refactoring.
+	* ml-site.rb: Ditto.
+	* ml-version.rb: Change version number.
+	* webrick.rb: Change accept_language.
+
+2005-05-03  Kouichirou Eto  <2005 eto.com>
+
+	* act-logout.rb: Bug fix.
+	* act-typkey.rb: add cond.
+	* ml-config.rb: Delete a test case.
+	* page-files.rb: sort in each.
+	* webrick.rb: Add check.
+
+2005-05-02  Kouichirou Eto  <2005 eto.com>
+
+	* change new.png path.
+	* act-edit.rb, act-interwiki.rb, act-newpage.rb, resolve.rb: Ditto.
+	* parser-inline.rb, parser.rb, tokenizer.rb: Refactoring test cases.
+	* tokenizer-inline.rb: Add new ref mode.
+	* ml-catalog-ja.rb: Change indent.
+	* ml-config.rb, ml-processor.rb, ml-quickml-server.rb,
+	ml-quickml.rb, ml-server.rb, ml-utils.rb: Refactoring.
+	* ml-gettext.rb, ml-logger.rb, ml-mail.rb, ml-sender.rb: Small changes.
+	* ml-core-utils.rb: Removed.
+	* test-ml-util.rb: Change t_make_public
+	* test-module-quickml.rb: Change config style.
+	* ml-session.rb, ml-util-safeio.rb: New files.
+
+2005-04-26  Kouichirou Eto  <2005 eto.com>
+
+	* tokenizer-inline.rb, parser-inline.rb: Splited.
+	* parser-inline.rb: Add bad hack for symbol in the end of line.
+	* tokenizer*, parser*: Change methods to class methods.
+	* act-calc.rb, act-generate.rb, act-toc.rb, smil.rb: Ditto.
+
+2005-04-20  Kouichirou Eto  <2005 eto.com>
+
+	* action.rb: Bug fix. Set catalog.
+	* memory.rb: Add load_all_catalog for catalog
+	* webrick.rb: Add test cases for WEBrick.
+	* act-getpass.rb: Add focus.
+	* act-search.rb: Add focus.
+	* delete assert_attr and assert_rattr from test cases.
+
+2005-04-20  Kouichirou Eto  <2005 eto.com>
+
+	* qwikWeb 0.5.2 released.
+
+2005-04-19  Kouichirou Eto  <2005 eto.com>
+
+	* qwikgreen.css: Change size of sidebar.
+
+2005-04-19  Kouichirou Eto  <2005 eto.com>
+
+	* act-basic-plugin.rb: Split.
+	* act-include.rb, act-list.rb: Splited from act-basic-plugin.rb
+	* act-editor.rb: Merge generator-editor.rb
+	* act-editor.rb: Add link to h1
+	* generator-editor.rb: Removed.
+	* act-edit.rb: Update.
+	* act-file.rb: Refactoring.
+	* theme/js/base.js: Add focus function.
+	* act-login.rb, act-newpage.rb: Add focus.
+	* act-member.rb: Update.
+	* act-notice.rb: Merge generator-notice
+
+2005-04-14  Kouichirou Eto  <2005 eto.com>
+
+	* action.rb: Refactoring.
+	* catalog-ja.rb: Add test.
+	* gettext.rb: Update.
+	* memory.rb: Update.
+	* ml-config.rb: Update.
+	* ml-gettext.rb: Update.
+	* ml-mail.rb: Update for inline.
+	* ml-sweeper.rb: Update test case.
+	* test-ml-sweeper.rb: Removed.
+	* ml-catalog-ja.rb, ml-catalog-factory.rb, catalog-factory.rb: New
+	files.
+
+2005-04-13  Kouichirou Eto  <2005 eto.com>
+
+	* catalog-factory.rb: Refactoring.
+	* catalog.rb: Removed.
+
+2005-04-12  Kouichirou Eto  <2005 eto.com>
+
+	* gettext-validator.rb: Renamed from catalog-validator.rb
+	* catalog-ja.rb: New file.
+	* gettext.rb: Update.
+	* ml-processor.rb: Update.
+	* ml-quickml.rb: Update.
+	* test-module-session.rb: Refactoring.
+
+2005-04-11  Kouichirou Eto  <2005 eto.com>
+
+	* t/*: Move test cases from t to qwik.
+	* act-form.rb: Removed.
+	* act-search.rb: Remove obsolete methods.
+	* etc/config*.txt: Update comment.
+	* bin/*: Move body of commands to lib/qwik
+
+2005-04-11  Kouichirou Eto  <2005 eto.com>
+
+	* act-surface.rb: Make clear body_enter
+	* template/surface.html: Add id to adminmenu
+	* ml-quickml-server.rb: Remove QuickML::
+	* quickml-server.rb: Change to /usr/local/bin/ruby
+	* make.rb: Move MakeRelease to lib/qwik/make-release.rb
+	* lib/qwik/make-release.rb: Refactoring.
+
+2005-04-11  Kouichirou Eto  <2005 eto.com>
+
+	* bin/quickml-server: New file.
+	* compat/typekey.rb, qrcode.rb: Move to lib/qwik
+	* act-basic-plugin.rb: Use c_plain instead of c_view
+	* act-condition.rb: Remove c_is_private_page?
+	* act-editor.rb: Remove c_get_super
+	* act-generate.rb: Remove c_view, c_wview
+	* act-theme.rb: Do not test some cases.
+	* act-view.rb: Use surface_view. New method private_page?
+	* generator-view.rb: Remove generate_mes and generate_wmes
+	* htree-template.rb: Make them private.
+	* loadlib.rb: Change API.
+	* ml-mail.rb: Include quickml/mail.rb
+	* ml-processor.rb: Include quickml/core.rb Processor
+	* ml-quickml.rb: Include quickml/core.rb QuickML
+	* ml-sweeper.rb: Include quickml/sweeper.rb
+	* quickml.rb: Removed.
+	* server.rb: Refactoring. New class QwikWebServer
+	* site.rb: Check with default_hostname
+	* tdiary-resolver.rb: Make them private.
+	* test-common.rb: Do not start autoreload.
+	* wikidb.rb: Make them private.
+	* ml-core.rb, ml-logger.rb, ml-quickml-server.rb: New files.
+	* typekey.rb: Moved from compat
+	* template/surface.html: add id to toc abd body_leave
+
+2005-04-10  Kouichirou Eto  <2005 eto.com>
+
+	* site.rb: Remove @logger
+	* act-history.rb: Add c_require_member.
+	* generator-view.rb: New method get_window_title
+	* tempalte/surface.html, generator-surface.rb: New files.
+	* act-surface.rb: New file.
+
+2005-04-09  Kouichirou Eto  <2005 eto.com>
+
+	* act-wema.rb: Do not touch in wema process.
+	* act-editor.rb: Add Site admin column.
+	* act-editor.rb: Add Experimental column.
+	* act-wysiwyg.rb: Add warning.
+	* theme/qwikeditor: Change size of textarea.
+	* theme/qwikplain: Add message class.
+	* super/_PageAttribute.txt: Remove presen, wysiwyg and sitemenu.
+	* super/_PageAttribute.txt: Change qrcode to print out only.
+
+2005-04-09  Kouichirou Eto  <2005 eto.com>
+
+	* act-archive.rb: Bug fix. Change path for theme files.
+	* ml-quickml.rb: Bug fix. Change URL from example.com to qwik.jp
+	* mail.rb: Bug fix. Add Content-Type.
+
+2005-04-05  Takachin
+
+	* act-basic-plugin.rb: Change more link to p tag.
+	* theme/login.css: Update.
+	* theme/qwikviridian/*: Update.
+
+2005-04-05  Kouichirou Eto  <2005 eto.com>
+
+	* generator-module.rb: Add debugwindow.
+	* debugwindow.js: Update to 0.5
+	* wema.js: Debug. Refactoring.
+
+2005-04-04  Kouichirou Eto  <2005 eto.com>
+
+	* ml-mail.rb: New method qp_decode.
+	* ml-site.rb: Use decoded_body for make_message
+
+2005-04-04  Kouichirou Eto  <2005 eto.com>
+
+	* act-external-service.rb: Renamed from act-icon.rb
+	* act-file.rb, act-files.rb, act-thumbnail.rb, act-icon.rb: New	files.
+	* page-files.rb: Splited from attach.rb
+	* site-attach.rb: Renamed from attach.rb
+	* ml-mail.rb: New method quoted_printable?
+
+2005-04-04  Kouichirou Eto  <2005 eto.com>
+
+	* quickml.rb: Refactoring.
+	* ml-mail.rb, ml-processor.rb, ml-quickml.rb, ml-site.rb,
+	ml-sweeper.rb: New files. Splited from quickml.rb.
+	* act-typekey.rb: Refactoring.
+	* act-url.rb: Splited from act-generate.rb
+	* act-url.rb: Bug fix for c_relative_to_full
+	* t/test-quickml-util.rb: Make private methods to public.
+	* t/check-uuencode.rb: Splited from test-quickml.rb
+	* t/module-quickml.rb: New methods. t_make_public, t_make_readable
+	* t/test-ml-gettext.rb, test-ml-sweeper.rb, test-ml-util.rb: New
+	files. Splited from test-quickml.rb
+	* act-url.rb: Refactoring.
+	* site.rb: Refactoring.
+	* t/module-quickml.rb, module-session.rb: Refactoring.
+	* t/test-submit-japanese.rb: New file.
+	* t/test-submit-attach.rb, test-submit-basic.rb,
+	test-subimt-search.rb: Update.
+
+2005-03-31  Kouichirou Eto  <2005 eto.com>
+
+	* generator-module.rb: Add niftypp.
+	* quickml.rb: Add version check to attach file.
+	* theme/js/debugwindow.js, debugwindow.html,
+	debugwindow-test.html: Refactoring.
+	* theme/js/niftypp.js: Update addEvent.
+
+2005-03-30  Kouichirou Eto  <2005 eto.com>
+
+	* quickml.rb: Bug fix. ignore case in base64.
+	* quickml.rb: add require util-path
+	* generator-module.rb: remove debug niftypp for a while.
+	* theme/js/Makefile: add dist rule.
+	* t/test-quickml.rb: Removed.
+	* t/test-quickml-uril.rb, module-quickml.rb, test-submit-attach.rb,
+	test-submit-basic.rb, test-submit-search.rb,
+	test-submit-uuencode.rb: Removed.
+
+2005-03-29  Kouichirou Eto  <2005 eto.com>
+
+	* js/debugwindow.js, debugwindow.html, debugwindow-test.html: New files.
+	* js/base.js: Remove debug.js.
+	* js/niftypp.js: Under reconstruction.
+	* js/test-debug.js: Rename variables.
+	* generator-plain.rb, act-history.js, act-backup.rb: Update.
+	* generator-module.rb: Add debug.js.
+	* super/_PageAttribute.txt: Remove show_history and backup_list
+
+2005-03-28  Kouichirou Eto  <2005 eto.com>
+
+	* act-backup.rb: Use c_plain instead of c_notice
+	* act-edit.rb, act-editor.rb, generator-editor.rb: Use new design.
+	* wabisabi-get.rb: New method parse_attr_selector
+	* theme/qwikeditor, qwiknotice, qwikplain: Update.
+	* catalog/catalog.ja: Add message for act-editor.rb
+	* act-backup.rb: Fix Bug. Refactoring.
+	* act-history.rb: New method history_show.
+	* act-search.rb: New method search_result.
+	* act-sitelog.rb: New method sitelog_viewer.
+	* act-wysiwyg.rb: New method wysiwyg_show.
+	* generator-plain.rb: Change class from section to main.
+	* wabisabi-diff.rb, act-edit.rb, act-backup.rb: Change method to
+	class method.
+	* theme/history.js: Change Y pos.
+	* theme/qwikplain/qwikplain.css: Add day and section.
+
+2005-03-28  Kouichirou Eto  <2005 eto.com>
+
+	* act-editor.rb, act-message.rb, act-plain.rb,
+	generator-editor.rb, generator-plain.rb: New files.
+	* act-farm.rb: New method check_inactive_sites. Change
+	move_to_grave to bury. Remove test sites after bury.
+	* act-login.rb, act-wema.rb: Not use gettext for hatena antenna.
+	* act-notice.rb: New method c_nredirect.
+	* act-csv.rb: Do not delete spaces in args.
+	* act-edit.rb: Use c_editor.
+	* act-attach.rb: Update.
+	* act-backup.rb: Update.
+	* act-generate.rb: Remove old methods.
+	* act-media.rb, act-monitor.rb, act-sample.rb, act-search.rb: Use
+	c_notice.
+	* act-wysiwyg.rb, act-history.rb: Use c_plain.
+	* act-typekey.rb: Use c_nredirect.
+	* generator-edit.rb: Removed.
+	* generator-msg.rb: Removed.
+	* generator-notice.rb: Reomove h2.
+	* template.rb, template-generator: Add require.
+	* template/plain.*, editor.*: New templates.
+
+2005-03-28  Kouichirou Eto  <2005 eto.com>
+
+	* act-attach.rb: Use c_notice.
+	* act-comment.rb: Change h3 to h2
+	* act-edit.rb: Split page method.
+	* act-generate.rb: Add to_i
+	* act-getpass.rb: Change user name.
+	* act-hcomment.rb: Use c_notice.
+	* act-interwiki.rb: Change .new
+	* act-login.rb: Show warning if already logged in.
+	* act-monitor.rb: Check login.
+	* act-newpage.rb: Redesign. Remove specify PageKey function.
+	* act-qrcode.rb: Use qrcode_dir
+	* act-ref.rb: Use theme_dir
+	* act-search.rb: Use c_notice.
+	* act-sitelog.rb: Add sitelog viewer action.
+	* act-smil.rb: Use c_notice.
+	* act-style.rb: Use c_notice.
+	* act-typekey.rb: Clear cookie.
+	* action.rb: Use c_notice.
+	* config.rb: Redesign.
+	* loadlib.rb: Update.
+	* resolve.rb: Change .new
+	* server.rb: Update load lib.
+	* test-module.rb: Change DEFAULT_USER.
+	* version.rb: Update to 0.5.0
+	* catalog/catalog.ja: Update.
+	* theme/ap/*: Update.
+	* generator-edit.rb: Change title name scheme.
+	* site.rb: Change title name scheme.
+	* bin/qwikweb-server.rb: Renamed from qwikweb.rb
+	* farm.rb: Delete Enumerable.
+
+2005-03-27  Kouichirou Eto  <2005 eto.com>
+
+	* act-backup.rb: Use conditions.
+	* act-conditions.rb: Add methods. Add test cases.
+	* act-edit.rb: Use c_notice. Use DiffGenerator. Add test case for
+	conflict.
+	* act-newpage.rb: Use c_notice.
+	* act-notice.rb: Now you can specify status code.
+	* act-redirect.rb: Use c_notice.
+	* act-sfcring.rb: Split.
+	* act-sitelog.rb: Update.
+	* act-toc.rb: Remove a test case.
+	* act-typekey.rb: Use longer cache expire time.
+	* action.rb: Add page view.
+	* diff.rb: Renamed to wabisabi-diff.rb
+	* generator-module.rb: Add ArekorePopup.js
+	* generator-view.rb: Add ArekorePopup.css
+	* htree-diff.rb: Update.
+	* request.rb: Set start time to 0 in debug mode.
+	* resolve.rb: Start to test popup.
+	* test-module.rb: Add asert_in.
+	* act-external-link.rb, act-sfcring-message.rb,
+	act-sfcring-userinfo.rb, wabisabi-diff.rb: New files.
+	* theme/ap/*: Add ArekorePopup.
+	* ext/test-xmlformatter.rb: Add test case.
+
+2005-03-26  Kouichirou Eto  <2005 eto.com>
+
+	* request.rb: Set time to epoch if in debug mode.
+	* act-typekey.rb, action.rb: Use c_notice.
+
+2005-03-25  Kouichirou Eto  <2005 eto.com>
+
+	* config.rb: Redesign parse_argv
+	* template.rb, template-generator.rb: Change classname for template.
+
+2005-03-24  Kouichirou Eto  <2005 eto.com>
+
+	* act-notice.rb: New file.
+	* generator-notice.rb: New file.
+	* act-login.rb: Use c_notice.
+	* autoreload.rb: Check also $0 file.
+	* generator-module.rb, generator-msg.rb: Update.
+	* memory.rb: Remove require farm.rb
+	* template-generator.rb: Update.
+	* template.rb: Update.
+	* test-common.rb: Add autoreload.
+	* test-part.rb: Remove requires.
+	* wabisabi-get.rb: Add get_by_class.  Remove each_in_class.
+	* wabisabi-template.rb: Update.
+	* theme/qwiknotice/*: New theme.
+	* template/notice.html, notice.rb: New template.
+
+2005-03-23  Kouichirou Eto  <2005 eto.com>
+
+	* bug fix for can not use editor.
+	* theme/js/*: Refactoring.
+	* theme/js/compile.rb: New file.
+	* theme/css/*: New files.
+	* generator-edit.rb, generator-module.rb, generator-msg.rb,
+	generator-view.rb: New files.
+	* generator.rb: Removed.
+	* act-archive.rb, act-history.rb: Update.
+	* act-basic-plugin.rb: Make more em.
+	* act-wema.rb: Remove wema.css
+	* module-path.rb: Update.
+	* template-generator.rb: Update.
+	* template.rb: Update.
+	* wabisabi-template.rb: Update.
+
+2005-03-22  Kouichirou Eto  <2005 eto.com>
+
+	* act-book.rb, act-icon.rb: Update.
+	* act-metadata.rb: Update.
+	* act-plugin.rb: Refactoring.
+	* csv.rb: Change method to class method.
+	* htree-diff.rb: Add test code.
+	* htree-generator.rb: Split HtmlGenerator.
+	* htree-template.rb: Class Attr is moved to here.
+	* htree-wabisabi.rb: Removed.
+	* htree.rb: Removed.
+	* resolve.rb: Refactoring.
+	* template.rb: Remove init_template_by_htree.
+	* wabisabi.rb: Removed.
+	* htree-format-xml.rb: New file.
+	* htree-html-generator.rb: New file.
+	* htree-to-wabisabi.rb: New file.
+	* template-generator.rb: New file.
+	* wabisabi-template.rb: New file.
+	* wabisabi-to-htree.rb: New file.
+	* template/*: Redesign.
+	* theme/js/debug.js: New file.
+
+2005-03-21  Kouichirou Eto  <2005 eto.com>
+
+	* action.rb: Change Member Only message.
+	* act-login.rb: Change message.  New method logout_form.
+	* act-getpass.rb: Change message.  New method getpass_not_member.
+
+2005-03-19  Kouichirou Eto  <2005 eto.com>
+
+	* act-wema.rb: Remove multibyte character.
+
+2005-03-18  Kouichirou Eto  <2005 eto.com>
+
+	* act-generate.rb: c_ok, add status args.
+	* act-getpass.rb, act-httpauth.rb, act-login.rb, act-typekey.rb,
+	action.rb: Redesign the pages.
+	* act-monitor.rb: Test many monitors.
+	* act-simple-send.rb: Bug fix.
+
+2005-03-17  Kouichirou Eto  <2005 eto.com>
+
+	* act-draw.rb: New file.  Try to implement vml, svg plugin.
+
+2005-03-16  Kouichirou Eto  <2005 eto.com>
+
+	* sitemonitor.rb: Renamed from monitor.rb
+	* act-monitor.rb: Update.
+	* theme/js/monitor.js: New file.  Update monitor.
+
+2005-03-15  Kouichirou Eto  <2005 eto.com>
+
+	* siteconfig.rb, sitelog.rb: Splited from site.rb
+	* sitemember.rb: Renamed from member.rb
+	* act-form.rb: Refactoring.
+	* act-member.rb: Refactoring.
+	* act-sfcring.rb: Refactoring.
+	* theme/base.js: Upadate.
+
+2005-03-14  Kouichirou Eto  <2005 eto.com>
+
+	* act-sample2.rb: Splited from act-sample.rb
+	* act-getpass.rb, act-login.rb, act-ref.rb, act-wema.rb: Add
+	action to form.
+	* act-httpauth.rb, act-login.rb, : Do not use check_user
+	* act-login.rb: Add more table to login form.
+	* request.rb: Set language to ja if useragent is mobile phone.
+	* request.rb: Make is action if theme or attach.
+
+2005-03-12  Kouichirou Eto  <2005 eto.com>
+
+	* media.rb: Bug fix.  clipBegin to clip-begin, clipEnd to clip-end
+	* smil.rb: Bug fix.  clipBegin to clip-begin, clipEnd to clip-end
+	* site.rb: New method sitemonitor
+	* act-sample.rb: New method plg_hello.
+	* act-monitor.rb: Renamed from act-live.rb
+	* act-comment.rb, act-edit.rb, act-hcomment.rb, act-newpage.rb,
+	act-view.rb, act-wema.rb: Add c_monitor
+	* monitor.rb, act-monitor.rb: New files.
+	* module-path.rb, test-common.rb, test-module.rb: New files.
+	* theme/base.js: Add xmlhttp, monitor.
+	* theme/s5/i18n/pretty.css: Add strong
+
+2005-03-11  Kouichirou Eto  <2005 eto.com>
+
+	* act-calc.rb: New file. Plugin for calc.
+	* parser.rb: Insert "" to empty td tag.
+	* data/HelloQwik: Update. Add many documentation.
+	* template.rb: Add test code.
+
+2005-03-10  Kouichirou Eto  <2005 eto.com>
+
+	* act-live.rb: Update.
+	* t/all.rb: Update.
+	* t/testall.rb: New file.
+	* t/test.rb: Update.
+	* t/check-monitor.rb: Check monitor.rb usage.
+
+2005-03-09  Kouichirou Eto  <2005 eto.com>
+
+	* act-serial.rb, act-memory-session.rb: Removed.
+	* action.rb: Remove .slogin from PRE_ACTION
+	* act-getpass.rb: Use memory to make PasswordGenerator.
+	* webrick.rb: Fix a bug in WEBrick parse_query.
+	* act-generate.rb: Change c_relative_to_full, not to rewrite the
+	URL begin with scheme.
+	* act-login.rb: Update.
+	* act-emode.rb: New method plg_emode_include_recent.
+	* act-generate.rb, act-theme.rb, config.rb, webrick.rb: Update
+	test code for Unix.
+
+2005-03-08  Kouichirou Eto  <2005 eto.com>
+
+	* act-sitelog.rb: Merge act-log.rb
+	* act-conditions.rb: Make error classes.
+	* act-login.rb: Refactoring.
+	* act-httpauth.rb: Add test code.
+	* act-session.rb: Moved from action.rb
+	* act-typekey.rb: Add test code.
+	* format-xml.rb: Refactoring test code.
+	* act-wema.rb: Change redirect url to relative.
+	* typekey.rb, act-archive.rb: Check whether have library.
+	* theme/sfcring: Update.
+	* session.rb: Deleted.
+	* Refactoring require.
+	* act-basic-plugin.rb: Method plg_br moved from act-style.rb
+	* act-getpass.rb: Do not send pass if you are not a member.
+	* act-login.rb: Update.
+	* act-session.rb: Update.
+	* act-typekey.rb: Update.
+	* response.rb: New methods, set_cookie, clear_cookie
+
+2005-03-07  Kouichirou Eto  <2005 eto.com>
+
+	* t/module-session.rb: Refactoring.
+	* t/module-session.rb: Remove t_lang_ja method.
+	* t/module-session.rb: Remove query, cookie, method, user from args.
+	* act-httpauth.rb: Renamed from act-basicauth.rb
+
+2005-03-06  Kouichirou Eto  <2005 eto.com>
+
+	* format-xml.rb: Update.  Remove args from c_format_xml.
+	* password.rb: New file.  Splited from member.rb
+	* act-session.rb: New file.  Splited from act-login.rb
+	* act-typekey.rb: New file for authenticate using TypeKey.
+	* t/module-session.rb: Change default accept-language to en.
+	* t/module-session.rb: New method pw for debug.
+	* catalog/catalog.ja: Update.
+	* compat/typekey.rb: Update.
+
+2005-03-05  Kouichirou Eto  <2005 eto.com>
+
+	* act-smil.rb, smil.rb: Update.
+	* typekey.rb: New file.
+
+2005-03-04  Kouichirou Eto  <2005 eto.com>
+
+	* farm.rb: Do not sweep "www" (default_site).
+	* format-xml.rb: Change format default indent.
+
+2005-03-03  Kouichirou Eto  <2005 eto.com>
+
+	* qwikweb-0.4.2 released.
+	* act-smil.rb, media.rb, smil.rb: New files.
+	* Refactoring test codes.
+	* act-wema.rb: Use .redirect in wema.
+
+2005-03-02  Kouichirou Eto  <2005 eto.com>
+
+	* act-backup.rb: Check ul length.
+	* act-basic-plugin.rb: Refactoring test code.
+	* farm.rb: New method close_all.
+	* server.rb: Add StopCallback for test.
+	* util-string.rb: Add test code.
+	* t/module-session.rb: Refactoring.
+
+2005-02-26  Kouichirou Eto  <2005 eto.com>
+
+	* act-log.rb, catalog-validator.rb: New files.
+	* act-charset.rb: Update.
+	* act-getpass.rb: Add test code.
+	* t/*: Move test codes to qwik/*
+
+2005-02-24  Kouichirou Eto  <2005 eto.com>
+
+	* backup-bdb.rb: New file. Use Berkeley DB for BackupDB.
+	* site.rb: Remove get_pages method.
+	* act-attach.rb: Update.
+	* act-backup.rb: Update.
+	* act-history.rb: Update.
+	* site.rb, act-metadata.rb, act-view.rb: Remove get_pages
+	* backupdb.rb: Update.
+	* config.rb: Update.
+	* fsdb.rb: Update.
+	* page.rb: Update.
+	* Remove old test files.
+	* page.rb: Rename append to add.
+	* page.rb: Update add.
+	* util-path.rb: New method erase_all
+
+2005-02-23  Kouichirou Eto  <2005 eto.com>
+
+	* bdb.rb, pagedb.rb: New file. Use Berkeley DB as PageDB.
+
+2005-02-22  Kouichirou Eto  <2005 eto.com>
+
+	* act-attach.rb: Add multiple file attach support.
+
+2005-02-21  Kouichirou Eto  <2005 eto.com>
+
+	* act-attach.rb: Update page files support.
+	* act-generate.rb, act-media.rb: Fix spell miss.
+	* act-ref.rb: Change thumbnail size from 150 to 100.
+	* act-ref.rb: Change icon format from png to gif.
+
+2005-02-20  Kouichirou Eto  <2005 eto.com>
+
+	* report.rb: Splited from act-report.rb
+	* attach.rb, act-attach.rb, act-ref: Add page files support.
+
+2005-02-19  Kouichirou Eto  <2005 eto.com>
+
+	* act-attach.rb: Update.
+	* page.rb: Change initialize arguments.
+	* attach.rb: Change initialize arguments.
+	* attach.rb, backupdb.rb, config.rb, escape.rb, farm.rb, fsdb.rb,
+	iconv.rb, kconv.rb, page.rb, qp.rb, site.rb, util-path.rb,
+	util-time.rb, util.rb, wikidb.rb: Merge test code.
+	* act-view: Add test for cache.
+	* backupdb.rb: Change initialize arguments.
+	* format-xml.rb: Refactoring.
+	* format-xml.rb: Escape element names and attribute names.
+	* site.rb: Do not use db.get_path
+	* diff.rb, emode-parser.rb, format-xml.rb, fsdb.rb, htmlparser.rb,
+	htmltotext.rb, htree-generator.rb, htree-get.rb,
+	htree-template.rb, htree-wabisabi.rb, htree.rb, parser.rb,
+	request.rb, response.rb, style.rb, tokenizer.rb,
+	wabisabi-generator.rb, wabisabi-get.rb, wabisabi-valid.rb,
+	wabisabi.rb: Merge test code.
+
+2005-02-18  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/config.rb: Remove load ext-* files.
+	* qwik/loadlib.rb: Update.
+	* qwik/loadlib.rb: Change initialize argment.
+	* t/all.rb: New method load_all_action
+	* t/act-attach.rb: Update.
+	* t/test-request.rb: Add test for ext_args
+	* t/test-loadlib.rb: Update.
+	* t/module-session.rb: Add POST in path.
+	* t/module-session.rb: Add query in path.
+	* qwik/act-hcomment.rb: Merge test code.
+	* qwik/act-attach.rb: Update delete process.
+	* qwik/act-toc.rb: Check if page exist.
+	* qwik/attach.rb: Renamed from siteattach.rb
+	* qwik/member.rb: Splited from act-member.rb
+	* act-backup, act-basic-plugin, act-comment, act-common, act-edit,
+	act-exception, act-generate, act-getpass, act-hcomment,
+	act-history, act-login, act-media, act-member, act-metadata,
+	act-password, act-plugin, act-presen, act-redirect, act-ref,
+	act-search, act-theme, act-view, act-wema, act-wysiwyg: Merge test
+	code.
+	* act-archive, act-book, act-emode, act-form, act-html, act-lang,
+	act-sfcring: Merge test	code.
+
+2005-02-17  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-sample.rb: New file.  Sample code to make plugin.
+	* qwik/act-attach.rb: Merge test code.
+	* qwik/act-ref.rb: Update.
+	* qwik/parser.rb: Change the image reference with message.
+	* qwik/style.rb: New file.  Splited from act-style.rb
+	* qwik/act-attach.rb: Split act_attach to many methods.
+	* qwik/act-generate.rb: Change c_error.
+	* qwik/act-ref.rb: Update thumbnail generate.
+	* qwik/act-edit.rb: Merge test code.
+	* qwik/act-generate.rb: Add test code.
+
+2005-02-16  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-toc.rb: Remove onmousedown.
+	* qwik/act-code.rb: New file. Plugin for code reading.
+	* theme/base.css: Add code class.
+	* theme/base.js: Refine toc support.
+	* theme/base.js: Refine debug.js
+	* qwik/act-ref.rb: Update.  Merge test code.
+	* theme/base.css: Update ref class.
+
+2005-02-15  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-toc.rb: Add header link.
+	* qwik/tdiary-resolver.rb: Update.
+	* qwik/wabisabi.rb: New method.  get_single
+	* t/test-format-xml.rb: Splited from wabisabi.rb
+	* t/module-session.rb: Add array support for assert_xml, assert_path
+	* theme/base.css: Add toc class
+	* theme/base.js: Add toc_toggle method.
+	* theme/base.js: Add debug.js
+	
+2005-02-14  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/tdiary-resolve.rb: New file.  Splited from resolve.rb
+	* qwik/format-xml.rb: New file.  Splited from wabisabi.rb
+	* qwik/act-basic-plugin.rb: Refactoring.
+
+2005-02-13  Kouichirou Eto  <2005 eto.com>
+
+	* ext/*: New directory.  To make extension.
+	* qwik/tdiary-resolver.rb: New file.  Splited from resolve.rb
+
+2005-02-13  Kouichirou Eto  <2005 eto.com>
+
+	* t/*.rb: Change Japanese message to English.
+	* t/*.rb: Refactoring.
+	* t/act-getpass.rb bench-page.rb bench-textformat.rb
+	module-assert.rb module-bench.rb module-session.rb
+	test-htmltotext.rb test-logger.rb: New files.
+	* catalog/catalog.ja: Update.
+	* qwik/act-generate.rb: Replace method c_message.
+	* qwik/act-exception.rb: Check if from host is localhost.
+	* qwik/logger.rb: Update.
+	* qwik/request.rb: Update.
+	* qwik/xmlformatter.c: Bug fix.
+	* qwik/act-simple-send.rb, qwik/htmlparser.rb, qwik/htmltotext.rb,
+	qwik/util-time.rb: New files.
+
+2005-02-11  Kouichirou Eto  <2005 eto.com>
+
+	* t/check-act-archive.rb: New file. Splited from act-archive.rb.
+	* t/bench-bench.rb, t/bench-example.rb, t/bench-run.rb,
+	t/bench-xmlformatter.rb, t/check-zip.rb, t/test-backupdb.rb,
+	t/test-fsdb.rb, t/test-xmlformatter.rb: New files.
+	* t/act-zip.rb, t/bench-session2.rb: Deleted.
+	* t/common.rb: New method t_add_user.
+	* t/bench-wabisabi.rb: Refactoring.
+	* t/check-qrcode.rb: Bug fix.
+	* t/check-sfcring.rb: Bug fix.
+	* qwik/util-path.rb: New file. Splited from util.rb.
+	* qwik/xmlformatter.c: New file. Copied from gonzui-0.3.
+	* qwik/act-qrcode.rb: New method qrcode_generate. Splited from
+	plg_qrcode.
+	* qwik/fsdb.rb: Change each not to use Pathname for speed up.
+	* qwik/wabisabi.rb: Add xmlformatter support (in progress).
+	* compat/aspectr.rb, rbprof.rb, trap_method_definitions.rb: Copied
+	from AspectR for profiling.
+	* qwik/xmlformatter.c: Change too short to null string.
+
+2005-02-09  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-view.rb: Refactoring.
+	* super/_AdminMenu.txt: Comment out wysiwyg edit link.
+
+2005-02-08  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-wysiwyg.rb: Add wysiwyg edit mode.
+	* qwik/act-html.rb: New class HtmlParser.
+	* qwik/util-string.rb: Splited from util.rb
+	* qwik/parser.rb: Refactoring.
+	* qwik/tokenizer.rb: Refactoring.
+	* qwik/wabisabi.rb: Rename each_tags to each_tag
+	* qwik/act-toc.rb: New file for toc plugin.
+	* qwik/act-icon.rb: New plugin tracfeed.
+
+2005-02-07  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/fsdb.rb: Remove move_old_to_new
+	* qwik/fsdb.rb: Bug fix for touch.
+	* qwik/act-archive.rb: Renamed from act-zip.rb
+	* qwik/act-archive.rb: Add presentaion html to archive.
+	* qwik/act-conditons.rb: Splited from act-common.rb
+	* qwik/act-archive.rb: Add theme files.
+	* qwik/site.rb: Aggregate site method.
+	* qwik/act-theme.rb: Refactoring.
+	* qwik/act-theme.rb: Add theme_files method.
+	* qwik/act-archive.rb: Inlclude image files with theme css file.
+	* qwik/act-wysiwyg.rb: Refactoring.
+	* theme/base.css, wema.css: Reformat indent.
+
+2005-02-06  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-metadata.rb: Renamed from act-rss.rb
+	* qwik/act-metadata.rb: Add ATOM support.
+
+2005-02-05  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-aa.rb: New file for ascii art plugin.
+	* theme/base.css: Update for ascii art plugin.
+	* theme/wema.js (WemaEnvironment::mouseMove), theme/base.js
+	(qwik_onload): Bug fix for undefind.
+	* qwik/act-lang.rb: New file for language selection plugin.
+	* qwik/act-basic-plugin.rb: Splited from act-common.rb
+	* qwik/act-basic-plugin.rb: Delete header from list and recent.
+	* qwikborder.css: Change style of h1.
+
+2005-02-04  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/wabisabi.rb: remove w_ prefix.
+	* qwik/act-emode.rb: new file
+	* qwik/act-comment.rb: bug fix.
+	* qwik/emode-parser.rb: bug fix.  Do not add br in blank line.
+	* qwik/act-generate.rb, act-basic-plugin.rb: new files.
+	* qwik/site.rb: add new siteconfig siteurl
+	* qwik/quickml.rb: add support for debug mode.
+	* t/test-quickml.rb: do not delete test directory.
+	* qwik/act-media.rb (to_xml): Refactoring.
+	* qwik/act-emode.rb (plg_emode_date_link): New method.
+	* qwik/page.rb (<=>): New method.
+	* qwik/act-generate.rb (Qwik::Action::c_relative_to_full): Add
+	support for siteurl
+
+2005-02-03  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/wabisabi.rb: change to_s to format_xml
+	* qwik/act-html.rb: add html plugin
+	* qwik/wabisabi-valid.rb: new file, check valid html
+
+2005-02-02  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-presen.rb: bug fix.
+	* qwik/parser.rb, tokenizer.rb: Rename class name.
+	* qwik/act-common.rb: new method c_parse
+	* qwik/act-icon.rb: new file
+	* qwik/parser.rb: change :empty to "\n"
+	* theme/qwikviridian: new theme
+	* qwik/act-icon.rb: new method
+	plg_sub_bloglines, plg_e_words, plg_google_ad
+
+2005-02-01  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-common.rb: make new method c_make_log
+	* qwik/site.rb: delete plugin accessor.
+	* qwik/action.rb: refactoring.
+	* qwik/resolve.rb, qwik/act-common.rb:
+	delete site.plugin accessor.
+	change all generate method to action centric.
+
+2004-01-31  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/resolve.rb, qwik/site.rb, super/_SiteConfig.txt:
+	add "redirect" config.
+	* qwik/site.rb: change order of SiteConfig.txt
+	* theme/qwiksystem: update qwiksystem theme.
+
+2005-01-30  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-plugin.rb: c_calc_args, do not make it number.
+	* qwik/resolve.rb: do not redirect if it's an open site.
+
+2005-01-22  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/act-report.rb: add weekly
+	* qwik/act-report.rb: renamed from report.rb
+	* qwik/page.rb: new private method parse_first_line
+	* qwik/page.rb: change pagename scheme.
+
+2005-01-13  Kouichirou Eto  <2005 eto.com>
+
+	* qwik/ext-*.rb: restruct from Plugin to Action.
+
+2005-01-06  Kouichirou Eto  <2005 eto.com>
+
+	* super/TextFormat.txt: add description for super pre mode.
+
+2004-12-30  Kouichirou Eto  <2004 eto.com>
+
+	* act-zip.rb: include theme files.
+	* t/act-zip.rb: renamed from check-act-zip.rb
+	* act-style.rb: adapt for CSS relate.
+	* act-theme.rb: adapt for theme relate.
+	* act-html.rb: new file for html plugin.
+
+2004-12-26  Kouichirou Eto  <2004 eto.com>
+
+	* act-style.rb, t/act-style.rb: new files.
+	* change test style from assert_wiki to assert_format
+	
+2004-12-25  Kouichirou Eto  <2004 eto.com>
+
+	* release qwikweb-0.4.
+	* new feature: Presentation mode.
+	* change spec: change Page name specification.
+
+2004-12-24  Kouichirou Eto  <2004 eto.com>
+
+	* qwik/*, t/*, super*: Change super page name format.
+	* act-zip.rb: fix bug.
+
+2004-12-23  Kouichirou Eto  <2004 eto.com>
+
+	* README: update.
+	* qwikweb.en.rd: update.
+	* qwikweb.ja.rd: removed.
+	* generator.rb: Change page name style.
+	* super/*: Change page name style.
+
+2004-12-22  Kouichirou Eto  <2004 eto.com>
+
+	* act-presen.rb: new file.
+	* t/act-presen.rb: new file.
+	* themes/s5: new directory.
+
+2004-12-21  Kouichirou Eto  <2004 eto.com>
+
+	* act-wysiwyg.rb: update.
+
+2004-12-14  Kouichirou Eto  <2004 eto.com>
+
+	* server.rb: fix bug.  put log to stdout.
+
+2004-12-13  Kouichirou Eto  <2004 eto.com>
+
+	* act-wysiwyg.rb: add messages.
+
+2004-12-10  Kouichirou Eto  <2004 eto.com>
+
+	* act-history.rb: fix bug.
+	* act-backup.rb, act-history.rb: add class.
+	* test-responserb: new file.
+	* parser.rb: fix bug.
+	* request.rb: change external site scheme.
+	* action.rb: add support for favicon.ico
+
+2004-12-09  Kouichirou Eto  <2004 eto.com>
+
+	* gettext.rb: New file.  Copied from gonzui-0.1
+	* catalog.ja: add English messages.
+

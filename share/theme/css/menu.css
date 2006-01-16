@@ -1,0 +1,77 @@
+/* Copyright (C) 2003-2005 Kouichirou Eto, All rights reserved.
+   This is free software with ABSOLUTELY NO WARRANTY.
+   You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+
+/* ============================== menu */
+div.hmenu {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  font-size: small;
+}
+div.hmenu a.external {
+  border-bottom: 0;
+}
+div.hmenu ul.m1 {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  list-style: none;
+}
+div.hmenu ul.m1 li.off {
+  position: relative;
+  height: 1.2em;
+  width: 100px;
+  float: left;
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #090;
+}
+div.hmenu ul.m1 li.on {
+  width: 100px;
+  float: left;
+  overflow: hidden;
+  background-color: #efe;
+  border: 1px solid #090;
+}
+div.hmenu ul.m1>li.on {
+  overflow: visible;
+}
+div.hmenu ul.m1 a {
+  display: block;
+  text-decoration: none;
+}
+div.hmenu ul.m1 a:hover {
+  color: #900;
+  background-color: transparent;
+}
+div.hmenu ul.m2 {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 3px;
+  top: 3px;
+  width: 120px;
+  border: 1px solid #090;
+  border-bottom: 0px solid #090;
+  background-color: #ffe;
+  list-style: none;
+  text-align: left;
+}
+
+div.hmenu ul.m2 li {
+}
+
+div.hmenu ul.m2 a {
+  padding: 0 0 0 5px;
+  display: block;
+  border-bottom: 1px solid #090;
+}	
+
+div.hmenu ul.m2 a:hover {
+  background-color: #fee;
+}
+
+/* end */

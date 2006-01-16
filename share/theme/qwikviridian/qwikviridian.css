@@ -1,0 +1,413 @@
+/* Copyright (C) 2003-2005 Takashi Maekawa, All rights reserved.
+   This is free software with ABSOLUTELY NO WARRANTY.
+   You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+
+/* ========== general */
+
+* {
+ padding: 0;
+ margin: 0;
+}
+
+body {
+ background-image: url("./qwikviridian_bg.gif");
+ Background-repeat: repeat-y;
+ background-position: center top;
+ color: #000000;
+ font-size: small;
+ font-family: "‚l‚r ‚oƒSƒVƒbƒN","ƒqƒ‰ƒMƒmŠpƒS Pro W3","Osaka","Arial","Helvetica","Verdana","Tahoma",sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, pre {
+ /*font-size: small;*/
+}
+
+h3, h4, h5, h6 {
+}
+
+}
+h5 {
+
+}
+h6 {
+
+}
+
+ul, ol {
+
+}
+ul ul, ol ol, ul ol, ol ul {
+
+}
+ul {
+}
+
+}
+dl {
+ margin: 1em;
+ padding: 0;
+}
+dt {
+ margin: 0.5em 0 0 0;
+ padding: 0;
+ font-weight: bold;
+ border-bottom: 1px solid #bbb;
+}
+dd {
+ margin: 0 0 0 1.5em;
+ padding: 0;
+}
+pre {
+ margin: 0.75em 0;
+ padding: 0.5em;
+ background-color: #fff;
+ border: 1px dotted #00B71E;
+ font-size: small;
+
+}
+blockquote {
+ margin: 0.75em 0;
+ padding: 0;
+ background-color: #efe;
+ border: 1px dotted #6b6;
+
+}
+
+.section blockquote p {
+ margin: 0.5em;
+ padding: 0;
+}
+
+hr {
+border: 2px dotted #6b6;
+}
+
+em, strong {
+ font-style: normal;
+ font-weight: bold;
+}
+
+a {
+ color:#00B71E;
+}
+a:link		{
+ color:#00B71E;
+}
+a:visited	{
+}
+a:active, a:hover {
+
+}
+
+/* ========== table */
+table {
+
+}
+
+td {
+
+}
+
+/* ========== visual framework ==========*/
+.container {
+
+ margin-right: auto;
+ margin-left: auto;
+ position: relative;
+ /*width: 814px;*/
+ width: 800px;
+ background-color: #eee;
+ height: 100%;
+}
+.main {
+ float: right;
+ position: relative;
+ width: 578px; /* 580px - 1px * 1*/
+ background-color: #F9F9F9;
+ border-left: 1px dotted #00B71E;
+ /*margin-right: 6px;*/
+}
+
+div.footer {
+ display:block;
+ background-color: #00B71E;
+ margin-right: auto;
+ margin-left: auto;
+ padding: 14px 0px 14px 0px;
+ position: relative;
+ width: 800px;
+ text-align: center;
+ color: #fff;
+ font-size: small;
+ clear: both;
+ font-family: Helvetica,Arial,Verdana,'MS UI Gothic',sans-serif;
+}
+
+
+/* ========== main */
+
+.main h1 {
+ margin: 30px;
+ font-size: x-large;
+ border-bottom: 1px solid #00B71E;
+ padding : 0px 0px 6px 0px;
+ color:#00B71E;
+ position:relative;
+ 
+}
+
+.main h2 {
+ margin: 0 0 0.5em 0;
+ padding: 0.4em;
+ font-size: medium;
+ background-image: url("./qwikviridian_bg_shade.gif");
+           /*background-image: url("./qwikviridian_bg.gif");}*/
+ /*Background-repeat: repeat-x;*/
+ /*background-color: #eee;*/
+ border: 1px solid #ccc;
+ border-left: 4px solid #00B71E;
+ color:#00B71E;
+ position:relative;
+
+/*
+ margin: 30px 0px 30px 0px;
+ border-left: 4px solid #00B71E;
+ border-bottom: 1px solid #00B71E;
+ padding : 0px 0px 6px 6px;
+ color:#00B71E;
+ font-size: large; 
+*/
+
+}
+
+.main h3 {
+ margin: 30px 0px 18px 0px;
+ border-left: 4px solid #00B71E;
+ border-bottom: 1px solid #00B71E;
+ padding : 0px 0px 6px 6px;
+  color:#00B71E;
+ font-size: medium;
+ position:relative;
+}
+
+.main h4 {
+ margin: 20px 0px 18px 0px;
+ border-bottom: 1px solid #00B71E;
+ padding : 0px 0px 6px 0px;
+ color:#00B71E;
+ font-size: medium;
+ position:relative;
+
+}
+
+
+.main h5 {
+ margin: 10px 0px 18px 0px;
+ border-bottom: 1px solid #00B71E;
+ padding : 0px 0px 6px 0px;
+ color:#00B71E;
+
+ font-size: small;
+ position:relative;
+}
+
+.main h6 {
+ margin: 10px 0px 18px 0px;
+ padding : 0px 0px 6px 0px;
+ color:#00B71E;
+ font-size: small;
+position:relative;
+
+}
+
+.main p {
+ margin-top: 1em;
+ margin-bottom: 1em;
+}
+
+.main pre {
+ width:95%;
+ display: block;
+ overflow : auto;
+}
+
+.main brockquote {
+ width:95%;
+ display: block;
+ overflow : auto;
+} 
+/* ============= toc */
+.toc{
+ width: 200px;
+ padding 1em;
+}
+.toc h5{
+ padding-left:1em;
+}
+/* ==================== main adminmenu */
+.adminmenu {
+ color: #393;
+ background-color: #ddd;
+ background-image: url("./qwikviridian_adminmenu_bg.gif");
+ /*background-image: url("./login_bg.gif");*/
+ margin: 0;
+ padding: 2px 30px 2px 30px;
+ font-size: 90%;
+ text-align: right;
+ border-bottom: 1px solid #00B71E;
+}
+.adminmenu a:link	{ color: #f66; }
+.adminmenu a:visited	{ color: #c33; }
+.adminmenu a:active, .adminmenu a:hover { color: #fff; background-color: #c00; }
+.adminmenu ul {
+ margin: 0;
+ padding: 0;
+}
+
+/* ========== adminmenu */
+.loginstatus {
+ float: left;
+}
+.adminmenu li {
+ display: inline;
+}
+.adminmenu li a {
+ padding: 0.2em 0.4em 0 0.4em;
+}
+
+/* ==================== main day */
+.main .day {
+ margin: 30px;
+}
+/*
+.main .day h2 {
+}*/
+.main li, .main ol  {
+ margin-left: 1em;
+}
+.main ul,.main ol {
+ margin-left: 1em;
+}
+
+
+/* ============================== main day body */
+.body {
+ line-height: 160%;
+ font-size: small;
+
+}
+.section {
+
+}
+.section p {
+
+}
+
+/* ========== ago */
+.ago {
+ color: #888;
+ font-size: small;
+}
+/* ============================== main day comment */
+.comment {
+ margin: 0;
+ padding: 0.5em 2em;
+ background-color: #EFEFEF;
+ font-size: small;
+}
+#body_leave .day {
+ margin: 30px;
+ border: 0px;
+}
+
+/* ========== sidebar*/
+.sidebar {
+ color: #393;
+ margin: 0px;
+ padding-left: 20px;
+ padding-right: 20px;
+ position: relative;
+ float :left;
+ width: 181px; /* 220px - 20px * 2 - 1px  */
+ font-size: small;
+ background-color: #eee;
+  border-top:18px solid #00B71E;
+}
+
+.sidebar h2 {
+  color:#00B71E;
+  margin-bottom: 22px;
+  margin-top: 22px;
+  border-bottom: 1px solid #00B71E;
+  font-size: medium;
+}
+.sidebar h3, .sidebar h4, .sidebar h5, .sidebar h6 {
+
+}
+.sidebar ul {
+
+}
+
+.sidebar li {
+ list-style-type: none; 
+ line-height: 160%;
+ background-color: #eee;
+}
+.sidebar div.recent li {
+ padding: 2px 4px 2px 4px;
+ margin-top:2px;
+ margin-bottom:2px;
+ border: 1px solid #00B71E;
+ list-style-type: none; 
+ line-height: 160%;
+  background-color: #eee;
+}
+.sidebar  a {
+ color:#00B71E;
+ padding: 4px 0 0 18px;
+ margin: 0 0 0 0;
+ background: url("qwikviridian_siderbar_li_a.gif") no-repeat 0% 100%;
+}
+
+.sidebar p.recent{
+  text-align: right;
+  margin: 1em 0em;
+}
+
+.sidebar a:link	 {
+  color:#00B71E;
+}
+
+.sidebar a:visited {
+  color:#00B71E;
+}
+.sidebar a:hover,.sidebar a:active{
+ color:#FF6666;
+}
+
+/* ========== print out */
+@media print {
+ h2 {
+  color: #000 ! important;
+  border: 2px solid #393 ! important;
+/*
+  padding: 0 ! important;
+*/
+ }
+ h3 {
+  color: #000 ! important;
+/*
+  padding: 0 ! important;
+  border-bottom: 1px solid #393 ! important;
+*/
+ }
+ .day {
+  border: 0 ! important;
+ }
+ .section {
+  margin: 1em 0em 1em 1em ! important;
+  padding: 0;
+ }
+}
+
+/* end */

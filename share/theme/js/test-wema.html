@@ -1,0 +1,304 @@
+<!-- -*- c++ -*- -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>test</title>
+<script type="text/javascript" src="../../jsUnit/app/jsUnitCore.js"></script>
+<script type="text/javascript" src="debug.js"></script>
+<script type="text/javascript" src="wema.js"></script>
+</head>
+<body onload="wema_init();">
+
+<p>test case for wema</p>
+
+<div>wema:
+<a href="javascript:wema_editor_show()" title="新しい付箋を作る">new</a>
+<a href="javascript:wema_help_show()" title="使い方">help</a>
+</div>
+
+<div class="wema" id="id1" style="left:1px;top:2px;color:#000;background:#fff;" wema_tc="#000" wema_bg="#fff" wema_ln="" wema_d="This is a test.">
+<div class="menubar">
+<span class="handle">id1</span>
+<span class="cmd">
+<a href="javascript:wema_setpos('id1')">set</a>
+<a href="javascript:wema_edit('id1')">edit</a>
+<a href="javascript:wema_link('id1')">link</a>
+</span>
+</div>
+<div class="cont">
+<p>This is a test.</p>
+</div>
+</div>
+
+<div class="wema" id="id2" style="left:8px;top:9px;color:#600;background:#cfc;" wema_tc="#600" wema_bg="#cfc" wema_ln="id2" wema_d="This is a test2.">
+<div class="menubar">
+<span class="handle">id2</span>
+<span class="cmd">
+<a href="javascript:wema_setpos('id2')">set</a>
+<a href="javascript:wema_edit('id2')">edit</a>
+<a href="javascript:wema_link('id2')">link</a>
+</span>
+</div>
+<div class="cont">
+<p>This is a test2.</p>
+</div>
+</div>
+
+<div class="wema" id="editor">
+<div class="menubar">
+<span class="handle">editor</span>
+<span class="close">
+<a href="javascript:wema_editor_hide()" title="閉じる">×</a>
+</span>
+</div>
+
+<form action="ActWema.wema" id="frm" method="POST">
+<div class="save">
+<input type="submit" value="○ 書き込み"/>
+</div>
+<textarea name="body"></textarea>
+
+<p>文字色：
+<input id="tc" name="tc"/>
+<a class="color" href="javascript:wema_set_color('tc', '#000')" style="color:#000;background:#000;">■</a>
+</p>
+
+<p>背景色：
+<input id="bg" name="bg"/>
+<a class="color" href="javascript:wema_set_color('bg', '#fff')" style="color:#fff;background:#fff;">■</a>
+</p>
+
+<p>線を引く：
+<input name="ln"/>
+</p>
+
+<p>
+x: <input name="l" value=""/>
+y: <input name="t" value=""/>
+</p>
+
+<input name="id" type="hidden" value=""/>
+<input name="mode" type="hidden" value="edit"/>
+</form>
+
+</div>
+
+<div class="wema" id="help">
+<div class="menubar"><span class="handle">help</span>
+<span class="close">
+<a href="javascript:wema_help_hide()" title="閉じる">×</a></span>
+</div>
+<div class="cont">
+<h3>付箋機能ヘルプ</h3>
+</div>
+</div>
+
+<style>@import '../all.css';</style>
+
+<script language="javascript">
+
+////////////////////////////////////////////////////////////
+function testPoint() {
+  p = new Point(1, 2);
+  assertEquals(1, p.x);
+  assertEquals(2, p.y);
+  assertEquals("Point(1, 2)", p.toString());
+}
+function testPointStr() {
+  p = new Point("3px", "4px");
+  assertEquals(3, p.x);
+  assertEquals(4, p.y);
+}
+function testPointPlusMinus() {
+  var a = new Point(1, 2);
+  var b = new Point(3, 4);
+  assertEquals("Point(4, 6)", a.plus(b).toString());
+  assertEquals("Point(2, 2)", b.minus(a).toString());
+}
+
+////////////////////////////////////////////////////////////
+function testWemaEditor() {
+  assertEquals("hidden", g_env.editor.getMode());
+  assertNotNull(g_env.editor.form);
+}
+function testWemaEditorShow() {
+  assertEquals("hidden", g_env.editor.getMode());
+  g_env.editor._show();
+  assertEquals("visible", g_env.editor.getMode());
+  g_env.editor.hide();
+  assertEquals("hidden", g_env.editor.getMode());
+}
+function testWemaEditorCreateNewWema() {
+  assertEquals("hidden", g_env.editor.getMode());
+  g_env.mouse  = new Point(1, 2);
+  g_env.editor.createNewWema();
+  assertEquals("visible", g_env.editor.getMode());
+  assertEquals("1px", g_env.editor.form.l.value);
+  assertEquals("2px", g_env.editor.form.t.value);
+  g_env.editor.hide();
+}
+function testWemaEditorSetWemaPosition() {
+  g_env.editor._setWemaPosition("id1");
+  assertEquals("1px", g_env.editor.form.l.value);
+  assertEquals("2px", g_env.editor.form.t.value);
+}
+// Do not test setPos, because setPos calls form.submit().
+function testWemaEditorEditWema() {
+  g_env.editor.editWema("id1");
+  assertEquals("id1",  g_env.editor.form.id.value);
+  assertEquals("edit", g_env.editor.form.mode.value);
+  assertEquals("",     g_env.editor.form.ln.value);
+  assertEquals("This is a test.", g_env.editor.form.body.value);
+  assertEquals("#000", g_env.editor.form.tc.value);
+  assertEquals("#fff", g_env.editor.form.bg.value);
+  g_env.editor.editWema("id2");
+  assertEquals("id2", g_env.editor.form.ln.value);
+  assertEquals("This is a test2.", g_env.editor.form.body.value);
+  assertEquals("#600", g_env.editor.form.tc.value);
+  assertEquals("#cfc", g_env.editor.form.bg.value);
+}
+function testWemaEditorCreateNewLinkedWema() {
+  g_env.editor.createNewLinkedWema("id1");
+  assertEquals("id1", g_env.editor.form.ln.value);
+}
+function testWemaEditorSetColor() {
+  g_env.editor.setColor("tc", "#000");
+  assertEquals("#000", g_env.editor.form.tc.value);
+  g_env.editor.setColor("bg", "#fff");
+  assertEquals("#fff", g_env.editor.form.bg.value);
+}
+
+////////////////////////////////////////////////////////////
+function nutestWemaLineFillRect() {
+  var o = xp.fillRect(1, 2, 3, 4, "#000");
+  var s = o.style;
+  if (xp.IE) assertEquals("#000", s.backgroundColor);
+  if (xp.GK) assertEquals("rgb(0, 0, 0)", s.backgroundColor);
+  assertEquals("absolute", s.position);
+  assertEquals("hidden", s.overflow);
+  assertEquals("1px", s.left);
+  assertEquals("2px", s.top);
+  assertEquals("3px", s.width);
+  assertEquals("3px", s.height);
+}
+
+function nutestWemaLineDrawLine() {
+  var o = xp.drawLine(1, 2, 3, 4, "#000", "lineid");
+  assertEquals("lineid", o.id);
+  var s = o.firstChild.style;
+  assertEquals("1px", s.left);
+  assertEquals("2px", s.top);
+  assertEquals("1px", s.width);
+  assertEquals("3px", s.height);
+  var s = o.lastChild.style;
+  assertEquals("1px", s.left);
+  assertEquals("4px", s.top);
+  assertEquals("3px", s.width);
+  assertEquals("1px", s.height);
+}
+
+////////////////////////////////////////////////////////////
+function testWemaLine() {
+  /*
+  var line = g_env.wemas.get("id1").line;
+  assertEquals("<WemaLine(id1)>", line.toString());
+  assertEquals("wema_line", line.obj.className);
+  assertEquals("hidden", line.line1.style.visibility);
+
+  var line = g_env.wemas.get("id2").line;
+  assertEquals("<WemaLine(id2)>", line.toString());
+  var s = line.line1.style
+  assertEquals("visible", s.visibility);
+  assertEquals("1px", s.width);
+  assertEquals("1px", s.height);
+  */
+}
+
+////////////////////////////////////////////////////////////
+function testWema() {
+  /*
+  var w = g_env.wemas.get("id1");
+  assertEquals("id1", w.id);
+  assertEquals("This is a test.", w.text);
+  assertEquals("", w.lineid);
+  assertEquals("<WemaLine(id1)>", w.line.toString());
+  assertEquals("#000", w.color);
+  assertEquals("#fff", w.background);
+  assertEquals("<Wema(id1)>", w.toString());
+  */
+}
+function testWemaPos() {
+  var w = g_env.wemas.get("id1");
+  assertEquals("Point(1, 2)", w.getPos().toString());
+  w.setPos(new Point(3, 4));
+  assertEquals("Point(3, 4)", w.getPos().toString());
+}
+function testWemaZIndex() {
+  var w = g_env.wemas.get("id1");
+  w.setZIndex(6);
+  assertEquals(6, w.getZIndex());
+}
+
+////////////////////////////////////////////////////////////
+function testWemaSet() {
+  var wl = g_env.wemas.wlist; // length is 4. 2 wemas + editor + help
+  assertEquals("id1", wl["id1"].id);
+}
+function testWemaSetGet() {
+  var w = g_env.wemas.get("id1");
+  assertEquals("id1", w.obj.id);
+}
+function testWemaSetDragging() {
+  g_env.wemas.clearDragging();
+  assertNull(g_env.wemas.getCurDragging());
+  g_env.wemas.startDragging("id1");
+  assertEquals("<Wema(id1)>", g_env.wemas.getCurDragging().toString());
+}
+function testWemaSetZIndex() {
+  g_env.wemas.setZIndex(7);
+  var w = g_env.wemas.get("id1");
+  assertEquals(7, g_env.xp.getZIndex(w.obj));
+}
+
+function testWemaSetSetMouseEvent() {
+  g_env.wemas.setMouseEvent();
+  var ar = g_env.xp.getDivListByClass("menubar");
+  for(var i=0; i < ar.length; i++){
+    var o = ar[i];	//showAllProperty(o);
+    assertEquals("menubar", o.className);
+    assertEquals("function", typeof(o.onmousedown));
+  }
+  assertEquals("function", typeof(document.onmouseup));
+  assertEquals("function", typeof(document.onmousemove));
+}
+
+////////////////////////////////////////////////////////////
+function testWemaEnvironment() {
+  //assertEquals(0, g_env.offset.x);
+  //assertEquals(0, g_env.mouse.x);
+}
+
+function testWemaEnvironmentHelp() {
+  g_env.showHelp();
+  var o = g_env.xp.getById("help");
+  assertEquals("visible", o.style.visibility);
+  g_env.hideHelp();
+  assertEquals("hidden", o.style.visibility);
+}
+
+function testWemaEnvironmentShowWindow() {
+  var o = g_env.xp.createDiv("testid");
+  assertEquals("testid", o.id);
+  assertEquals("", o.style.visibility);
+  g_env.showWindow("testid");
+  assertEquals("visible", o.style.visibility);
+  assertEquals(2, g_env.xp.getZIndex(o));
+  g_env.hideWindow("testid");
+  assertEquals("hidden", o.style.visibility);
+  assertEquals(0, g_env.xp.getZIndex(o));
+  g_env.xp.removeElement(o);
+}
+
+</script>
+</body>
+</html>

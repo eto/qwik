@@ -1,0 +1,247 @@
+/*
+ Theme: qwikworld
+ Kouichirou Eto (http://eto.com/)
+ Theme placed under CC by-sa 2.0 license
+ based on theme "i18n" by Mr. Eric A. Meyer.
+*/
+
+/* ========== general */
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background: #9ad url(bg-slide.jpg) 100% 100% no-repeat;
+  color: #210;
+/*
+  font-size: 28px;
+*/
+  font-size: 28px;
+  font-family: "小塚ゴシック Std B","A-OTF ゴシックMB101 Pro B","IPA Pゴシック",Helvetica,Arial,sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+h3 {  padding-left: 0.5em; }
+h4 {  padding-left: 1.0em; }
+h5 {  padding-left: 1.5em; }
+h5 {  padding-left: 2.0em; }
+
+p {
+  margin: 0.5em 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+
+ul, ol {
+/*  margin-left: 1em;*/
+  margin: 0.5em 0 0.5em 1.0em;
+  padding-left: 0;
+}
+li {
+  margin-bottom: 0.6em;
+  list-style: square;
+  font-size: 1.2em;
+}
+li li {
+  margin: 0.3em 0;
+  font-size: 85%;
+}
+
+dl {
+  margin: 0.3em 1em 0.3em 0;
+  padding: 0;
+}
+dt {
+  margin: 0.3em 0 0 0;
+  padding: 0;
+  font-weight: bold;
+}
+dd {
+  margin: 0 0 0 1.5em;
+  padding: 0;
+}
+
+pre {
+  margin: 0.3em 1em 0.3em 0;
+  padding: 0.1em 0.2em 0 0.2em;
+  border: 2px solid #bbd;
+/*
+  font-family: "小塚ゴシック Pro M","IPA Pゴシック",Helvetica,Arial,sans-serif;
+*/
+  font-family: "Courier New",sans-serif;
+}
+blockquote {
+  margin: 0.3em 1em 0.3em 0;
+  padding: 0.1em 0.2em 0.1em 0.2em;
+  border: 2px dotted #cce;
+}
+blockquote blockquote {
+  margin: 0.75em;
+  padding: 0;
+}
+.section blockquote p {
+  margin: 0.5em;
+  padding: 0;
+}
+
+hr {
+  margin: 0 1em 0 0;
+  padding: 0;
+  border: 2px dotted #cce;
+}
+
+em, strong {
+  font-style: normal;
+/*
+  font-weight: bold;
+*/
+  font-family: "小塚ゴシック Std H",Helvetica,Arial,sans-serif;
+}
+em {
+  color: #666;
+}
+strong {
+  color: #900;
+}
+
+a {
+  text-decoration: none;
+  color: #339;
+}
+
+sup {
+  font-size: 0.75em;
+  font-weight: normal;
+  vertical-align: 0.5em;
+  line-height: 1px;
+}
+
+/* ==================== The first slide */
+#slide0 h1 {
+  border: none;
+  font-size: 2.00em;
+  font-weight: normal;
+/*  letter-spacing: -0.1em;
+  margin: 3em 1em 1.5em 0;*/
+  margin: 3em 0 1.5em 0;
+}
+#slide0 h2 {
+/*  margin: 0.5em 0 0;
+  font-size: 1.30em;*/
+  margin: 0.5em 0 0 0;
+  font-size: 1.25em;
+}
+#slide0 h3 {
+  margin: 0.5em 0 0 0;
+  font-size: 0.90em;
+}
+#slide0 h4 {
+  margin-top: 0;
+  font-size: smaller;
+}
+
+/* ==================== slide */
+.slide h1 {
+  font-size: 1.35em;
+  line-height: 1;
+  letter-spacing: -1px;
+/*
+  margin: 2.0em 1em 0.5em 0;
+  padding: 0 1em 0.1em 0;
+*/
+  margin: 2.0em 0 0.7em 0;
+  padding: 0;
+  color: #003;
+}
+
+/* ==================== .slide .current */
+.slide .current {
+  color: #003;
+  text-shadow: 0 0 0.25em #9ad;
+}
+
+/* ==================== current slide */
+#currentSlide {
+  font-size: 0.5em;
+}
+#currentSlide span {
+  font-size: 13px;
+  color: #bbb;
+}
+#currentSlide #csSep {
+  display: none;
+}
+#currentSlide #csHere {
+  font-weight: bold;
+}
+#currentSlide #csHere:before {
+  content: "#";
+  font-weight: normal;
+}
+#currentSlide #csTotal:before {
+  content: " of ";
+}
+
+/* ==================== header, footer */
+#header,
+#footer {
+  font-size: 0.5em;
+}
+#header {
+  background: url(bg-shade.png);
+  border-bottom: 1px solid #333;
+  padding-bottom: 2em;
+}
+#footer {
+  background: url(bg-shade.png);
+  color: #bbb;
+  border-top: 1px solid #333;
+}
+
+#footer h1,
+#footer h2 {
+  padding: 0.5em 0.75em;
+  font-weight: normal;
+}
+#footer h1 {
+  left: 0;
+  font-size: 1em;
+  letter-spacing: 1px;
+}
+#footer h2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#controls {
+  font-size: 0.75em;
+}
+
+#navList {
+  margin-top: 3px;
+}
+
+#navLinks a {
+  margin: 0 0.33em;
+  padding: 0 0.25em;
+  border: 1px solid;
+  border-color: #ccd #556 #556 #ccd;
+  background-color: #89c;
+}
+
+/* ==================== slide frame */
+/* see framing.css */
+
+div.slide {
+  top: 0;
+  width: 95%;
+  padding: 0 0 0 5%;
+  z-index: 2;
+}
+
+/* end */

@@ -1,0 +1,224 @@
+/* Copyright (C) 2003-2005 Kouichirou Eto, All rights reserved.
+   based on a design by Hironori Oooka.
+   This is free software with ABSOLUTELY NO WARRANTY.
+   You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+
+/* ========== general */
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: #fff;
+  color: #000;
+  font-family: Helvetica,Arial,Verdana,"‚l‚r ‚oƒSƒVƒbƒN",sans-serif;
+  line-height: 1.33;
+  font-size: small;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-size: medium;
+}
+h3, h4, h5, h6 {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  /*background-color: #cdc;*/
+  /*color: #333;*/
+}
+h3 {
+
+}
+h4 {
+}
+h5 {
+}
+h6 {
+}
+
+ul, ol {
+  margin: 0;
+  padding: 2em 0 2em 3em;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin: 0;
+}
+ul {
+  list-style: square url(qwikborder_li.png);
+}
+dl {
+  margin: 0;
+  padding: 0;
+}
+dt {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+/*
+  border-bottom: 1px solid #bbb;
+*/
+  border-bottom: 1px solid #9c9;
+}
+dd {
+  margin: 0 0 0 1.5em;
+  padding: 0;
+}
+
+pre {
+  margin: 1em 0;
+  padding: 0.5em;
+  background-color: #dfd;
+  border: 1px solid #aba;
+  font-size: medium;
+}
+blockquote {
+  margin: 0.75em 0;
+  padding: 0;
+  background-color: #efe;
+  border: 1px dotted #6b6;
+}
+blockquote blockquote {
+  margin: 0.75em;
+  padding: 0;
+}
+.section blockquote p {
+  margin: 0.5em;
+  padding: 0;
+}
+
+hr {
+  border: 2px dotted #6b6;
+}
+
+em, strong {
+  font-style: normal;
+  font-weight: bold;
+}
+strong {
+  color: #900;
+}
+
+a:link		{ color: #0c0; }
+a:visited	{ color: #060; }
+a:active, a:hover { color: #fff; background-color: #0c0; text-decoration: none; }
+
+/* ========== container */
+.container {
+  /*border: 13px solid #090;*/
+  height: 100%;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+}
+
+/* ========== main */
+.main {
+  float: right;
+  width: 75%;/* 80% - (5% * 2) */
+  padding: 2%;
+}
+.main h1 {
+  margin: 0 0 0 0;
+  padding: 2em 0 2em 0;
+  /*color: #090;*/
+  font-size: large;
+}
+
+.main h2{
+  margin: 2em;
+  padding: 2em 0 2em 0;
+  font-size: medium;
+ 
+}
+/* ==================== main adminmenu */
+.adminmenu {
+  /*color: #090;*/
+  margin: 1em 0 0 0;
+  padding: 0;
+  font-size: small;
+  text-align: right;
+}
+.adminmenu a:link	{ }
+.adminmenu a:visited	{ }
+.adminmenu a:active, .adminmenu a:hover	{ }
+
+.adminmenu li {
+ display: inline;
+}
+/* ==================== main day */
+.day {
+  margin: 0;
+  padding: 0;
+/*
+  clear: both;
+*/
+}
+.day h2 {
+  margin: 0 0 0 0;
+  padding: 2em 0 2em 0;
+  /*border-bottom: 2px solid #9c9;*/
+  /*color: #090;*/
+  /*background: url(qwikborder_h2.png) no-repeat 1% 60%*/;
+}
+
+/* ============================== main day body */
+.body {
+  margin: 0;
+  padding: 0;
+}
+.section p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================== main day comment */
+.comment {
+  margin: 2em 0;
+  padding: 0.5em 30px;
+  font-size: small;
+  color: #060;
+  background-color: #eee;
+}
+
+/* ========== sidebar */
+.sidebar {
+  margin: 2em 0 0 0
+  adding: 0;
+  float: left;
+  width: 20%;/* 20% - (2% * 2) */
+  font-size: small;
+  text-align: right;
+}
+
+.sidebar h2 {
+  position: relative;
+  /*left: -24px;*/
+  margin: 0;
+  /*padding: 0 0 0 23px;*/
+  padding: 0 0 0.5em 0;
+  /*color: #900;*/
+  background: url(qwikborder_ball.png) no-repeat 0% 85%;
+  font-size: medium;
+}
+.sidebar h3 {
+  margin: 0.2em 0;
+  padding: 0;
+  color: #090;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+  font-size: small;
+}
+.sidebar ul {
+  /*margin: 0.5em;*/
+}
+.sidebar li {
+ list-style-type: none; 
+ line-height: 180%;
+}
+/* ========== toc */
+.toc {
+  border-top: 2px solid #090;
+}
+
+/* end */

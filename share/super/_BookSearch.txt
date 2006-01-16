@@ -1,0 +1,3 @@
+* Book Search Link
+,amazon,http://www.amazon.co.jp/exec/obidos/external-search?tag=q02-22&keyword=,utf8
+,ê¢ìcíJãÊ,http://libweb.city.setagaya.tokyo.jp/clis/search?MAXVIEW=100&ITEM1=AB&COMP1=3&KEY1=,sjis

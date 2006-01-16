@@ -1,0 +1,3 @@
+powered by [[qwikWeb|http://qwik.jp/]]
+
+# フッター

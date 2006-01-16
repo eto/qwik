@@ -1,0 +1,19 @@
+* Menu
+- [[FrontPage]]
+- [[TitleList|.list]]
+- [[RecentList|.recent]]
+- [[TextFormat|textformat_simple.describe]]
+
+* Search
+{{search_form}}
+
+{{plan}}
+
+#* 最近の更新
+* Recent change
+{{srecent(10)}}
+
+{{rss}}
+#{{atom}}
+
+# サイドメニュー

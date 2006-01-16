@@ -1,0 +1,14 @@
+Source: qwik
+Section: web
+Priority: optional
+Maintainer: Yasuo Eto <yasuo@etou.org>
+Build-Depends: debhelper (>= 4.0.0), ruby1.8, ruby1.8-dev
+Standards-Version: 3.6.0
+
+Package: qwik
+Architecture: any
+Depends: ruby1.8 (>=1.8.2-3), libhtree-ruby1.8, libalgorithm-diff-ruby1.8, libzip-ruby1.8, libaspectr, libopenssl-ruby1.8
+Suggests: libdb4.2-ruby1.8
+Description: qwikWeb is a group communication system uses Wiki and ML
+ qwikWeb is a group communication system uses Wiki and mailing list.
+ Please see http://qwik.jp/ for information.

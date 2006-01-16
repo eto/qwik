@@ -1,0 +1,16 @@
+usr/bin
+usr/sbin
+usr/lib/ruby/1.8/qwik
+usr/lib/ruby/1.8/qwik/template
+usr/share/qwik/
+usr/share/qwik/super
+usr/share/qwik/theme
+usr/share/qwik/qrcode
+usr/share/qwik/jsunit
+var/log/qwik/
+var/cache/qwik
+var/cache/qwik/grave/
+etc/qwik/
+var/run/qwik/
+var/lib/qwik/data/www/
+var/lib/qwik/backup/

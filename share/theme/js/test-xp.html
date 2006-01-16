@@ -1,0 +1,99 @@
+<!-- -*- c++ -*- -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>test</title>
+<script type="text/javascript" src="../../jsUnit/app/jsUnitCore.js"></script>
+<script type="text/javascript" src="wema.js"></script>
+<script language="javascript">
+
+//var xp = new XP();
+var xp = g_xp;
+
+function testCheckBrowser() {
+  assertEquals(0, xp.N4); // adhoc
+}
+
+function testCreateElement() {
+  var o = xp.createElement("div");
+  o.id = "testid1";
+  assertEquals("testid1", o.id);
+}
+
+function testCreateDiv() {
+  var o = xp.createDiv("testid2");
+  assertEquals("testid2", o.id);
+  xp.removeElement(o);
+  assertEquals("testid2", o.id); // object is not erased.
+}
+
+function testAttr() {
+  var o = xp.createElement("div");
+  xp.setAttr(o, "testattr", "testvalue");
+  assertEquals("testvalue", xp.getAttr(o, "testattr"));
+}
+
+function testGetDivList() {
+  var first_length = xp.getDivList().length
+  //assertEquals(0, xp.getDivList().length);
+  xp.createElement("div");
+  //assertEquals(0, xp.getDivList().length); // no effect
+  assertEquals(first_length, xp.getDivList().length); // no effect
+  xp.createDiv("testid2"); // add one
+  //assertEquals(1, xp.getDivList().length);
+  assertEquals(first_length+1, xp.getDivList().length);
+}
+
+function testGetDivListByClass() {
+  assertEquals(0, xp.getDivListByClass("testclass").length);
+  var o = xp.createDiv("testid2");
+  o.className = "testclass";
+  assertEquals("testclass", o.className);
+  assertEquals(1, xp.getDivListByClass("testclass").length);
+}
+
+function testGetById() {
+  xp.createDiv("testid3");
+  assertEquals("testid3", xp.getById("testid3").id);
+}
+
+function testZIndex() {
+  var o = xp.createElement("div");
+  assertEquals(0, xp.getZIndex(o));
+  xp.setZIndex(o, 1);
+  assertEquals(1, xp.getZIndex(o));
+}
+
+function testPos() {
+  var o = xp.createElement("div");
+  var p = xp.getPos(o);
+  assertEquals(0, p.x);
+  assertEquals(0, p.y);
+  xp.setPos(o, new Point(1, 2));
+  var p = xp.getPos(o);
+  assertEquals(1, p.x);
+  assertEquals(2, p.y);
+}
+
+function testGetSize() {
+  var o = xp.createElement("div");
+  var p = xp.getSize(o);
+  assertEquals("number", typeof(p.x));
+  assertEquals("number", typeof(p.y));
+}
+
+function testGetCenter() {
+  var o = xp.createElement("div");
+  var p = xp.getCenter(o);
+  assertEquals("number", typeof(p.x));
+  assertEquals("number", typeof(p.y));
+}
+
+// test for event capture is not yet finished.
+
+</script>
+</head>
+<body>
+<p>test case for xp</p>
+</body>
+</html>

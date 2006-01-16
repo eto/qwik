@@ -1,0 +1,11 @@
+* 設定
+:open:false
+これをtrueにすると、公開Wikiになります。
+:theme:qwikgreen
+テーマを変更します。qwikgreen, qwikcyan, qwikborderから選べます。
+:sitename:
+タイトルに表示されるサイト名を指定できます。
+:reportmail:daily
+レポートメール送信間隔をhourly, daily, weeklyから選べます。falseにすると送られなくなります。
+:redirect:false
+外部へのリンクをリダイレクトするかどうかを選べます。trueにすると、redirectしてから外部リンクへ飛ぶようになります。

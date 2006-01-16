@@ -1,0 +1,323 @@
+/* Copyright (C) 2003-2005 Kouichirou Eto, All rights reserved.
+   based on a design by Hironori Oooka.
+   This is free software with ABSOLUTELY NO WARRANTY.
+   You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+
+/* ========== general */
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background: #ddd url(qwiksystem_bg.png);
+  color: #000;
+  font-family: Helvetica,Arial,Verdana,"‚l‚r ‚oƒSƒVƒbƒN",sans-serif;
+  line-height: 1.33;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-size: medium;
+}
+h3, h4, h5, h6 {
+  margin: 1em 0;
+  padding: 0;
+  border-bottom: 2px dotted #6cc;
+  color: #099;
+}
+h4 {
+  border-bottom: 2px dotted #9cc;
+}
+h5 {
+  border-bottom: 2px dotted #ccc;
+}
+h6 {
+  border-bottom: 2px dotted #ccc;
+  font-weight: normal;
+}
+
+ul, ol {
+  margin: 0.5em 1.5em;
+  padding: 0;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin: 0 1em;
+}
+dl {
+  margin: 1em 0;
+  padding: 0;
+}
+dt {
+  margin: 0.5em 0 0.2em 0;
+  padding: 0;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+dd {
+  margin: 0 0 0 1.5em;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+pre {
+  margin: 1em 0;
+  padding: 0.5em;
+  background-color: #eff;
+  border: 1px solid #999;
+}
+blockquote {
+  margin: 0.75em 0;
+  padding: 0;
+  background-color: #eff;
+  border: 1px dotted #696;
+}
+blockquote blockquote {
+  margin: 0.75em;
+  padding: 0;
+}
+.section blockquote p {
+  margin: 0.5em;
+  padding: 0;
+}
+
+hr {
+  margin: 0.5em 0;
+  border: 1px solid #9cc;
+/*
+  border: 1px dotted #9cc;
+  margin: 0;
+  padding: 0;
+  border: 2px dotted #9cc;
+*/
+}
+
+em, strong {
+  font-style: normal;
+  font-weight: bold;
+}
+strong {
+  color: #c00;
+}
+
+a:link		{ color: #099; }
+a:visited	{ color: #066; }
+a:active, a:hover { color: #fff; background-color: #099; text-decoration: none;}
+
+/* copy from qwikcyan */
+/* ========== container */
+.container {
+}
+
+/* ========== main */
+.main {
+  margin: 0 0 0 180px;
+  padding: 0 1em 2em;
+}
+.main h1 {
+  margin: 0 0 0.5em 0;
+  padding: 0.5em 1em 0.25em 1em;
+  border: 2px solid #9cc;
+  border-left: 10px solid #9cc;
+  color: #099;
+}
+
+/* ==================== main adminmenu */
+.adminmenu {
+  color: #099;
+  margin: 0;
+  padding: 0.2em 0 0 0;
+  font-size: 90%;
+  text-align: right;
+}
+.adminmenu a:link	{ color: #f66; }
+.adminmenu a:visited	{ color: #c33; }
+.adminmenu a:active, .adminmenu a:hover { color: #fff; background-color: #c00; }
+.adminmenu ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* ==================== main day */
+.day {
+  margin: 10px 0;
+  padding: 0 10px;
+}
+.day h2 {
+  margin: 0 0 0.5em 0;
+  padding: 0;
+  color: #066;
+  border-bottom: 2px dotted #066;
+}
+
+/* ============================== main day body */
+.body {
+  margin: 1em 1em 1em 2em;
+  padding: 0;
+}
+.section {
+  margin: 1em 0;
+  padding: 0;
+}
+.section p {
+  margin: 1em 0;
+  padding: 0;
+}
+
+/* ============================== main day comment */
+/*
+  padding: 0.5em 2em;
+  color: #099;
+*/
+.comment {
+  margin: 0;
+  padding: 0.5em;
+  font-size: small;
+}
+/*
+  background-color: #eff;
+*/
+#body_leave .day {
+  margin: 1em 0 1em 0;
+  border: 0px;
+  background-color: #fff;
+}
+
+/* ========== sidebar */
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 180px;
+  font-size: small;
+}
+
+.sidebar h2 {
+  background-color: #099;
+  color: #fff;
+  margin: 1em 0;
+  padding: 0.1em 1em;
+}
+.sidebar h2, .sidebar h3, .sidebar h4, .sidebar h5, .sidebar h6 {
+  font-size: small;
+}
+.sidebar ul {
+  margin: 0.5em 0 0.5em 1.5em;
+}
+
+/* ========== label */
+a:link.label	{ color: #9cc; }
+a:visited.label	{ color: #9cc; }
+a:active.label,
+a:hover.label { color: #fff; background-color: #099; }
+
+/* end */
+
+/* original from qwiksystem */
+
+/* ========== header */
+.header {
+  background: url(qwiksystem_header.png) repeat-x;
+  height: 70px;
+  margin: 0;
+  /* border: 1px solid #f00;*/
+}
+.header div {
+  background: url(qwiksystem_headerbar.png) no-repeat;
+  height: 70px;
+}
+.header div div {
+  background: url(qwiksystem_qwikweb.png) 100% 0% no-repeat;
+  height: 60px;
+  padding: 10px 10px 0 20px;
+  /* border: 1px solid #f00;*/
+}
+
+/* ========== msg */
+/*
+  margin: 1em;
+  padding: 1em;
+*/
+.msg {
+  margin: 0;
+  padding: 1em;
+  color: #033;
+  border: 2px solid #066;
+}
+
+/* ========== differ */
+.differ {
+  margin: 0;
+  padding: 0.5em;
+  background-color: #eee;
+  color: #033;
+  border: 1px solid #666;
+  font-size: small;
+  font-family: monospace;
+}
+.differ del {
+  color: #66f;
+}
+.differ ins {
+  color: #c00;
+  font-weight: bold;
+}
+
+/* ========== form */
+form.update {
+  width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+}
+form.update textarea {
+  margin: 0;
+  padding: 1px;
+  width: 100%;
+  height: 350px;
+}
+input {
+}
+form.update input {
+  margin: 0.2em 0;
+  padding: 0 2em;
+  font-weight: bold;
+  background: #aaa url(qwiksystem_header.png);
+  font-family: Verdana,Helvetica,Arial,'MS UI Gothic',sans-serif;
+}
+.comment {
+  font-size: smaller;
+}
+.comment pre {
+  font-size: small;
+}
+
+/* history mode */
+.period {
+ font-size: small;
+}
+.period h2, .period h3, .period h4, .period h5, .period h6 {
+ font-size: small;
+}
+
+/* ========== table for password */
+table {
+  margin: 0;
+  border: 0;
+/*
+  border: 1px solid #f00;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  margin: 0;
+  margin: 1em 0;
+*/
+  background-color: transparent;
+}
+
+td, th {
+  padding: 0.01em 0.45em 0.01em 0.45em;
+  border: 0;
+}
+
+/* end */

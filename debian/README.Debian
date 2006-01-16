@@ -1,0 +1,60 @@
+qwik for Debian
+---------------
+
+How to use with apache2 
+
+for instance
+adding apache configuration file
+
+step1
+available proxy module
+
+# ln -s /etc/apache2/mods-available/proxy_http.load /etc/apache2/mods-enabled/proxy_http.load
+
+
+step2
+adding config file(for instance, /etc/apache2/sites-enablesd/foo)
+this 2line in <VirtualHost> directive.
+
+--start--
+ProxyPass       /.theme/ http://127.0.0.1:9190/theme/
+ProxyPass       /qwik/  http://127.0.0.1:9190/
+--stop--
+
+
+step3
+restarting apache2
+
+# /etc/init.d/apache2 restart
+
+
+step4
+check
+
+access http://foo/qwik a your www-browser
+
+
+How to use with postfix
+
+
+Transport confiuration
+
+Add this 1 line /etc/postfix/transport.
+
+   example.com :[localhost:10025]
+
+Tranport DB cleate.
+   # postmap transport 
+
+Add this 3 line /etc/postfix/main.cf.
+
+   transport_maps = hash:/etc/postfix/transport
+   local_recipient_maps =
+   fallback_transport= smtp:127.0.0.1:10025 
+
+Reloading new configuration.
+
+   # postfix reload
+
+fine!
+ -- Yasuo Eto <yasuo@etou.org>, Mon, 13 Dec 2004 14:31:27 +0900

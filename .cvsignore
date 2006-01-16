@@ -1,0 +1,6 @@
+cache
+grave
+log
+.config
+*.tar.gz
+*.gem

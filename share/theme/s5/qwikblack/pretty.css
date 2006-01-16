@@ -1,0 +1,245 @@
+/*
+ Theme: qwikblack
+ Kouichirou Eto (http://eto.com/)
+
+ Theme placed under CC by-sa 2.0 license
+*/
+
+/* ==================== basic */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html { 
+  scrollbar-face-color: #003;
+  scrollbar-highlight-color: #003;
+  scrollbar-shadow-color: #003;
+  scrollbar-3dlight-color: #003;
+  scrollbar-arrow-color: #003;
+  scrollbar-track-color: #003;
+  scrollbar-darkshadow-color: #003;
+}
+
+body {
+  background: #003 100% 100% no-repeat;
+  color: #fff;
+  font-size: 28px;
+  font-family: "小塚ゴシック Std M","A-OTF ゴシックMB101 Pro B","IPA Pゴシック",Helvetica,Arial,sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin: 0;
+  font-weight: normal;
+  font-family: "小塚ゴシック Std B","A-OTF ゴシックMB101 Pro B","IPA Pゴシック",Helvetica,Arial,sans-serif;
+  color: #fff;
+}
+
+h3 {  padding-left: 0.5em; }
+h4 {  padding-left: 1.0em; }
+h5 {  padding-left: 1.5em; }
+h5 {  padding-left: 2.0em; }
+
+p {
+  margin: 0.5em 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+
+ul, ol {
+  margin: 0.5em 0 0.5em 1.0em;
+  padding-left: 0;
+}
+li {
+  margin-bottom: 0.6em;
+  list-style: square;
+  font-size: 1.2em;
+}
+li li {
+  margin: 0.3em 0;
+  font-size: 85%;
+}
+
+dl {
+  margin: 0.3em 1em 0.3em 0;
+  padding: 0;
+}
+dt {
+  margin: 0.3em 0 0 0;
+  padding: 0;
+  font-weight: bold;
+}
+dd {
+  margin: 0 0 0 1.5em;
+  padding: 0;
+}
+
+pre {
+  margin: 0.3em 1em 0.3em 0;
+  padding: 0.1em 0.2em 0 0.2em;
+  border: 2px solid #bbd;
+  font-family: "小塚ゴシック Std L","Courier New",sans-serif;
+}
+blockquote {
+  margin: 0.3em 1em 0.3em 0;
+  padding: 0.1em 0.2em 0.1em 0.2em;
+  border: 2px dotted #cce;
+}
+blockquote blockquote {
+  margin: 0.75em;
+  padding: 0;
+}
+.section blockquote p {
+  margin: 0.5em;
+  padding: 0;
+}
+
+hr {
+  margin: 0 1em 0 0;
+  padding: 0;
+  border: 2px dotted #cce;
+}
+
+em, strong {
+  font-style: normal;
+  font-family: "小塚ゴシック Std H",Helvetica,Arial,sans-serif;
+}
+em {
+  color: #ccc;
+}
+strong {
+  color: #f60;
+}
+a {
+  color: #ccf;
+}
+
+sup {
+  font-size: 0.75em;
+  font-weight: normal;
+  vertical-align: 0.5em;
+  line-height: 1px;
+}
+
+/* ==================== The first slide */
+#slide0 h1 {
+  border: none;
+  font-size: 2.00em;
+  font-weight: normal;
+  margin: 3em 0 1.5em 0;
+}
+#slide0 h2 {
+  margin: 0.5em 0 0 0;
+  font-size: 1.25em;
+}
+#slide0 h3 {
+  margin: 0.5em 0 0 0;
+  font-size: 0.90em;
+}
+#slide0 h4 {
+  margin-top: 0;
+  font-size: smaller;
+}
+
+/* ==================== slide */
+.slide h1 {
+  font-size: 1.35em;
+  line-height: 1;
+  letter-spacing: -1px;
+  margin: 2.0em 0 0.7em 0;
+  padding: 0;
+}
+
+/* ==================== .slide .current */
+.slide .current {
+  border: 1px solid #f00;
+}
+.slide {
+}
+
+/* ==================== current slide */
+#currentSlide {
+  font-size: 0.5em;
+}
+#currentSlide span {
+  font-size: 13px;
+  color: #bbb;
+}
+#currentSlide #csSep {
+  display: none;
+}
+#currentSlide #csHere {
+  font-weight: bold;
+}
+#currentSlide #csHere:before {
+  content: "#";
+  font-weight: normal;
+}
+#currentSlide #csTotal:before {
+  content: " of ";
+}
+
+/* ==================== header, footer */
+#header,
+#footer {
+  font-size: 0.5em;
+  background: #336;
+  filter: Alpha(
+  Opacity=50,
+  FinishOpacity=100,
+  Style=1, 
+  StartX=100,  
+  FinishX=0, 
+  StartY=100, 
+  FinishY=100);
+}
+
+/* ========== header */
+#header {
+  border-bottom: 1px solid #333;
+  padding-bottom: 2em;
+  font-family: "小塚ゴシック Std L","A-OTF ゴシックMB101 Pro B","IPA Pゴシック",Helvetica,Arial,sans-serif;
+}
+
+/* ========== footer */
+#footer {
+  color: #bbb;
+  border-top: 1px solid #333;
+  font-family: "小塚ゴシック Std L","A-OTF ゴシックMB101 Pro B","IPA Pゴシック",Helvetica,Arial,sans-serif;
+}
+#footer h1,
+#footer h2 {
+  padding: 0.5em 0.75em;
+  font-weight: normal;
+}
+#footer h1 {
+  left: 0;
+  font-size: 1em;
+  letter-spacing: 1px;
+}
+#footer h2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#navLinks a {
+  margin: 0 0.33em;
+  padding: 0 0.25em;
+  border: 1px solid;
+  border-color: #CCD #556 #556 #CCD;
+  background-color: #8597C4;
+}
+
+/* ==================== slide frame */
+/* see framing.css */
+
+div.slide {
+  top: 0;
+  width: 95%;
+  padding: 0 0 0 5%;
+  z-index: 2;
+}
+
+/* end */

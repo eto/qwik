@@ -1,0 +1,60 @@
+<!-- -*- c++ -*- -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>test</title>
+<script type="text/javascript" src="../../jsUnit/app/jsUnitCore.js"></script>
+<script type="text/javascript" src="debugwindow.js"></script>
+<script language="javascript">
+
+//
+// Copyright (C) 2003-2005 Kouichirou Eto
+//     All rights reserved.
+//     This is free software with ABSOLUTELY NO WARRANTY.
+//
+// You can redistribute it and/or modify it under the terms of 
+// the GNU General Public License version 2.
+//
+
+function testShowHide() {
+  var obj = document.getElementById("debugwindow");
+
+  g_debug.hide();
+  assertEquals("none", obj.style.display);
+
+  g_debug.show();
+  assertEquals("block", obj.style.display);
+
+  var button = document.getElementById("debugwindowclosebutton");
+  button.onmousedown(); // clicked
+
+  assertEquals("none", obj.style.display);
+
+  g_debug.show();
+}
+
+function testPrint() {
+  var obj = document.getElementById("debugwindow");
+  assertEquals("object", typeof obj);
+
+  var obj = document.getElementById("debugwindowconsole");
+  assertEquals("object", typeof obj);
+  assertEquals("debugwindowconsole", obj.id);
+  assertEquals("", obj.innerHTML);
+
+  // test_print
+  g_debug.print("t");
+  var str = obj.innerHTML;
+  /*
+    var re = /<tt>t<\/tt>/i;
+    var ar = str.match(re);
+    assertEquals(true, re.test(str));
+  */
+}
+
+</script>
+</head>
+<body>
+<p>test</p>
+</body>
+</html>

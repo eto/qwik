@@ -1,0 +1,19 @@
+Overview of Changes in qwikWeb 0.7.2 - 2005-10-29
+
+* Make config setting more clear.
+* Delete default_hostname
+* Delete public_host
+* Delete public_port
+* New setting public_url
+* New setting public_maildomain
+* Add qwik-bench.rb for benchmark your site.
+* You can use relative URL.  Ex. http://example.com/qwik/
+
+Overview of Changes in qwikWeb 0.5.2 - 2005-04-20
+
+* Add focus functon by JavaScript.
+
+Overview of Changes in qwikWeb 0.5 - 2005-03-29
+
+* Change page design of editor.
+

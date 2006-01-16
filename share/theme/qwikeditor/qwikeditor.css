@@ -1,0 +1,319 @@
+/* Copyright (C) 2003-2005 Kouichirou Eto, Takashi Maekawa, All rights reserved.
+   based on a design by Takashi Maekawa.
+   This is free software with ABSOLUTELY NO WARRANTY.
+   You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+
+/* ========== general */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #ccc url("login_bg.gif");
+  color: #000;
+  font-family: Helvetica,Arial,Verdana,"‚l‚r ‚oƒSƒVƒbƒN",sans-serif;
+  font-size: small;
+}
+
+h1 {
+  font-size: medium;
+}
+
+h2, h3, h4, h5, h6 {
+  margin: 8px 0;
+  padding: 0;
+  font-size: small;
+}
+h2 {
+  font-size: small;
+}
+h4 {
+}
+h5 {
+}
+h6 {
+  font-weight: normal;
+}
+
+img {
+  border: 0;
+}
+
+ul, ol {
+  margin: 8px 0px;
+  padding: 0;
+  list-style-position: inside;
+  height: 10px; /* for IE bug. I don't know why. */
+}
+ul {
+  list-style: square;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin: 0 16px;
+}
+li {
+  margin-left: 0px;
+}
+dl {
+  margin: 4px 16px 8px;
+  padding: 0;
+}
+dt {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-weight: bold;
+}
+dd {
+  margin: 0 0 0 24px;
+  padding: 0;
+}
+
+p {
+  margin: 8px 0;
+  padding: 0;
+}
+pre {
+  margin: 8px 8px;
+  padding: 4px;
+  background-color: #eff;
+  border: 1px solid #999;
+  font-size: small;
+}
+blockquote {
+  margin: 8px 8px;
+  padding: 0;
+  background-color: #eff;
+  border: 1px dotted #696;
+}
+blockquote p {
+  margin: 8px 8px;
+}
+blockquote blockquote {
+  margin: 8px;
+  padding: 0;
+}
+
+hr {
+  margin: 0 0;
+  border: 1px solid #999;
+}
+
+em, strong {
+  font-style: normal;
+  font-weight: bold;
+}
+strong {
+  color: #c00;
+}
+
+a:link		{ color: #099; }
+a:visited	{ color: #066; }
+a:active, a:hover { color: #fff; background-color: #099;
+ text-decoration: none;
+}
+
+/* ==================== container */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+}
+
+/* ========== header */
+.header {
+  margin: 0 0 8px 0;
+  padding: 8px 8px 8px 24px;
+  height: 24px; /* 8 + 24 + 8 = 40 */
+  background: transparent url("edit_title_bg.jpg") repeat-x 0 0;
+}
+
+/* ========== main */
+.main {
+  margin: 0 172px 0 0; /* 8 + 160 + 4 */
+  padding: 0 0 0 8px;
+  height: 100%; /* IE bug fix. I don't know why. */
+}
+
+/* ========== day */
+.day {
+  margin: 0 0 8px 0;
+  padding: 0;
+  background: #aaa url("edit_form_bg.jpg") repeat 0 0;
+  border: 1px solid #666;
+}
+.day h2 {
+  margin: 0;
+  padding: 2px 8px 0 8px;
+  border-top: 6px solid #0aa;
+  color: #066;
+}
+
+/* ========== section */
+.section {
+  margin: 0 auto 0 auto;
+  padding: 0 0 8px 0;
+  width: 97%;
+}
+.section p {
+  margin: 4px 8px;
+  padding: 0;
+}
+.section .right {
+  text-align: right;
+}
+.section .right a {
+  padding: 0 0 0 18px; /* button */
+  margin: 0;
+  background: url("command.gif") no-repeat 0% 100%;
+}
+.section input.submit {
+  padding: 0 16px;
+  font-weight: bold;
+  font-family: Verdana,Helvetica,Arial,'MS UI Gothic',sans-serif;
+}
+
+/* ========== section_edit */
+.section_edit {
+}
+.section_edit textarea {
+  width: 100%;
+  height: 450px;
+}
+
+/* ========== section_attach */
+.section_attach .inputfile {
+  margin: 0;
+  padding: 0;
+}
+.section_attach .inputfile input {
+  width: 100%;
+}
+.section_attach .input_submit {
+  float: left;
+}
+.section_attach .attach_many {
+  margin: 8px 0 0 0;
+  padding: 0;
+}
+
+/* ========== sidebar */
+.sidebar {
+  position: absolute;
+  right: 4px;
+  top: 48px;
+  width: 160px;
+  margin: 0;
+  padding: 0;
+  font-size: small;
+}
+.sidebar li {
+  padding: 0 8px 0 8px;
+}
+.sidebar .section {
+  margin: 0 0 8px 0;
+  padding: 0 0 4px 0;
+  background-image: url("sidebar_bg.gif");
+  border: 1px solid #666;
+}
+.sidebar h2 {
+  margin: 0;
+  padding: 3px 0 0 8px;
+  border-top: 6px solid #0AA;
+  color: #066;
+}
+
+.sidebar h3 {
+  margin: 8px 16px 0 0;
+  padding: 0;
+  color: #066;
+  border-bottom: 1px solid #0AA;
+}
+
+/* ========== sidebar edithistory */
+.sidebar .edithistory ul li {
+  list-style: none;
+  list-style-position: outside;
+  padding: 0 0 0 18px; /* for button */
+  margin: 0 0 0 8px;
+  background: url("command.gif") no-repeat 0% 100%;
+}
+
+/* ========== sidebar edithelp */
+.sidebar .edithelp ul li {
+  margin: 0 0 0 8px;
+  padding: 0 0 0 0;
+  list-style: none;
+  list-style-position: outside;
+  color: #666;
+}
+.sidebar .edithelp ul li tt {
+  margin: 0 0;
+  padding: 0 2px;
+  color: #000;
+  background: #bbb;
+}
+.sidebar .edithelp p {
+  margin: 0 8px;
+  text-align: right;
+}
+.sidebar .edithelp p a {
+  padding: 0 0 0 16px;
+  margin: 0 0 0 0;
+  background: url("command.gif") no-repeat 0% 100%;
+}
+
+/* ========== footer */
+.footer {
+  margin: 0 0 0 0;
+  clear: both;
+  text-align: right;
+}
+
+/* ========== message */
+.message {
+  margin: 0;
+  padding: 0;
+}
+.message .day {
+  margin: 0 0 8px 8px;
+  padding: 0;
+  width: 97%;
+}
+.message .day .section {
+  margin: 0;
+  padding: 0;
+}
+.message .day h2 {
+  margin: 0;
+  padding: 4px;
+  border: 6px solid #c33;
+  background: #ddd;
+  color: #c00;
+}
+.message .day h2 p {
+  text-align:
+  border-top: 6px solid #c66;
+}
+.message tt {
+  font-size: small;
+  font-weight: bold;
+}
+
+/* ========== differ */
+.differ {
+  margin: 0 8px 8px 8px;
+  padding: 4px;
+  background: #eee;
+  border: 1px solid #999;
+}
+.differ del {
+  color: #33f;
+}
+.differ ins {
+  color: #c00;
+  font-weight: bold;
+}
+
+/* end */

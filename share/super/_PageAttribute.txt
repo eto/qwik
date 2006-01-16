@@ -1,0 +1,9 @@
+{{last_modified}}
+
+{{only_member
+{{generate_time}}
+}}
+
+{{wema}}
+
+# ページアトリビュート
