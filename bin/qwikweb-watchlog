@@ -1,4 +1,2 @@
-#! /usr/bin/ruby
-$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)+'/../lib'))
-require 'qwik/qwikweb-watchlog'
-Qwik::WatchLog.main(ARGV)
+#! /bin/sh
+qwik-service --watchlog

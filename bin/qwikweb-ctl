@@ -1,40 +1,14 @@
 #! /bin/sh
 
-start() {
-	echo -n "Starting qwikWeb services: "
-	/usr/local/qwik/bin/qwikweb-server
-#	/usr/sbin/qwikweb-server
-	echo
-}
-
-stop() {
-	echo -n "Stopping qwikWeb services: "
-#	kill `cat /var/run/quickml.pid`
-	kill `cat /usr/local/qwik/log/qwikweb.pid`
-	echo
-
-#	pid = `cat /usr/local/qwik/log/qwikweb.pid`
-#	pid = `cat /var/run/qwik/qwikweb.pid`
-#	process = `ps ho%c -p $pid`
-#	if [ $process = "qwikweb-server" ] ; then
-#		kill $pid
-#		echo 
-#	else
-#		echo "Stopping failed."
-#	fi
-}
-
 case "$1" in
   start)
-	start
+	qwik-service --web-start
 	;;
   stop)
-	stop
+	qwik-service --web-stop
 	;;
   restart)
-	stop
-	sleep 1
-	start
+	qwik-service --web-restart
 	;;
   *)
 	echo "Usage: qwikweb-ctl {start|stop|restart}"

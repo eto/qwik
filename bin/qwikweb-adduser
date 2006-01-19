@@ -1,4 +1,2 @@
-#! /usr/bin/ruby
-$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)+'/../lib'))
-require 'qwik/qwikweb-adduser'
-Qwik::AddUser.main(ARGV)
+#! /bin/sh
+qwik-service --adduser $1,$2

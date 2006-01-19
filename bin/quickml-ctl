@@ -1,41 +1,14 @@
 #! /bin/sh
 
-start() {
-	echo -n "Starting QuickML services: "
-#	/usr/local/sbin/quickml
-#	/usr/local/qwik/bin/quickml
-	/usr/local/qwik/bin/quickml-server
-#	/usr/sbin/quickml-server
-	echo
-}
-
-stop() {
-	echo -n "Stopping QuickML services: "
-#	kill `cat /var/run/quickml.pid`
-	kill `cat /usr/local/qwik/log/quickml.pid`
-	echo
-
-#	pid = `cat /usr/local/qwik/log/quickml.pid`
-#	pid = `cat /var/run/qwik/quickml.pid`
-#	process = `ps ho%c -p $pid`
-#	if [ $process = "quickml-server" ] ; then
-#		kill $pid
-#	else
-#		echo  "Stopping failed."
-#	fi
-}
-
 case "$1" in
   start)
-	start
+	qwik-service --ml-start
 	;;
   stop)
-	stop
+	qwik-service --ml-stop
 	;;
   restart)
-	stop
-	sleep 1
-	start
+	qwik-service --ml-restart
 	;;
   *)
 	echo "Usage: quickml-ctl {start|stop|restart}"
