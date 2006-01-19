@@ -10,7 +10,7 @@
 $LOAD_PATH.unshift('../../compat') unless $LOAD_PATH.include?('../../compat')
 require 'htree'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module HTree
   module GeneratorModule

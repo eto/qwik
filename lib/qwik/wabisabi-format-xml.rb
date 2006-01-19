@@ -7,23 +7,25 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/util-escape'
 
-$LOAD_PATH << '../..' unless $LOAD_PATH.include?('../..')
+$LOAD_PATH << '../../ext' unless $LOAD_PATH.include?('../../ext')
 
 $have_xmlformatter_so = false
 begin
-  require 'ext/xmlformatter.so'
+  require 'xmlformatter.so'
   $have_xmlformatter_so = true
 rescue LoadError
-#  p "error"
+  #p "No extention.  Use Ruby version."
   $have_xmlformatter_so = false
 end
 
 module Qwik
   class RB_XMLFormatter
     # copied from gonzui-0.1
+    # Extend some functions by Kouichirou Eto
+
     # To eliminate costs for object creation, the following
     # strings are defined as constants. It makes format_xml
     # 1.2 times faster.
@@ -64,7 +66,6 @@ module Qwik
       end
 
       element = ar[0].to_s.escapeHTML
-      #qp element
 
       if element == XMLDECL # XML Declaration
 	attributes = ''
@@ -284,18 +285,34 @@ if defined?($test) && $test
 	 [:'?xml', '1.0', 'utf-8', 'yes'])
       ok("<?xml version=\"1.0\" encoding=\"utf-8\"?><a\n/>",
 	 [[:'?xml', '1.0', 'utf-8'], [:a]])
+
+      # check_wabisabi_output
+      html = [:html,
+	[:head,
+	  [:title, 'hello']],
+	[:body,
+	  [:h1, 'hello, world!'],
+	  [:p, 'This is a ',
+	    [:a, {:href=>'hello.html'}, 'hello, world'],
+	    ' example.']]]
+      #puts html.format_xml
+      ok("<html
+><head
+><title
+>hello</title
+></head
+><body
+><h1
+>hello, world!</h1
+><p
+>This is a <a href=\"hello.html\"
+>hello, world</a
+> example.</p
+></body
+></html
+>",
+	 html)
     end
   end
 end
 
-if defined?($check) && $check
-html = [:html,
-  [:head,
-    [:title, 'hello']],
-  [:body,
-    [:h1, 'hello, world!'],
-    [:p, 'This is a ',
-      [:a, {:href=>'hello.html'}, 'hello, world'],
-      ' example.']]]
-puts html.format_xml
-end

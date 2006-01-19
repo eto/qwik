@@ -1,34 +1,9 @@
 require 'pp'
 require 'qp'
 
-def nu29replace_line(line)
-  return line if line.include?("\\")
-  return line if line.include?('<')
-  return line if line.include?('>')
-
-  line =  line.gsub(/\"(.*?)\"/) {
-    str = $1
-    ignore = %w(ascii section EOT)
-    if ignore.include?(str)
-      "\"#{str}\""
-#   elsif /\A[A-Za-z0-9\:\.\/_ |-]+\z/ =~ str
-#   elsif /\A[A-Za-z0-9\:\._ |-]+\z/ =~ str
-#   elsif /\A[A-Za-z0-9\@\:\._ |-]+\z/ =~ str
-#   elsif /\A[A-Za-z0-9\%\*\/\@\:\._ |-]+\z/ =~ str
-#   elsif /\A[A-Za-z0-9\%\*\/\@\:\._ |-]+\z/ =~ str
-    elsif /\A[A-Za-z0-9\,\%\*\/\@\:\._ \|-]+\z/ =~ str
-      "'#{str}'"
-    else
-      "\"#{str}\""
-    end
-  }
-
-  return line
-end
-
 def replace_line(line)
-  return line.gsub(%r|assert_text\(\'(.+)\', \'title\'\)|) {
-    "ok_title('#{$1}')"
+  return line.gsub(%r|\A\$LOAD_PATH << \'\.\./\.\./lib\' unless \$LOAD_PATH\.include\?\('\.\./\.\./lib'|) {
+    "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..'"
   }
 end
 
@@ -81,6 +56,7 @@ def main
 end
 main
 
+=begin
 # ============================== souko
 def nu_replace_line(line)
   return line.gsub(/require \"t\/test\"/) {
@@ -255,4 +231,35 @@ def nu28replace_line(line)
   }
 end
 
+def nu29replace_line(line)
+  return line if line.include?("\\")
+  return line if line.include?('<')
+  return line if line.include?('>')
 
+  line =  line.gsub(/\"(.*?)\"/) {
+    str = $1
+    ignore = %w(ascii section EOT)
+    if ignore.include?(str)
+      "\"#{str}\""
+#   elsif /\A[A-Za-z0-9\:\.\/_ |-]+\z/ =~ str
+#   elsif /\A[A-Za-z0-9\:\._ |-]+\z/ =~ str
+#   elsif /\A[A-Za-z0-9\@\:\._ |-]+\z/ =~ str
+#   elsif /\A[A-Za-z0-9\%\*\/\@\:\._ |-]+\z/ =~ str
+#   elsif /\A[A-Za-z0-9\%\*\/\@\:\._ |-]+\z/ =~ str
+    elsif /\A[A-Za-z0-9\,\%\*\/\@\:\._ \|-]+\z/ =~ str
+      "'#{str}'"
+    else
+      "\"#{str}\""
+    end
+  }
+
+  return line
+end
+
+def replace_line(line)
+  return line.gsub(%r|assert_text\(\'(.+)\', \'title\'\)|) {
+    "ok_title('#{$1}')"
+  }
+end
+
+=end

@@ -8,7 +8,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/mail'
 
 module QuickML
@@ -52,7 +52,10 @@ module QuickML
 
     # ==================== class method
     def self.boundary(ct)
-      return $2 if /^multipart\/\w+;\s*boundary=("?)(.*)\1/i =~ ct
+     #if /^multipart\/\w+;\s*boundary=("?)(.*)\1/i =~ ct
+      if /^multipart\/\w+;/i =~ ct and /[\s;]boundary=("?)(.*)\1/i =~ ct
+	return $2 
+      end
       return nil
     end
 
@@ -99,6 +102,10 @@ if defined?($test) && $test
 
       # test_boundary
       ok_eq('b', c.boundary("multipart/mixed; boundary=\"b\""))
+      # ref. https://www.codeblog.org/blog/ryu/?date=20060112#p01
+      # Thanks to Mr. Sato.
+      ok_eq('b', c.boundary("multipart/signed; protocol=\"TYPE/STYPE\";
+           micalg=\"MICALG\"; boundary=\"b\""))
 
       # test_split_body
       ok_eq(['body'], c.split_body('body', ''))

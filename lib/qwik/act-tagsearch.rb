@@ -8,7 +8,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/act-summary' # Page.get_summary()
 require 'qwik/common-plain' # c_plain()
 require 'qwik/act-tag' # self.tag_get_pages()

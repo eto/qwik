@@ -9,7 +9,7 @@
 
 require 'webrick/log'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/testunit'
 require 'qwik/test-module-path'
 require 'qwik/test-module-public'

@@ -10,7 +10,7 @@
 
 # You can send a mail by using SMTP for check the status.
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/config'
 require 'qwik/util-sendmail'
 require 'qwik/qwik-mail'

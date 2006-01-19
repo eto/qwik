@@ -9,7 +9,7 @@
 
 require 'optparse'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 $test = true	# Set $test before require 'qwik/test-common'
 require 'qwik/test-common'
 

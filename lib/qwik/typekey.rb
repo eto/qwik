@@ -179,6 +179,7 @@ if defined?($test) && $test
     end
 
     def test_typekey
+      return if $0 != __FILE__	# just only for unit test.
       config = Qwik::Config.new
 
       sitetoken = 't'
@@ -200,6 +201,7 @@ if defined?($test) && $test
     end
 
     def test_verify
+      return if $0 != __FILE__	# just only for unit test.
       config = Qwik::Config.new
 
       sitetoken = typekey_get_sitetoken(config)

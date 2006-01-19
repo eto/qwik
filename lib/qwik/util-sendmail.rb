@@ -9,7 +9,7 @@
 
 require 'net/smtp'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/mail'
 require 'qwik/util-kconv'
 

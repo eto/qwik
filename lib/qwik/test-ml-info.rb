@@ -12,7 +12,7 @@
 # This file is just for information.  Do not execute.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/testunit'
 require 'qwik/ml-session'
 

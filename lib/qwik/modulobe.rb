@@ -9,7 +9,7 @@
 
 # special mode for modulobe.com
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/util-time'
 require 'qwik/htree-to-wabisabi'
 require 'qwik/mdlb-sample'

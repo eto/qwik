@@ -10,7 +10,7 @@
 # $use_charset = true
 if defined?($use_charset) && $use_charset
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 # $LOAD_PATH.unshift('../../../chise/ruby/lib')
 CHISE_DIR = '/chise'

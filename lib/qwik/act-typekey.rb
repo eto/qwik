@@ -7,7 +7,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 begin
   require 'qwik/typekey'
   $have_typekey = true
@@ -155,6 +155,7 @@ if defined?($test) && $test
     end
 
     def test_typekey
+      return if $0 != __FILE__	# just only for unit test.
       return if ! $have_typekey
 
       res = session
@@ -178,6 +179,7 @@ if defined?($test) && $test
     end
 
     def test_verify
+      return if $0 != __FILE__	# just only for unit test.
       return if ! $have_typekey
 
       res = session

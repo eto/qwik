@@ -14,7 +14,7 @@ rescue LoadError
   $have_senna_so = false
 end
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/util-pathname'
 
 module Qwik

@@ -9,7 +9,7 @@
 
 require 'pp'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 # $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)+'/../lib'))
 # $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)+'/../compat'))
 require 'qwik/config'

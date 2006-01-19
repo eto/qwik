@@ -11,7 +11,7 @@
 # If you'd like to check the details of qwikWeb plugin, please see URL below.
 # http://qwik.jp/HowToMakePlugin.html
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module Qwik
   class Action

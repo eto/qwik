@@ -9,7 +9,7 @@
 
 require 'strscan'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 #require 'qwik/tokenizer-inline'
 
 module Qwik

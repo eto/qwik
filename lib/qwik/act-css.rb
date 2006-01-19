@@ -10,7 +10,7 @@
 require 'uri'
 require 'net/http'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module Qwik
   class Action

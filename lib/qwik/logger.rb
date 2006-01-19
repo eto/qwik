@@ -8,7 +8,7 @@
 #
 
 require 'resolv'
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/config'
 
 module Qwik

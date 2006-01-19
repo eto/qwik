@@ -11,7 +11,7 @@
 # charts.php v4.1
 # Copyright (c) 2003-2005, maani.us
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 class Array
   def keys

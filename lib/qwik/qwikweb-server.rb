@@ -7,7 +7,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/config'
 require 'qwik/loadlib'
 require 'qwik/server'
@@ -15,6 +15,8 @@ require 'qwik/server'
 module Qwik
   class QwikWebServer
     def self.main(args)
+      return if defined?($qwikweb_server_running) && $qwikweb_server_running
+
       File.umask(0)
 
       config = Config.new
@@ -24,6 +26,7 @@ module Qwik
       init_load_lib(config.lib_dir)
 
       server = Server.new(config)
+      $qwikweb_server_running = true
       server.start
     end
 

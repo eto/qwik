@@ -10,7 +10,7 @@
 require 'time'
 require 'fileutils'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/server-memory'
 require 'qwik/pages'
 require 'qwik/site-config'

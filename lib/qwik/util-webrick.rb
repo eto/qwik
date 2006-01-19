@@ -1,6 +1,6 @@
 require 'webrick'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module WEBrick
   class HTTPRequest

@@ -9,7 +9,7 @@
 
 # Under construction.
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/site-timeline'
 require 'qwik/act-time-walker'
 

@@ -7,12 +7,17 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 class MailAddress
   def self.valid?(mail)
     return false if mail.nil?
-    return (/\A([0-9a-zA-Z_.+-]+)@([0-9a-zA-Z_.-]+)\z/ =~ mail) != nil
+    return false unless /\A([0-9a-zA-Z_.+-]+)@([0-9a-zA-Z_.-]+)\z/ =~ mail
+    login_part = $1
+    domain_part = $2
+    return false if domain_part.include?('..')
+    #return false if mail.include?('..')
+    return true
   end
 
   def self.obfuscate(address)
@@ -57,12 +62,14 @@ if defined?($test) && $test
       ok_eq(true,  c.valid?("valid+@example.com"))
       ok_eq(true,  c.valid?("+valid@example.com"))
       ok_eq(true,  c.valid?('_@example.com'))
-      # Make this address valid for enabling local account.
+      ok_eq(true,  c.valid?('us..er@example.com'))
+      # Make this address valid for local account.
       ok_eq(true,  c.valid?('invalid@example'))
       ok_eq(false, c.valid?(nil))
       ok_eq(false, c.valid?(''))
       ok_eq(false, c.valid?("invalid!@example.com"))
       ok_eq(false, c.valid?('invalid'))
+      ok_eq(false, c.valid?('user@example..com'))
     end
 
     def test_obfuscate

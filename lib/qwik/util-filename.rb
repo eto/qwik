@@ -9,7 +9,7 @@
 
 # Thanks to Mr. Shuhei Yamamoto.
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/util-escape'
 require 'qwik/util-charset'
 

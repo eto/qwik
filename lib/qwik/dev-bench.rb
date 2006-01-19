@@ -11,7 +11,7 @@ require 'benchmark'
 require 'optparse'
 require 'fileutils'
 
-$LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/bench-module-session'
 require 'qwik/test-common'
 
