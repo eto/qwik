@@ -1,3 +1,19 @@
+2006-01-20  Kouichirou Eto  <2005 eto.com>
+
+	* mail-multipart.rb: Bug fix for multipart/signed.
+	Thanks to Mr. Sato at IPA.
+
+	* mailaddress.rb#valid?: Make invalid if it contains '..'
+
+	* qwikweb-server.rb: Do not start if the server is already running.
+
+	* change add LOAD_PATH to '..'
+
+	* wabiwabi-format-xml.rb: Change require path.
+
+	* act-typekey.rb: Test only if unit test.
+	* typekey.rb: Ditto.
+
 2006-01-16  Kouichirou Eto  <2005 eto.com>
 
 	* config.rb: New config public_url.  Simplify url stuff.
