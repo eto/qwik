@@ -1,5 +1,7 @@
 2006-01-20  Kouichirou Eto  <2005 eto.com>
 
+	* bin/*.rb: Change them to stub for qwik-service
+
 	* mail-multipart.rb: Bug fix for multipart/signed.
 	Thanks to Mr. Sato at IPA.
 
