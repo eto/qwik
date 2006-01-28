@@ -2,7 +2,7 @@
 # DO NOT EDIT!
 
 module Qwik
-  VERSION = '0.7.4'
+  VERSION = '0.7.3'
   RELEASE_DATE = '20060124'
 end
 
