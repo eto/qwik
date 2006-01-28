@@ -1,3 +1,13 @@
+2006-01-28  Kouichirou Eto  <2005 eto.com>
+
+	* wabisabi-table.rb: Refactoring.
+
+	* tokenizer.rb: Refactoring.
+
+	* tokenizer.rb: Add '!' for header.
+
+	* qwikweb-release.rb: Refactoring.
+
 2006-01-20  Kouichirou Eto  <2005 eto.com>
 
 	* bin/*.rb: Change them to stub for qwik-service
