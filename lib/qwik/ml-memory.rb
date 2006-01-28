@@ -7,7 +7,7 @@ require 'qwik/util-safe'
 module QuickML
   class ServerMemory
     def self.init_logger(memory, config)
-      memory[:logger] = Logger.new(config[:log_file], config[:verbose_mode])
+      memory[:logger] = Logger.new(config[:ml_log_file], config[:verbose_mode])
     end
 
     def self.init_mutex(memory)
