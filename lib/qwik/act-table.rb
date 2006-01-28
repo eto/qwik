@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/act-edit'
 require 'qwik/wabisabi-table'
@@ -38,13 +29,15 @@ You should try this plugin on your own page.
       return p_error(_('You can only use a table.')) if 1 < w.length
 
       table = w[0]
-      return p_error(_('You can only use a table.')) if table.nil? || table[0] != :table
+      if table.nil? || table[0] != :table
+	return p_error(_('You can only use a table.'))
+      end
 
-      wtable = WabisabiTable.new(table)
+      if WabisabiTable.error_check(table)
+	return p_error(_('You can only use text.'))
+      end
 
-      return p_error(_('You can only use text.')) if wtable.error_check
-
-      table = wtable.prepare
+      WabisabiTable.prepare(table)
 
       # @table_num is global for an action.
       @table_num = 0 if !defined?(@table_num)
@@ -91,7 +84,7 @@ You should try this plugin on your own page.
 	}
       end
 
-      c_make_log('table')	# COMMENT
+      c_make_log('table')	# TABLE
 
       url = "#{@req.base}.html"
       return c_notice(_('Edit done.'), url){
@@ -160,76 +153,59 @@ a
 
 |b
 }}")
-      ok_wi(
-[:div,
- {:class=>'table'},
- [:form,
-  {:action=>'1.1.table', :method=>'POST'},
-  [:table,
-   [:tr,
-    [:th, [:input, {:size=>'1', :value=>'a', :name=>'t_0_0'}]],
-    [:th,
-     {:class=>'new_col'},
-     [:input, {:size=>'1', :value=>'', :name=>'t_1_0'}]],
-    [:td,
-     {:class=>'new_col_button'},
-     [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
-   [:tr,
-    {:class=>'new_row'},
-    [:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_1'}]],
-    [:td,
-     {:class=>'new_col'},
-     [:input, {:size=>'1', :value=>'', :name=>'t_1_1'}]]],
-   [:tr,
-    {:class=>'new_row_button_row'},
-    [:td,
-     {:class=>'new_row_button'},
-     [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
-  [:div, {:class=>'submit'}, [:input, {:value=>'Update', :type=>'submit'}]]]],
+      ok_wi([:div, {:class=>'table'},
+	      [:form, {:action=>'1.1.table', :method=>'POST'},
+		[:table,
+		  [:tr,
+		    [:th, [:input, {:size=>'1', :value=>'a', :name=>'t_0_0'}]],
+		    [:th, {:class=>'new_col'},
+		      [:input, {:size=>'1', :value=>'', :name=>'t_1_0'}]],
+		    [:td, {:class=>'new_col_button'},
+		      [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
+		  [:tr, {:class=>'new_row'},
+		    [:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_1'}]],
+		    [:td, {:class=>'new_col'},
+		      [:input, {:size=>'1', :value=>'', :name=>'t_1_1'}]]],
+		  [:tr, {:class=>'new_row_button_row'},
+		    [:td, {:class=>'new_row_button'},
+		      [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
+		[:div, {:class=>'submit'},
+		  [:input, {:value=>'Update', :type=>'submit'}]]]],
 	    "{{table
 |a
 }}")
-      ok_wi(
-[:div,
- {:class=>'table'},
- [:form,
-  {:action=>'1.1.table', :method=>'POST'},
-  [:table,
-   [:tr,
-    [:th, [:input, {:size=>'1', :value=>'a', :name=>'t_0_0'}]],
-    [:th, [:input, {:size=>'1', :value=>'b', :name=>'t_1_0'}]],
-    [:th,
-     {:class=>'new_col'},
-     [:input, {:size=>'1', :value=>'', :name=>'t_2_0'}]],
-    [:td,
-     {:class=>'new_col_button'},
-     [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
-   [:tr,
-    [:th, [:input, {:size=>'1', :value=>'c', :name=>'t_0_1'}]],
-    [:td, [:input, {:size=>'1', :value=>'d', :name=>'t_1_1'}]],
-    [:td,
-     {:class=>'new_col'},
-     [:input, {:size=>'1', :value=>'', :name=>'t_2_1'}]]],
-   [:tr,
-    {:class=>'new_row'},
-    [:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_2'}]],
-    [:td, [:input, {:size=>'1', :value=>'', :name=>'t_1_2'}]],
-    [:td,
-     {:class=>'new_col'},
-     [:input, {:size=>'1', :value=>'', :name=>'t_2_2'}]]],
-   [:tr,
-    {:class=>'new_row_button_row'},
-    [:td,
-     {:class=>'new_row_button'},
-     [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
-  [:div, {:class=>'submit'}, [:input, {:value=>'Update', :type=>'submit'}]]]],
+      ok_wi([:div, {:class=>'table'},
+	      [:form, {:action=>'1.1.table', :method=>'POST'},
+		[:table,
+		  [:tr,
+		    [:th, [:input, {:size=>'1', :value=>'a', :name=>'t_0_0'}]],
+		    [:th, [:input, {:size=>'1', :value=>'b', :name=>'t_1_0'}]],
+		    [:th, {:class=>'new_col'},
+		      [:input, {:size=>'1', :value=>'', :name=>'t_2_0'}]],
+		    [:td, {:class=>'new_col_button'},
+		      [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
+		  [:tr,
+		    [:th, [:input, {:size=>'1', :value=>'c', :name=>'t_0_1'}]],
+		    [:td, [:input, {:size=>'1', :value=>'d', :name=>'t_1_1'}]],
+		    [:td, {:class=>'new_col'},
+		      [:input, {:size=>'1', :value=>'', :name=>'t_2_1'}]]],
+		  [:tr, {:class=>'new_row'},
+		    [:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_2'}]],
+		    [:td, [:input, {:size=>'1', :value=>'', :name=>'t_1_2'}]],
+		    [:td, {:class=>'new_col'},
+		      [:input, {:size=>'1', :value=>'', :name=>'t_2_2'}]]],
+		  [:tr, {:class=>'new_row_button_row'},
+		    [:td, {:class=>'new_row_button'},
+		      [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
+		[:div, {:class=>'submit'},
+		  [:input, {:value=>'Update', :type=>'submit'}]]]],
 	    "{{table
 |a|b
 |c|d
 }}")
     end
 
-    def test_ext_table
+    def nutest_ext_table
       t_add_user
       page = @site.create_new
       page.store("{{table
@@ -237,29 +213,23 @@ a
 }}")
 
       res = session('/test/1.html')
-      expected = [:form,
- {:action=>'1.1.table', :method=>'POST'},
- [:table,
-  [:tr,
-   [:th, [:input, {:size=>'1', :value=>'a', :name=>'t_0_0'}]],
-   [:th,
-    {:class=>'new_col'},
-    [:input, {:size=>'1', :value=>'', :name=>'t_1_0'}]],
-   [:td,
-    {:class=>'new_col_button'},
-    [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
-  [:tr,
-   {:class=>'new_row'},
-   [:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_1'}]],
-   [:td,
-    {:class=>'new_col'},
-    [:input, {:size=>'1', :value=>'', :name=>'t_1_1'}]]],
-  [:tr,
-   {:class=>'new_row_button_row'},
-   [:td,
-    {:class=>'new_row_button'},
-    [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
- [:div, {:class=>'submit'}, [:input, {:value=>'Update', :type=>'submit'}]]]
+      expected = [:form, {:action=>'1.1.table', :method=>'POST'},
+	[:table,
+	  [:tr,
+	    [:th, [:input, {:size=>'1', :value=>'a', :name=>'t_0_0'}]],
+	    [:th, {:class=>'new_col'},
+	      [:input, {:size=>'1', :value=>'', :name=>'t_1_0'}]],
+	    [:td, {:class=>'new_col_button'},
+	      [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
+	  [:tr, {:class=>'new_row'},
+	    [:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_1'}]],
+	    [:td, {:class=>'new_col'},
+	      [:input, {:size=>'1', :value=>'', :name=>'t_1_1'}]]],
+	  [:tr, {:class=>'new_row_button_row'},
+	    [:td, {:class=>'new_row_button'},
+	      [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
+	[:div, {:class=>'submit'},
+	  [:input, {:value=>'Update', :type=>'submit'}]]]
       ok_in(expected, "//div[@class='table']")
 
       res = session("/test/1.1.table?t_0_0=bb")

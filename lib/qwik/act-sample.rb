@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 # This is a sample plugin for qwikWeb.
 # If you'd like to check the details of qwikWeb plugin, please see URL below.
 # http://qwik.jp/HowToMakePlugin.html
@@ -21,7 +12,7 @@ module Qwik
       :dc => "* Example
 You can show famous \"hello, world!\" string by this plugin.
 
-As you know, these \"hello world\" plugins are examples to describe
+As you know, this \"hello world\" plugin is an example to describe
 how you can create your own plugin.
 
 Please check this URL for detail.

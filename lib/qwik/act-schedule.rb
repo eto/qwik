@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/act-edit'
 require 'qwik/wabisabi-table'
@@ -36,13 +27,15 @@ You can not edit this table because this is a description page.
       return p_error(_('You can only use a table.')) if 1 < w.length
 
       table = w[0]
-      return p_error(_('You can only use a table.')) if table.nil? || table[0] != :table
+      if table.nil? || table[0] != :table
+	return p_error(_('You can only use a table.'))
+      end
 
-      wtable = WabisabiTable.new(table)
+      if WabisabiTable.error_check(table)
+	return p_error(_('You can only use text.'))
+      end
 
-      return p_error(_('You can only use text.')) if wtable.error_check
-
-      table = wtable.prepare
+      WabisabiTable.prepare(table)
 
       # @schedule_num is global for an action.
       @schedule_num = 0 if !defined?(@schedule_num)

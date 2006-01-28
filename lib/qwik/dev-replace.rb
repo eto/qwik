@@ -2,7 +2,19 @@ require 'pp'
 require 'qp'
 
 def replace_line(line)
-  return line.gsub(%r|\A\$LOAD_PATH << \'\.\./\.\./lib\' unless \$LOAD_PATH\.include\?\('\.\./\.\./lib'|) {
+  str = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..')"
+  restr = Regexp.escape(str)
+  #puts restr
+  # \$LOAD_PATH\ <<\ '\.\.'\ unless\ \$LOAD_PATH\.include\?\('\.\.'\)
+  re = Regexp.compile(restr)
+  out = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include? '..'"
+  return line.gsub(re) {
+    out
+  }
+end
+
+def nu_replace_line(line)
+  return line.gsub(%r|\$LOAD_PATH << \'\.\./\.\./lib\' unless \$LOAD_PATH\.include\?\('\.\./\.\./lib'|) {
     "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..'"
   }
 end
@@ -12,7 +24,7 @@ def dummy_replace_line(line)	# dummy
 end
 
 def main
-  #dryrun = false
+  dryrun = false
   dryrun = true
 
   #Dir.glob('test-sub-*.rb') {|fname|

@@ -48,7 +48,6 @@ module Qwik
 end
 
 if $0 == __FILE__
-  $LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
   require 'qwik/test-common'
   $test = true
 end

@@ -34,6 +34,8 @@ module Qwik
       :verbose_mode	=> false,
 
       # Server setting.
+      :server_type	=> 'webrick',
+      #:server_type	=> 'mongrel',
       :user		=> 'nobody',
       :group		=> 'nobody',
       :bind_address	=> '0.0.0.0',
@@ -102,7 +104,9 @@ module Qwik
 
     def initialize
       @config = {}
-      Config.init(@config)
+      @config.update(QuickMLInternal)
+      @config.update(DefaultConfig)
+      Config.make_accessor(Config, @config, @config[:debug])
     end
 
     def [](k)
@@ -118,12 +122,6 @@ module Qwik
     end
 
     # class method
-
-    def self.init(config)
-      config.update(QuickMLInternal)
-      config.update(DefaultConfig)
-      Config.make_accessor(Config, config, config[:debug])
-    end
 
     def self.load_args_and_config(config, progname, args)
       args_conf = Config.parse_args(progname, args)

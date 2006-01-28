@@ -116,7 +116,7 @@ module Qwik
 
       if @qconfig.debug
 	require 'qwik/autoreload'
-	autoreload(1, true)	# auto reload every sec.
+	AutoReload.start(1, true, 'Web')	# auto reload every sec.
       end
     end
 
@@ -178,7 +178,7 @@ if defined?($test) && $test
   class TestServer < Test::Unit::TestCase
     include TestServerModule
 
-    def test_front
+    def test_frontpage
       return if $0 != __FILE__		# Only for unit test.
       server, config, memory, wreq, wres = setup_server
       wreq.path = '/'

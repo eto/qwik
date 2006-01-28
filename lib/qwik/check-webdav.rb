@@ -1,10 +1,10 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
+require 'pp'
+require 'qwik/qp'
+require 'qwik/autoreload'
 require 'qwik/util-webrick'
 require 'qwik/webdavhandler'
-require 'qwik/autoreload'
-require 'qwik/qp'
-require 'pp'
 
 class MyWebDAVHandler < WEBrick::HTTPServlet::WebDAVHandler
   def do_OPTIONS(req, res)
@@ -18,7 +18,7 @@ end
 
 def start_server
   $running = true
-  autoreload(1, true)	# auto reload every sec.
+  AutoReload.start(1, true)	# auto reload every sec.
 
   log = WEBrick::Log.new
   log.level = WEBrick::Log::DEBUG if $DEBUG

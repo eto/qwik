@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module Qwik
@@ -42,30 +33,37 @@ module Qwik
       pagename = @req.base
       dirpath = @site.cache_path
       file = Action.html_page_cache_path(dirpath, pagename)
-      unless file.exist? && @site.last_page_time <= file.mtime
+
+      if view_page_cache_need_generate?(file)
 	view_page_cache_generate(pagename)
       end
 
       c_simple_send(file.to_s, "text/html; charset=Shift_JIS")
     end
 
+    def view_page_cache_need_generate?(file)
+      return true if ! file.exist?
+      return true if file.mtime < @site.last_page_time
+      return true if @req.header['cache-control'] == ['no-cache']
+      return false
+    end
+
     # called from act-archive
     def view_page_cache_generate(pagename)
       w = surface_view_generate(pagename)
       str = w.format_xml	# format xml with "\n"
-    # dirpath = @site.dir.path
       dirpath = @site.cache_path
       Action.html_page_cache_store(dirpath, pagename, str)
       return w
     end
 
     def self.html_page_cache_store(dirpath, pagename, str)
-      file = Action.html_page_cache_path(dirpath, pagename)
-      file.put(str)	# Write it to the file.
+      # Write it to the file.
+      Action.html_page_cache_path(dirpath, pagename).write(str)
     end
 
     def self.html_page_cache_path(dirpath, pagename)
-      return (dirpath+(pagename+'.html')).cleanpath
+      return (dirpath+"#{pagename}.html").cleanpath
     end
   end
 end

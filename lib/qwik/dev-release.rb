@@ -33,13 +33,13 @@ module Qwik
 
       case type
       when :generate_version
-	MakeRelease.generate_version_file(libdir, version, ml_version, date)
+	GenerateVersion.generate(libdir, version, ml_version, date)
       when :generate_manifest
-	MakeRelease.generate_manifest_file('.')
+	GenerateManifest.generate('.')
       when :generate_dist
-	MakeRelease.generate_dist_file(base, targz)
+	GenerateDist.generate(base, targz)
       when :upload
-	MakeRelease.upload_tarball(targz, upload_dest)
+	Upload.upload(targz, upload_dest)
       end
     end
 
@@ -49,16 +49,16 @@ module Qwik
 	opts.banner = 'Usage: dev-release.rb [options]'
 	opts.separator ''
 	opts.separator 'Specific options:'
-	opts.on('-v', '--generate-vesrion', 'Generate version file.') {|a|
+	opts.on('--generate-vesrion', 'Generate version file.') {|a|
 	  type = :generate_version
 	}
-	opts.on('-m', '--generate-manifest', 'Generate MANIFEST file.') {|a|
+	opts.on('--generate-manifest', 'Generate MANIFEST file.') {|a|
 	  type = :generate_manifest
 	}
-	opts.on('-d', '--generate-dist', 'Generate dist archive.') {|a|
+	opts.on('--generate-dist', 'Generate dist archive.') {|a|
 	  type = :generate_dist
 	}
-	opts.on('-u', '--upload', 'Upload dist file.') {|a|
+	opts.on('--upload', 'Upload dist file.') {|a|
 	  type = :upload
 	}
 	opts.separator ''
@@ -78,12 +78,12 @@ module Qwik
 '
 	exit
       end
-
       return type
     end
+  end
 
-    # ============================== version
-    def self.generate_version_file(libdir, version, ml_version, date)
+  class GenerateVersion
+    def self.generate(libdir, version, ml_version, date)
       version_str = "# Automatically generated.
 # DO NOT EDIT!
 
@@ -98,12 +98,13 @@ end
 "
       (libdir+'/version.rb').path.write(version_str)
     end
+  end
 
-    # ==============================
-    def self.generate_manifest_file(cwd)
+  class GenerateManifest
+    def self.generate(cwd)
       ar = []
       cwd.path.find {|f|
-	ar << f.to_s if MakeRelease.public_file?(f)
+	ar << f.to_s if public_file?(f)
       }
       ar += %w(etc/ log/)
 
@@ -114,7 +115,7 @@ end
       }
     end
 
-    IGNORE_DIR = %w(backup cache data etc grave log work)
+    IGNORE_DIR = %w(backup cache data etc grave log work .svn)
     IGNORE_PATTERN = %w(
 CVS sfcring memo.txt tar.gz .rm .MP4 .cvsignore
 .stackdump
@@ -127,23 +128,30 @@ qwik-0.
 album.swf
 charts.swf
 charts_library
+.config
+lib/qwik/dev-
+lib/qwik/mock-
+lib/qwik/test-
 )
-    def self.public_file?(f)
-      return false if f.directory?
-      s = f.to_s
+
+    def self.public_file?(file)
+      return false if file.directory?
+      s = file.to_s
       IGNORE_DIR.each {|dir|		# ignore dir
-	return false if s =~ /^#{dir}/
+	#qp s
+	return false if /^#{dir}/ =~ s
+	return false if /\/#{dir}\// =~ s
       }
       IGNORE_PATTERN.each {|pat|	# ignore pattern
 	return false if s.include?(pat)
-	return false if s.include?(pat)
       }
-      return false if s =~ /~$/
+      return false if /~$/ =~ s
       return true
     end
+  end
 
-    # ==============================
-    def self.generate_dist_file(base, targz)
+  class GenerateDist
+    def self.generate(base, targz)
       opt = {}		# dummy
       files = open('MANIFEST'){|f| f.read }.split
       rm_rf(base, opt)
@@ -214,9 +222,10 @@ charts_library
     def self.write_file(file, str)
       open(file, 'wb'){|f| f.print str }
     end
+  end
 
-    # ==============================
-    def self.upload_tarball(targz, upload_dest)
+  class Upload
+    def self.upload(targz, upload_dest)
       opt = {}		# dummy
       system_p("scp #{targz} #{upload_dest}", opt)
     end

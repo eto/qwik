@@ -61,7 +61,7 @@ module QuickML
 
       if config.debug
         require 'qwik/autoreload'
-	autoreload(1, true, 'ML')	# auto reload every sec.
+	AutoReload.start(1, true, 'ML')	# auto reload every sec.
       end
 
       server.start

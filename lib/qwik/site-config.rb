@@ -22,23 +22,49 @@ module Qwik
   end
 
   class SiteConfig
+    DefaultConfig = {
+      # Site access control.
+      :open		=> false,
+
+      # Site URL setting.
+      :siteurl		=> '',
+      :siteml		=> '',
+
+      # Site look and feel.
+      :theme		=> 'qwikgreen',
+      :sitename		=> '',
+      :redirect		=> 'false',
+      :titlelink	=> 'false',
+      :aid		=> 'q02-22',		# Amazon associate id
+
+      # Mailing list releation.
+      :reportmail		=> 'daily',
+      :reportfrom		=> '',
+      :ml_life_time		=> (60 * 60 * 24 * 31).to_s,	# 1 month
+
+=begin
+      # Config for each group.
+      :auto_unsubscribe_count	=> 5,
+      :max_mail_length		=> 100 * 1024,	# 100KB
+      :max_ml_mail_length	=> 100 * 1024,	# 100KB
+      :max_members		=> 100,
+      :ml_alert_time		=> 86400 * 24,
+      :ml_life_time		=> 86400 * 31,
+=end
+    }
+
     def initialize(config, site)
       @config = config
       @site = site
+
+      @site_config = {}
+      @config.update(DefaultConfig)
+
       @default = default_config
 
       page = get_page
 
       @db = page.wikidb
-    end
-
-    def nu_get_page
-      k = 'SiteConfig'
-      return @site[k] if @site.exist?(k)
-      k = '_SiteConfig'
-      return @site[k] if @site.exist?(k)
-      k = '_SiteConfig'
-      return @site.create(k)
     end
 
     def get_page
@@ -60,24 +86,17 @@ module Qwik
       {
 	'open'		=> 'false',
 	'theme'		=> 'qwikgreen',
-#	'sitename'	=> @config.default_hostname,
 	'sitename'	=> '',
 	'aid'		=> 'q02-22', # amazon associate id
-	'ml_life_time'	=> (60*60*24*31).to_s, # 1 month
+	'ml_life_time'	=> (60 * 60 * 24 * 31).to_s,	# 1 month
 	'reportmail'	=> 'hourly',
 	'reportfrom'	=> '',
 	'titlelink'	=> 'false',
 	'redirect'	=> 'false',
 	'siteurl'	=> '',
 	'siteml'	=> '',
-
-	'read'		=> 'private',
-	'write'		=> 'private',
-	'inedit'	=> 'private',
-	'wema'		=> 'private',
       }
     end
-
   end
 end
 
@@ -120,14 +139,14 @@ if defined?($test) && $test
       # test_title
       page = @site.create('TestPage')
       ok_eq('TestPage', page.get_title)
-#      ok_eq('TestPage - TestSite', @site.title('TestPage'))
+#     ok_eq('TestPage - TestSite', @site.title('TestPage'))
+      ok_eq('TestSite', @site.title)
 
       page = @site.create('1')
       ok_eq('1', page.get_title)
 #      ok_eq('1 - TestSite', @site.title('1'))
       page.store('* TestTitle')
 #      ok_eq('TestTitle - TestSite', @site.title('1'))
-
     end
   end
 end

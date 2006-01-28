@@ -25,7 +25,16 @@ module Qwik
       # Load all libraries here.
       init_load_lib(config.lib_dir)
 
-      server = Server.new(config)
+      if config[:server_type] == 'webrick'
+	server = Server.new(config)
+      elsif config[:server_type] == 'mongrel'
+	require 'qwik/mongrel-server'
+	server = MongrelServer.new(config)
+      else
+	puts 'Error'
+	exit
+      end
+
       $qwikweb_server_running = true
       server.start
     end

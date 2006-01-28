@@ -1,30 +1,26 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'strscan'
-
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
-#require 'qwik/tokenizer-inline'
 
 module Qwik
   class TextTokenizer
-    # Terminal regexp
-    TERMINAL_REGEXP = {
-      :plugin	=> /\A\}\}\z/,
-      :pre	=> /\A\}\}\}\z/,
-      :html	=> /\A\<\/html\>\z/,
+    MULTILINE = {
+      :plugin => [
+	/\A\{\{([^\(\)\{\}]+?)(?:\(([^\(\)\{\}]*?)\))?\z/,
+	/\A\}\}\z/
+      ],
+      :pre => [
+	/\A\{\{\{\z/,
+	/\A\}\}\}\z/
+      ],
+      :html => [
+	/\A\<html\>\z/,
+	/\A\<\/html\>\z/
+      ],
     }
 
-    # Tokenize a string into line tokens.
+    # Tokenize a text.
     def self.tokenize(str, br_mode=false)
-      page_ar = []
-      in_tag = {}
+      tokens = []
+      in_multiline = {}
 
       scanner = StringScanner.new(str)
       while ! scanner.eos?
@@ -33,13 +29,13 @@ module Qwik
 
 	line.chomp!
 
-	# At the first, check if it is in a tag branch to them.
-	last_token = page_ar.last
+	# At the first, check if it is in a multiline block.
+	last_token = tokens.last
 	if last_token
 	  last_tag = last_token[0] 
-	  if in_tag[last_tag]
-	    if TERMINAL_REGEXP[last_tag] =~ line
-	      in_tag[last_tag] = nil
+	  if in_multiline[last_tag]
+	    if MULTILINE[last_tag][1] =~ line
+	      in_multiline[last_tag] = nil
 	    else
 	      last_token[-1] += "#{line.chomp}\n"
 	    end
@@ -52,56 +48,38 @@ module Qwik
 	# preprocess
 	#line.gsub!(/&my-([0-9]+);/) {|m| "{{my_char(#{$1})}}" }
 
-	first_character = line[0]	# The first character,
-	rest = line[1, line.length-1]	# and the rest of the line.
-
-	case first_character
-	when nil, ?#	# The line is '', or comment.
-	  page_ar << [:empty]	# empty line
-
-	when ?*		# h
-	  if /\A(\*{1,5})(.+)\z/ =~ line
-	    h = $1
-	    s = $2.to_s	# Since $2 maybe nil, convert it to str.
-	    s = s.strip
-	    if 0 < s.length
-	      page_ar << [("h#{h.size+1}").intern, s]
-	    else	# '* '
-	      inline(page_ar, line, br_mode)
-	    end
-	  else		# '*'
-	    inline(page_ar, line, br_mode)
-	  end
-
-	when ?=		# hr
-	  if /\A====+\z/ =~ line
-	    page_ar << [:hr]
-	  else
-	    inline(page_ar, line, br_mode)
-	  end
-
-	when ?-		# ul
-	  if line == '-- ' || /\A----+\z/ =~ line	# Ad hoc hr mode.
-	    page_ar << [:hr]
-	  elsif /\A(\-{1,3})(.+)\z/ =~ line
-	    page_ar << [:ul, $1.size, $2.to_s.strip]
-	  else
-	    inline(page_ar, line, br_mode)
-	  end
-
-	when ?+		# ol
-	  if /\A(\+{1,3})(.+)\z/ =~ line
-	    page_ar << [:ol, $1.size, $2.to_s.strip]
-	  else
-	    inline(page_ar, line, br_mode)
-	  end
-
-	when ?>		# blockquote
-	  page_ar << [:blockquote, rest.strip]
-
-	when ?:		# dl
+	case line
+	when MULTILINE[:plugin][0]
+	  in_multiline[:plugin] = true
+	  tokens << [:plugin, $1.to_s, $2.to_s, '']
+	when MULTILINE[:pre][0]
+	  in_multiline[:pre] = true
+	  tokens << [:pre, '']
+	when MULTILINE[:html][0]
+	  tokens << [:html, '']
+	  in_multiline[:html] = true
+	when /\A====+\z/, '-- ', /\A----+\z/		# hr
+	  tokens << [:hr]
+	when /\A(\-{1,3})(.+)\z/			# ul
+	  tokens << [:ul, $1.size, $2.to_s.strip]
+	when /\A(\+{1,3})(.+)\z/			# ol
+	  tokens << [:ol, $1.size, $2.to_s.strip]
+	when /\A>(.*)\z/				# blockquote
+	  tokens << [:blockquote, $1.strip]
+	when /\A[ \t](.*)\z/				# pre
+	  tokens << [:pre, $1]
+	when /\A\{\{([^\(\)\{\}]+?)(?:\(([^\(\)\{\}]*?)\))?\}\}\z/	# plugin
+	  tokens << [:plugin, $1.to_s, $2.to_s]
+	when '', /\A#/					# '', or comment.
+	  tokens << [:empty]				# empty line
+	when /\A([,|])(.*)\z/				# pre
+	  re = Regexp.new(Regexp.quote($1), nil, 's')
+	  ar = [:table] + $2.split(re).map {|a| a.to_s }
+	  tokens << ar
+	when /\A:(.*)\z/				# dl
+	  rest = $1
 	  dt, dd = rest.split(':', 2)
-	  if dt && dt.include?("(")
+	  if dt && dt.include?('(')
 	    if /\A(.*?\(.*\)[^:]*):(.*)\z/ =~ rest	# FIXME: Bad hack.
 	      dt, dd = $1, $2
 	    end
@@ -109,59 +87,39 @@ module Qwik
 	  ar = [:dl]
 	  ar << ((dt && dt != '') ? dt.to_s.strip : nil)
 	  ar << ((dd && dd != '') ? dd.to_s.strip : nil)
-	  page_ar << ar
-
-	when ?\s, ?\t		# pre
-	  page_ar << [:pre, rest]
-
-	when ?, , ?|		# table
-	  re = Regexp.new(Regexp.quote(first_character.chr), nil, 's')
-	  ar = [:table] + rest.split(re).map {|a| a.to_s.strip }
-	  page_ar << ar
-
-	when ?{		# plugin or super pre
-	  if /\A\{\{([^\(\)\{\}]+?)(?:\(([^\(\)\{\}]*?)\))?\}\}\z/ =~ line
-	    page_ar << [:plugin, $1.to_s, $2.to_s]
-	  elsif /\A\{\{([^\(\)\{\}]+?)(?:\(([^\(\)\{\}]*?)\))?\z/ =~ line
-	    in_tag[:plugin] = true
-	    page_ar << [:plugin, $1.to_s, $2.to_s, '']
-	  elsif /\A\{\{\{/ =~ line
-	    in_tag[:pre] = true
-	    page_ar << [:pre, '']
+	  tokens << ar
+	when /\A([*!]{1,5})\s*(.+)\s*\z/		# h
+	  h = $1
+	  s = $2
+	  s = s.strip
+	  if s.empty?		# '* '
+	    inline(tokens, line, br_mode)
 	  else
-	    inline(page_ar, line, br_mode)
+	    tokens << [("h#{h.size+1}").intern, s]
 	  end
-
-	when ?<		# <html>
-	  if line == "<html>"
-	    page_ar << [:html, '']
-	    in_tag[:html] = true
-	  else
-	    inline(page_ar, line, br_mode)
-	  end
-
-	else		# normal text
-	  inline(page_ar, line, br_mode)
+	else
+	  inline(tokens, line, br_mode)
 	end
       end
 
-      page_ar
+      return tokens
     end
 
     private
 
-    def self.inline(page_ar, line, br_mode)
+    def self.inline(tokens, line, br_mode)
       if /~\z/s =~ line
-	line = line.sub(/~\z/s, "{{br}}")	# //s means shift_jis
+	line = line.sub(/~\z/s, '{{br}}')	# //s means shift_jis
       elsif br_mode
-	line = line+"{{br}}"
+	line = "#{line}{{br}}"
       end
-      page_ar << [:text, line]
+      tokens << [:text, line]
     end
   end
 end
 
 if $0 == __FILE__
+  $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
   if ARGV[0] == '-b'
     $bench = true
   else
@@ -179,18 +137,26 @@ if defined?($test) && $test
 
     def test_all
       ok([], '')
-      ok([[:empty]], "#t")
-      ok([[:hr]], "====")
-      ok([[:text, "==="]], "===")
+      ok([[:empty]], '#t')
+      ok([[:hr]], '====')
+      ok([[:text, '===']], '===')
+
+      # test_h
       ok([[:text, '*']], '*')
       ok([[:h2, 't']], '*t')
       ok([[:h2, 't']], '* t')
+      ok([[:h2, 't']], '*t ')
+      ok([[:h2, 's t']], '* s t')
       ok([[:text, '* ']], '* ')
       ok([[:text, '*']], '*')
       ok([[:h3, 't']], '**t')
       ok([[:h4, 't']], '***t')
       ok([[:h5, 't']], '****t')
       ok([[:h6, 't']], '*****t')
+
+      # test_!
+      ok([[:h2, 't']], '! t')
+
       ok([[:text, '-']], '-')
       ok([[:ul, 1, 't']], '-t')
       ok([[:ul, 1, 't']], '- t')
@@ -200,10 +166,10 @@ if defined?($test) && $test
       ok([[:ul, 1, '-']], '--')
       ok([[:hr]], '-- ')
       ok([[:hr]], '----')
-      ok([[:text, "+"]], "+")
-      ok([[:ol, 1, 't']], "+t")
-      ok([[:blockquote, 't']], ">t")
-      ok([[:blockquote, 't']], "> t")
+      ok([[:text, '+']], '+')
+      ok([[:ol, 1, 't']], '+t')
+      ok([[:blockquote, 't']], '>t')
+      ok([[:blockquote, 't']], '> t')
 
       # test dl
       ok([[:dl, 'dt', 'dd']], ':dt:dd')
@@ -218,19 +184,20 @@ if defined?($test) && $test
 
       # test_table
       ok([[:table, 't']], ',t')
-      ok([[:table, 't']], ', t')
+      #ok([[:table, 't']], ', t')
+      ok([[:table, ' t']], ', t')
       ok([[:table, 's', 't']], ',s,t')
       ok([[:table, '', 't']], ',,t')
       ok([[:table, 't']], '|t')
-      ok([[:table, "$t"]], ",$t")
-      ok([[:table, "$1"]], ",$1")
+      ok([[:table, '$t']], ',$t')
+      ok([[:table, '$1']], ',$1')
 
-      ok([[:text, "{t}"]], "{t}")
-      ok([[:plugin, 't', '']], "{{t}}")
-      ok([[:plugin, 't', 'a']], "{{t(a)}}")
-      ok([[:plugin, 't', '', '']], "{{t")
-      ok([[:plugin, 't', 'a', '']], "{{t(a)")
-      ok([[:plugin, 't', "", "s\n"]], "{{t\ns\n}}")
+      ok([[:text, '{t}']], '{t}')
+      ok([[:plugin, 't', '']], '{{t}}')
+      ok([[:plugin, 't', 'a']], '{{t(a)}}')
+      ok([[:plugin, 't', '', '']], '{{t')
+      ok([[:plugin, 't', 'a', '']], '{{t(a)')
+      ok([[:plugin, 't', '', "s\n"]], "{{t\ns\n}}")
       ok([[:plugin, 't', 'a', "s\n"]], "{{t(a)\ns\n}}")
 
       ok([[:pre, "s\n"]], "{{{\ns\n}}}")
@@ -243,19 +210,19 @@ if defined?($test) && $test
       ok([[:text, 's'], [:empty], [:text, 't']], "s\n\nt")
 
       # test_html
-      ok([[:text, "<t"]], "<t")
-      ok([[:html, '']], "<html>")
+      ok([[:text, '<t']], '<t')
+      ok([[:html, '']], '<html>')
       ok([[:html, "t\n"]], "<html>\nt\n</html>")
       ok([[:html, "<p>\nt\n</p>\n"]], "<html>\n<p>\nt\n</p>\n</html>")
 
       # test_sjis_bug
-      ok([[:table, "•|", "•|"]], ",•|,•|")
+      ok([[:table, '•|', '•|']], ',•|,•|')
       ok([[:table, 's', 't']], '|s|t')
-      ok([[:table, "•|", "•|"]], "|•||•|")
+      ok([[:table, '•|', '•|']], '|•||•|')
 
       # test_multiline
       ok([[:text, 's'], [:text, 't']], "s\nt")
-      ok([[:text, "s{{br}}"], [:text, "t{{br}}"]], "s~\nt~")
+      ok([[:text, 's{{br}}'], [:text, 't{{br}}']], "s~\nt~")
       ok([[:text, 's'], [:empty], [:text, 't']], "s\n\nt")
       ok([[:text, "s{{br}}"], [:text, "{{br}}"], [:text, "t{{br}}"]],
 	 "s~\n~\nt~")

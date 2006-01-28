@@ -1,13 +1,4 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
@@ -129,7 +120,6 @@ module Qwik
 end
 
 if $0 == __FILE__
-  $LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
   require 'qwik/test-common'
   $test = true
 end
@@ -152,54 +142,70 @@ if defined?($test) && $test
       ok_eq([nil, 1.5, nil], @action.calc_parse_num('1.5'))
       ok_eq([nil, 1,  'MB'], @action.calc_parse_num('1MB'))
       ok_eq([nil, 1.5,'MB'], @action.calc_parse_num('1.5MB'))
-      ok_eq(["$", 1,   nil], @action.calc_parse_num("$1"))
-      ok_eq(["$", 1.5, nil], @action.calc_parse_num("$1.5"))
+      ok_eq(['$', 1,   nil], @action.calc_parse_num('$1'))
+      ok_eq(['$', 1.5, nil], @action.calc_parse_num('$1.5'))
 
       # test plg_calc
       ok_wi([:table, [:tr, [:td, '0']], [:tr, {:class=>'sum'}, [:td, '0']]],
-	    "{{calc\n,0\n}}")
+	    '{{calc
+,0
+}}')
       ok_wi([:table, [:tr, [:td, '1']], [:tr, [:td, '2']],
-	      [:tr, {:class=>'sum'}, [:td, '3']]], "{{calc\n,1\n,2\n}}")
+	      [:tr, {:class=>'sum'}, [:td, '3']]], '{{calc
+,1
+,2
+}}')
       ok_wi([:table,
 	      [:tr, [:td, '1'], [:td, '3.4']],
 	      [:tr, [:td, '2'], [:td, '5.6']],
 	      [:tr, {:class=>'sum'}, [:td, '3'], [:td, '9.0']]],
-	    "{{calc\n,1,3.4\n,2,5.6\n}}")
+	    '{{calc
+,1,3.4
+,2,5.6
+}}')
       ok_wi([:table, [:tr, [:td, 'a'], [:td, '0']],
 	      [:tr, {:class=>'sum'}, [:td, ''], [:td, '0']]],
-	    "{{calc\n,a,0\n}}")
+	    '{{calc
+,a,0
+}}')
       ok_wi([:table, [:tr, [:td, '1MB']], [:tr, {:class=>'sum'}, [:td, '1MB']]],
-	    "{{calc\n,1MB\n}}")
-      ok_wi([:table, [:tr, [:td, "$1"]], [:tr, {:class=>'sum'}, [:td, "$1"]]],
-	    "{{calc\n,$1\n}}")
-      ok_wi([:table, [:tr, [:td, "$1"]], [:tr, {:class=>'sum'}, [:td, "$1"]]],
-	    "{{calc\n,$1,\n}}")
+	    '{{calc
+,1MB
+}}')
+      ok_wi([:table, [:tr, [:td, '$1']], [:tr, {:class=>'sum'}, [:td, '$1']]],
+	    '{{calc
+,$1
+}}')
+      ok_wi([:table, [:tr, [:td, '$1']], [:tr, {:class=>'sum'}, [:td, '$1']]],
+	    '{{calc
+,$1,
+}}' )
       ok_wi([:table,
-	      [:tr, [:td, "$100"], [:td, 'CPU']],
-	      [:tr, [:td, "$100"], [:td, 'Memory']],
-	      [:tr, [:td, "$20.5"], [:td, 'Cable']],
-	      [:tr, [:td, "$250"], [:td, 'Graphic Card']],
-	      [:tr, [:td, "$250"], [:td, 'HDD']],
-	      [:tr, [:td, "$400"], [:td, 'Mother Board']],
-	      [:tr, {:class=>'sum'}, [:td, "$1120.5"], [:td, '']]],
-	    "{{calc
+	      [:tr, [:td, "$100\t"], [:td, 'CPU']],
+	      [:tr, [:td, "$100\t"], [:td, 'Memory']],
+	      [:tr, [:td, "$20.5\t"], [:td, 'Cable']],
+	      [:tr, [:td, "$250\t"], [:td, 'Graphic Card']],
+	      [:tr, [:td, "$250\t"], [:td, 'HDD']],
+	      [:tr, [:td, "$400\t"], [:td, 'Mother Board']],
+	      [:tr, {:class=>'sum'}, [:td, "$1120.5\t"], [:td, '']]],
+	    '{{calc
 ,$100	,CPU
 ,$100	,Memory
 ,$20.5	,Cable
 ,$250	,Graphic Card
 ,$250	,HDD
 ,$400	,Mother Board
-}}")
+}}')
       ok_wi([:table,
-	      [:tr, [:td, "1万"], [:td, 'CPU']],
-	      [:tr, [:td, "1万"], [:td, 'Memory']],
-	      [:tr, [:td, "0.2万"], [:td, 'Adapter']],
-	      [:tr, [:td, "2.5万"], [:td, 'nVidia']],
-	      [:tr, [:td, "2.5万"], [:td, 'HDD 250GB']],
-	      [:tr, [:td, "4万"], [:td, 'NAS']],
-	      [:tr, [:td, "22万"], [:td, 'ThinkPad X40']],
-	      [:tr, {:class=>'sum'}, [:td, "33.2万"], [:td, '']]],
-	 "{{calc
+	      [:tr, [:td, '1万'], [:td, "\tCPU"]],
+	      [:tr, [:td, '1万'], [:td, "\tMemory"]],
+	      [:tr, [:td, '0.2万'], [:td, "\tAdapter"]],
+	      [:tr, [:td, '2.5万'], [:td, "\tnVidia"]],
+	      [:tr, [:td, '2.5万'], [:td, "\tHDD 250GB"]],
+	      [:tr, [:td, '4万'], [:td, "\tNAS"]],
+	      [:tr, [:td, '22万'], [:td, "\tThinkPad X40"]],
+	      [:tr, {:class=>'sum'}, [:td, '33.2万'], [:td, '']]],
+	 '{{calc
 ,1万,	CPU
 ,1万,	Memory
 ,0.2万,	Adapter
@@ -207,31 +213,26 @@ if defined?($test) && $test
 ,2.5万,	HDD 250GB
 ,4万,	NAS
 ,22万,	ThinkPad X40
-}}")
-
-=begin
+}}')
       ok_wi([:table,
- [:tr, [:td, "物品"], [:td, "値段"]],
- [:tr, [:td, 'a'], [:td, "\\10,000"]],
- [:tr, [:td, 'b'], [:td, "\\20,000"]],
- [:tr, {:class=>'sum'}, [:td, ''], [:td, '']]],
-"{{calc
+	      [:tr, [:td, "a\t"], [:td, '10,000']],
+	      [:tr, [:td, "b\t"], [:td, '20,000']],
+	      [:tr, {:class=>'sum'}, [:td, ''], [:td, '30']]],
+	    '{{calc
 |a	|10,000
 |b	|20,000
-}}")
-
+}}')
+      # Don't work.
       ok_wi([:table,
- [:tr, [:td, "物品"], [:td, "値段"]],
- [:tr, [:td, 'a'], [:td, "\\10,000"]],
- [:tr, [:td, 'b'], [:td, "\\20,000"]],
- [:tr, {:class=>'sum'}, [:td, ''], [:td, '']]],
-"{{calc
+	      [:tr, [:td, "物品\t"], [:td, '値段']],
+	      [:tr, [:td, "a\t"], [:td, "\\10,000"]],
+	      [:tr, [:td, "b\t"], [:td, "\\20,000"]],
+	      [:tr, {:class=>'sum'}, [:td, ''], [:td, '']]],
+	    '{{calc
 |物品	|値段
 |a	|\\10,000
 |b	|\\20,000
-}}")
-=end
-
+}}')
     end
   end
 end

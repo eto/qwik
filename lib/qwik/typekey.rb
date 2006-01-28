@@ -163,7 +163,7 @@ class TypeKey
 end
 
 if $0 == __FILE__
-  $LOAD_PATH << '../../lib' unless $LOAD_PATH.include?('../../lib')
+  $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
   require 'qwik/testunit'
   require 'qwik/config'
   require 'qwik/util-pathname'
