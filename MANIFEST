@@ -154,6 +154,7 @@ lib/qwik/act-tableform.rb
 lib/qwik/act-tag.rb
 lib/qwik/act-tagsearch.rb
 lib/qwik/act-takahashi.rb
+lib/qwik/act-test.rb
 lib/qwik/act-text.rb
 lib/qwik/act-textarea.rb
 lib/qwik/act-theme.rb
@@ -265,6 +266,7 @@ lib/qwik/ml-session.rb
 lib/qwik/ml-sweeper.rb
 lib/qwik/ml-version.rb
 lib/qwik/modulobe.rb
+lib/qwik/mongrel-server.rb
 lib/qwik/page-files.rb
 lib/qwik/page-generate.rb
 lib/qwik/page-get.rb
