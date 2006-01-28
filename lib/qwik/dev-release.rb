@@ -132,6 +132,7 @@ charts_library
 lib/qwik/dev-
 lib/qwik/mock-
 lib/qwik/test-
+.bak
 )
 
     def self.public_file?(file)

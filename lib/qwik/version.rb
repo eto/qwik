@@ -3,7 +3,7 @@
 
 module Qwik
   VERSION = '0.7.3'
-  RELEASE_DATE = '20060124'
+  RELEASE_DATE = '20060129'
 end
 
 module QuickML
