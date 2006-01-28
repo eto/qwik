@@ -7,11 +7,15 @@
 # the GNU General Public License version 2.
 #
 
-require 'singleton'
 require 'thread'
 
 class AutoReload
-  include Singleton
+  def self.start(interval, debug = false, name=nil)
+    ar = AutoReload.new
+    ar.debug = debug
+    ar.name = name
+    ar.autoreload(interval)
+  end
 
   def initialize
     @status = {}
@@ -87,9 +91,6 @@ class AutoReload
   end
 end
 
-def autoreload(interval, debug = false, name=nil)
-  ar = AutoReload.instance
-  ar.debug = debug
-  ar.name = name
-  ar.autoreload(interval)
+def autoreload(*a)
+  AutoReload.start(*a)
 end
