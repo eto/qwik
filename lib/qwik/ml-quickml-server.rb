@@ -29,7 +29,7 @@ module QuickML
 
       #config = Config.new
       config = Qwik::Config.new
-      Config.load_args_and_config(config, $0, args)
+      Qwik::Config.load_args_and_config(config, $0, args)
       config.update({:debug => true, :verbose_mode => true}) if $ml_debug
 
       ServerMemory.init_logger(config, config)
