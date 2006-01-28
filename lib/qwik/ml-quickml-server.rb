@@ -24,7 +24,7 @@ $ml_debug = false
 
 module QuickML
   class QuickMLServer
-    def self.main(argv)
+    def self.main(args)
       server = QuickMLServer.new
 
       #config = Config.new
