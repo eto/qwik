@@ -40,10 +40,10 @@ module QuickML
 	return
       end
 
-      qp 'start process_recipient' if $ml_debug
+      #qp 'start process_recipient' if $ml_debug
 
       @mail.recipients.each {|recipient|
-        qp 'process_recipient '+recipient if $ml_debug
+        #qp 'process_recipient '+recipient if $ml_debug
 	process_recipient(recipient)
       }
     end
@@ -78,10 +78,10 @@ module QuickML
       end
 
       begin
-        qp "before mutex #{mladdress}" if $ml_debug
+        #qp "before mutex #{mladdress}" if $ml_debug
 
 	ServerMemory.ml_mutex(@config, mladdress).synchronize {
-          qp "start in mutex #{mladdress}" if $ml_debug
+          #qp "start in mutex #{mladdress}" if $ml_debug
 	  ml = Group.new(@config, mladdress, @mail.from, @message_charset)
 	  @message_charset ||= ml.charset
 
@@ -125,7 +125,7 @@ module QuickML
     end
 
     def submit (ml)
-      qp 'submit ', ml.name if $ml_debug
+      #qp 'submit ', ml.name if $ml_debug
 
       if Group.exclude?(@mail.from, @config.ml_domain)
 	@logger.log "Invalid From Address: #{@mail.from}"
