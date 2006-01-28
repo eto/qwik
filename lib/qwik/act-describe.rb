@@ -10,7 +10,7 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/description'
 require 'qwik/description-ja'
-# FIXME: Load description files from all languages.
+# FIXME: Load description files from all languages automatically.
 
 module Qwik
   class Action
@@ -30,7 +30,6 @@ You can see the list below.
 	hash = description_get(name, @req.accept_language)
 	list << [:dt, [:a, {:href=>"#{name}.describe"},
 	    "#{name} | #{hash[:dt]}"]]
-	   #[:strong, name], " | #{hash[:dt]}"]]
 	list << [:dd, hash[:dd]]
       }
       return [:div, {:class=>'description-list'}, list]
@@ -68,12 +67,11 @@ You can see the list below.
       @req.base = 'FrontPage'	# Fake.
       w = c_res(content)
       w = TDiaryResolver.resolve(@config, @site, self, w)
-      title = _('Function')+' | '+hash[:dt]
+      title = "#{_('Function')} | #{hash[:dt]}"
       return c_surface(title, true) { w }
     end
 
     def description_get(name, langs=nil)
-      #qp langs
       langs = [] if langs.nil?
       langs << '' if ! langs.include?('')
       langs.each {|lang|
@@ -85,7 +83,6 @@ You can see the list below.
       }
       return nil
     end
-
   end
 end
 
@@ -108,7 +105,7 @@ if defined?($test) && $test
       # test_description_list
       list = @action.description_list
       eq(true, 0 < list.length)
-#      eq(true, list.include?('describe'))
+#     eq(true, list.include?('describe'))
     end
   end
 end
