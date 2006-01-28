@@ -19,16 +19,16 @@ test:
 	cd lib/qwik; make; cd ../..
 
 version:
-	$(RUBY) -Ilib lib/qwik/dev-release.rb -v
+	$(RUBY) -Ilib lib/qwik/dev-release.rb --generate-vesrion
 
 manifest:	version
-	$(RUBY) -Ilib lib/qwik/dev-release.rb -m
+	$(RUBY) -Ilib lib/qwik/dev-release.rb --generate-manifest
 
 dist:	manifest
-	$(RUBY) -Ilib lib/qwik/dev-release.rb -d
+	$(RUBY) -Ilib lib/qwik/dev-release.rb --generate-dist
 
 upload:	dist
-	$(RUBY) -Ilib lib/qwik/dev-release.rb -u
+	$(RUBY) -Ilib lib/qwik/dev-release.rb --upload
 
 clean:
 	-rm *~
