@@ -52,7 +52,8 @@ module Qwik
       c_require_post
 
       filename = content.filename
-      basename = filename.sub(/\A.*[\/\\]([^\/\\]+)\z/) { $1 }
+      basename = Action.get_basename(filename)
+#     basename = filename.sub(/\A.*[\/\\]([^\/\\]+)\z/) { $1 }
       basename.set_url_charset
       basename = Filename.decode(basename)
       res = basename
@@ -66,6 +67,11 @@ module Qwik
 	[[:p, [:strong, res], ' : ', _('The file is saved.')],
 	  [:p, [:a, {:href=>backpage}, _('Go back')]]]
       }
+    end
+
+    def self.get_basename(filename)
+      basename = filename.sub(/\A.*[\/\\]([^\/\\]+)\z/) { $1 }
+      return basename
     end
 
     def attach_rewrite_page(basename)

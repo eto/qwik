@@ -523,6 +523,12 @@ if defined?($test) && $test
       ok_eq('t', res.body)
     end
 
+    def test_class_method
+      c = Qwik::Action
+      eq("a.txt", c.get_basename("/tmp/a.txt"))
+      eq("a.txt", c.get_basename("c:\\tmp\\a.txt"))
+    end
+
     def test_upload_from_windows
       t_add_user
 
