@@ -195,7 +195,8 @@ You can show the list of attached files.
 	next if fullfilename.empty?
 
 	# Get basename.
-	filename = fullfilename.path.basename.to_s
+	#filename = fullfilename.path.basename.to_s
+	filename = Action.get_basename(fullfilename)
 
 	# If the file is saved as another name, you can use return value.
 	filename = @site.files(@req.base).fput(filename, data)
@@ -215,6 +216,11 @@ You can show the list of attached files.
 	[:p, _('Go next'), ' : ', [:a, {:href=>url}, url]],
       ]
       return c_notice(_('Attach file done'), url) { ar }
+    end
+
+    def self.get_basename(filename)
+      basename = filename.sub(/\A.*[\/\\]([^\/\\]+)\z/) { $1 }
+      return basename
     end
 
   end
@@ -514,6 +520,24 @@ if defined?($test) && $test
       res = session('/test/1.files/t.doc')
       ok_eq('application/msword', res['Content-Type'])
       ok_eq("attachment; filename=\"t.doc\"", res['Content-Disposition'])
+      ok_eq('t', res.body)
+    end
+
+    def test_upload_from_windows
+      t_add_user
+
+      page = @site.create_new
+      page.store('t')
+
+      # Put a file.
+      res = session('POST /test/1.files') {|req|
+	req.query.update('content'=>t_make_content("c:\\tmp\\t.txt", 't'))
+      }
+      ok_title('Attach file done')
+
+      # Download by files extension.
+      res = session('/test/1.files/t.txt')
+      ok_eq('text/plain', res['Content-Type'])
       ok_eq('t', res.body)
     end
 
