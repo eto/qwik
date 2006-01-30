@@ -35,12 +35,12 @@ module Qwik
 	puts 'Process id: '+str
       end
 
-      qp @config.web_log_file
-      qp @config.accesslog_file
-      qp @config.qlog_file
+      qp @config.web_error_log
+      qp @config.access_log
+      qp @config.web_access_log
 
-      tail_f(@config.web_log_file)
-      tail_f(@config.qlog_file)
+      tail_f(@config.web_error_log)
+      tail_f(@config.web_access_log)
       while true
 	sleep 1
       end

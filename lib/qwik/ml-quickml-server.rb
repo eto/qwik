@@ -27,7 +27,6 @@ module QuickML
     def self.main(args)
       server = QuickMLServer.new
 
-      #config = Config.new
       config = Qwik::Config.new
       Qwik::Config.load_args_and_config(config, $0, args)
       config.update({:debug => true, :verbose_mode => true}) if $ml_debug
@@ -44,11 +43,11 @@ module QuickML
     end
 
     def run (config)
-      check_directory(config.sites_dir)
+      QuickMLServer.check_directory(config.sites_dir)
 
       if ! config.debug
-        be_daemon
-        be_secure(config)
+        QuickMLServer.be_daemon
+        QuickMLServer.be_secure(config)
       end
 
       server  = Server.new(config)
@@ -69,7 +68,7 @@ module QuickML
 
     private
 
-    def check_directory (dir)
+    def self.check_directory(dir)
       error("#{dir}: No such directory") if ! File.directory?(dir) 
       error("#{dir}: is not writable")   if ! File.writable?(dir) 
     end
@@ -79,7 +78,7 @@ module QuickML
       exit(1)
     end
 
-    def be_daemon
+    def self.be_daemon
       exit!(0) if fork
       Process::setsid
       exit!(0) if fork
@@ -90,12 +89,10 @@ module QuickML
       STDERR.reopen('/dev/null', 'r+')
     end
 
-    def be_secure (config)
+    def self.be_secure(config)
       return unless Process.uid == 0
       uid = Etc::getpwnam(config.user).uid 
       gid = Etc::getgrnam(config.group).gid
-#      touch(config.ml_pid_file)
-#      touch(config.ml_log_file)
       FileUtils.touch(config.ml_pid_file)
       FileUtils.touch(config.ml_log_file)
       File.chown(uid, gid, config.sites_dir)

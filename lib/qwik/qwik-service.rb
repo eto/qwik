@@ -45,6 +45,15 @@ module Qwik
 	opts.on('-d', '--[no-]debug', 'Run in debug mode') {|a|
 	  config[:debug] = a
 	}
+	opts.on('--start', 'Start qwikWeb and QuickML services') {|a|
+	  cmd = [:start]
+	}
+	opts.on('--stop', 'Stop qwikWeb and QuickML services') {|a|
+	  cmd = [:stop]
+	}
+	opts.on('--restart', 'Restart qwikWeb and QuickML services') {|a|
+	  cmd = [:restart]
+	}
 	opts.on('--web-start', 'Start qwikWeb services') {|a|
 	  cmd = [:web_start]
 	}
@@ -100,12 +109,29 @@ module Qwik
       return config, cmd
     end
 
+    def start
+      web_start
+      ml_start
+    end
+
+    def stop
+      web_stop
+      ml_stop
+    end
+
+    def restart
+      stop
+      sleep 1
+      start
+    end
+
     def web_start
       start_cmd('Starting qwikWeb services: ', QWIKWEB_SERVER)
     end
 
     def web_stop
-      stop_cmd('Stopping qwikWeb services: ', QWIKWEB_PID)
+      pid = @config[:web_pid_file] || QWIKWEB_PID
+      stop_cmd('Stopping qwikWeb services: ', pid)
     end
 
     def web_restart
@@ -119,7 +145,8 @@ module Qwik
     end
 
     def ml_stop
-      stop_cmd('Stopping QuickML services: ', QUICKML_PID)
+      pid = @config[:ml_pid_file] || QUICKML_PID
+      stop_cmd('Stopping QuickML services: ', pid)
     end
 
     def ml_restart
@@ -163,7 +190,7 @@ module Qwik
     end
 
     def makesite_usage
-      puts 'usage: qwik-service --makesite sitename,yourmailaddress'
+      puts 'Usage: qwik-service --makesite sitename,yourmailaddress'
       exit
     end
 
@@ -198,7 +225,7 @@ module Qwik
     end
 
     def adduser_usage
-      puts 'usage: qwik-service --adduser sitename,mailaddress'
+      puts 'Usage: qwik-service --adduser sitename,mailaddress'
       exit
     end
 
@@ -218,7 +245,7 @@ module Qwik
     end
 
     def showpassword_usage
-      puts 'usage: qwik-service --showpassword mailaddress'
+      puts 'Usage: qwik-service --showpassword mailaddress'
       exit
     end
 
@@ -239,7 +266,7 @@ module Qwik
     end
 
     def incgen_usage
-      puts 'usage: qwik-service --showpassword mailaddress'
+      puts 'Usage: qwik-service --showpassword mailaddress'
       exit
     end
 

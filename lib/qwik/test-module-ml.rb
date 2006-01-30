@@ -82,8 +82,8 @@ module TestModuleML
 
       # Files and directories.
       :sites_dir	=> '.',			# *TEST*
-      :pid_file		=> 'quickml.pid',	# *TEST*
-      :log_file		=> 'quickml.log',	# *TEST*
+      :ml_pid_file	=> 'quickml.pid',	# *TEST*
+      :ml_log_file	=> 'quickml.log',	# *TEST*
       :config_file	=> 'config.txt',	# *TEST*
     }
   end

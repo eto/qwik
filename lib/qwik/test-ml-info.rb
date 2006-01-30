@@ -102,8 +102,8 @@ if false	# Just for information.  Do not execute.
 
 	# Setting for directories and files.
 	:sites_dir	=> Dir.pwd+'/mldata',
-	:log_file	=> Dir.pwd+'/quickml.log',
-	:pid_file	=> Dir.pwd+'/quickml.pid',
+	:ml_log_file	=> Dir.pwd+'/quickml.log',
+	:ml_pid_file	=> Dir.pwd+'/quickml.pid',
       }
     end
 

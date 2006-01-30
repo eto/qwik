@@ -42,7 +42,7 @@ if defined?($test) && $test
 
       # test_init_logger
       memory = {}
-      config = {:log_file=>'test.txt'}
+      config = {:ml_log_file=>'test.txt'}
       c.init_logger(memory, config)
       assert_instance_of(QuickML::Logger, memory[:logger])
 

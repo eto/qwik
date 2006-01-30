@@ -70,7 +70,7 @@ if defined?($test) && $test
       assert_match(/: t\n/, str)
       'testlog.txt'.path.unlink
 
-      # FIXME
+      # TODO
       # test_vlog
       # test_reopen
       # test_puts_log

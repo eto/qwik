@@ -228,7 +228,7 @@ lib/qwik/test-
   class Upload
     def self.upload(targz, upload_dest)
       opt = {}		# dummy
-      system_p("scp #{targz} #{upload_dest}", opt)
+      GenerateDist.system_p("scp #{targz} #{upload_dest}", opt)
     end
   end
 end

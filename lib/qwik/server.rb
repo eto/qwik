@@ -28,22 +28,20 @@ module Qwik
       @qconfig = qconfig
       @memory  = ServerMemory.new(@qconfig)
 
-      init_trap
+      # init_trap
+      trap(:TERM) { shutdown; }
+      trap(:INT)  { shutdown; }
+      trap(:HUP)  { reopen; }
 
       init_directory(@qconfig)
 
-      webrick_conf = init_webrick_conf(@qconfig, @memory)
+      webrick_conf, @pidfile = init_webrick_conf(@qconfig, @memory)
 
       super(webrick_conf)
 
       mount('/', Servlet)	# Delegate all accesses.
     end
     attr_reader :memory
-
-    def init_trap
-      trap(:TERM) { shutdown; }
-      trap(:INT)  { shutdown; }
-    end
 
     def init_directory(config)
       config.cache_dir.path.check_directory
@@ -55,37 +53,37 @@ module Qwik
     end
 
     def init_webrick_conf(config, memory)
-      logfile  = config.web_log_file	# qwikweb.log
-      @pidfile = config.web_pid_file
+      web_error_log = config.web_error_log	# qwik-error.log
+      pidfile = config.web_pid_file	# qwikweb.pid
       servertype = WEBrick::Daemon
       if config.debug
-	@pidfile += '-d'
+	pidfile += '-d'
 	servertype = WEBrick::SimpleServer
-	logfile = $stdout
-	logfile = 'testlog.txt' if config.test
+	web_error_log = $stdout
+	web_error_log = 'qwik-error.log' if config.test
       end
 
       # qwik-access.log
-      memory[:accesslog] = Qwik::AccessLog.new(config, config.qlog_file)
+      memory[:qwik_access_log] = Qwik::Logger.new(config, config.web_access_log)
 
-      logger = WEBrick::Log.new(logfile, WEBrick::Log::INFO)
-      memory[:logger] = logger
+      web_error_logger = WEBrick::Log.new(web_error_log, WEBrick::Log::INFO)
+      memory[:logger] = web_error_logger
 
       accesslog =
-	[[WEBrick::BasicLog.new(config.accesslog_file, WEBrick::Log::INFO),
+	[[WEBrick::BasicLog.new(config.access_log, WEBrick::Log::INFO),
 	  WEBrick::AccessLog::COMBINED_LOG_FORMAT]]
 
       server = Server.server_name
-      #server = "Apache/2.0.54 (Unix) "+server	# Imitate Apache server
+      #server = "Apache/2.0.54 (Unix) #{server}"	# Imitate Apache server
 
       webrick_config = {
 	:HostnameLookups => false,
 	:BindAddress	=> config.bind_address,
 	:Port		=> config.web_port.to_i,
-	:Logger		=> logger,
+	:Logger		=> web_error_logger,
 	:ServerType	=> servertype,
-	:StartCallback	=> Proc.new { start_server },
-	:StopCallback	=> Proc.new { stop_server },
+	:StartCallback	=> Proc.new { start_server; },
+	:StopCallback	=> Proc.new { stop_server; },
 	:AccessLog	=> accesslog,
 	:ServerSoftware	=> server,
 	:QwikConfig	=> config,
@@ -94,7 +92,7 @@ module Qwik
        #:WEBrickThread  => false, # test
       }
 
-      return webrick_config
+      return webrick_config, pidfile
     end
 
     # callback from :StartCallback
@@ -125,6 +123,20 @@ module Qwik
       remove_pid_file(@pidfile)
     end
 
+    def reopen
+      # qwik-access.log is an instance of Qwik::Logger
+      web_access_log = @memory[:qwik_access_log]
+      web_access_log.reopen
+
+      # qwik-error.log is an instance of WEBrick::Log
+      logger = @memory[:logger]
+      logger.reopen
+
+      # access.log is an instance of WEBrick::BasicLog
+      webrick_accesslog = @config[:AccessLog][0][0]
+      webrick_accesslog.reopen
+    end
+
     def self.version
       return VERSION
     end
@@ -151,7 +163,7 @@ module Qwik
 
       res.setback(response)
 
-      qlog = memory[:accesslog]
+      qlog = memory[:qwik_access_log]
       qlog.log(request, response, req, res) if qlog	# Take a log.
 
       if res.basicauth

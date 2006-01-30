@@ -12,7 +12,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/config'
 
 module Qwik
-  class AccessLog
+  class Logger
     def initialize(config, log_file)
       @config = config
       @log = open(log_file, 'ab+')
@@ -30,6 +30,14 @@ module Qwik
       format = format_log_line(req, wres)
       @log << format
       $stdout << format if @config.debug && ! @config.test
+    end
+
+    # FIXEM: Ad hoc reopen support.
+    def reopen
+      @log.close
+      log_file = @log.path
+      @log = open(log_file, 'ab+')
+      @log.sync = true
     end
 
     private
@@ -76,11 +84,11 @@ if defined?($test) && $test
       ok_eq(false, path.exist?)
 
       # test_init
-      logger = Qwik::AccessLog.new(config, path.to_s)
+      logger = Qwik::Logger.new(config, path.to_s)
       ok_eq(true, path.exist?)
 
       # test_format_log_line
-      Qwik::AccessLog.instance_eval {
+      Qwik::Logger.instance_eval {
 	public :format_log_line
       }
       req = Qwik::Request.new(config)

@@ -3,6 +3,17 @@ require 'webrick'
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module WEBrick
+  class BasicLog
+    # FIXEM: Ad hoc reopen support.
+    def reopen
+      log_file = @log.path
+      @log.close
+      @log = open(log_file, "a+")
+      @log.sync = true
+      @opened = true
+    end
+  end
+
   class HTTPRequest
     # copied from gonzui-0.1
     # FIXME: it should be deleted if WEBrick supports the method
