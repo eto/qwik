@@ -1,4 +1,28 @@
-2006-01-28  Kouichirou Eto  <2005 eto.com>
+2006-01-30  Kouichirou Eto  <2006 eto.com>
+
+	* config.rb: Chnage attribute names.
+	web_log_file to web_error_log
+	qlog_file to web_access_log
+	accesslog_file to access_log
+	* util-webrick.rb (BasicLog#reopen): New method.
+	* logger.rb: Rename class name to Logger
+	* logger.rb: New method reopen.
+	* server.rb: Change opening sequence.
+	* etc/config.txt: Change attribute names.
+	related files are also changed.
+
+	* ml-quickml-server.rb (main): Bug fix. Change Config to Qwik::Config
+
+	* dev-release.rb (Upload.upload): Bug fix. Add class name.
+
+	* qwik-service.rb: Add three new options.
+	* qwik-service.rb: Read pid files from config.
+
+2006-01-29  Kouichirou Eto  <2006 eto.com>
+
+	* act-files.rb: Bug fix, you can upload from Windows now.
+
+2006-01-28  Kouichirou Eto  <2006 eto.com>
 
 	* wabisabi-table.rb: Refactoring.
 
@@ -8,7 +32,7 @@
 
 	* qwikweb-release.rb: Refactoring.
 
-2006-01-20  Kouichirou Eto  <2005 eto.com>
+2006-01-20  Kouichirou Eto  <2006 eto.com>
 
 	* bin/*.rb: Change them to stub for qwik-service
 
@@ -26,7 +50,7 @@
 	* act-typekey.rb: Test only if unit test.
 	* typekey.rb: Ditto.
 
-2006-01-16  Kouichirou Eto  <2005 eto.com>
+2006-01-16  Kouichirou Eto  <2006 eto.com>
 
 	* config.rb: New config public_url.  Simplify url stuff.
 	Delete public_host, public_port, public_path
@@ -42,7 +66,7 @@
 
 	* act-media.rb: Refactoring.
 
-2006-01-10  Kouichirou Eto  <2005 eto.com>
+2006-01-10  Kouichirou Eto  <2006 eto.com>
 
 	* act-describe.rb: Do not show edit link.
 
@@ -53,11 +77,11 @@
 	* site-resolve.rb: Do not escape title.  You can use [[C++]] now.
 	Thanks to Mr. Satoru Takabayashi.
 
-2006-01-06  Kouichirou Eto  <2005 eto.com>
+2006-01-06  Kouichirou Eto  <2006 eto.com>
 
 	* test-module-ml.rb: Change port to 9196 for testing.
 
-2006-01-06  Kouichirou Eto  <2005 eto.com>
+2006-01-06  Kouichirou Eto  <2006 eto.com>
 
 	* Update directories.
 	* Use setup.rb to install.
