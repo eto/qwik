@@ -5,7 +5,9 @@ Overview of Changes in qwikWeb 0.8.0 - 2006-01-29
 * Using only one file 'config.txt' for configuration file.
   Both qwikWeb and QuickML are using one 'config.txt' file.
 
-* You can access the help page of qwikWeb.
+* You can now access the help page of qwikWeb.
+
+* Change attribute names for log files.
 
 * Many new plugins.
 
