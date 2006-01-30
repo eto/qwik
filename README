@@ -1,73 +1,57 @@
 * qwikWeb
-
 qwikWeb is a communication system integrating mailing lists and WikiWikiWeb.
 
 * Requirements
+- ruby 1.8.4 or higher
 
-- ruby 1.8.2 or higher
-
-* Install
-
-Run the qwikWeb server from installed directory.
-
- % ruby bin/qwikweb-server -d
-
-Then, see folowing address using Web browser.
-
- http://localhost:9190/
-
+* Run for development mode.
+You can run qwikWeb server from installed directory.
+ % ruby bin/qwikweb-server -d -c etc/config.txt
+Then, see the folowing page.
+- http://localhost:9190/
 To edit the page, use following guest acount.
-
 :mail:	guest@qwik
 :pass:	80245996
 
-* Before make public your qwikWeb site
+* Install
+ % sudo ruby setup.rb
+Then, edit the config file.
+- /etc/qwik/config.txt
+You have to stet config after "Setting for production mode." line.
 
-Please change password in this file.
-
- etc/password.txt
+* Make site password
+Before make public your qwikWeb site,
+please specify the site password in this file.
+- etc/password.txt
 
 * Document
-
 Please see qwikWeb web site for information.
-
 - http://qwik.jp/
 
 * License
-
 This software is distributed under the The GNU General Public License
 version 2.  See COPYING.
 
 * Special Thanks To
-
 - Thanks to Mr. TAKEUCHI Hitoshi, creator of Hiki.
 -- http://www.namaraii.com/hiki/
-
 - Thanks to Mr. Satoru Takabayashi, creator of QuickML.
 -- http://namazu.org/~satoru/
-
 - Thanks to Mr. Kan Fushihara for wema plugin.
 -- http://www.mikihoshi.com/
-
 - Thanks to Mr. Eric Meyer for presentation mode.
 -- S5: A Simple Standards-Based Slide Show System
 -- http://www.meyerweb.com/eric/tools/s5/
-
 - Thanks to Mr. Y. Swetake for his QRCode library.
 -- http://www.swetake.com/qr/ruby/qr_rb.html
-
 - Thanks to Ms. rica for the icons.
 -- http://jm.vis.ne.jp/sbox/
-
 - Thanks to Mr. Takachin for page design.
 -- http://www.generative.info/
-
 - Thanks to Mr. Keisuke Kambara for Nameraka Album.
 -- http://sappari.org/na.html
-
 - Thanks to WEBLAB@AJIBIT for Takahashi Method machine.
 -- http://lab.ajibit.com
 
 * Author
-
-Kouichirou Eto <2005 at eto.com>
+- Kouichirou Eto <2006 at eto.com>

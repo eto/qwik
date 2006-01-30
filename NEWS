@@ -1,3 +1,16 @@
+Overview of Changes in qwikWeb 0.8.0 - 2006-01-29
+
+* Make install process better.  Use setup.rb for install.
+
+* Using only one file 'config.txt' for configuration file.
+  Both qwikWeb and QuickML are using one 'config.txt' file.
+
+* You can access the help page of qwikWeb.
+
+* Many new plugins.
+
+* Many bug fixes.
+
 Overview of Changes in qwikWeb 0.7.2 - 2005-10-29
 
 * Make config setting more clear.
