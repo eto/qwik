@@ -274,7 +274,7 @@ class Qwik::CatalogFactory
       'For mobile phone user' => '携帯電話の方はこちらへ',
       'Logout done.' => 'ログアウト完了',
       'Confirm' => '確認',
-      "Push 'Do Logout'." =>
+      "Push \"Do Logout\"." =>
       '「ログアウトする」を押すと、本当にログアウトします。',
       'Do Logout' => 'ログアウトする',
 
