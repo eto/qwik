@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2005 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 # Load utils.
@@ -135,7 +126,7 @@ module Qwik
 	else
 	  # FIXME: Move from act_attach to act_files.
 	  if @site.top_site? # Special attach mode.
-	    @req.path_args = [@req.base+'.'+@req.ext]
+	    @req.path_args = ["#{@req.base}.#{@req.ext}"]
 	    # FIXME: move to act_files
 	    #return act_files
 	    return act_attach

@@ -22,8 +22,8 @@ module Qwik
       config = Config.new
       Config.load_args_and_config(config, $0, args)
 
-      # Load all libraries here.
-      init_load_lib(config.lib_dir)
+      # Load all actions here.
+      LoadLibrary.load_libs(config.lib_dir, 'qwik/act-*.rb')
 
       if config[:server_type] == 'webrick'
 	server = Server.new(config)
@@ -37,11 +37,6 @@ module Qwik
 
       $qwikweb_server_running = true
       server.start
-    end
-
-    def self.init_load_lib(dir)
-      loadlib = LoadLibrary.new
-      loadlib.glob(dir, 'qwik/act-*.rb')
     end
   end
 end

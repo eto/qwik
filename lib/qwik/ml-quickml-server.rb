@@ -73,7 +73,7 @@ module QuickML
       error("#{dir}: is not writable")   if ! File.writable?(dir) 
     end
 
-    def error (msg)
+    def self.error (msg)
       STDERR.puts "#{$0}: #{msg}"
       exit(1)
     end

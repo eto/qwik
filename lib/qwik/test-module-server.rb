@@ -76,7 +76,7 @@ module TestServerModule
 
   def read_page(pagekey)
     file = @dir+"#{pagekey}.txt"
-    str = file.get
+    str = file.read
     return str
   end
 

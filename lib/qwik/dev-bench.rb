@@ -35,7 +35,7 @@ class QwikBench
     src.each_entry {|file|
       if /\A.+\.txt\z/ =~ file.to_s
 	srcfile = src+file
-	str = srcfile.get
+	str = srcfile.read
 	mtime = srcfile.mtime
 
 	destfile = dest+file

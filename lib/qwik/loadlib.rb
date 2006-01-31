@@ -11,7 +11,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 
 module Qwik
   class LoadLibrary
-    def glob(dir, glob)
+    def self.load_libs(dir, glob)
       ar = list_files(dir, glob)
       add_load_path(dir)
       require_files(ar)
@@ -19,23 +19,23 @@ module Qwik
 
     private
 
-    def list_files(dir, glob)
-      return Dir.glob(dir+'/'+glob).map {|f|
-	f.sub(dir+'/', '')
+    def self.list_files(dir, glob)
+      return Dir.glob("#{dir}/#{glob}").map {|f|
+	f.sub("#{dir}/", '')
       }
     end
 
-    def add_load_path(dir)
-      dir = '../../lib' if defined?($test) && $test
+    def self.add_load_path(dir)
+      dir = '..' if defined?($test) && $test
       $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
     end
 
-    def require_files(ar)
-      before = $".dup
+    def self.require_files(ar)
+      #before = $".dup
       ar.each {|f|
 	require f
       }
-      after = $".dup
+      #after = $".dup
       #pp 'load success', after-before if before != after
     end
   end
@@ -52,28 +52,25 @@ if defined?($test) && $test
       return if $0 != __FILE__	# just only for unit test.
 
       config = Qwik::Config.new
-      loadlib = Qwik::LoadLibrary.new
+      c = Qwik::LoadLibrary
       dir = config.lib_dir
       org_path = $LOAD_PATH.dup
       org_libs = $".dup
 
-      Qwik::LoadLibrary.instance_eval {
-	public :list_files
-      }
-
       # test list_files
       glob = 'qwik/act-*.rb'
-      files = loadlib.list_files(dir, glob)
+      files = c.list_files(dir, glob)
       ok_eq(true, 0 < files.length)
       files.each {|f|
 	assert_match(/\Aqwik\/act-[-a-z0-9]+\.rb\z/, f)
       }
 
-      loadlib.glob(dir, glob) # LOAD
+      c.load_libs(dir, glob) # LOAD
 
       # LOAD_PATH is not changed.
       diff = $LOAD_PATH.length - org_path.length
       #qp $LOAD_PATH.length, org_path.length
+      #pp $LOAD_PATH, org_path
       ok_eq(false, 0 < diff)
 
       diff = $".length - org_libs.length

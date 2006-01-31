@@ -87,8 +87,7 @@ class TestSuite
   end
 
   def load_by_loadlib(arg)
-    loadlib = Qwik::LoadLibrary.new
-    loadlib.glob('../../lib', arg)
+    Qwik::LoadLibrary.load_libs('..', arg)
   end
 end
 

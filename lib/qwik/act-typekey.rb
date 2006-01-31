@@ -151,7 +151,7 @@ if defined?($test) && $test
 
     def nutypekey_get_sitetoken
       file = @config.etc_dir.path+'typekey-sitetoken.txt'
-      return file.get.chomp
+      return file.read.chomp
     end
 
     def test_typekey
