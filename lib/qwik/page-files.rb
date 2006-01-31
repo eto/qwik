@@ -87,7 +87,10 @@ module Qwik
       return [] unless @attach_path.directory?
       ar = []
       @attach_path.each_entry {|file|
-	next if /\A\./ =~ file.to_s || file.directory?
+        #qp file, file.directory?
+	next if file.directory?
+	next if file.to_s == 'CVS'
+	next if /\A\./ =~ file.to_s
 	ar << Filename.decode(file.to_s)
       }
       return ar.sort!
