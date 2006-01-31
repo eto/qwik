@@ -79,7 +79,7 @@ because qwikWeb uses mailaddress for authentication.
     def typekey_get_sitetoken
       file = @config.etc_dir.path+'typekey-sitetoken.txt'
       return nil if ! file.exist?
-      return file.get.chomp
+      return file.read.chomp
     end
 
     def typekey_get_publickey(tk)
