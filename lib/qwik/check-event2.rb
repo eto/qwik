@@ -7,7 +7,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/check-event'
 
 if $0 == __FILE__

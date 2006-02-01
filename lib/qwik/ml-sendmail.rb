@@ -10,7 +10,7 @@
 
 require 'socket'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module QuickML
   class Sendmail

@@ -11,7 +11,7 @@
 
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'diff'
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-escape'
 require 'qwik/htree-generator'
 

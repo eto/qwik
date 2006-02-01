@@ -43,3 +43,4 @@ clean:
 realclean:	clean
 	-rm *.profile profile.txt rbprof.txt rbprof-bench.txt rbprof-table.txt
 	-rm rubyprof-bench.txt log
+	-rm *.bak

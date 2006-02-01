@@ -7,7 +7,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-ring-common'
 require 'qwik/act-ring-user'
 require 'qwik/act-ring-msg'

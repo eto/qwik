@@ -2,8 +2,8 @@ require 'pp'
 require 'qp'
 
 def replace_line(line)
-  return line.gsub(%r|\$LOAD_PATH\.unshift 'compat' unless \$LOAD_PATH\.include\? 'compat'|) {
-    "$LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'"
+  return line.gsub(%r|\$LOAD_PATH \<\< '\.\.' unless \$LOAD_PATH\.include\?\('\.\.'\)|) {
+    "$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'"
   }
 end
 
@@ -57,6 +57,12 @@ end
 main
 
 =begin
+
+def replace_line(line)
+  return line.gsub(%r|\$LOAD_PATH\.unshift 'compat' unless \$LOAD_PATH\.include\? 'compat'|) {
+    "$LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'"
+  }
+end
 
 def nu3_replace_line(line)
   return line.gsub(%r|\$LOAD_PATH\.unshift\('\.\.\/\.\.\/compat'\) unless \$LOAD_PATH\.include\?\('\.\.\/\.\.\/compat'\)|) {

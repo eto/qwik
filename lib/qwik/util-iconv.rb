@@ -9,7 +9,7 @@
 
 require 'iconv'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-charset'
 
 class String

@@ -1,4 +1,4 @@
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 # Load utils.
 require 'qwik/util-basic'

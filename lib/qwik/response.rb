@@ -10,7 +10,7 @@
 # $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'webrick/cookie'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/wabisabi-format-xml'
 

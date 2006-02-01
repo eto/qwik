@@ -1,4 +1,4 @@
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/ml-logger'
 require 'qwik/ml-catalog-factory'

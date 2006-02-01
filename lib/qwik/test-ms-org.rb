@@ -8,7 +8,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/test-module-ml'
 require 'qwik/test-module-path'

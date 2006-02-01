@@ -9,7 +9,7 @@
 
 require 'pathname'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 class String
   def path

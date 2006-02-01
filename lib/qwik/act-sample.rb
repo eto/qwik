@@ -2,7 +2,7 @@
 # If you'd like to check the details of qwikWeb plugin, please see URL below.
 # http://qwik.jp/HowToMakePlugin.html
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action

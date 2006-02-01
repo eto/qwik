@@ -15,7 +15,7 @@ rescue LoadError
   $have_zip = false
 end
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-presen'
 require 'qwik/act-theme'
 

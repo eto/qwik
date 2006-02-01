@@ -10,7 +10,7 @@
 
 require 'thread'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-safe'
 require 'qwik/util-pathname'
 

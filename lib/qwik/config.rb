@@ -9,7 +9,7 @@
 
 require 'optparse'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/version'
 require 'qwik/qp'
 

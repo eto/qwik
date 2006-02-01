@@ -9,7 +9,7 @@
 
 require 'stringio'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/wabisabi-generator'
 require 'qwik/act-smil'
 
