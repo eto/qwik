@@ -7,11 +7,11 @@ a:		test-suite-all
 b:		test-suite-basic
 m:		test-suite-ml
 test-suite-all:
-	$(RUBY) test-suite-all.rb
+	$(RUBY) -I.. test-suite-all.rb
 test-suite-basic:
-	$(RUBY) test-suite-basic.rb
+	$(RUBY) -I.. test-suite-basic.rb
 test-suite-ml:
-	$(RUBY) test-suite-ml.rb
+	$(RUBY) -I.. test-suite-ml.rb
 
 # For production test.
 checkmail:
