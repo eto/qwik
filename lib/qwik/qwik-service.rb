@@ -27,6 +27,7 @@ module Qwik
       cmd, cmd_args = cmd
 
       if self.respond_to?(cmd)
+	return self.send(cmd) if cmd_args.nil?
 	return self.send(cmd, cmd_args)
       end
       puts "Error: unknown cmd [#{cmd}]"
