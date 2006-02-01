@@ -1,3 +1,7 @@
+Overview of Changes in qwikWeb 0.8.1 - 2006-02-01
+
+* Bug fix.  You can now use setup.rb to install.
+
 Overview of Changes in qwikWeb 0.8.0 - 2006-02-01
 
 * Make install process better.  Use setup.rb for install.

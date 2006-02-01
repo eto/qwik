@@ -10,7 +10,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'http://qwik.jp/qwikWeb.html'
   s.platform = Gem::Platform::RUBY
   s.summary = 'qwikWeb is a communication system integrating mailing lists and WikiWikiWeb.'
-  s.files = Dir.glob('{bin,compat,data,etc,ext,lib,share,test}/**/*').delete_if {|item| item.include?('CVS')}
+  s.files = Dir.glob('{bin,data,etc,ext,lib,share,test}/**/*').delete_if {|item| item.include?('CVS')}
   s.files.concat %w(ChangeLog Makefile NEWS README)
   s.require_path = 'lib'
   s.autorequire = 'qwik/qwik'
