@@ -7,30 +7,6 @@ def replace_line(line)
   }
 end
 
-def nu3_replace_line(line)
-  return line.gsub(%r|\$LOAD_PATH\.unshift\('\.\.\/\.\.\/compat'\) unless \$LOAD_PATH\.include\?\('\.\.\/\.\.\/compat'\)|) {
-    "$LOAD_PATH.unshift 'compat' unless $LOAD_PATH.include? 'compat'"
-  }
-end
-
-def nu2_replace_line(line)
-  str = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..')"
-  restr = Regexp.escape(str)
-  #puts restr
-  # \$LOAD_PATH\ <<\ '\.\.'\ unless\ \$LOAD_PATH\.include\?\('\.\.'\)
-  re = Regexp.compile(restr)
-  out = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include? '..'"
-  return line.gsub(re) {
-    out
-  }
-end
-
-def nu_replace_line(line)
-  return line.gsub(%r|\$LOAD_PATH << \'\.\./\.\./lib\' unless \$LOAD_PATH\.include\?\('\.\./\.\./lib'|) {
-    "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..'"
-  }
-end
-
 def dummy_replace_line(line)	# dummy
   return line
 end
@@ -81,6 +57,32 @@ end
 main
 
 =begin
+
+def nu3_replace_line(line)
+  return line.gsub(%r|\$LOAD_PATH\.unshift\('\.\.\/\.\.\/compat'\) unless \$LOAD_PATH\.include\?\('\.\.\/\.\.\/compat'\)|) {
+    "$LOAD_PATH.unshift 'compat' unless $LOAD_PATH.include? 'compat'"
+  }
+end
+
+def nu2_replace_line(line)
+  str = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..')"
+  restr = Regexp.escape(str)
+  #puts restr
+  # \$LOAD_PATH\ <<\ '\.\.'\ unless\ \$LOAD_PATH\.include\?\('\.\.'\)
+  re = Regexp.compile(restr)
+  out = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include? '..'"
+  return line.gsub(re) {
+    out
+  }
+end
+
+def nu_replace_line(line)
+  return line.gsub(%r|\$LOAD_PATH << \'\.\./\.\./lib\' unless \$LOAD_PATH\.include\?\('\.\./\.\./lib'|) {
+    "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..'"
+  }
+end
+
+
 # ============================== souko
 def nu_replace_line(line)
   return line.gsub(/require \"t\/test\"/) {
