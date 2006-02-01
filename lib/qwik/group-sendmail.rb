@@ -49,7 +49,7 @@ module QuickML
     end
 
     def submit (mail)
-      qp 'ml.submit ' if $ml_debug
+      #qp 'ml.submit ' if $ml_debug
 
       return if @members.active_empty?
 
