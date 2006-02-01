@@ -145,10 +145,12 @@ Thank you very much.
     end
 
     def font_name=(val)
+      val = val.to_s
       @cmdline << ' -Nfontname="' << val.gsub(/\$|"|`|\!/, '\\\&') << '"'
     end
 
     def font_size=(val)
+      val = val.to_s
       @cmdline << ' -Nfontsize="' << val.gsub(/\$|"|`|\!/, '\\\&') << '"'
     end
 
