@@ -1,5 +1,15 @@
 2006-02-01  Kouichirou Eto  <2006 eto.com>
 
+	* Change for installation process.
+	* Move compat to under lib/qwik
+	* qwik-service.rb: Specify config file for the server.
+	* test-module-session.rb: Set generation_file to test
+	* bin/*: Change LOAD_PATH
+	* qwik/compat/add_load_path.rb: New file for adding load path.
+	* post-install.rb: New file.  Make directories.
+
+2006-02-01  Kouichirou Eto  <2006 eto.com>
+
 	* qwikWeb 0.8.0 is released.
 	See NEWS for the Changes.
 
