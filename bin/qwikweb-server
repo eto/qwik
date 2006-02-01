@@ -1,7 +1,6 @@
 #! /usr/bin/ruby
-libdir = File.expand_path(File::dirname(__FILE__)+'/../lib')
-$LOAD_PATH.unshift(libdir)
-$LOAD_PATH.unshift(libdir+'/qwik/compat'))
-$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)+'/../ext'))
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__)+'/../lib')
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__)+'/../ext')
+require 'qwik/compat/add_load_path'
 require 'qwik/qwikweb-server'
 Qwik::QwikWebServer.main(ARGV)
