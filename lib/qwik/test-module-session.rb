@@ -34,14 +34,16 @@ module TestSession
     # setup config
     if ! defined?($test_config)
       config = Qwik::Config.new
-      config[:debug] = true
-      config[:test] = true	# do not send mail
-      config[:pass_file] = 'password.txt'
-      $test_org_sites_dir = config.sites_dir.dup
-      config[:sites_dir] = '.'
-
-      config[:public_url] = 'http://example.com/'
-
+      $test_org_sites_dir = config[:sites_dir].dup
+      hash = {
+	:debug			=> true,
+	:test			=> true,	# Do not send mail.
+	:pass_file		=> 'password.txt',
+	:generation_file	=> 'generation.txt',
+	:sites_dir		=> '.',
+	:public_url		=> 'http://example.com/',
+      }
+      config.update(hash)
       $test_config = config
     end
     @config = $test_config

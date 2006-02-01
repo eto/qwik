@@ -127,7 +127,8 @@ module Qwik
     end
 
     def web_start
-      start_cmd('Starting qwikWeb services: ', QWIKWEB_SERVER)
+      start_cmd('Starting qwikWeb services: ',
+		"#{QWIKWEB_SERVER} -c #{@config[:config_file]}")
     end
 
     def web_stop
@@ -142,7 +143,8 @@ module Qwik
     end
 
     def ml_start
-      start_cmd('Starting QuickML services: ', QUICKML_SERVER)
+      start_cmd('Starting QuickML services: ',
+		"#{QUICKML_SERVER}")
     end
 
     def ml_stop
