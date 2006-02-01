@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2005 Kouichirou Eto
+# Copyright (C) 2003-2006 Kouichirou Eto
 #     All rights reserved.
 #     This is free software with ABSOLUTELY NO WARRANTY.
 #
@@ -9,7 +9,7 @@
 
 # reference: http://www.maani.us/charts/ PHP/SWF Charts
 # charts.php v4.1
-# Copyright (c) 2003-2005, maani.us
+# Copyright (c) 2003-2006, maani.us
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 

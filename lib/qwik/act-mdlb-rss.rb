@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2005 Kouichirou Eto
+# Copyright (C) 2003-2006 Kouichirou Eto
 #     All rights reserved.
 #     This is free software with ABSOLUTELY NO WARRANTY.
 #
