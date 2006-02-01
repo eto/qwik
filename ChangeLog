@@ -1,3 +1,19 @@
+2006-01-31  Kouichirou Eto  <2006 eto.com>
+
+	* act-typekey.rb: Change get to read.
+	* dev-bench.rb: Ditto.
+
+	* loadlib.rb: Refactoring.
+
+2006-01-31  Kouichirou Eto  <2006 eto.com>
+
+	* page-files.rb: Do not include a file with filename 'CVS'.
+	I don't know why sometimes file.directory? don't work.
+
+2006-01-30  Kouichirou Eto  <2006 eto.com>
+
+	* act-typekey.rb: Bug fix.  Use file.read for Pathname.
+
 2006-01-30  Kouichirou Eto  <2006 eto.com>
 
 	* config.rb: Chnage attribute names.
