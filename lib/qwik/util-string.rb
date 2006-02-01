@@ -9,7 +9,7 @@
 
 require 'md5'
 
-$LOAD_PATH.unshift('../../compat') unless $LOAD_PATH.include?('../../compat')
+$LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'base64'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')

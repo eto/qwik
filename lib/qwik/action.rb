@@ -274,7 +274,8 @@ if defined?($test) && $test
     def test_nonexistent_ext
       t_add_user
       res = session('/test/1.nosuch')
-      ok_title('no such extention : nosuch')
+      #ok_title('no such extention : nosuch')
+      ok_title("No such file")
     end
 
     def test_redirect

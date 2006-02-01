@@ -9,7 +9,7 @@
 
 # modified from hiki/command.rb
 
-$LOAD_PATH.unshift('../../compat') unless $LOAD_PATH.include?('../../compat')
+$LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'diff'
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 require 'qwik/util-escape'

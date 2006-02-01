@@ -19,17 +19,17 @@ checkmail:
 
 # profiles
 profile:
-	$(RUBY) -rprofile -I../../compat test-suite-basic.rb 2> profile.txt
+	$(RUBY) -rprofile -Icompat test-suite-basic.rb 2> profile.txt
 rbprof:
-	$(RUBY) -rrbprof -I../../compat test-suite-basic.rb 2>rbprof.txt
+	$(RUBY) -rrbprof -Icompat test-suite-basic.rb 2>rbprof.txt
 
 # benchmarks
 bench:
 	$(RUBY) -runprof bench-s-md5.rb 2> rubyprof-bench.txt
 bench-page:
-	$(RUBY) -rrbprof -I../../compat bench-page.rb 2> rbprof-page.txt
+	$(RUBY) -rrbprof -Icompat bench-page.rb 2> rbprof-page.txt
 bench-textformat:
-	$(RUBY) -rrbprof -I../../compat bench-textformat.rb 2> rbprof-textformat.txt
+	$(RUBY) -rrbprof -Icompat bench-textformat.rb 2> rbprof-textformat.txt
 
 x:
 	-chmod 644 *.rb .cvsignore Makefile dev-*

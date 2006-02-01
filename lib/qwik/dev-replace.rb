@@ -2,6 +2,18 @@ require 'pp'
 require 'qp'
 
 def replace_line(line)
+  return line.gsub(%r|\$LOAD_PATH\.unshift 'compat' unless \$LOAD_PATH\.include\? 'compat'|) {
+    "$LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'"
+  }
+end
+
+def nu3_replace_line(line)
+  return line.gsub(%r|\$LOAD_PATH\.unshift\('\.\.\/\.\.\/compat'\) unless \$LOAD_PATH\.include\?\('\.\.\/\.\.\/compat'\)|) {
+    "$LOAD_PATH.unshift 'compat' unless $LOAD_PATH.include? 'compat'"
+  }
+end
+
+def nu2_replace_line(line)
   str = "\$LOAD_PATH << '..' unless \$LOAD_PATH.include?('..')"
   restr = Regexp.escape(str)
   #puts restr

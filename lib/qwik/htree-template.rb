@@ -7,7 +7,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH.unshift('../../compat') unless $LOAD_PATH.include?('../../compat')
+$LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'htree'
 $LOAD_PATH << '..' unless $LOAD_PATH.include?('..')
 

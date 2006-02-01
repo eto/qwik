@@ -125,15 +125,16 @@ testlog.txt
 .#
 #
 qwik-0.
-album.swf
 charts.swf
 charts_library
 .config
 lib/qwik/dev-
-lib/qwik/mock-
-lib/qwik/test-
 .bak
 )
+
+#album.swf
+#lib/qwik/mock-
+#lib/qwik/test-
 
     def self.public_file?(file)
       return false if file.directory?
