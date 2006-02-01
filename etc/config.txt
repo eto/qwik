@@ -83,9 +83,9 @@
 #:pass_file:	/etc/qwik/password.txt
 #:generation_file:	/etc/qwik/generation.txt
 #:log_dir:	/var/log/qwik
-#:web_log_file:	/var/log/qwik/qwik-error.log
-#:qlog_file:	/var/log/qwik/qwik-access.log
-#:accesslog_file:	/var/log/qwik/access.log
+#:web_error_log:	/var/log/qwik/qwik-error.log
+#:web_access_log:	/var/log/qwik/qwik-access.log
+#:access_log:	/var/log/qwik/access.log
 #:ml_log_file:	/var/log/qwik/quickml.log
 #:web_pid_file:	/var/run/qwik/qwikweb.pid
 #:ml_pid_file:	/var/run/qwik/quickml.pid
