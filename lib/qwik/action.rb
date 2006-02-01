@@ -124,14 +124,10 @@ module Qwik
 	if self.respond_to?(method)
 	  return self.send(method)
 	else
-	  # FIXME: Move from act_attach to act_files.
-	  if @site.top_site? # Special attach mode.
-	    @req.path_args = ["#{@req.base}.#{@req.ext}"]
-	    # FIXME: move to act_files
-	    #return act_files
-	    return act_attach
-	  end
-	  return c_nerror("no such extention : #{ext}")
+          # Special attached file mode.
+          @req.path_args = ["#{@req.base}.#{@req.ext}"]
+          @req.base = 'FrontPage'
+          return act_files
 	end
 
       rescue InvalidUserError
