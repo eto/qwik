@@ -119,8 +119,8 @@ a.external {
   padding: 0 7px;
   font-size: small;
   line-height: 100%;
-  border: #ffeeee;
-  background-color: #fff;
+  border: #fbb;
+  background-color: #fee;
 }
 .code .line {
   padding: 0 0 0 20px;
@@ -128,10 +128,10 @@ a.external {
   width: 100%;
 }
 .code .odd {
-  background-color: #ffffff;
+  background-color: #fdd;
 }
 .code .even {
-  background-color: #fff7f7;
+  background-color: #fcc;
 }
 
 /* ========== act-describe */
