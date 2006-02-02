@@ -1,19 +1,19 @@
 RUBY=ruby
 
 debug:
-	$(RUBY) bin/qwikweb-server -d -c etc/config.txt
+	$(RUBY) -Ilib bin/qwikweb-server -d -c etc/config.txt
 
 mldebug:
-	$(RUBY) bin/quickml-server -d -c etc/config.txt
+	$(RUBY) -Ilib bin/quickml-server -d -c etc/config.txt
 
 run:
-	$(RUBY) bin/qwikweb-server -c etc/config.txt
+	$(RUBY) -Ilib bin/qwikweb-server -c etc/config.txt
 
 mlrun:
-	$(RUBY) bin/qwikweb-server -c etc/config.txt
+	$(RUBY) -Ilib bin/qwikweb-server -c etc/config.txt
 
 watch:
-	$(RUBY) bin/qwikweb-watchlog -c etc/config.txt
+	$(RUBY) -Ilib bin/qwikweb-watchlog -c etc/config.txt
 
 test:
 	cd lib/qwik; make; cd ../..
