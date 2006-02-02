@@ -11,8 +11,6 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-escape'
 
 $LOAD_PATH << '../../ext' unless $LOAD_PATH.include?('../../ext')
-
-$have_xmlformatter_so = false
 begin
   require 'xmlformatter.so'
   $have_xmlformatter_so = true

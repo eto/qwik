@@ -11,7 +11,6 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/qrcode'
 require 'qwik/wabisabi-generator'
 
-$have_gd = false
 begin
   require 'GD'
   $have_gd = true

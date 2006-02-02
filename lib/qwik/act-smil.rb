@@ -74,7 +74,7 @@ This is just an example to use smil plugin.
       filename = ar.join('.')
       file = @site.files(@req.base).path(filename)
       if $smil_debug
-	return c_notice(1) { 'filename is '+filename }
+	return c_notice(1) { "filename is #{filename}" }
       end
 
       return c_simple_send(file.to_s, 'application/smil')

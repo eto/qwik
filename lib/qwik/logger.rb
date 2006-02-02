@@ -24,7 +24,8 @@ module Qwik
       @log = nil
     end
 
-    IGNORE_ACTION = ['theme']
+    #IGNORE_ACTION = %w(theme)
+    IGNORE_ACTION = %w(theme num)
     def log(wreq, wres, req, res)
       return if IGNORE_ACTION.include?(req.plugin)
       format = format_log_line(req, wres)
