@@ -115,8 +115,8 @@ a.external {
 
 /* ========== act-code */
 .code pre {
-  margin: 0px;
-  padding: 0 7px;
+  margin: 8px 0;
+  padding: 2px 7px;
   font-size: small;
   line-height: 100%;
   border: #fbb;
@@ -128,10 +128,10 @@ a.external {
   width: 100%;
 }
 .code .odd {
-  background-color: #fdd;
+  background-color: #fee;
 }
 .code .even {
-  background-color: #fcc;
+  background-color: #fdd;
 }
 
 /* ========== act-describe */
