@@ -115,9 +115,23 @@ a.external {
 
 /* ========== act-code */
 .code pre {
-  padding: 5px;
+  margin: 0px;
+  padding: 0 7px;
   font-size: small;
   line-height: 100%;
+  border: #ffeeee;
+  background-color: #fff;
+}
+.code .line {
+  padding: 0 0 0 20px;
+  background: no-repeat 0% 50%;
+  width: 100%;
+}
+.code .odd {
+  background-color: #ffffff;
+}
+.code .even {
+  background-color: #fff7f7;
 }
 
 /* ========== act-describe */
