@@ -1,5 +1,12 @@
 2006-02-01  Kouichirou Eto  <2006 eto.com>
 
+	* act-code.rb: Add line number to each line.
+	* act-code.rb: New plugin act_num to generate number images.
+	* logger.rb: Ignore num action.
+	* base.css: Add code line class.
+
+2006-02-01  Kouichirou Eto  <2006 eto.com>
+
 	* Change for installation process.
 	* Move compat to under lib/qwik
 	* qwik-service.rb: Specify config file for the server.
