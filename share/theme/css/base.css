@@ -116,14 +116,17 @@ a.external {
 /* ========== act-code */
 .code pre {
   margin: 8px 0;
-  padding: 2px 7px;
+  padding: 4px 0;
   font-size: small;
   line-height: 100%;
-  border: #fbb;
+  border: 0px;
+  border-top: #fbb solid 1px;
+  border-bottom: #fbb solid 1px;
   background-color: #fee;
+  white-space: pre;
 }
 .code .line {
-  padding: 0 0 0 20px;
+  padding: 0 0 0 24px;
   background: no-repeat 0% 50%;
   width: 100%;
 }
