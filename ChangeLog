@@ -1,3 +1,13 @@
+2006-02-09  Kouichirou Eto  <2006 eto.com>
+
+	* act-code.rb: Show line number by using generated PNG images.
+	* css/base.css: Update.
+
+	* Refactoring test cases using ok_title.
+
+	* common-error.rb: New file.
+	* common-notice.rb: Move error pages to common-error.rb
+
 2006-02-01  Kouichirou Eto  <2006 eto.com>
 
 	* act-code.rb: Add line number to each line.
