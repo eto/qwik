@@ -1,13 +1,5 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+require 'qwik/common-error'
 
 module Qwik
   class Action
@@ -20,17 +12,6 @@ module Qwik
     def c_notice(title, url=nil, status=200, sec=0, &b)
       msg = yield
       generate_notice_page(status, title, url, msg, sec)
-    end
-
-    def c_nerror(title, url=nil, status=500, &b)
-      status = 200 if @config.test
-      msg = title
-      msg = yield if block_given?
-      generate_notice_page(status, title, url, msg)
-    end
-
-    def c_notfound(title, &b)
-      return c_nerror(title, nil, 404, &b)
     end
 
     def c_nredirect(title, url, &b)
@@ -88,7 +69,7 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestActNotice < Test::Unit::TestCase
+  class TestCommonNotice < Test::Unit::TestCase
     include TestSession
 
     def test_all
@@ -96,25 +77,22 @@ if defined?($test) && $test
 
       @action.generate_notice_page(200, 'title'){'msg'}
       ok_eq(200, res.status)
-      ok_xp([:title, 'title'], 'title', res)
+      ok_title 'title'
 
       @action.generate_notice_page(200, 'title', 'u'){'msg'}
       ok_eq(200, res.status)
-      ok_xp([:title, 'title'], 'title', res)
+      ok_title 'title'
       ok_xp([:meta, {:content=>'0; url=u', 'http-equiv'=>'Refresh'}],
 	    'meta[2]', res)
 
       @action.c_notice('c_notice title'){'msg'}
       ok_eq(200, res.status)
-      ok_xp([:title, 'c_notice title'], 'title', res)
-      @action.c_nerror('c_notice_error title'){'msg'}
-      #ok_eq(500, res.status)
-      ok_xp([:title, 'c_notice_error title'], 'title', res)
+      ok_title 'c_notice title'
 
       t_add_user
 
       res = session('/test/.test_notice')
-      ok_xp([:title, 'act_test_notice'], 'title', res)
+      ok_title 'act_test_notice'
     end
 
     def test_c_nredirect

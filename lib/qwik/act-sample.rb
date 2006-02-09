@@ -88,7 +88,7 @@ if defined?($test) && $test
     def test_act_hello
       t_add_user
       res = session('/test/.hello')
-      ok_xp([:title, 'hello, world!'], '//title')
+      ok_title 'hello, world!'
       ok_in(['hi, there.'], '//div[@class="section"]')
     end
 

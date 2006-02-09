@@ -81,7 +81,7 @@ if defined?($test) && $test
     def test_test_plain
       t_add_user
       res = session('/test/.test_plain')
-      ok_xp([:title, 'act_test_plain'], 'title', res)
+      ok_title 'act_test_plain'
     end
 
     def test_all
@@ -89,11 +89,11 @@ if defined?($test) && $test
 
       @action.generate_plain_page(200, 'title', 'msg')
       ok_eq(200, res.status)
-      ok_xp([:title, 'title'], 'title', res)
+      ok_title 'title'
 
       @action.c_plain('c_plain title'){'msg'}
       ok_eq(200, res.status)
-      ok_xp([:title, 'c_plain title'], 'title', res)
+      ok_title 'c_plain title'
     end
 
     def test_plain_generate
