@@ -67,8 +67,6 @@ void main(){
   printf(\"hello, world!\\n\");
 }
 }}
-
-pre指定よりも、行間がすこしつまり、文字がすこし小さくなります。
 " }
 
     Dja_comment = {

@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2001-2005 Kouichirou Eto
+# Copyright (C) 2001-2006 Kouichirou Eto
 #     All rights reserved.
 #     This is free software with ABSOLUTELY NO WARRANTY.
 #
@@ -10,9 +10,9 @@
 require 'thread'
 
 class AutoReload
-  def self.start(interval, debug = false, name=nil)
+  def self.start(interval, verbose = false, name=nil)
     ar = AutoReload.new
-    ar.debug = debug
+    ar.verbose = verbose
     ar.name = name
     ar.autoreload(interval)
   end
@@ -20,10 +20,10 @@ class AutoReload
   def initialize
     @status = {}
     @thread = nil
-    @debug = false
+    @verbose = false
     @name = nil
   end
-  attr_accessor :debug
+  attr_accessor :verbose
   attr_accessor :name
 
   def message(str)
@@ -61,7 +61,7 @@ class AutoReload
       return if ! FileTest.exist?(file) # file is disappered.
       curtime = File.mtime(file).to_i
       if mtime < curtime
-        if @debug
+        if @verbose
           $stdout.puts(message("reload: \"#{file}\""))
         end
 	load file	# Load it.
