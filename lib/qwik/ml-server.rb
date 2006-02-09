@@ -44,7 +44,11 @@ module QuickML
     end
 
     def shutdown
-      @server.shutdown
+      begin
+	@server.shutdown
+      rescue Errno::ENOTCONN
+        qp 'Already disconnected.'
+      end
       @status = :shutdown
     end
 
