@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -22,10 +13,12 @@ This is an example for textarea.
  {{textarea
  This is an example for textarea.
  }}
-You can show a editable text filed.
+You can show an editable text field.
 
-Since this is description page, you can not edit text field here.
-" }
+Since this is description page, you can not edit this page.
+Please use this plugin on your own page.
+"
+    }
 
     TEXTAREA_MIN_COLS = 50
     TEXTAREA_MIN_ROWS = 4

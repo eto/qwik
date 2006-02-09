@@ -72,7 +72,7 @@ if defined?($test) && $test
       page.store("* [t1][t2] t
 {{show_tags}}")
       res = session('/test/1.html')
-      ok_xp([:title, 't'], '//title')
+      ok_title 't'
       ok_xp([:div, {:class=>'tags'},
 	      [:a, {:href=>'t1.tag'}, 't1'],
 	      [:a, {:href=>'t2.tag'}, 't2']], "//div[@class='tags']")
@@ -91,10 +91,10 @@ body2")
 
       # test_act_tag
       res = session('/test/nosuch.tag')
-      ok_xp([:title, 'no such tag'], '//title')
+      ok_title 'no such tag'
 
       res = session('/test/t1.tag')
-      ok_xp([:title, 'tag : t1'], '//title')
+      ok_title 'tag : t1'
       ok_xp([:div, {:class=>'tag_pages'},
 	      [:div, {:class=>'day'}, '',
 		[:div, {:class=>'body'},
