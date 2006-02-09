@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module QuickML
@@ -41,9 +32,7 @@ module QuickML
       @sites_dir = sites_dir
       @group_name = group_name
       @site = nil
-
-      # Make a new directory here.
-      get_dirpath.check_directory
+      get_dirpath.check_directory	# Make a new directory here.
     end
 
     def set_site(site)
@@ -117,7 +106,11 @@ module QuickML
 
       if fmt < pmt	# The page is new.
 	f.put(page_content)
-	f.utime(pmt, pmt)
+	begin
+	  f.utime(pmt, pmt)
+	rescue e
+	  qp 'error to set time'
+	end
 	return page_content
       end
 
