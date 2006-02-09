@@ -240,7 +240,7 @@ if defined?($test) && $test
 
       @action.generate_editor_page('title', 'h1', 'msg', ['ma'], ['si'])
       ok_eq(200, res.status)
-      ok_xp([:title, 'title'], 'title', res)
+      ok_title('title')
       ok_xp([:div, {:class=>'message'}, 'msg'],
 	    "//div[@class='message']")
       ok_xp([:div, {:class=>'main'}, 'ma'],
@@ -257,7 +257,7 @@ if defined?($test) && $test
       page = @site.create_new
       page.store('t')
       @action.c_editor(@site, '1')
-      ok_xp([:title, 'Edit | 1'], 'title')
+      ok_title 'Edit | 1'
       ok_xp([:div, {:class=>'message'}, ['']],
 	    "//div[@class='message']")
 

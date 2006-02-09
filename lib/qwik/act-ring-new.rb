@@ -81,10 +81,10 @@ if defined?($test) && $test
       res = session('/test/.ring_new') {|req|
 	req.cookies.clear	# before login
       }
-      ok_xp([:title, 'No id nor mail'], '//title')
+      ok_title 'No id nor mail'
 
       res = session("/test/.ring_new?id=d@1990.sfc.ne.jp&mail=d@g.jp")
-      ok_xp([:title, "アカウントが作成されました。"], '//title')
+      ok_title 'アカウントが作成されました。'
 
       invite_member_page = @site['_'+Qwik::Action::RING_INVITE_MEMBER]
       ok_eq(",d@1990.sfc.ne.jp,,info@ring.sfc.ne.jp,sfc.ne.jpよりの登録です。,0\n", invite_member_page.load)
