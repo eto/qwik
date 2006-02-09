@@ -238,7 +238,7 @@ if defined?($test) && $test
       page.store(str)
       res = session('/test/1.html')
 
-      ok_xp([:title, '1'], '//title')
+      ok_title '1'
       w = res.body.get_path("//div[@class='maplink']")
       ok_eq([:div, {:class=>'maplink'},
 	      [:iframe, {:src=>'/.map?s=test&k=1',
@@ -246,7 +246,7 @@ if defined?($test) && $test
 	    w[0..2])
 
       res = session('/.map?s=test&k=1')
-      ok_xp([:title, 'map'], '//title')
+      ok_title 'map'
       w = res.body.get_path("//div[@class='maparea']")
     end
 
