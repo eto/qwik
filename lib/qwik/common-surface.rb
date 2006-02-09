@@ -203,7 +203,7 @@ if defined?($test) && $test
     def test_test_surface
       t_add_user
       res = session('/test/.test_surface')
-      ok_xp([:title, 'act_test_surface'], 'title', res)
+      ok_title 'act_test_surface'
     end
 
     def test_all
@@ -213,7 +213,7 @@ if defined?($test) && $test
 #      ok_xp([:title, 'title'], 'title', res)
 
       @action.c_surface('c_surface title') { 'msg' }
-      ok_xp([:title, 'c_surface title'], 'title', res)
+      ok_title 'c_surface title'
     end
 
     def test_surface_generate
@@ -250,7 +250,7 @@ if defined?($test) && $test
       data['pageattribute'] = 'pageattribute'
       @action.surface_template(template, data)
       res.body = template
-      ok_xp([:title, 'title'], 'title', res)
+      ok_title 'title'
       ok_xp([:div, {:class=>'sidebar'}, 'sidemenu'],
 	    "//div[@class='sidebar']")
     end

@@ -48,7 +48,7 @@ module Qwik
       return nil
     end
 
-    def fput(filename, content, overwrite=nil, time=nil)
+    def fput(filename, content, overwrite=nil, time=nil)	# obsolete
       # overwrite is always ignored.
       res = filename
       if exist?(filename)
