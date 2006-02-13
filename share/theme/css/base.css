@@ -130,15 +130,18 @@ a.external {
   background: no-repeat 0% 50%;
   width: 100%;
 }
+/*
 .code .odd {
   background-color: #fee;
 }
 .code .even {
   background-color: #fdd;
 }
+*/
 
 /* ========== act-describe */
-.description-list {
+.descriptio
+n-list {
 /*
   border: 1px solid #ccc;
   margin: 0 0.7em 0 0;
