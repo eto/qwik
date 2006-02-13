@@ -1,3 +1,17 @@
+2006-02-13  Kouichirou Eto  <2006 eto.com>
+
+	* act-takahashi.rb: Delete c_require_page_exist.
+
+	* act-code.rb: Delete to_s in c_simple_send.
+
+	* base.css: Comment out the odd and even classes in code class.
+
+2006-02-09  Kouichirou Eto  <2006 eto.com>
+
+	* group-db.rb: Bug fix. Rescue for utime error.
+
+	* ml-server.rb: Bug fix. Add rescue Errno::ENOTCONN for shutdown.
+
 2006-02-09  Kouichirou Eto  <2006 eto.com>
 
 	* act-code.rb: Show line number by using generated PNG images.
