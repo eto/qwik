@@ -47,8 +47,6 @@ you.
     }
 
     def plg_takahashi
-      c_require_page_exist
-
       files = @site.files(@req.base)
 
       # Copy T_method_module.swf from theme directory.

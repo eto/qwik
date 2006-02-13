@@ -60,7 +60,7 @@ void main(){
 	files.put(filename, png)
       end
       path = files.path(filename)
-      return c_simple_send(path.to_s, 'image/png')
+      return c_simple_send(path, 'image/png')
     end
 
     def self.generate_png(str)
