@@ -87,77 +87,33 @@ Thank you very much.
 "
     }
 
-    def plg_graphviz(str=nil)
-      y = yield if block_given?
-      str = y.chomp if y && y != ''
-
-      if str.nil?
-	str = @site.site_url
-	n = @site.sitename
-      else
-	str = str.to_s
-	hash_str = str.dup
- 	hash_str << @config.graphviz_font_name if @config.respond_to?('graphviz_font_name')
-	hash_str << @config.graphviz_font_size if @config.respond_to?('graphviz_font_size')
-	n = hash_str.md5hex
-      end
-
-      f = 'graphviz-'+n+'.png'
-      files = @site.files('FrontPage')
+    def plg_graphviz
+      #return if @config.test && !(defined?($test_graphviz) && $test_graphviz)
+      str = yield.to_s
+      str = str.set_page_charset.to_utf8
+      f = "graphviz-#{str.md5hex}.png"
+      files = @site.files
       if ! files.exist?(f)
-	res = graphviz_generate(f, str)
-	return res if res
-      end
-
-      ar = [:img, {:src=>'.files/'+f, :alt=>str}]
-      h = ar
-      h = [:a, {:href=>str}, ar] if is_valid_url?(str)
-      div = [:div, {:class=>'graphviz'}, h]
-      return div
-    end
-
-    def graphviz_generate(f, str)
-      return if @config.test && !(defined?($test_graphviz) && $test_graphviz)
-
-      gv = @memory.graphviz
-
-      #str = str.set_sjis_charset.to_utf8_charset
-      str = str.sjistou8
-
-      begin
-	png = gv.generate_png(str)
+	png = Graphviz.generate_png(@config, str)
 	return [:div, {:class=>'graphviz'}, ''] if png.nil?
-      rescue
-	return [:div, {:class=>'graphviz'}, '']
+	files.put(f, png)
       end
-
-      files = @site.files('FrontPage')
-      files.put(f, png)
-
-      return nil 
+      return [:div, {:class=>'graphviz'},
+	[:img, {:src=>".files/#{f}", :alt=>str}]]
     end
   end
 
   class Graphviz
-    def initialize(bin_path)
-      @bin_path = bin_path
-      @cmdline = ''
-    end
+    def self.generate_png(config, str)
+      cmdpath  = config[:graphviz_dot_path]
+      return nil if cmdpath.nil?
 
-    def font_name=(val)
-      val = val.to_s
-      @cmdline << ' -Nfontname="' << val.gsub(/\$|"|`|\!/, '\\\&') << '"'
-    end
-
-    def font_size=(val)
-      val = val.to_s
-      @cmdline << ' -Nfontsize="' << val.gsub(/\$|"|`|\!/, '\\\&') << '"'
-    end
-
-    def generate_png(str)
-      out=''
-      p @cmdline
-      IO.popen(@bin_path + ' -Tpng ' + @cmdline, 'r+') { |io|
+      fontname = config[:graphviz_font_name].to_s.gsub(/\$|"|`|\!/, '\\\&')
+      fontsize = config[:graphviz_font_size].to_s.gsub(/\$|"|`|\!/, '\\\&')
+      out = ''
+      cmd = "#{cmdpath} -Tpng -Nfontname=\"#{fontname}\" -Nfontsize=\"#{fontsize}\""
+      #p cmd
+      IO.popen(cmd, 'r+') {|io|
 	io.puts str
 	io.close_write
 	out = io.read
@@ -165,26 +121,7 @@ Thank you very much.
       return out
     end
   end
-
-  class GraphvizMemory
-    def initialize(config, memory)
-      @config = config
-      @memory = memory
-      @graphviz = Graphviz.new(@config.graphviz_dot_path)
-      @graphviz.font_name = @config.graphviz_font_name if @config.respond_to?('graphviz_font_name')
-      @graphviz.font_size = @config.graphviz_font_size if @config.respond_to?('graphviz_font_size')
-    end
-
-    def generate_png(d)
-      begin 
-	return @graphviz.generate_png(d)
-      rescue
-	return ''
-      end
-    end
-  end
 end
-
 
 if $0 == __FILE__
   require 'qwik/test-common'
@@ -196,14 +133,15 @@ if defined?($debug) && $debug
     include TestSession
 
     def test_all
-      ok_wi([:div, {:class=>"graphviz"},
- [:img, {:src=>".files/graphviz-3c7bc23c6e7fc2e92cb971e53a18a842.png",
-   :alt=>"digraph G {\n  \"A\" ->  B\n}"}]],
-"{{graphviz
+      ok_wi [:div, {:class=>"graphviz"}, [:img,
+	  {:src=>".files/graphviz-f27b0e2b9dfab5d00382ed5cdffa9871.png",
+	    :alt=>"digraph G {\n  \"A\" ->  B\n}\n"}]],
+	"{{graphviz
 digraph G {
   \"A\" ->  B
 }
-}}")
+}}"
+      eq ["graphviz-f27b0e2b9dfab5d00382ed5cdffa9871.png"], @site.files.list
     end
   end
 end
