@@ -11,7 +11,8 @@ module Qwik
       :dc => "* Example
 {{qrcode(\"http://qwik.jp/\")}}
  {{qrcode(\"http://qwik.jp/\")}}
-" }
+"
+    }
 
     def plg_qrcode(str=nil)
       y = yield if block_given?

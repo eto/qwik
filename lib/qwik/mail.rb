@@ -13,7 +13,6 @@ require 'qwik/mail-parse'
 require 'qwik/mail-header'
 require 'qwik/mail-body'
 require 'qwik/util-string'
-require 'qwik/qwik-mail'
 
 module QuickML
   class Mail

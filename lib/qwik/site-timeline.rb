@@ -140,7 +140,7 @@ if defined?($test) && $test
 
       # test_site_min, page_min, pages_history, site_duration
       eq Time.at(0), tl.site_min
-      eq {'1'=>Time.at(0)}, tl.page_min
+      eq({'1'=>Time.at(0)}, tl.page_min)
       eq ['1'], tl.pages_history
       assert(0 < tl.site_duration)
     end
