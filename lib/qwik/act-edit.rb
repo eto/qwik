@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-save'
 require 'qwik/act-files'	# files_form
@@ -207,46 +198,42 @@ if defined?($test) && $test
       res = session
 
       template = @memory.template.get('editor')
-      ok_eq([:h1], template.get_tag('h1'))
-      ok_eq([:div, {:class=>'main'}],
-	    template.get_by_class('main'))
+      eq [:h1], template.get_tag('h1')
+      eq [:div, {:class=>'main'}], template.get_by_class('main')
 
       res = Qwik::Action.editor_generate(template, 'title', 'h1',
 					 'msg', ['m'], ['s'])
 
-      ok_eq([:title, 'title'], res.get_tag('title'))
-#      ok_eq([:script, {:src=>'.theme/js/base.js',
-#		:type=>'text/javascript'}, ''], res.get_tag('script'))
-      ok_eq([:link, {:href=>'.theme/css/base.css', :rel=>'stylesheet',
-		:media=>'screen,tv', :type=>'text/css'}],
-	    res.get_tag('link'))
-      ok_eq([:link, {:media=>'screen,tv', :type=>'text/css',
-		:href=>'.theme/qwikeditor/qwikeditor.css',
-		:rel=>'stylesheet'}],
-	    res.get_tag('link[2]'))
-      ok_eq([:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
-	    res.get_tag('meta'))
-      ok_eq([:h1, 'h1'], res.get_tag('h1'))
-      ok_eq([:div, {:class=>'message'}, 'msg'],
-	    res.get_path("//div[@class='message']"))
-      ok_eq([:div, {:class=>'main'}, 'm'],
-	    res.get_path("//div[@class='main']"))
-      ok_eq([:div, {:class=>'sidebar'}, 's'],
-	    res.get_path("//div[@class='sidebar']"))
+      eq [:title, 'title'], res.get_tag('title')
+#     eq [:script, {:src=>'.theme/js/base.js',
+#		:type=>'text/javascript'}, ''], res.get_tag('script')
+      eq [:link, {:href=>'.theme/css/base.css', :rel=>'stylesheet',
+	  :media=>'screen,tv', :type=>'text/css'}],
+	res.get_tag('link')
+      eq [:link, {:media=>'screen,tv', :type=>'text/css',
+	  :href=>'.theme/qwikeditor/qwikeditor.css',
+	  :rel=>'stylesheet'}],
+	res.get_tag('link[2]')
+      eq [:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
+	res.get_tag('meta')
+      eq [:h1, 'h1'], res.get_tag('h1')
+      eq [:div, {:class=>'message'}, 'msg'],
+	res.get_path("//div[@class='message']")
+      eq [:div, {:class=>'main'}, 'm'],
+	res.get_path("//div[@class='main']")
+      eq [:div, {:class=>'sidebar'}, 's'],
+	res.get_path("//div[@class='sidebar']")
     end
 
     def test_all
       res = session
 
       @action.generate_editor_page('title', 'h1', 'msg', ['ma'], ['si'])
-      ok_eq(200, res.status)
-      ok_title('title')
-      ok_xp([:div, {:class=>'message'}, 'msg'],
-	    "//div[@class='message']")
-      ok_xp([:div, {:class=>'main'}, 'ma'],
-	    "//div[@class='main']")
-      ok_xp([:div, {:class=>'sidebar'}, 'si'],
-	    "//div[@class='sidebar']")
+      eq 200, res.status
+      ok_title 'title'
+      ok_xp([:div, {:class=>'message'}, 'msg'], "//div[@class='message']")
+      ok_xp([:div, {:class=>'main'}, 'ma'], "//div[@class='main']")
+      ok_xp([:div, {:class=>'sidebar'}, 'si'], "//div[@class='sidebar']")
 
       t_add_user
 
@@ -299,7 +286,7 @@ if defined?($test) && $test
 
       res = session
       @action.c_editor(@site, '1', 'contents', 'msg')
-      ok_title('Edit | test')
+      ok_title 'Edit | test'
       assert_text('Edit | test', 'h1')
       ok_xp([:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
 	    '//meta')
