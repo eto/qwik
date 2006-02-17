@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/bench-module-session'
 require 'qwik/test-common'
@@ -44,7 +35,6 @@ class BenchEmode < Test::Unit::TestCase
     t_add_user
     repeat.times {
       pages.each {|base|
-#	qp base
 	session("/test/#{base}.html")
 	body = @res.body.format_xml
       }

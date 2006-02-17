@@ -56,7 +56,7 @@ module Qwik
 	  elsif x.is_a?(NilClass)
 	    # do nothing
 	  else
-	    qp "what?", x
+	    p "what?", x
 	    out << x.to_s.escapeHTML
 	  end
 	}
@@ -145,7 +145,6 @@ if $0 == __FILE__
   else
     require 'qwik/testunit'
     require 'pp'
-    require 'qwik/qp'
     $test = true
   end
 end
