@@ -1,3 +1,51 @@
+2006-02-17  Kouichirou Eto  <2006 eto.com>
+
+	* common-url.rb: Rename methods.
+	c_relative_to_absoulte -> c_relative_to_root
+	c_relative_to_full -> c_relative_to_absoulte
+
+	* util-sendmail.rb: Use mail in hash form.
+	act-getpass.rb and related files are also changed.
+	* qwik-mail.rb: Deleted.
+
+	* ml-sendmail.rb: Use Hash to send mail.
+	related files are also changed.
+	* ml-processor.rb: Changed.
+
+	* wabisabi-valid.rb: Security Fix. Allow only possible URLs.
+
+	* action.rb (pre_ext_): Bug fix. Rewrite the root path.
+
+	* ml-server.rb: Bug fix. Use ml_pid_file.
+
+	* page-wikidb.rb: Can use space after delimeter.
+
+	* config.rb (parse): Can use time format in config.txt.
+
+	* test-module-session.rb (t_with_path): New method.
+	For testing an action with path in public_url.
+
+	* act-graphviz.rb: Refactoring.
+	* server-memory.rb (graphviz): Deleted.
+
+	* site-attach.rb: Deleted.
+
+	* common-res.rb (c_get_superpage): Deleted.
+
+	* common-surface.rb: Refactoring.
+
+	* act-wema.rb: Refactoring.
+
+	* wabisabi-basic.rb: Renamed from wabisabi-get.rb
+
+	* Refactoring test cases.
+	act-edit.rb, 
+
+	* qrcode.rb: Refactoring.
+	* qrcode-view.rb: also changed.
+
+	* act-book.rb: Add description.
+
 2006-02-13  Kouichirou Eto  <2006 eto.com>
 
 	* act-takahashi.rb: Delete c_require_page_exist.
