@@ -1,18 +1,9 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module QuickML
   class MockSendmail
     def self.open(smtp_host, smtp_port)
-      self.new(smtp_host, smtp_port)
+      return self.new(smtp_host, smtp_port)
     end
 
     def initialize(smtp_host, smtp_port)
@@ -30,7 +21,7 @@ module QuickML
       if @in_data
 	if /\.\z/ =~ @buffer.last
 	  @in_data = false
-	  return '250 Ok: queued as 381E41683E'
+	  return '250 Ok: queued as 381E41683E'	# The message is fake.
 	end
       end
 

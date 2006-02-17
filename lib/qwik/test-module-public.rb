@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module TestModulePublic
@@ -36,12 +27,12 @@ module TestModulePublic
 end
 
 if $0 == __FILE__
-  require 'qwik/test-common'
+  require 'test/unit'
   $test = true
 end
 
 if defined?($test) && $test
-  class DummyClass
+  class TestModulePublicDummyClass
     def initialize
       @var = 't'
     end
@@ -57,19 +48,19 @@ if defined?($test) && $test
     include TestModulePublic
 
     def test_all
-      dc = DummyClass.new
+      dc = TestModulePublicDummyClass.new
 
       # test_t_make_public
-      ok_eq(true, dc.private_methods.include?('hello'))
-      ok_eq(false, dc.public_methods.include?('hello'))
-      t_make_public(DummyClass, :hello)
-      ok_eq('hello', dc.hello)
-      ok_eq(false, dc.private_methods.include?('hello'))
-      ok_eq(true, dc.public_methods.include?('hello'))
+      assert_equal true, dc.private_methods.include?('hello')
+      assert_equal false, dc.public_methods.include?('hello')
+      t_make_public(TestModulePublicDummyClass, :hello)
+      assert_equal 'hello', dc.hello
+      assert_equal false, dc.private_methods.include?('hello')
+      assert_equal true, dc.public_methods.include?('hello')
 
       # test_t_make_readable
-      t_make_readable(DummyClass, :var)
-      ok_eq('t', dc.var)
+      t_make_readable(TestModulePublicDummyClass, :var)
+      assert_equal 't', dc.var
     end
   end
 end
