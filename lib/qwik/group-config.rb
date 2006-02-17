@@ -106,7 +106,6 @@ module QuickML
 
     def read
       content = @db.get(:Config)
-#      qp content
       return if content && content == @content	# Do nothing.
       @content = content
       config = GroupConfig.parse_hash(@content)

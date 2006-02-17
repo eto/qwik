@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -20,7 +11,7 @@ module Qwik
     def site_url
       siteurl = self.siteconfig['siteurl']
       return siteurl if ! siteurl.empty?
-      return @config.public_url+self.url_path
+      return "#{@config.public_url}#{self.url_path}"
     end
 
     def page_url(k)
@@ -54,7 +45,9 @@ module Qwik
       page_title = page.get_title
 
       sitetitle = self.title
-      return "#{sitetitle} - #{page_title}" if ! sitetitle.empty?
+      if ! sitetitle.empty?
+	return "#{sitetitle} - #{page_title}"
+      end
 
       return page_title
     end
@@ -78,34 +71,34 @@ if defined?($test) && $test
     def test_url_test
       site = @site
       page = site.create_new
-      ok_eq('http://example.com/', site.host_url)
-      ok_eq('http://example.com/test/', site.site_url)
-      ok_eq('http://example.com/test/1.html', site.page_url('1'))
-      ok_eq('test@example.com', site.ml_address)
+      eq 'http://example.com/', site.host_url
+      eq 'http://example.com/test/', site.site_url
+      eq 'http://example.com/test/1.html', site.page_url('1')
+      eq 'test@example.com', site.ml_address
       t_without_testmode {
-	ok_eq('example.com/test', site.title)
-	ok_eq('example.com/test - 1', site.get_page_title('1'))
+	eq 'example.com/test', site.title
+	eq 'example.com/test - 1', site.get_page_title('1')
       }
 
       siteconfig = site.create('_SiteConfig')
       siteconfig.store(":sitename:t\n")
       t_without_testmode {
-	ok_eq('t', site.title)
-	ok_eq('t - 1', site.get_page_title('1'))
+	eq 't', site.title
+	eq 't - 1', site.get_page_title('1')
       }
     end
 
     def test_url_top_site
       site = @memory.farm.get_top_site
       page = site.create_new
-      ok_eq(true, site.top_site?)
-      ok_eq('http://example.com/', site.host_url)
-      ok_eq('http://example.com/', site.site_url)
-      ok_eq('http://example.com/1.html', site.page_url('1'))
-      ok_eq('www@example.com', site.ml_address)
+      eq true, site.top_site?
+      eq 'http://example.com/', site.host_url
+      eq 'http://example.com/', site.site_url
+      eq 'http://example.com/1.html', site.page_url('1')
+      eq 'www@example.com', site.ml_address
       t_without_testmode {
-	ok_eq('example.com', site.title)
-	ok_eq('example.com - 1', site.get_page_title('1'))
+	eq 'example.com', site.title
+	eq 'example.com - 1', site.get_page_title('1')
       }
     end
 
@@ -114,15 +107,15 @@ if defined?($test) && $test
       page = site.create_new
       siteconfig = site.create('_SiteConfig')
       siteconfig.store(":siteurl:http://example.org/\n")
-      ok_eq('http://example.org/', site.host_url)
-      ok_eq('http://example.org/', site.site_url)
-      ok_eq('http://example.org/1.html', site.page_url('1'))
-      ok_eq('test@example.com', site.ml_address)	# FIXME: Umm.
+      eq 'http://example.org/', site.host_url
+      eq 'http://example.org/', site.site_url
+      eq 'http://example.org/1.html', site.page_url('1')
+      eq 'test@example.com', site.ml_address	# FIXME: Umm.
       siteconfig.add(":siteml:info@example.org\n")
-      ok_eq('info@example.org', site.ml_address)
+      eq 'info@example.org', site.ml_address
       t_without_testmode {
-	ok_eq('example.org', site.title)
-	ok_eq('example.org - 1', site.get_page_title('1'))
+	eq 'example.org', site.title
+	eq 'example.org - 1', site.get_page_title('1')
       }
     end
 
@@ -131,15 +124,15 @@ if defined?($test) && $test
       page = site.create_new
       siteconfig = site.create('_SiteConfig')
       siteconfig.store(":siteurl:https://example.net/\n")
-      ok_eq('https://example.net/', site.host_url)
-      ok_eq('https://example.net/', site.site_url)
-      ok_eq('https://example.net/1.html', site.page_url('1'))
-      ok_eq('test@example.com', site.ml_address)	# FIXME: Umm.
+      eq 'https://example.net/', site.host_url
+      eq 'https://example.net/', site.site_url
+      eq 'https://example.net/1.html', site.page_url('1')
+      eq 'test@example.com', site.ml_address	# FIXME: Umm.
       siteconfig.add(":siteml:info@example.net\n")
-      ok_eq('info@example.net', site.ml_address)
+      eq 'info@example.net', site.ml_address
       t_without_testmode {
-	ok_eq('https://example.net', site.title)
-	ok_eq('https://example.net - 1', site.get_page_title('1'))
+	eq 'https://example.net', site.title
+	eq 'https://example.net - 1', site.get_page_title('1')
       }
     end
   end

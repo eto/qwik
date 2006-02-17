@@ -25,7 +25,7 @@ module Qwik
       return if modellist.empty?
 
       div = [:div, {:class=>'files'}]
-      path = c_relative_to_absolute(pagename+'.files')
+      path = c_relative_to_root(pagename+'.files')
       div << modellist.get_table(self, path)
       div << modellist.get_style
       return div

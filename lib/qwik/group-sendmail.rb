@@ -41,7 +41,7 @@ module QuickML
 
       Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
 		     :mail_from => '', 
-		     :recipients => get_active_members,
+		     :recipient => get_active_members,
 		     :header => header,
 		     :body => body)
       @logger.log "[#{@name}]: Alert: ML will be closed soon"
@@ -49,7 +49,7 @@ module QuickML
     end
 
     def submit (mail)
-      #qp 'ml.submit ' if $ml_debug
+      #p 'ml.submit ' if $ml_debug
 
       return if @members.active_empty?
 
@@ -96,7 +96,7 @@ module QuickML
       header.concat(quickml_fields)
       Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
 		     :mail_from => @return_address, 
-		     :recipients => get_active_members,
+		     :recipient => get_active_members,
 		     :header => header,
 		     :body => body)
     end
@@ -161,7 +161,7 @@ module QuickML
 
       Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger, 
 		     :mail_from => '', 
-		     :recipients => get_active_members,
+		     :recipient => get_active_members,
 		     :header => header,
 		     :body => body)
       @logger.log "[#{@name}]: Notify: Remove #{error_address}"

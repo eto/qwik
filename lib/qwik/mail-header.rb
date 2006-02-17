@@ -13,7 +13,6 @@ require 'qwik/mail'
 require 'qwik/mailaddress'
 require 'qwik/mail-multipart'
 require 'qwik/util-kconv'
-require 'qwik/qp'
 
 module QuickML
   class Mail

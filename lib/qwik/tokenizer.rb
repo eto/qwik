@@ -124,7 +124,6 @@ if $0 == __FILE__
     $bench = true
   else
     require 'qwik/testunit'
-    require 'qwik/qp'
     $test = true
   end
 end

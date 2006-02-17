@@ -20,7 +20,7 @@ module Qwik
       pagename ||= @req.base
 
       url = pagename+'.event'
-      url = c_relative_to_absolute(url)
+      url = c_relative_to_root(url)
 
       ar = []
       div = [:div, {:id=>'event'}]

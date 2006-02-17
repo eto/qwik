@@ -8,11 +8,34 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/wabisabi-get'
+require 'qwik/wabisabi-basic'
 require 'qwik/wabisabi-traverse'
-require 'qwik/wabisabi-parent'
 
 module WabisabiIndexModule
+  def set_parent(parent)
+    @parent = parent
+    return nil
+  end
+
+  def parent
+    @parent = nil if ! defined?(@parent)
+    return @parent
+  end
+
+  def traverse_with_parent(&b)
+    self.each {|child|
+      next if ! child.is_a?(Array)
+      yield(self, child)
+      child.traverse_with_parent(&b)	# Recursive.
+    }
+  end
+
+  def set_all_parent
+    self.traverse_with_parent {|parent, child|
+      child.set_parent(parent)
+    }
+  end
+
   def make_index
     @tags  = Hash.new {|h, k| h[k] = [] }
     @klass = Hash.new {|h, k| h[k] = [] }
@@ -43,7 +66,7 @@ module WabisabiIndexModule
     if ! defined?(@tags)
       self.make_index
     end
-    
+
     tags = @tags[element_name]
     return if tags.nil?
     tags.each {|e|
@@ -55,8 +78,6 @@ module WabisabiIndexModule
 	if child.object_id == e.object_id
 	  if result.nil?
 	    # do nothing.
-#	  elsif 1 < result.length
-#	    new_parent += result
 	  else
 	    new_parent << result
 	  end
@@ -67,10 +88,8 @@ module WabisabiIndexModule
 
       parent.replace(new_parent)
     }
-
     return nil
   end
-
 end
 
 class Array
@@ -78,26 +97,67 @@ class Array
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
 if defined?($test) && $test
   class TestWabisabiIndex < Test::Unit::TestCase
+    def test_parent
+      child = [:child]
+      parent = [:parent, child]
+
+      # test_parent
+      assert_equal nil, child.parent
+
+      # test_set_parent
+      child.set_parent(parent)
+      assert_equal [:parent, [:child]], child.parent
+
+      # test_traverse_with_parent
+      parent.traverse_with_parent {|p, c|
+	assert_equal [:parent, [:child]], p
+	assert_equal [:child], c
+      }
+
+      # test_set_all_parent
+      parent.set_all_parent
+      assert_equal [:parent, [:child]], child.parent
+    end
+
+    def test_parent_real
+      w = [:html,
+	[:div, {:class=>'main'},
+	  [:div, {:class=>'day'},
+	    [:h2, 'bh2']],
+	  [:div, {:class=>'sidebar'},
+	    [:h2, 'sh2',
+	      [:b, 'a'], 'sh2a']]]]
+
+      # test_set_all_parent
+      w.set_all_parent
+
+      # test_parent
+      ok_eq(nil, w.parent)
+      ok_eq(w, w[1].parent)
+      ok_eq([:h2, 'sh2', [:b, 'a'], 'sh2a'],
+	    w[1][3][2][2].parent)
+    end
+
     def test_all
-      h = [:html, [:div, {:class=>'main'},
+      w = [:html, [:div, {:class=>'main'},
 	  [:div, {:class=>'day'}, [:h2, 'bh2']],
 	  [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']]]]
 
       # test_make_index
-      h.make_index
+      w.make_index
 
       # test_index_tag
-      ok_eq([:h2, 'bh2'], h.index_tag(:h2))
+      assert_equal [:h2, 'bh2'], w.index_tag(:h2)
 
       # test_index_class
-      ok_eq([:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
-	    h.index_class('sidebar'))
+      assert_equal [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
+	    w.index_class('sidebar')
 
       # test_index_each_tag
       w = [:p, '']
@@ -113,8 +173,7 @@ if defined?($test) && $test
 	www[-1] = 't'
 	www
       }
-      ok_eq([[:a, 't']], w)
-
+      assert_equal [[:a, 't']], w
     end
   end
 end

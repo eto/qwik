@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'webrick/log'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -162,7 +153,6 @@ module TestSession
     @config[:test]  = false
     @config[:debug] = false
     yield
-    #qp org_test, org_debug
     @config[:test]  = org_test
     @config[:debug] = org_debug
   end
@@ -178,6 +168,13 @@ module TestSession
     content = WEBrick::HTTPUtils::FormData.new(data)
     content.filename = filename
     return content
+  end
+
+  def t_with_path
+    org_public_url = @config[:public_url]
+    @config[:public_url] = "http://www.example.org/qwik/"
+    yield
+    @config[:public_url] = org_public_url
   end
 
   # ==================== assert xpath module

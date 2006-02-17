@@ -1,21 +1,10 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'open-uri'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/testunit'
 require 'qwik/config'
-#require 'qwik/server'
 require 'qwik/htree-to-wabisabi'
 require 'qwik/test-module-path'
-#require 'qwik/qp'
 
 module TestServerSetupModule
   def setup

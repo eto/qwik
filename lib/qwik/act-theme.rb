@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -45,7 +36,6 @@ You can specify the theme of this site from [[_SiteConfig]].
 
     def pre_act_theme
       args = @req.path_args
-      #qp args
       filename = args.join('/')
       return theme_send_file(filename)
     end
@@ -86,7 +76,7 @@ if defined?($test) && $test
     include TestSession
 
     def test_act_theme
-      res = session('/.theme/css/base.css')
+      res = session '/.theme/css/base.css'
       assert_match(/\A\/*/, res.body)
     end
 
@@ -98,16 +88,15 @@ if defined?($test) && $test
       # test_theme_list
       res = session
       list = @action.theme_list
-      ok_eq(true, list.include?('qwiksystem'))
-      ok_eq(true, list.include?('qwikborder'))
-      ok_eq(true, 4 <= list.length) # at least 4 themes
+      eq true, list.include?('qwiksystem')
+      eq true, list.include?('qwikborder')
+      eq true, 4 <= list.length		# at least 4 themes
 
       # test_theme_files
       list = @action.theme_files('qwikborder')
-      ok_eq(['qwikborder.css', 'qwikborder_ball.png',
-	      'qwikborder_h2.png', 'qwikborder_li.png'],
-	    list.sort)
-      ok_eq(true, 4 <= list.length) # at least 4 themes
+      eq ['qwikborder.css', 'qwikborder_ball.png',
+	'qwikborder_h2.png', 'qwikborder_li.png'], list.sort
+      eq true, 4 <= list.length		# at least 4 themes
     end
   end
 end

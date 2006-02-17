@@ -62,7 +62,6 @@ module Qwik
       sc_dir.check_directory
 
       org = self.path(file)
-      #qp org
       #scaled = sc_dir+file
       scaled = sc_dir + Filename.encode(file)
       if ! scaled.exist?
@@ -71,7 +70,7 @@ module Qwik
 	geom = "#{w}x#{h}"
 	cmd = "#{convert} -size #{geom} \"#{org}\" -resize #{geom} \"#{scaled}\""
 	#cmd = "#{convert} -size #{geom} #{org} -resize #{geom} #{scaled}"
-	qp cmd
+	#p cmd
 	system cmd
       end
     end

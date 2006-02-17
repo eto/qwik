@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -118,9 +109,9 @@ if defined?($test) && $test
       db = @site.sitedb
 
       # test_quote
-      ok_eq("''", db.quote("'"))	# only this...
-      ok_eq('BAhpAA==', db.encode(0))	# marshal and base64
-      ok_eq(0, db.decode('BAhpAA=='))
+      eq "''", db.quote("'")		# only this...
+      eq 'BAhpAA==', db.encode(0)	# marshal and base64
+      eq 0, db.decode('BAhpAA==')
 
       # test_sitedb
       assert_instance_of(SQLite::Database, db.db)
@@ -129,13 +120,13 @@ if defined?($test) && $test
 	assert_instance_of(Array, row)
       }
 
-      #ok_eq('2.8.15', SQLite::Database::VERSION)
-      #ok_eq('iso8859', SQLite::Database::ENCODING)
+      #eq '2.8.15', SQLite::Database::VERSION
+      #eq 'iso8859', SQLite::Database::ENCODING
       db.table_create('test') unless db.table_exist?('test')
       db.set('test', 'k', 'v')
-      ok_eq('v', db.get('test', 'k'))
+      eq 'v', db.get('test', 'k')
       db.delete('test', 'k')
-      ok_eq(nil, db.get('test', 'k'))
+      eq nil, db.get('test', 'k')
     end
   end
 end

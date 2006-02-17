@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'time'
 require 'fileutils'
 
@@ -16,11 +7,11 @@ require 'qwik/pages'
 require 'qwik/site-config'
 require 'qwik/site-log'
 require 'qwik/site-member'
-require 'qwik/site-attach'
 require 'qwik/site-url'
 require 'qwik/site-theme'
 require 'qwik/site-pages'
 require 'qwik/site-group'
+require 'qwik/site-files'
 
 module Qwik
   class Site

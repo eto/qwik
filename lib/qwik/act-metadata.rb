@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -225,7 +216,6 @@ module Qwik
       @config[:test] = false
       @config[:debug] = false
       yield
-     #qp org_test, org_debug
       @config[:test]  = org_test
       @config[:debug] = org_debug
     end
@@ -260,7 +250,6 @@ Since this site is in private mode, the feed includes minimum data.'
       @updated += 'Z'
 
       @generator = Server.server_name
-     #qp @config.test
       @generator = 'qwikWeb' if @config.test
     end
 

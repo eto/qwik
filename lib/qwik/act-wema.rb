@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-monitor'
 
@@ -40,28 +31,27 @@ You can move the small window and click set for setting the position.
 
       page = @site[@req.base]
       wp = WemaPage.new(@site, page)
-      redirect = @req.base+'.html'
+      redirect = "#{@req.base}.html"
       redirect = nil if $wema_debug
 
       mode = @req.query['mode']
-      wid  = @req.query['id'] # wema id
+      wid  = @req.query['id']		# wema id
       connected = @req.query['ln']
       left = @req.query['l']
       top  = @req.query['t']
       fg   = @req.query['tc']
       bg   = @req.query['bg']
       text = @req.query['body']
-      #qp mode, wid, connected, left, top, fg, bg, text
 
-      mode = 'delete' if mode == 'edit' && text == ''
+      mode = 'delete' if mode == 'edit' && text.empty?
 
       case mode
       when 'edit'
-	if wid.nil? || wid == '' # create new
+	if wid.nil? || wid.empty?	# create new
 	  wema = wp.create_new
 	  msg = _('New post-it is created.')
 	else
-	  id = wid.sub(/\Aid/, "").to_i
+	  id = wid.sub(/\Aid/, '').to_i
 	  wema = wp[id]
 	  msg = _('Edit done.')
 	end
@@ -72,11 +62,11 @@ You can move the small window and click set for setting the position.
 	return wema_jump(msg, redirect)
 
       when 'delete'
-	if wid.nil? || wid == ''
+	if wid.nil? || wid.empty?
 	  return wema_jump(_('No action.'), redirect)
 	end
 
-	id = wid.sub(/\Aid/, "").to_i
+	id = wid.sub(/\Aid/, '').to_i
 	wema = wp[id]
 	wp.delete(id)
 	c_make_log('wemadelete') # WEMADELETE
@@ -84,10 +74,10 @@ You can move the small window and click set for setting the position.
 	return wema_jump(_('Delete a Post-it.'), redirect)
 
       when 'setpos'
-	wid = nil if wid == ''
+	wid = nil if wid.empty?
 	return c_nerror('wid is nil') if wid.nil?
 	  
-	id = wid.sub(/\Aid/, "").to_i
+	id = wid.sub(/\Aid/, '').to_i
 	wema = wp[id]
 	return c_nerror('can not get wema') if wid.nil?
 	wema.setpos(left, top)
@@ -111,7 +101,6 @@ You can move the small window and click set for setting the position.
       return c_nredirect(msg, url) if $wema_redirect
       return c_notice(msg, url)
     end
-
   end
 
   class WemaPage
@@ -176,7 +165,7 @@ You can move the small window and click set for setting the position.
       lines = []
       @wemas.each {|wema|
 	connected = wema.connected
-	if connected && connected != ''
+	if connected && ! connected.empty?
 	  lines << [wema.id, connected]
 	end
       }
@@ -197,7 +186,7 @@ You can move the small window and click set for setting the position.
     attr_reader :id, :connected, :x, :y, :fg, :bg, :text
 
     def get_id
-      return 'id'+@id.to_s
+      return "id#{@id}"
     end
 
     def key(id)
@@ -228,10 +217,9 @@ You can move the small window and click set for setting the position.
     end
 
     def store
-      str = [nil, @connected, @x, @y, @fg, @bg].join(",")+"\n"
+      str = [nil, @connected, @x, @y, @fg, @bg].join(',')+"\n"
       str << @text.to_s
       @page.store(str)
-      # @wemapage.touch
     end
 
     def setpos(x, y)
@@ -263,7 +251,7 @@ You can move the small window and click set for setting the position.
     end
 
     def is_nil?(a)
-      return a.nil? || !a.is_a?(String) || a == ''
+      return a.nil? || ! a.is_a?(String) || a.empty?
     end
   end
 
@@ -284,10 +272,9 @@ You can move the small window and click set for setting the position.
       # load the CSS first.
       ar << [:style, "@import '.theme/css/wema.css';"]
 
-      ar << [:span, {:class=>'attribute'},
-	('Post-it'), ': ',
-	[:a, {:href=>"javascript:wema_editor_show()"}, ('New Post-it')],
-	" (", [:a, {:href=>"javascript:wema_help_show()"}, ('help')], ")"]
+      ar << [:span, {:class=>'attribute'}, 'Post-it', ': ',
+	[:a, {:href=>'javascript:wema_editor_show()'}, 'New Post-it'],
+	' (', [:a, {:href=>'javascript:wema_help_show()'}, 'help'], ')']
 
       # make divs of the all wemas.
       @wemapage.get_wemas
@@ -298,8 +285,7 @@ You can move the small window and click set for setting the position.
       ar << editor_html(@wemapage.pagename)
 
       # load JavaScript the last.
-      ar << [:script,
-	{:type=>'text/javascript', :src=>'.theme/js/wema.js'}, '']
+      ar << [:script, {:type=>'text/javascript', :src=>'.theme/js/wema.js'}, '']
 
       ar
     end
@@ -310,7 +296,6 @@ You can move the small window and click set for setting the position.
 
       text = wema.text || ''
 
-      #h = @action.c_parse_br(text)
       tokens = TextTokenizer.tokenize(text, true)
       h = TextParser.make_tree(tokens)
 
@@ -319,9 +304,9 @@ You can move the small window and click set for setting the position.
       h << '' if h.length == 0
 
       fg = wema.fg
-      fg = "#000" if fg.nil? || fg == ''
+      fg = '#000' if fg.nil? || fg.empty?
       bg = wema.bg
-      bg = "#fff" if bg.nil? || bg == ''
+      bg = '#fff' if bg.nil? || bg.empty?
 
       x = wema.x
       y = wema.y
@@ -354,18 +339,12 @@ You can move the small window and click set for setting the position.
       href = attr[:href].to_s
 
       if /^(?:http|https|ftp|file):\/\// =~ href	# external link
-	set_attr(w, {:class=>'external'})
-	href = ".redirect?url="+href
-	set_attr(w, {:href=>href})
-	set_attr(w, {:rel=>'nofollow'})
+	w.set_attr :class=>'external', :rel=>'nofollow',
+	  :href=>".redirect?url=#{href}"
 	return [w]
       end
 
       return nil
-    end
-
-    def set_attr(w, attr)
-      w[1].update(attr)
     end
 
     # ============================== editor window
@@ -375,30 +354,30 @@ You can move the small window and click set for setting the position.
 	[:div, {:class=>'menubar'},
 	  [:span, {:class=>'handle'}, 'editor'],
 	  [:span, {:class=>'close'},
-	    [:a, {:href=>"javascript:wema_editor_hide()"}, 'X']]],
+	    [:a, {:href=>'javascript:wema_editor_hide()'}, 'X']]],
 	[:div, {:class=>'cont'},
 	  [:form, {:method=>'POST', :action=>action,
 	      :id=>'frm', :name=>'frm'},
 	    [:p, {:class=>'save'},
-	      [:input, {:type=>'submit', :value=>('Save')}]],
+	      [:input, {:type=>'submit', :value=>'Save'}]],
 	    [:textarea, {:name=>'body', :cols=>'40', :rows=>'7'}, ''],
 	    font_color,
 	    bg_color,
-	    [:p, ('Draw Line')+': ', text('ln')],
+	    [:p, 'Draw Line'+': ', text('ln')],
 	    [:p, 'x:', text('l'), ' y:', text('t')],
 	    param('id', ''),
 	    param('mode', 'edit')]]]
     end
 
     def font_color
-      ar = [('Text color')+': ', [:input, {:id=>'tc', :name=>'tc'}]]
-      ar += ["#000", "#600", "#060", "#006"].map {|c| radio_color('tc', c) }
+      ar = ['Text color'+': ', [:input, {:id=>'tc', :name=>'tc'}]]
+      ar += ['#000', '#600', '#060', '#006'].map {|c| radio_color('tc', c) }
       [:p, ar]
     end
 
     def bg_color
-      ar = [('Background')+': ', [:input, {:id=>'bg', :name=>'bg'}]]
-      ar += ["#fff", "#fcc", "#cfc", "#ccf", "#ffc", "#000"].map {|c|
+      ar = ['Background'+': ', [:input, {:id=>'bg', :name=>'bg'}]]
+      ar += ['#fff', '#fcc', '#cfc', '#ccf', '#ffc', '#000'].map {|c|
 	radio_color('bg', c)
       }
       [:p, ar]
@@ -407,7 +386,7 @@ You can move the small window and click set for setting the position.
     def radio_color(name, color)
       [:a, {:href=>"javascript:wema_set_color('#{name}', '#{color}')",
 	  :class=>'color',
-	  :style=>"color:#{color};background:#{color};"}, "[_]"]
+	  :style=>"color:#{color};background:#{color};"}, '[_]']
     end
 
     def param(*a)
@@ -419,14 +398,14 @@ You can move the small window and click set for setting the position.
       h = {}
       h.update(:name=>a) if a
       h.update(:value=>b) if b
-      [:input, h]
+      return [:input, h]
     end
 
     def hidden(a='', b=nil)
       h = {:type=>'hidden'}
       h.update(:name=>a) if a
       h.update(:value=>b) if b
-      [:input, h]
+      return [:input, h]
     end
     private :param, :text, :hidden
   end
@@ -449,64 +428,64 @@ if defined?($test) && $test
 
       page = @site.create_new
 
-      res = session('/test/1.wema')
-      ok_title('Need POST')
+      res = session '/test/1.wema'
+      ok_title 'Need POST'
 
-      res = session('POST /test/1.wema')
-      assert_text("Unknown mode: []", 'title')
+      res = session 'POST /test/1.wema'
+      assert_text('Unknown mode: []', 'title')
 
-      res = session("POST /test/1.wema?mode=edit&body=")
-      ok_title('No action.')
+      res = session 'POST /test/1.wema?mode=edit&body='
+      ok_title 'No action.'
 
-      res = session("POST /test/1.wema?mode=edit&body=t")
-      ok_title('New post-it is created.')
+      res = session 'POST /test/1.wema?mode=edit&body=t'
+      ok_title 'New post-it is created.'
       page = @site['_1_wema_1']
       ok_eq(",,,,,\nt\n", page.load)
 
-      res = session("POST /test/1.wema?mode=edit&id=id1&body=t2")
-      ok_title('Edit done.')
+      res = session 'POST /test/1.wema?mode=edit&id=id1&body=t2'
+      ok_title 'Edit done.'
       page = @site['_1_wema_1']
       ok_eq(",,,,,\nt2\n", page.load)
 
-      res = session("POST /test/1.wema?mode=setpos&id=id1&l=1&t=2")
-      ok_title('Set position.')
+      res = session 'POST /test/1.wema?mode=setpos&id=id1&l=1&t=2'
+      ok_title 'Set position.'
       page = @site['_1_wema_1']
       ok_eq(",,1,2,,\nt2\n", page.load)
 
-      res = session('/test/1.html')
-      ok_title('1')
+      res = session '/test/1.html'
+      ok_title '1'
       ok_in(['t2'], "//div[@class='wema']/p")
       ok_in([:p, 't2'], "//div[@class='wema']/div[@class='cont']")
 
-      res = session("POST /test/1.wema?mode=edit&id=id1&body=* t3")
-      ok_title('Edit done.')
+      res = session 'POST /test/1.wema?mode=edit&id=id1&body=* t3'
+      ok_title 'Edit done.'
       page = @site['_1_wema_1']
       ok_eq(",,1,2,,\n* t3\n", page.load)
 
-      res = session('/test/1.html')
+      res = session '/test/1.html'
       ok_in([:h2, 't3'], "//div[@class='wema']/div[@class='cont']")
 
-      res = session("POST /test/1.wema?mode=edit&id=id1&body={{recent}}")
-      ok_title('Edit done.')
+      res = session 'POST /test/1.wema?mode=edit&id=id1&body={{recent}}'
+      ok_title 'Edit done.'
       page = @site['_1_wema_1']
       ok_eq(",,1,2,,\n{{recent}}\n", page.load)
 
-      res = session('/test/1.html')
+      res = session '/test/1.html'
       ok_in([:plugin, {:method=>'recent', :param=>''}],
 	    "//div[@class='wema']/div[@class='cont']")
 
-      res = session("POST /test/1.wema?mode=edit&id=id1&body=http://e.com/")
-      ok_title('Edit done.')
+      res = session 'POST /test/1.wema?mode=edit&id=id1&body=http://e.com/'
+      ok_title 'Edit done.'
       page = @site['_1_wema_1']
       ok_eq(",,1,2,,\nhttp://e.com/\n", page.load)
 
-      res = session('/test/1.html')
-      ok_xp([:a, {:href=>".redirect?url=http://e.com/",
+      res = session '/test/1.html'
+      ok_xp([:a, {:href=>'.redirect?url=http://e.com/',
 		:rel=>'nofollow', :class=>'external'}, 'http://e.com/'],
 	    "//div[@class='wema']/p/a")
 
-      res = session("POST /test/1.wema?mode=edit&id=id1&body=")
-      ok_title('Delete a Post-it.')
+      res = session 'POST /test/1.wema?mode=edit&id=id1&body='
+      ok_title 'Delete a Post-it.'
       page = @site['_1_wema_1']
       ok_eq(nil, page)
     end

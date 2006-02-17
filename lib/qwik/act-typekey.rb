@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 begin
   require 'qwik/typekey'
@@ -25,7 +16,8 @@ In login screen, you can see 'Login by TypeKey' link.
 Follow the link and login at the TypeKey screen.
 It is necessary to select tell mail address,
 because qwikWeb uses mailaddress for authentication.
-" }
+"
+    }
 
     def pre_act_typekey
       if @req.query.length == 0
@@ -71,7 +63,7 @@ because qwikWeb uses mailaddress for authentication.
       tk = TypeKey.new(sitetoken, '1.1')
 
       # http://example.com/test/.typekey
-      ret_url = c_relative_to_full('.typekey')
+      ret_url = c_relative_to_absolute('.typekey')
       url = tk.get_login_url(ret_url, true)
       return c_nredirect('Go TypeKey', url)	# Redirect to TypeKey
     end
@@ -95,7 +87,6 @@ end
 
 if $0 == __FILE__
   require 'qwik/test-common'
-  require 'qwik/qp'
   $test = true
 end
 
@@ -112,10 +103,10 @@ if defined?($test) && $test
       # test_get_sitetoken
       sitetoken = @action.typekey_get_sitetoken
       return if sitetoken.nil?	# Stop test here.
-      ok_eq(20, sitetoken.length)
+      eq 20, sitetoken.length
 
       # See the FrontPage.
-      res = session('/test/')
+      res = session '/test/'
       ok_title('FrontPage')
 
       # See the Login page.
@@ -125,8 +116,8 @@ if defined?($test) && $test
       ok_title('Login')
 
       # Redirect to TypeKey login page.
-      res = session('/test/.typekey')
-      ok_eq(302, @res.status)
+      res = session '/test/.typekey'
+      eq 302, @res.status
       assert_match(%r|\Ahttps://www.typekey.com/t/typekey/login|,
 		   @res['Location'])
       meta = @res.body.get_path('//meta[2]')
@@ -135,17 +126,17 @@ if defined?($test) && $test
 
       # The client returned from the TypeKey login page.
       begin
-	res = session('/test/.typekey?&ts=1111111111&email=guest@example.com&name=guestexample&nick=guest&sig=ttttttttttttttttttttttttttt=:LLLLLLLLLLLLLLLLLLLLLLLLLLL=')
+	res = session '/test/.typekey?&ts=1111111111&email=guest@example.com&name=guestexample&nick=guest&sig=ttttttttttttttttttttttttttt=:LLLLLLLLLLLLLLLLLLLLLLLLLLL='
 	ok_title('Verify failed.')
       rescue => e
-	qp 'failed.', e
+	p 'failed.', e
       end
 
       begin
-	res = session('/test/.typekey?&ts=1110026410&email=2005@eto.com&name=etocom&nick=eto&sig=tRUcIO6haAHv/vQSguPk2EijTrc=:LCUvoHCXFLaeO8SoldCKmFr2Guo=')
+	res = session '/test/.typekey?&ts=1110026410&email=2005@eto.com&name=etocom&nick=eto&sig=tRUcIO6haAHv/vQSguPk2EijTrc=:LCUvoHCXFLaeO8SoldCKmFr2Guo='
 	ok_title('Time out.')
       rescue => e
-	qp 'failed.', e
+	p 'failed.', e
       end
     end
 
@@ -166,15 +157,15 @@ if defined?($test) && $test
       tk.key_cache_path = (@config.cache_dir.path+'typekey-publickey.txt').to_s
 
       return_url = 'http://example.com/.typekey'
-      ok_eq('https://www.typekey.com/t/typekey/login?t=t&_return=http://example.com/.typekey&v=1.1', tk.get_login_url(return_url))
-      ok_eq('https://www.typekey.com/t/typekey/login?t=t&need_email=1&_return=http://example.com/.typekey&v=1.1', tk.get_login_url(return_url, true))
-      ok_eq('https://www.typekey.com/t/typekey/logout?_return=http://example.com/.typekey', tk.get_logout_url(return_url))
+      eq 'https://www.typekey.com/t/typekey/login?t=t&_return=http://example.com/.typekey&v=1.1', tk.get_login_url(return_url)
+      eq 'https://www.typekey.com/t/typekey/login?t=t&need_email=1&_return=http://example.com/.typekey&v=1.1', tk.get_login_url(return_url, true)
+      eq 'https://www.typekey.com/t/typekey/logout?_return=http://example.com/.typekey', tk.get_logout_url(return_url)
 
       begin
 	key = tk.get_key
-	ok_eq(['p', 'q', 'pub_key', 'g'], key.keys)
+	eq ['p', 'q', 'pub_key', 'g'], key.keys
       rescue
-	qp 'failed'
+	p 'failed'
       end
     end
 
@@ -199,7 +190,7 @@ if defined?($test) && $test
 	  result = tk.verify(email, name, nick, ts, sig)
 	}
       rescue => e
-	qp 'failed', e
+	p 'failed', e
       end
     end
   end

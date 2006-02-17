@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 begin
   require 'bdb'
   $have_bdb_so = true
@@ -42,10 +33,10 @@ module Qwik
       begin
 	db = BDB::Hash.open(path.to_s, nil, options)
       rescue => e
-	qp 'e is '+e
+	p 'e is '+e
 	@path.each_entry {|pa|
 	  if /\.db\z/ =~ pa.to_s
-	    qp pa
+	    p pa
 	    (@path+pa).unlink
 	  end
 	}

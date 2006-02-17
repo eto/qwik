@@ -1,17 +1,7 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'optparse'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/version'
-require 'qwik/qp'
 
 module Qwik
   class Config
@@ -157,8 +147,12 @@ module Qwik
       when 'nil';	return nil
       when /\A\d+\z/;	return v.to_i
       # Only numbers, * and spaces are allowable.
-      # Eval is not evil in this context.
+      # It is allowable to use eval in this context.
       when /\A[\d\ \*]+\z/;	return eval(v)
+      when /\A(\d+)m\z/;	return $1.to_i * 60
+      when /\A(\d+)h\z/;	return $1.to_i * 60 * 60
+      when /\A(\d+)d\z/;	return $1.to_i * 60 * 60 * 24
+      when /\A(\d+)w\z/;	return $1.to_i * 60 * 60 * 24 * 7
       end
       v.gsub!('$BASEDIR') { BASEDIR }
       return v
@@ -216,40 +210,47 @@ if defined?($test) && $test
       c = Qwik::Config
 
       # test_parse_config
-      ok_eq({}, c.parse_config('::'))
-      ok_eq({}, c.parse_config('::v'))
-      ok_eq({:k=>''}, c.parse_config(':k:'))
-      ok_eq({:k=>''}, c.parse_config(':k:	'))
+      eq({}, c.parse_config('::'))
+      eq({}, c.parse_config('::v'))
+      eq({:k=>''}, c.parse_config(':k:'))
+      eq({:k=>''}, c.parse_config(':k:	'))
 
-      ok_eq({:k=>'v'}, c.parse_config(':k:v'))
-      ok_eq({:k=>'v:v'}, c.parse_config(':k:v:v'))
-      ok_eq({:k=>'v'}, c.parse_config("\#c\n:k:v"))
-      ok_eq({:k=>'v'}, c.parse_config(':k:v#comment'))
-      ok_eq({:k=>'v'}, c.parse_config(':k:v #comment'))
+      eq({:k=>'v'}, c.parse_config(':k:v'))
+      eq({:k=>'v:v'}, c.parse_config(':k:v:v'))
+      eq({:k=>'v'}, c.parse_config("\#c\n:k:v"))
+      eq({:k=>'v'}, c.parse_config(':k:v#comment'))
+      eq({:k=>'v'}, c.parse_config(':k:v #comment'))
 
-      ok_eq({:k=>true}, c.parse_config(':k:true'))
-      ok_eq({:k=>false}, c.parse_config(':k:false'))
-      ok_eq({:k=>nil}, c.parse_config(':k:nil'))
+      eq({:k=>4}, c.parse_config(':k:	2 * 2'))
+      eq({:k=>'1.1'}, c.parse_config(':k:1.1'))
 
-      ok_eq({:k=>1}, c.parse_config(':k:1'))
-      ok_eq({:k=>4}, c.parse_config(':k:2*2'))
-      ok_eq({:k=>4}, c.parse_config(':k:2 * 2'))
-      ok_eq({:k=>4}, c.parse_config(':k:	2 * 2'))
-      ok_eq({:k=>'1.1'}, c.parse_config(':k:1.1'))
+      eq({:k=>Qwik::Config::BASEDIR}, c.parse_config(':k:$BASEDIR'))
 
-      ok_eq({:k=>Qwik::Config::BASEDIR}, c.parse_config(':k:$BASEDIR'))
+      # test_parse_value
+      eq true, c.parse_value('true')
+      eq false, c.parse_value('false')
+      eq nil, c.parse_value('nil')
+
+      eq 1, c.parse_value('1')
+      eq 4, c.parse_value('2*2')
+      eq 4, c.parse_value('2 * 2')
+
+      eq     60, c.parse_value('1m')
+      eq   3600, c.parse_value('1h')
+      eq  86400, c.parse_value('1d')
+      eq 604800, c.parse_value('1w')
 
       # test_parse_args
-      ok_eq({:debug=>true}, c.parse_args('myprog', ['-d']))
+      eq({:debug=>true}, c.parse_args('myprog', ['-d']))
     end
 
     def test_all
       # test_new
       config = Qwik::Config.new
-      ok_eq(false, config.debug)
-      ok_eq(false, config.test)
+      eq(false, config.debug)
+      eq(false, config.test)
       config[:debug] = true
-      ok_eq(true, config.debug)
+      eq(true, config.debug)
     end
   end
 end

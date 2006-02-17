@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/test-common'
 require 'qwik/act-md5'
@@ -27,7 +18,6 @@ class BenchMD5Session < Test::Unit::TestCase
       res = session('/test/TextFormat.md5')
       #body = res.body.format_xml
       #ok_title("‘Ž®ˆê——Ú×”Å")
-      #qp res.body
       ok_eq('2ee66272e916d3c21c151920c94334aa', res.body)
     }
   end

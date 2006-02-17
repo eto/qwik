@@ -14,34 +14,30 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module QuickML
   class Sendmail
-    def self.send_mail (smtp_host, smtp_port, logger, optional = {})
-      mail_from = optional[:mail_from]
-      recipients = optional[:recipients]
-      header = optional[:header]
-      body = optional[:body]
-      if optional[:recipient]
-	raise unless optional[:recipient].kind_of?(String)
-	recipients = [optional[:recipient]] 
-      end
-      raise if mail_from.nil? or recipients.nil? or body.nil? or header.nil?
+    def self.send_mail (smtp_host, smtp_port, logger, mail)
+      raise if mail[:mail_from].nil? || mail[:recipient].nil? ||
+	mail[:header].nil? || mail[:body].nil?
 
-      contents = ''
-      header.each {|field|
-	key = field.first
-	value = field.last
-	contents << "#{key}: #{value}\n" if key.kind_of?(String)
-      }
-      contents << "\n"
-      contents << body
-      so = nil
+      mail[:recipient] = [mail[:recipient]] if mail[:recipient].kind_of?(String)
+
+      msg = build_message(mail)
+
+      result = nil
       begin
 	sender = Sendmail.new(smtp_host, smtp_port, true)
-	so = sender.send(contents, mail_from, recipients)
+	result = sender.send(msg, mail[:mail_from], mail[:recipient])
       rescue => e
 	logger.log "Error: Unable to send mail: #{e.class}: #{e.message}"
       end
 
-      return so		# Only for test
+      return result	# Only for test
+    end
+
+    def self.build_message(mail)
+      return mail[:header].map {|field|
+	key, value = field
+	"#{key}: #{value}\n"
+      }.join+"\n"+mail[:body]
     end
 
     def initialize (smtp_host, smtp_port, use_xverp = false, test = false)
@@ -56,15 +52,17 @@ module QuickML
     def send (message, mail_from, recipients)
       s = open_socket
       send_to_socket(s, message, mail_from, recipients)
-      return s		# for test
+      return s		# Only for test.
     end
+
+    private
 
     def open_socket(test=false)
       test = true if @test
       host, port = @smtp_host, @smtp_port
       if test
 	s = MockSendmail.open(host, port)
-	$ml_sm = s	# only for test
+	$ml_sm = s	# Only for test.
       else
 	s = TCPSocket.open(host, port)
       end
@@ -109,8 +107,6 @@ module QuickML
       s.close
     end
 
-    private
-
     def send_command (s, command, code)
       s.print(command + "\r\n") if command
       begin
@@ -125,7 +121,6 @@ module QuickML
         raise "smtp-error: #{command} => #{line}"
       end
     end
-
   end
 end
 
@@ -142,6 +137,14 @@ if defined?($test) && $test
     end
 
     def test_all
+      c = QuickML::Sendmail
+
+      # test_build_message
+      eq "\n", c.build_message(:header=>[], :body=>'')
+      eq "a: b\n\nc", c.build_message(:header=>[['a', 'b']], :body=>'c')
+      eq "a: b\n\nc", c.build_message(:header=>[[:a, 'b']], :body=>'c')
+
+      # test_send
       s = QuickML::Sendmail.new('localhost', 25, false, true)
       so = s.send('', '', '')
       ok_eq(["EHLO sender", "MAIL FROM: <>", "RCPT TO: <>",

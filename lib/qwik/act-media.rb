@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'stringio'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -33,7 +24,6 @@ module Qwik
 	  each_media_entry {|f|
 	    file = f.basename
 	    f = @site.attach.path(file)
-	    qp f, f.exist?
 	    next unless f.exist?
 	    ms.publish_file(@site, f)
 	  }
@@ -50,23 +40,22 @@ module Qwik
       each_media_entry {|f|
 	file = f.basename
 	ar = []
-	ar << [:a, {:href=>c_relative_to_absolute('.media_server/'+file.to_s)},
+	ar << [:a, {:href=>c_relative_to_root('.media_server/'+file.to_s)},
 	  file.to_s]
 	output = ms.output_file(@site, file)
 	if output.exist?
 	  outbase = output.basename.to_s
 	  uri = URI(@config.public_url)
-	  qp uri.host
 	  url = "rtsp://#{uri.host}:554/#{uri.path}#{@site.sitename}/#{outbase}"
 	  ar << ' [' << [:a, {:href=>url}, outbase] << '] '
-	  url = [:a, {:href=>c_relative_to_absolute('.media_server/'+file.to_s+'?delete=yes')}, 'delete']
+	  url = [:a, {:href=>c_relative_to_root('.media_server/'+file.to_s+'?delete=yes')}, 'delete']
 	  ar << url
 	end
 	ul << [:li, ar]
       }
 
       if 0 < ul.length
-	ul << [:li, [:a, {:href=>c_relative_to_absolute('.media_server/all')},
+	ul << [:li, [:a, {:href=>c_relative_to_root('.media_server/all')},
 	    'publish all']]
       end
 
@@ -101,11 +90,9 @@ module Qwik
 	    each_movie_entry {|f|
 	      file = f.basename
 	      f = @site.attach.path(file)
-	      qp f, f.exist?
 	      next unless f.exist?
 	      output = rp.output_file(file)
 	      output.dirname.check_directory
-	      qp f, output, output.dirname
 	      next if output.exist?
 	      msg = StringIO.new
 	      rp.encode_file(f, output, msg)
@@ -130,13 +117,12 @@ module Qwik
       each_movie_entry {|f|
 	file = f.basename
 	ar = []
-	ar << [:a, {:href=>c_relative_to_absolute('.encode/'+file.to_s)},
+	ar << [:a, {:href=>c_relative_to_root('.encode/'+file.to_s)},
 	  file.to_s]
 	output = rp.output_file(file)
 	if output.exist?
 	  outbase = output.basename.to_s
 	  uri = URI(@config.public_url)
-	  qp uri.host
 	  url = "rtsp://#{uri.host}:554/#{rpath}#{@site.sitename}/#{outbase}"
 	  ar += [' [', [:a, {:href=>url}, outbase], ']']
 	end
@@ -144,7 +130,7 @@ module Qwik
       }
 
       if 0 < ul.length
-	ul << [:li, [:a, {:href=>c_relative_to_absolute('.encode/all')},
+	ul << [:li, [:a, {:href=>c_relative_to_root('.encode/all')},
 	    'encode all']]
       end
 

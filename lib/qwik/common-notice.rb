@@ -17,13 +17,13 @@ module Qwik
     def c_nredirect(title, url, &b)
       msg = ''
       msg = yield if block_given?
-      @res['Location'] =  c_relative_to_full(url)
-    # @res['Location'] =  c_relative_to_absolute(url)
+      @res['Location'] = c_relative_to_absolute(url)
+    # @res['Location'] = c_relative_to_root(url)
       generate_notice_page(302, title, url, msg)
     end
 
     def generate_notice_page(status, title, url=nil, msg='', sec=0)
-      #url = nil # for debug
+      #url = nil	# for debug
       @res.status = status
       template = @memory.template.get('notice')
       @res.body = Action.notice_generate(template, title, msg, url, false, sec)
@@ -45,7 +45,7 @@ module Qwik
 
       # insert meta
       w << [:meta, {:name=>'ROBOTS', :content=>'NOINDEX,NOFOLLOW'}]
-      if url && !redirectflag # redirect
+      if url && ! redirectflag		# redirect
 	w << [:meta, {'http-equiv'=>'Refresh',
 	    :content=>"#{sec}; url=#{url}"}]
       end
@@ -75,18 +75,18 @@ if defined?($test) && $test
     def test_all
       res = session
 
-      @action.generate_notice_page(200, 'title'){'msg'}
-      ok_eq(200, res.status)
+      @action.generate_notice_page(200, 'title') { 'msg' }
+      eq 200, res.status
       ok_title 'title'
 
-      @action.generate_notice_page(200, 'title', 'u'){'msg'}
-      ok_eq(200, res.status)
+      @action.generate_notice_page(200, 'title', 'u') { 'msg' }
+      eq 200, res.status
       ok_title 'title'
       ok_xp([:meta, {:content=>'0; url=u', 'http-equiv'=>'Refresh'}],
 	    'meta[2]', res)
 
       @action.c_notice('c_notice title'){'msg'}
-      ok_eq(200, res.status)
+      eq 200, res.status
       ok_title 'c_notice title'
 
       t_add_user
@@ -98,34 +98,33 @@ if defined?($test) && $test
     def test_c_nredirect
       res = session
       @action.c_nredirect('t', 't.html')
-     #ok_eq('http://127.0.0.1:9190/t.html', res['Location'])
-      #qp res['Location']
+     #eq 'http://127.0.0.1:9190/t.html', res['Location']
       #assert_match(/\Ahttp:/, res['Location'])
       @action.c_nredirect('t', 'http://e.com/')
-      #ok_eq('http://e.com/', res['Location'])
+      #eq 'http://e.com/', res['Location']
     end
 
     def test_notice_generate
       template = @memory.template.get('notice')
-      ok_eq([:h1], template.get_tag('h1'))
-      ok_eq([:div, {:class=>'section'}],
-	    template.get_by_class('section'))
+      eq [:h1], template.get_tag('h1')
+      eq [:div, {:class=>'section'}],
+	template.get_by_class('section')
 
       res = Qwik::Action.notice_generate(template, 'title', 'msg')
-      ok_eq([:title, 'title'], res.get_tag('title'))
-#      ok_eq([:script, {:src=>'.theme/js/base.js',
-#		:type=>'text/javascript'}, ''], res.get_tag('script'))
-      ok_eq([:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
-	    res.get_tag('meta'))
-      ok_eq([:h1, 'title'], res.get_tag('h1'))
-      ok_eq([:div, {:class=>'section'}, 'msg'],
-	    res.get_path('//div[@class="section"]'))
-      ok_eq(nil, res.get_tag('meta[2]')) # not redirected
+      eq [:title, 'title'], res.get_tag('title')
+      #      eq [:script, {:src=>'.theme/js/base.js',
+      #		:type=>'text/javascript'}, ''], res.get_tag('script')
+      eq [:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
+	res.get_tag('meta')
+      eq [:h1, 'title'], res.get_tag('h1')
+      eq [:div, {:class=>'section'}, 'msg'],
+	res.get_path('//div[@class="section"]')
+      eq nil, res.get_tag('meta[2]')	# not redirected
 
       template = @memory.template.get('notice')
       res = Qwik::Action.notice_generate(template, 'title', 'msg', 'url')
-      ok_eq([:meta, {:content=>'0; url=url', 'http-equiv'=>'Refresh'}],
-	    res.get_tag('meta[2]')) # redirected
+      eq [:meta, {:content=>'0; url=url', 'http-equiv'=>'Refresh'}],
+	res.get_tag('meta[2]')	# redirected
     end
   end
 end

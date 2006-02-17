@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -69,12 +60,12 @@ if defined?($test) && $test
 
       # LOAD_PATH is not changed.
       diff = $LOAD_PATH.length - org_path.length
-      #qp $LOAD_PATH.length, org_path.length
+      #p $LOAD_PATH.length, org_path.length
       #pp $LOAD_PATH, org_path
       ok_eq(false, 0 < diff)
 
       diff = $".length - org_libs.length
-      #qp $".length, org_libs.length
+      #p $".length, org_libs.length
       ok_eq(true, 0 < diff)
     end
   end

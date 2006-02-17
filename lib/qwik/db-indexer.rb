@@ -1,18 +1,10 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 begin
-  require 'senna'
-  $have_senna_so = true
+#  require 'senna'
+#  $have_senna_so = true
 rescue LoadError
   $have_senna_so = false
 end
+$have_senna_so = false
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-pathname'
@@ -100,7 +92,6 @@ if defined?($test) && $test
   class TestDBIndexer < Test::Unit::TestCase
     def setup_db
       config = Qwik::Config.new
-#      config[:debug] = true
       spath = config.super_dir.path
       path = './test/'.path
       path.setup
@@ -155,6 +146,5 @@ if defined?($test) && $test
 
       teardown_db(path)
     end
-
   end
 end

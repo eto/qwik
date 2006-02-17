@@ -40,10 +40,10 @@ module QuickML
 	return
       end
 
-      #qp 'start process_recipient' if $ml_debug
+      #p 'start process_recipient' if $ml_debug
 
       @mail.recipients.each {|recipient|
-        #qp 'process_recipient '+recipient if $ml_debug
+        #p 'process_recipient '+recipient if $ml_debug
 	process_recipient(recipient)
       }
     end
@@ -78,10 +78,10 @@ module QuickML
       end
 
       begin
-        #qp "before mutex #{mladdress}" if $ml_debug
+        #p "before mutex #{mladdress}" if $ml_debug
 
 	ServerMemory.ml_mutex(@config, mladdress).synchronize {
-          #qp "start in mutex #{mladdress}" if $ml_debug
+          #p "start in mutex #{mladdress}" if $ml_debug
 	  ml = Group.new(@config, mladdress, @mail.from, @message_charset)
 	  @message_charset ||= ml.charset
 
@@ -94,6 +94,7 @@ module QuickML
 	}
 
       rescue InvalidMLName
+	#p 'InvalidMLName'
 	report_invalid_mladdress(mladdress)
       end
     end
@@ -125,7 +126,7 @@ module QuickML
     end
 
     def submit (ml)
-      #qp 'submit ', ml.name if $ml_debug
+      #p 'submit ', ml.name if $ml_debug
 
       if Group.exclude?(@mail.from, @config.ml_domain)
 	@logger.log "Invalid From Address: #{@mail.from}"
@@ -152,22 +153,21 @@ module QuickML
     end
 
     def report_invalid_mladdress (mladdress)
-      header = []
-      subject = Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))
-      header.push(['To',	@mail.from],
-		  ['From',	@config.ml_postmaster],
-		  ['Subject',	subject],
-                  ['Content-type', content_type])
-
-      body =   _("Invalid mailing list name: <%s>\n", mladdress)
-      body <<  _("You can only use 0-9, a-z, A-Z,  `-' for mailing list name\n")
-
-      body << generate_footer
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => @mail.from,
-		     :header => header,
-		     :body => body)
+      mail = {
+	:mail_from => '', 
+	:recipient => @mail.from,
+	:header => [
+	  ['To',	@mail.from],
+	  ['From',	@config.ml_postmaster],
+	  ['Subject',
+	    Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))],
+	  ['Content-Type', content_type]
+	],
+	:body => _("Invalid mailing list name: <%s>\n", mladdress) +
+	_("You can only use 0-9, a-z, A-Z,  `-' for mailing list name\n") +
+	generate_footer,
+      }
+      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger, mail)
       @logger.log "Invalid ML Address: #{mladdress}"
     end
 
@@ -215,8 +215,8 @@ module QuickML
         parts[0] = sub_mail.to_s
         body = Mail.join_parts(parts, @mail.boundary)
       else
-        unless @mail['Content-type'].empty?
-          header.push(['Content-Type', @mail['Content-type']]) 
+        unless @mail['Content-Type'].empty?
+          header.push(['Content-Type', @mail['Content-Type']]) 
         end
         body << @mail.body
       end
@@ -236,7 +236,7 @@ module QuickML
       header.push(['To',	member],
 		  ['From',	ml.address],
 		  ['Subject',	subject],
-                  ['Content-type', content_type])
+                  ['Content-Type', content_type])
 
       if requested_by
 	body =  _("You are removed from the mailing list:\n<%s>\n",
@@ -249,7 +249,7 @@ module QuickML
       body << generate_footer
       Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
 		     :mail_from => '', 
-		     :recipients => member,
+		     :recipient => member,
 		     :header => header,
 		     :body => body)
       @logger.log "[#{ml.name}]: Unsubscribe: #{member}"
@@ -261,7 +261,7 @@ module QuickML
       header.push(['To',	@mail.from],
 		  ['From',	ml.address],
 		  ['Subject',	subject],
-                  ['Content-type', content_type])
+                  ['Content-Type', content_type])
 
       body =  _("The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)\n\n",
 		ml.address,
@@ -405,13 +405,12 @@ if defined?($test) && $test
     include TestModuleML
 
     def ok_file(e, file)
-      str = ('./test/'+file).path.read
+      str = "test/#{file}".path.read
       ok_eq(e, str)
     end
 
     def ok_config(e)
-      file = '_GroupConfig.txt'
-      str = ('./test/'+file).path.read
+      str = 'test/_GroupConfig.txt'.path.read
       hash = QuickML::GroupConfig.parse_hash(str)
       ok_eq(e, hash)
     end
@@ -424,7 +423,8 @@ Subject: Test Mail
 Date: Mon, 3 Feb 2001 12:34:56 +0900
 
 This is a test.
-' }
+'
+      }
       processor = QuickML::Processor.new(@ml_config, mail)
       processor.process
 
@@ -441,31 +441,48 @@ This is a test.
 		})
     end
 
-    def nu_test_with_confirm
-      str = 'From: "Test User" <user@e.com>
+    def test_with_confirm
+      message = 'From: "Test User" <user@e.com>
 To: "Test Mailing List" <test@example.com>
 Subject: Test Mail
 Date: Mon, 3 Feb 2001 12:34:56 +0900
 
 This is a test.
 '
-      mail = QuickML::Mail.generate { str }
-
+      mail = QuickML::Mail.generate { message }
+      org_confirm_ml_creation = @ml_config[:confirm_ml_creation]
+      @ml_config[:confirm_ml_creation] = true
       processor = QuickML::Processor.new(@ml_config, mail)
       processor.process
 
       ok_file('', '_GroupMembers.txt')
       ok_file("user@e.com\n", '_GroupWaitingMembers.txt')
-      ok_file(str, '_GroupWaitingMessage.txt')
+      ok_file(message, '_GroupWaitingMessage.txt')
       h = {
-	:max_members => 100,
-	:max_mail_length => 2097152,
-	:ml_life_time => 2678400,
-	:ml_alert_time => 2073600,
-	:auto_unsubscribe_count => 5,
+	:auto_unsubscribe_count=>5,
+	:max_mail_length=>102400,
+	:max_members=>100,
+	:ml_alert_time=>2073600,
+	:ml_life_time=>2678400,
+	:forward=>false,
+	:permanent=>false,
+	:unlimited=>false,
       }
       ok_config(h)
+      @ml_config[:confirm_ml_creation] = org_confirm_ml_creation
     end
 
+    def test_invalid_mlname
+      message = 'From: user@e.com
+To: invalid_mlname@example.com
+Subject: Test Mail
+Date: Mon, 3 Feb 2001 12:34:56 +0900
+
+This is a test.
+'
+      mail = QuickML::Mail.generate { message }
+      processor = QuickML::Processor.new(@ml_config, mail)
+      processor.process
+    end
   end
 end

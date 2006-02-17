@@ -1,25 +1,21 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    def describe_book
-      '* Book plugin
-Add a search link to book stores.
-You can edit the list of the book stores for [[_BookSearch]].
-* Example
+    D_book = {
+      :dt => 'Book and ISBN plugins',
+      :dd => 'Add a link to a book or a link to searcha book.',
+      :dc => "* Example
+** ISBN plugin
+Add a link to a book by isbn.
+ {{isbn(4797318325)}}
+{{isbn(4797318325)}}
+** Book Serach plugin
  {{book(Wiki)}}
 {{book(Wiki)}}
-'
-    end
+You can edit the book stores list on [[_BookSearch]].
+"
+    }
 
     def plg_book(key)
       page = @site['_BookSearch']
@@ -41,19 +37,10 @@ You can edit the list of the book stores for [[_BookSearch]].
     def plg_isbn_amazon(isbn, t=nil)
       isbn = isbn.to_s
       msg = t
-      msg = 'isbn:'+isbn if t.nil?
+      msg = "isbn:#{isbn}" if t.nil?
       a = @site.siteconfig['aid']
-      aid = '/'+a if a
+      aid = "/#{a}" if a
       return [:a, {:href=>"http://www.amazon.co.jp/exec/obidos/ASIN/#{isbn}#{aid}/ref=nosim/"}, msg]
-    end
-
-    def describe_isbn
-      '* ISBN plugin
-Add a link to a book by isbn.
-* Example
- {{isbn(4797318325)}}
-{{isbn(4797318325)}}
-'
     end
 
     def plg_isbn(isbn, t=nil)
@@ -61,20 +48,19 @@ Add a link to a book by isbn.
       isbn1 = isbn.gsub(/ISBN/i, '')
       isbn2 = isbn1.gsub(/-/, '')
       a = @site.siteconfig['aid']
-      aid = '/'+a if a
+      aid = "/#{a}" if a
 
       link = @site['_IsbnLink']
       db = link.wikidb
       ar = []
 
       msg = t
-      msg = 'isbn:'+isbn if t.nil?
+      msg = "isbn:#{isbn}" if t.nil?
 
       ar << msg
       ar << ' '
 
       db.array.each {|name, args|
-	#qp name, args
 	args = args.dup
 	url = args.shift
 	next if url.nil?

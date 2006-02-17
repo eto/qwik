@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'md5'
 
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
@@ -41,7 +32,6 @@ class String
   end
 
   def md5hex
-    #qp self.length, caller(1)[0]
     return MD5.hexdigest(self)
   end
 
@@ -51,7 +41,7 @@ class String
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -59,45 +49,45 @@ if defined?($test) && $test
   class TestUtilString < Test::Unit::TestCase
     def test_string
       # test_xchomp
-      ok_eq('', ''.xchomp)
-      ok_eq("", "\n".xchomp)
-      ok_eq("", "\r".xchomp)
-      ok_eq("", "\r\n".xchomp)
-      ok_eq("\n", "\n\r".xchomp)
-      ok_eq('t', 't'.xchomp)
-      ok_eq('t', "t\r".xchomp)
-      ok_eq('t', "t\n".xchomp)
+      assert_equal '', ''.xchomp
+      assert_equal "", "\n".xchomp
+      assert_equal "", "\r".xchomp
+      assert_equal "", "\r\n".xchomp
+      assert_equal "\n", "\n\r".xchomp
+      assert_equal 't', 't'.xchomp
+      assert_equal 't', "t\r".xchomp
+      assert_equal 't', "t\n".xchomp
 
       # test_chompp
-      ok_eq("", "\n\r".chompp)
-      ok_eq("", "\n\r\n\r".chompp)
+      assert_equal "", "\n\r".chompp
+      assert_equal "", "\n\r\n\r".chompp
 
       # test_normalize_eol
-      ok_eq("\n", "".normalize_eol)
-      ok_eq("\n", "\n".normalize_eol)
-      ok_eq("t\n", 't'.normalize_eol)
-      ok_eq("t\n", "t\n".normalize_eol)
+      assert_equal "\n", "".normalize_eol
+      assert_equal "\n", "\n".normalize_eol
+      assert_equal "t\n", 't'.normalize_eol
+      assert_equal "t\n", "t\n".normalize_eol
 
       # test_normalize_newline
-      ok_eq("\n", "\n".normalize_newline)
-      ok_eq("\n", "\r".normalize_newline)
-      ok_eq("\n", "\r\n".normalize_newline)
-      ok_eq("\n\n", "\n\r".normalize_newline)
-      ok_eq("\na\n", "\ra\r".normalize_newline)
-      ok_eq("\na\n", "\r\na\r\n".normalize_newline)
-      ok_eq("\n\na\n\n", "\n\ra\n\r".normalize_newline)
+      assert_equal "\n", "\n".normalize_newline
+      assert_equal "\n", "\r".normalize_newline
+      assert_equal "\n", "\r\n".normalize_newline
+      assert_equal "\n\n", "\n\r".normalize_newline
+      assert_equal "\na\n", "\ra\r".normalize_newline
+      assert_equal "\na\n", "\r\na\r\n".normalize_newline
+      assert_equal "\n\na\n\n", "\n\ra\n\r".normalize_newline
 
       # test_sub_str
-      ok_eq('a:b', 'a*b'.sub_str('*', ':'))
+      assert_equal 'a:b', 'a*b'.sub_str('*', ':')
 
       # test_md5
-      assert_instance_of(String, 't'.md5)
-      ok_eq(16, 't'.md5.length)
-      ok_eq("\343X\357\244\211\365\200b\361\r\3271ked\236", 't'.md5)
-      assert_instance_of(String, 't'.md5hex)
-      ok_eq(32, 't'.md5hex.length)
-      ok_eq('e358efa489f58062f10dd7316b65649e', 't'.md5hex)
-      ok_eq("dA==", 't'.base64)
+      assert_instance_of String, 't'.md5
+      assert_equal 16, 't'.md5.length
+      assert_equal "\343X\357\244\211\365\200b\361\r\3271ked\236", 't'.md5
+      assert_instance_of String, 't'.md5hex
+      assert_equal 32, 't'.md5hex.length
+      assert_equal 'e358efa489f58062f10dd7316b65649e', 't'.md5hex
+      assert_equal "dA==", 't'.base64
     end
   end
 end

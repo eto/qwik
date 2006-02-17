@@ -102,7 +102,6 @@ module QuickML
       # e.g. <foo=return@quickml.com>
       return name + "=return" + '@' + domain
     end
-
   end
 end
 

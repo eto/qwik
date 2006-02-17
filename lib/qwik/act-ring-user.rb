@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-ring-common'
 
@@ -15,7 +6,7 @@ module Qwik
     # ============================== manage user information.
     def ring_user_info(key, mail)
       # Get member database page.
-      page = c_get_superpage(key)
+      page = @site.get_superpage(key)
       return nil if page.nil?
 
       # Get the correspondig record to the mail.
@@ -67,7 +58,7 @@ module Qwik
     end
 
     def plg_ring_get_user_from_pagename(pagename)
-      page = c_get_superpage(RING_MEMBER)
+      page = @site.get_superpage(RING_MEMBER)
       return if page.nil?
 
       page.wikidb.each {|k, ar|

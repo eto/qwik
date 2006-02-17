@@ -1,17 +1,5 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
-#require 'pp'
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
-require 'qwik/qp'
 require 'qwik/util-tail'
 require 'qwik/util-pathname'
 
@@ -35,9 +23,9 @@ module Qwik
 	puts 'Process id: '+str
       end
 
-      qp @config.web_error_log
-      qp @config.access_log
-      qp @config.web_access_log
+      p @config.web_error_log
+      p @config.access_log
+      p @config.web_access_log
 
       tail_f(@config.web_error_log)
       tail_f(@config.web_access_log)
@@ -73,7 +61,6 @@ end
 
 if $0 == __FILE__
   argv = ARGV
-  #qp argv
   argv << '-d'
   argv << '-c'
   argv << 'config-debug.txt'

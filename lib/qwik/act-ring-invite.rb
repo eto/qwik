@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-ring-common'
 require 'qwik/act-ring-user'
@@ -64,12 +55,10 @@ module Qwik
 
       guest_mails = @req.query['guest_mail']
       message = @req.query['message']
-      #qp guest_mails, message
       if guest_mails.nil? || guest_mails.empty? || message.nil?
 	return ring_invite_goback(href)
       end
 
-      #qp guest_mails, message
       if guest_mails.to_s == 'guest@example.com' 
 	return ring_invite_goback(href)
       end
@@ -116,7 +105,7 @@ module Qwik
     # In this method, we actually add the guest user.
     def ring_invite_guest(guest_mail_ar, message)
       host_mail = @req.user
-      page = c_get_superpage(RING_INVITE_MEMBER)
+      page = @site.get_superpage(RING_INVITE_MEMBER)
       page = @site.create('_'+RING_INVITE_MEMBER) if page.nil?
       now = @req.start_time
 
@@ -145,7 +134,7 @@ http://ring.sfc.keio.ac.jp/.getpass?mail=#{guest_mail}
       host_from = host_name+" <"+host_mail+">"
       guest_to = guest_mail
       subject = _r(:INVITE_SUBJECT)
-      template_page = c_get_superpage(RING_INVITE_MAIL_TEMPLATE)
+      template_page = @site.get_superpage(RING_INVITE_MAIL_TEMPLATE)
 
       if template_page
 	content = template_page.load
@@ -153,19 +142,23 @@ http://ring.sfc.keio.ac.jp/.getpass?mail=#{guest_mail}
 	content = ring_dummy_template
       end
 
-      #qp content
       content.gsub!(/\#\{host_name\}/, host_name)
       content.gsub!(/\#\{host_mail\}/, host_mail)
       content.gsub!(/\#\{guest_mail\}/, guest_mail)
       content.gsub!(/\#\{message\}/, message)
 
-      mail = Mail.new(host_from, guest_to, subject, content)
+      mail = {
+	:from => host_from,
+	:to => guest_to,
+	:subject => subject,
+	:content => content,
+      }
       sm = Sendmail.new(@config.smtp_host, @config.smtp_port, @config.test)
       sm.send(mail)
     end
 
     def plg_ring_invite_list(arg=nil)
-      page = c_get_superpage(RING_INVITE_MEMBER)
+      page = @site.get_superpage(RING_INVITE_MEMBER)
       ar = page.wikidb.hash.to_a
 
       dl = [:dl]
@@ -241,15 +234,15 @@ if defined?($test) && $test
 		[:p, [:a, {:href=>'1.html'}, 'Go back']]]],
 	    "//div[@class='section']")
 
-      ok_eq('', page.load)
+      eq '', page.load
 
       invite_member_page = @site['_'+Qwik::Action::RING_INVITE_MEMBER]
-      ok_eq(",g@e.com,,user@e.com,hi,0\n", invite_member_page.load)
+      eq ",g@e.com,,user@e.com,hi,0\n", invite_member_page.load
 
       member_page = @site['_SiteMember']
-      ok_eq(",user@e.com,
+      eq ",user@e.com,
 ,g@e.com,user@e.com
-", member_page.load)
+", member_page.load
     end
 
     def test_plg_ring_invite_list
@@ -267,67 +260,67 @@ if defined?($test) && $test
 		   "//div[@class='ring_invite_list']/dl")
     end
 
-  # http://colinux:9190/ring.sfc.keio.ac.jp/
-  def test_ring_invite
-    t_add_user
+    # http://colinux:9190/ring.sfc.keio.ac.jp/
+    def test_ring_invite
+      t_add_user
 
-    page = @site.create('_RingMember')
-    page.store(',user@e.com,Test User,Alan Smithy,ei,1990,1,0')
+      page = @site.create('_RingMember')
+      page.store(',user@e.com,Test User,Alan Smithy,ei,1990,1,0')
 
-    page = @site.create_new
-    page.store("{{ring_invite_form}}")
+      page = @site.create_new
+      page.store("{{ring_invite_form}}")
 
-    # See invite page.
-    res = session('/test/1.html')
-    assert_rattr({:action=>'1.ring_invite', :method=>'POST'}, '//form')
-    ok_in(['user@e.com'], '//table/tr/td')
-    ok_in(['guest@example.com'], "//form/table/tr[4]/td/textarea")
+      # See invite page.
+      res = session('/test/1.html')
+      assert_rattr({:action=>'1.ring_invite', :method=>'POST'}, '//form')
+      ok_in(['user@e.com'], '//table/tr/td')
+      ok_in(['guest@example.com'], "//form/table/tr[4]/td/textarea")
 
-    # Try to invite, but it cause error.
-    res = session("/test/1.ring_invite?guest_mail=invalid@mailaddress")
-    ok_in(["µ‘Òó‚Í‘—‚ç‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"], '//h3')
+      # Try to invite, but it cause error.
+      res = session("/test/1.ring_invite?guest_mail=invalid@mailaddress")
+      ok_in(["µ‘Òó‚Í‘—‚ç‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"], '//h3')
 
-    # Try to invite again.
-    res = session("/test/1.ring_invite?guest_mail=gu@e.com&message=invite")
-    ok_in(["µ‘Òó‚ª‘—‚ç‚ê‚Ü‚µ‚½"], '//h3')
-    ok_eq(",gu@e.com,,user@e.com,invite,0\n", @site['_RingInvitedMember'].load)
-    ok_eq("Alan Smithy <user@e.com>", $smtp_sendmail[2])
-    ok_eq('gu@e.com', $smtp_sendmail[3])
-    assert_match(/^From/, $smtp_sendmail[4])
-    url = "http://ring.sfc.keio.ac.jp/.getpass?mail=gu@e.com"
-    assert_match(Regexp.new(Regexp.escape(url)), $smtp_sendmail[4])
+      # Try to invite again.
+      res = session("/test/1.ring_invite?guest_mail=gu@e.com&message=invite")
+      ok_in(["µ‘Òó‚ª‘—‚ç‚ê‚Ü‚µ‚½"], '//h3')
+      eq ",gu@e.com,,user@e.com,invite,0\n", @site['_RingInvitedMember'].load
+      eq "Alan Smithy <user@e.com>", $smtp_sendmail[2]
+      eq 'gu@e.com', $smtp_sendmail[3]
+      assert_match(/^From/, $smtp_sendmail[4])
+      url = "http://ring.sfc.keio.ac.jp/.getpass?mail=gu@e.com"
+      assert_match(Regexp.new(Regexp.escape(url)), $smtp_sendmail[4])
 
-    # Try to invite another person.
-    res = session("/test/1.ring_invite?guest_mail=fe@e.com&message=youtoo")
-    ok_in(["µ‘Òó‚ª‘—‚ç‚ê‚Ü‚µ‚½"], '//h3')
-    ok_eq(",gu@e.com,,user@e.com,invite,0\n,fe@e.com,,user@e.com,youtoo,0\n",
-	  @site['_RingInvitedMember'].load)
-    ok_eq("Alan Smithy <user@e.com>", $smtp_sendmail[2])
-    ok_eq('fe@e.com', $smtp_sendmail[3])
-    assert_match(/^From/, $smtp_sendmail[4])
-    url = "http://ring.sfc.keio.ac.jp/.getpass?mail=fe@e.com"
-    assert_match(Regexp.new(Regexp.escape(url)), $smtp_sendmail[4])
+      # Try to invite another person.
+      res = session("/test/1.ring_invite?guest_mail=fe@e.com&message=youtoo")
+      ok_in(["µ‘Òó‚ª‘—‚ç‚ê‚Ü‚µ‚½"], '//h3')
+      eq ",gu@e.com,,user@e.com,invite,0\n,fe@e.com,,user@e.com,youtoo,0\n",
+	@site['_RingInvitedMember'].load
+      eq "Alan Smithy <user@e.com>", $smtp_sendmail[2]
+      eq 'fe@e.com', $smtp_sendmail[3]
+      assert_match(/^From/, $smtp_sendmail[4])
+      url = "http://ring.sfc.keio.ac.jp/.getpass?mail=fe@e.com"
+      assert_match(Regexp.new(Regexp.escape(url)), $smtp_sendmail[4])
 
-    # See invited member list.
-    page = @site.create_new
-    page.store("{{ring_invite_list}}")
+      # See invited member list.
+      page = @site.create_new
+      page.store("{{ring_invite_list}}")
 
-    res = session('/test/2.html')
-    ok_in([:dl,
- [:dt, [:span, {:class=>'ring_ul'}, [:a, {:href=>'1.html'}, 'Test User']],
-  "¨ (gu@e.com) 1970-01-01"],
- [:dd, 'invite'],
- [:dt, [:span, {:class=>'ring_ul'}, [:a, {:href=>'1.html'}, 'Test User']],
-  "¨ (fe@e.com) 1970-01-01"],
- [:dd, 'youtoo']],
- "//div[@class='ring_invite_list']")
+      res = session('/test/2.html')
+      ok_in([:dl,
+	      [:dt, [:span, {:class=>'ring_ul'},
+		  [:a, {:href=>'1.html'}, 'Test User']],
+		"¨ (gu@e.com) 1970-01-01"],
+	      [:dd, 'invite'],
+	      [:dt, [:span, {:class=>'ring_ul'},
+		  [:a, {:href=>'1.html'}, 'Test User']],
+		"¨ (fe@e.com) 1970-01-01"],
+	      [:dd, 'youtoo']],
+	    "//div[@class='ring_invite_list']")
 
-    page = @site['_RingMember']
-    ok_eq(',user@e.com,Test User,Alan Smithy,ei,1990,1,0', page.load)
-    page = @site['_SiteMember']
-    ok_eq(",user@e.com,\n,gu@e.com,user@e.com\n,fe@e.com,user@e.com\n",
-	  page.load)
-  end
-
+      page = @site['_RingMember']
+      eq ',user@e.com,Test User,Alan Smithy,ei,1990,1,0', page.load
+      page = @site['_SiteMember']
+      eq ",user@e.com,\n,gu@e.com,user@e.com\n,fe@e.com,user@e.com\n", page.load
+    end
   end
 end

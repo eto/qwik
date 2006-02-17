@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'fileutils'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -87,7 +78,6 @@ module Qwik
       return [] unless @attach_path.directory?
       ar = []
       @attach_path.each_entry {|file|
-        #qp file, file.directory?
 	next if file.directory?
 	next if file.to_s == 'CVS'
 	next if /\A\./ =~ file.to_s
@@ -138,7 +128,6 @@ end
 if $0 == __FILE__
   require 'qwik/testunit'
   require 'qwik/test-module-path'
-  require 'qwik/qp'
   $test = true
 end
 
@@ -149,7 +138,7 @@ if defined?($test) && $test
     include TestModulePublic
 
     def setup_files
-      dir = './test/'.path
+      dir = 'test/'.path
       dir.setup
       files = Qwik::PageFiles.new(dir.to_s, '1')
 

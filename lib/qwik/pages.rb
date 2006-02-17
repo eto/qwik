@@ -431,7 +431,6 @@ if defined?($test) && $test
 
       found = false
       pages.each_all {|page|
-	#qp page.key
 	found = true if page.key[0] == ?_
       }
       ok_eq(true, found)

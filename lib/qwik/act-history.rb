@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-backup'
 
@@ -21,8 +12,8 @@ module Qwik
     def ext_history
       c_require_pagename
       c_require_member
-      #c_require_page_exist # does not require the page is exist
-      # because you can see the list of the page that is already deleted.
+      #c_require_page_exist
+      # You can see the history of the deleted page.
 
       return c_nerror('no path args') if 0 < @req.path_args.length
       return c_nerror('no ext args')  if 0 < @req.ext_args.length
@@ -30,7 +21,6 @@ module Qwik
 =begin
       divs = []
       key = @req.base
-      qp key
       @site.backupdb.each_by_key(key) {|v, time|
 	res = [:div, {:class=>'period'}, c_res(v)]
 	divs << [:div, {:class=>'era', :id=>time.to_i.to_s}, res]
@@ -94,19 +84,19 @@ if defined?($test) && $test
     def test_act_history
       t_add_user
 
-      ok_wi([:span, {:class=>'attribute'},
-	      [:a, {:href=>'1.history'}, 'Show history']],
-	    '{{show_history}}')
+      ok_wi [:span, {:class=>'attribute'},
+	[:a, {:href=>'1.history'}, 'Show history']],
+	'{{show_history}}'
 
       page = @site['1']
-      page.store('* t1') # store the first
-      page.store('* t2') # store the second
+      page.store('* t1')	# store the first
+      page.store('* t2')	# store the second
 
-      res = session('/test/1.html')
-      ok_in(['t2'], '//title')
+      res = session '/test/1.html'
+      ok_in ['t2'], '//title'
 
-      res = session('/test/1.history')
-      ok_in(['Time machine | 1'], '//title')
+      res = session '/test/1.history'
+      ok_in ['Time machine | 1'], '//title'
     end
   end
 end

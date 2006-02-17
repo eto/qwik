@@ -61,37 +61,37 @@ This is a test.
       mail = gen_mail { str }
 
       # test_accessor
-      ok_eq('user@e.com', mail.mail_from)
-      ok_eq(['test@example.com'], mail.recipients)
-      ok_eq("This is a test.\n", mail.body)
-      ok_eq(str, mail.bare)
+      eq 'user@e.com', mail.mail_from
+      eq ['test@example.com'], mail.recipients
+      eq "This is a test.\n", mail.body
+      eq str, mail.bare
 
       # test_to_s
-      ok_eq(str, mail.to_s)
+      eq str, mail.to_s
 
       # test_looping?
-      ok_eq(false, mail.looping?)
+      eq false, mail.looping?
 
       # test_from
-      ok_eq('user@e.com', mail.from)
+      eq 'user@e.com', mail.from
 
       # test_collect
-      ok_eq([], mail.collect_cc)
-      ok_eq(['test@example.com'], mail.collect_to)
+      eq [], mail.collect_cc
+      eq ['test@example.com'], mail.collect_to
 
       # test_decoded_body
-      ok_eq("This is a test.\n", mail.decoded_body)
+      eq "This is a test.\n", mail.decoded_body
 
       # test_get_body
-      ok_eq("This is a test.\n", mail.get_body)
+      eq "This is a test.\n", mail.get_body
 
       # test_parts
-      ok_eq(["This is a test.\n"], mail.parts)
+      eq ["This is a test.\n"], mail.parts
 
-      ok_eq(nil, mail.filename)		# test_filename
+      eq nil, mail.filename		# test_filename
       assert(['test@example.com'], mail.valid?)	# test_valid?
-      ok_eq(nil, mail.boundary)		# test_boundary
-      ok_eq(false, mail.multipart?)	# test_multipart?
+      eq nil, mail.boundary		# test_boundary
+      eq false, mail.multipart?		# test_multipart?
 
       # test_each_part
       mail.each_part {|mail|
@@ -126,52 +126,50 @@ body2
 " }
 
       # test_accessor
-      ok_eq(['test@example.com', 'guest@example.com'], mail.recipients)
+      eq ['test@example.com', 'guest@example.com'], mail.recipients
 
       # test_collect
-      ok_eq(['guest@example.com'], mail.collect_cc)
+      eq ['guest@example.com'], mail.collect_cc
 
       # test_get_body
-      ok_eq("body1\nbody2\n", mail.get_body)
+      eq "body1\nbody2\n", mail.get_body
 
       # test_parts
-      ok_eq([
-	      "Content-Type: text/plain; charset=\"ascii\"
+      eq ["Content-Type: text/plain; charset=\"ascii\"
 Content-Transfer-Encoding: 7bit
 
 body1
 
-",
-	      "Content-Type: text/plain; charset=\"ascii\"
+", "Content-Type: text/plain; charset=\"ascii\"
 Content-Transfer-Encoding: 7bit
 
 body2
 
-"], mail.parts)
+"], mail.parts
 
       # test_parts
       mail0 = QuickML::Mail.new
       mail0.read(mail.parts[0])
-      ok_eq("body1\n\n", mail0.body)
+      eq "body1\n\n", mail0.body
 
       mail1 = QuickML::Mail.new
       mail1.read(mail.parts[1])
-      ok_eq("body2\n\n", mail1.body)
+      eq "body2\n\n", mail1.body
 
       # test_multipart
-      ok_eq(true, mail.multipart?) # test_multipart?
-      ok_eq('boundary', mail.boundary) # test_boundary
+      eq true, mail.multipart?		# test_multipart?
+      eq 'boundary', mail.boundary	# test_boundary
 
       # test_multipart_alternative
       mail['Content-Type'] = "multipart/alternative; boundary=\"b\""
       mail.instance_eval {
 	@content_type = QuickML::Mail.get_content_type(self['Content-Type'])
       }
-      ok_eq('multipart/alternative', mail.content_type)
-      ok_eq("multipart/alternative; boundary=\"b\"",
-	    mail['Content-Type'])
-      ok_eq(true, mail.multipart?) # test_multipart?
-      ok_eq('b', mail.boundary) # test_boundary
+      eq 'multipart/alternative', mail.content_type
+      eq "multipart/alternative; boundary=\"b\"",
+	    mail['Content-Type']
+      eq true, mail.multipart?		# test_multipart?
+      eq 'b', mail.boundary		# test_boundary
     end
 
     def test_mail_with_image
@@ -204,26 +202,26 @@ AAAAAElFTkSuQmCC
 " }
 
       # test_get_body
-      ok_eq("Test with image.\n", mail.get_body)
+      eq "Test with image.\n", mail.get_body
 
       # test_parts
       mail0 = QuickML::Mail.new
       mail0.read(mail.parts[0])
-      ok_eq('text/plain', mail0.content_type)
-      ok_eq("Test with image.\n\n", mail0.body)
+      eq 'text/plain', mail0.content_type
+      eq "Test with image.\n\n", mail0.body
 
       mail1 = QuickML::Mail.new
       mail1.read(mail.parts[1])
-      ok_eq('image/png', mail1.content_type)
-      ok_eq("attachment;
+      eq 'image/png', mail1.content_type
+      eq "attachment;
  filename=\"1x1.png\"",
-		   mail1['Content-Disposition'])
-      ok_eq('1x1.png', mail1.filename)
-      ok_eq('base64', mail1['Content-Transfer-Encoding'])
-      ok_eq("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP4//8/AAX+Av4zEpUU\nAAAAAElFTkSuQmCC\n\n", mail1.body)
-      ok_eq("\211PNG\r\n\032\n\000\000\000\rIHDR\000\000\000\001\000\000\000\001\010\002\000\000\000\220wS\336\000\000\000\fIDATx\332c\370\377\377?\000\005\376\002\3763\022\225\024\000\000\000\000IEND\256B`\202", mail1.decoded_body)
+		 mail1['Content-Disposition']
+      eq '1x1.png', mail1.filename
+      eq 'base64', mail1['Content-Transfer-Encoding']
+      eq "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP4//8/AAX+Av4zEpUU\nAAAAAElFTkSuQmCC\n\n", mail1.body
+      eq "\211PNG\r\n\032\n\000\000\000\rIHDR\000\000\000\001\000\000\000\001\010\002\000\000\000\220wS\336\000\000\000\fIDATx\332c\370\377\377?\000\005\376\002\3763\022\225\024\000\000\000\000IEND\256B`\202", mail1.decoded_body
 
-      ok_eq(nil, mail.parts[2])
+      eq nil, mail.parts[2]
     end
 
     def test_inline_disposition
@@ -251,9 +249,8 @@ AAAAAElFTkSuQmCC
 " }
       mail1 = QuickML::Mail.new
       mail1.read(mail.parts[1])
-      ok_eq("inline; filename=\"sample.jpg\"",
-		   mail1['Content-Disposition'])
-      ok_eq('sample.jpg', mail1.filename)
+      eq "inline; filename=\"sample.jpg\"", mail1['Content-Disposition']
+      eq 'sample.jpg', mail1.filename
     end
 
     def test_apple_mail
@@ -290,20 +287,19 @@ AAAAAElFTkSuQmCC
 " }
 
       # test_get_body
-      ok_eq("I attach a file using Apple Mail.\n", mail.get_body)
+      eq "I attach a file using Apple Mail.\n", mail.get_body
 
       # test_parts
       mail0 = QuickML::Mail.new
       mail0.read(mail.parts[0])
-      ok_eq('text/plain', mail0.content_type)
-      ok_eq("I attach a file using Apple Mail.\n", mail0.body)
+      eq 'text/plain', mail0.content_type
+      eq "I attach a file using Apple Mail.\n", mail0.body
 
       mail1 = QuickML::Mail.new
       mail1.read(mail.parts[1])
-      ok_eq('application/zip', mail1.content_type)
-      ok_eq("attachment;\n\tfilename=sounds.zip",
-		   mail1['Content-Disposition'])
-      ok_eq('sounds.zip', mail1.filename)
+      eq 'application/zip', mail1.content_type
+      eq "attachment;\n\tfilename=sounds.zip", mail1['Content-Disposition']
+      eq 'sounds.zip', mail1.filename
     end
   end
 
@@ -322,10 +318,10 @@ Subject: Re: [test:1] テスト
 これはテストです。
 '
       mail = gen_mail { str }
-      ok_eq("これはテストです。\n".set_sourcecode_charset.to_mail_charset, mail.body)
-      ok_eq(str.set_sourcecode_charset.to_mail_charset, mail.bare)
-      ok_eq("Re: [test:1] テスト ".set_sourcecode_charset.to_mail_charset, mail['Subject'])
-      ok_eq("これはテストです。\n".set_sourcecode_charset.to_mail_charset, mail.get_body)
+      eq "これはテストです。\n".set_sourcecode_charset.to_mail_charset, mail.body
+      eq str.set_sourcecode_charset.to_mail_charset, mail.bare
+      eq "Re: [test:1] テスト ".set_sourcecode_charset.to_mail_charset, mail['Subject']
+      eq "これはテストです。\n".set_sourcecode_charset.to_mail_charset, mail.get_body
     end
 
     def test_for_confirm
@@ -338,9 +334,9 @@ test
       mail = gen_mail { str }
 
       # test_accessor
-      ok_eq('bob@example.net', mail.mail_from)
-      ok_eq(['test@example.com'], mail.recipients)
-      ok_eq("test\n", mail.body)
+      eq 'bob@example.net', mail.mail_from
+      eq ['test@example.com'], mail.recipients
+      eq "test\n", mail.body
     end
   end
 end

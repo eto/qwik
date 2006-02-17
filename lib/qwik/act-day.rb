@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 # Under construction.
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -23,8 +14,6 @@ module Qwik
 
       max = timeline.site_max
       day = max.ymd_s
-
-#      qp day
 
       @req.base = day
       return ext_day
@@ -51,7 +40,6 @@ module Qwik
       timeline = @site.timeline
       timeline.calc_history
 
-      #qp timeline.days
       ymd = time.ymd_s
       keys = timeline.get_keys_by_day(ymd)
       return c_nerror('no contents') if keys.nil?

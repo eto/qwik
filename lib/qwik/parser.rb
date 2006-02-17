@@ -4,7 +4,7 @@ require 'qwik/tokenizer'
 require 'qwik/parser-inline'
 require 'qwik/tokenizer-inline'
 require 'qwik/html-to-wabisabi'
-require 'qwik/wabisabi-valid'
+require 'qwik/wabisabi-validator'
 
 module Qwik
   class TextParser
@@ -134,7 +134,7 @@ module Qwik
       str = token[1]
       wabisabi = HtmlToWabisabi.parse(str)
 
-      v = wabisabi.check_valid
+      v = WabisabiValidator.valid?(wabisabi)
       if v == true
 	return [:html, *wabisabi]
       else

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -99,7 +90,6 @@ module Qwik
       site_max = Time.at(1) if site_max.nil?
       site_min = Time.at(0) if site_min.nil?
 
-      #qp site_max, site_min
       site_duration = site_max - site_min
 
       return times, days, page_min, page_max, site_min, site_max, pages_history, site_duration
@@ -139,19 +129,19 @@ if defined?($test) && $test
 
       # test_times
       times = tl.times
-      ok_eq(['1'], times.keys)
-      ok_eq(0, times['1'][0].to_i)
-      ok_eq(1, times['1'][1].to_i)
+      eq ['1'], times.keys
+      eq 0, times['1'][0].to_i
+      eq 1, times['1'][1].to_i
 
       # test_days
       days = tl.days
       day = days['19700101']
-      ok_eq([['1', Time.at(0)], ['1', Time.at(1)]], day)
+      eq [['1', Time.at(0)], ['1', Time.at(1)]], day
 
       # test_site_min, page_min, pages_history, site_duration
-      ok_eq(Time.at(0), tl.site_min)
-      ok_eq({'1'=>Time.at(0)}, tl.page_min)
-      ok_eq(['1'], tl.pages_history)
+      eq Time.at(0), tl.site_min
+      eq {'1'=>Time.at(0)}, tl.page_min
+      eq ['1'], tl.pages_history
       assert(0 < tl.site_duration)
     end
   end

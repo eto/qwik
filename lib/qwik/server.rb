@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/server-memory'
@@ -180,7 +171,6 @@ if $0 == __FILE__
   require 'qwik/test-common'
   require 'qwik/testunit'
   require 'qwik/act-theme'
-  require 'qwik/qp'
   $test = true
 end
 
@@ -204,7 +194,7 @@ if defined?($test) && $test
     def test_css
       return if $0 != __FILE__		# Only for unit test.
       server, config, memory, wreq, wres = setup_server
-      wreq.path = '/.theme/all.css'
+      wreq.path = '/.theme/css/base.css'
       wres = session(config, memory, wreq, wres)
       ok_eq('text/css', wres['content-type'])
       assert_match(%r|^/*|, wres.body)

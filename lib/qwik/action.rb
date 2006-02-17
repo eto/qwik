@@ -11,7 +11,7 @@ require 'qwik/parser'
 require 'qwik/server-memory'
 require 'qwik/template'
 require 'qwik/tokenizer'
-require 'qwik/wabisabi-get'
+require 'qwik/wabisabi'
 
 # Load common actions.
 require 'qwik/common-backtrace'
@@ -177,7 +177,7 @@ module Qwik
     end
 
     def action_go_login
-      url = c_relative_to_absolute('.login')
+      url = c_relative_to_root('.login')
       c_notice(_('Login'), url, 200, 1) {
 	[:div,
 	  [:p, _('Please login.')],
@@ -232,8 +232,9 @@ module Qwik
     # Null ext.
     def pre_ext_
       sitename = @req.base
-      title = 'redirect to site : '+sitename
-      url = "/#{sitename}/"
+      title = "redirect to site : #{sitename}"
+      #url = "/#{sitename}/"
+      url = c_relative_to_root("#{sitename}/")
       c_notice(title, url) {
 	[:h2, title]
       }
@@ -251,38 +252,65 @@ if defined?($test) && $test
     include TestSession
 
     def test_nonexistent_site
-      res = session('/nosuchsite/')
-      ok_title('No such site')
-      assert_text('No such site', 'h1')
-      assert_text('nosuchsite', 'b')
-      #ok_eq(404, @res.status)
+      res = session '/nosuchsite/'
+      ok_title 'No such site'
+      assert_text 'No such site', 'h1'
+      assert_text 'nosuchsite', 'b'
+      #eq 404, @res.status
     end
 
     def test_private_site
-      res = session('/test/')
-      ok_title('Member Only')
-      ok_xp([:p, 'You are now logged in as this user id.', [:br],
-	      [:strong, 'user@e.com']],'//p')
+      res = session '/test/'
+      ok_title 'Member Only'
+      ok_xp [:p, 'You are now logged in as this user id.', [:br],
+	[:strong, 'user@e.com']],'//p'
     end
 
     def test_nonexistent_action
       t_add_user
-      res = session('/test/.nosuch')
-      ok_title('no such action : nosuch')
+      res = session '/test/.nosuch'
+      ok_title 'no such action : nosuch'
     end
 
     def test_nonexistent_ext
       t_add_user
-      res = session('/test/1.nosuch')
-      #ok_title('no such extention : nosuch')
-      ok_title("No such file")
+      res = session '/test/1.nosuch'
+     #ok_title 'no such extention : nosuch'
+      ok_title "No such file"
     end
 
     def test_redirect
-      res = session('/test')
-      ok_title('redirect to site : test')
-      ok_xp([:meta, {:content=>'0; url=/test/',
-		'http-equiv'=>'Refresh'}], '//meta[2]')
+      res = session '/test'
+      ok_title 'redirect to site : test'
+      ok_xp [:meta, {:content=>'0; url=/test/',
+	  'http-equiv'=>'Refresh'}], '//meta[2]'
+    end
+
+    def test_redirect
+      t_with_path {
+	res = session '/test'
+	ok_title 'redirect to site : test'
+	ok_xp [:meta, {:content=>'0; url=/qwik/test/',
+	    'http-equiv'=>'Refresh'}], '//meta[2]'
+      }
+    end
+
+    def test_go_login
+      res = session('/test/') {|req|
+	req.cookies.clear
+      }
+      ok_title 'Login'
+      ok_xp [:meta, {:content=>'1; url=/test/.login',
+	  'http-equiv'=>'Refresh'}], '//meta[2]'
+
+      t_with_path {
+	res = session('/test/') {|req|
+	  req.cookies.clear
+	}
+	ok_title 'Login'
+	ok_xp [:meta, {:content=>'1; url=/qwik/test/.login',
+	    'http-equiv'=>'Refresh'}], '//meta[2]'
+      }
     end
   end
 end

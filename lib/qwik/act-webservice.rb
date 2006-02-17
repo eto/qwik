@@ -53,7 +53,7 @@ Specify translate Japanese to English link.
     # ========== hatena point
     def plg_hatena_point(hatena_account)
       page = @site[@req.base]
-      url = c_relative_to_full(page.url)
+      url = c_relative_to_absolute(page.url)
       rdf =[:'rdf:RDF',
 	{:'xmlns:rdf'=>'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
 	  :'xmlns:foaf'=>'http://xmlns.com/foaf/0.1/'},
@@ -162,7 +162,7 @@ EOT
 
       page = @site[@req.base]
       return if page.nil?
-      full_url = c_relative_to_full(page.url)
+      full_url = c_relative_to_absolute(page.url)
      #base = 'http://www.excite.co.jp/world/english/web/'
       base = 'http://www.excite.co.jp/world/english/web/proceeding/'
       url = base+"?wb_lp=#{lp}&wb_url="+full_url

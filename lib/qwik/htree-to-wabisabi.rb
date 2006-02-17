@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'htree'
 
@@ -62,13 +53,12 @@ module HTree
 	when Elem, Text, Comment, BogusETag
 	  ar << h.to_wabisabi
 	else
-	  qp 'what?', h
+	  p 'what?', h
 	end
       }
 
       return ar
     end
-
   end
 
   class Text
@@ -88,12 +78,10 @@ module HTree
       return ''
     end
   end
-
 end
 
 if $0 == __FILE__
   require 'qwik/testunit'
-  require 'qwik/qp'
   $test = true
 end
 

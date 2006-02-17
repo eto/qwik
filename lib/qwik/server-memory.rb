@@ -52,12 +52,6 @@ module Qwik
       @qrcode
     end
 
-    # act-graphviz
-    def graphviz
-      @graphviz = GraphvizMemory.new(@config, self) unless defined? @graphviz
-      @graphviz
-    end
-
     # act-theme
     def theme
       @theme = ThemeFactory.new(@config) unless defined? @theme

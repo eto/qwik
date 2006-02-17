@@ -14,7 +14,7 @@ require 'thread'
 require 'thwait'
 require 'timeout'
 require 'time'
-require 'net/smtp'	# FIXME: Which code are using smtp?
+require 'net/smtp'	# FIXME: Which code uses smtp?
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
@@ -35,19 +35,19 @@ module QuickML
 
     def start
       raise 'server already started' if @status != :stop
-      write_pid_file(@config.web_pid_file)
+      write_pid_file(@config.ml_pid_file)
       @logger.log sprintf('Server started at %s:%d [%d]',
                           'localhost', @config.ml_port, Process.pid)
       accept
       @logger.log "Server exited [#{Process.pid}]"
-      remove_pid_file(@config.web_pid_file)
+      remove_pid_file(@config.ml_pid_file)
     end
 
     def shutdown
       begin
 	@server.shutdown
       rescue Errno::ENOTCONN
-        qp 'Already disconnected.'
+        p 'Already disconnected.'
       end
       @status = :shutdown
     end

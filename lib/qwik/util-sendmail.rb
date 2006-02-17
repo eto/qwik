@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'net/smtp'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -21,8 +12,8 @@ module Qwik
     end
 
     def send(mail)
-      Sendmail.send(@host, @port,
-		    mail.from, mail.to, mail.subject, mail.content, @test)
+      Sendmail.send(@host, @port, mail[:from], mail[:to], mail[:subject],
+		    mail[:content], @test)
     end
 
     private
@@ -62,20 +53,33 @@ if defined?($test) && $test
   class TestSendmail < Test::Unit::TestCase
     def test_all
       sm = Qwik::Sendmail.new('127.0.0.1', '25', true)
+      mail = {
+	:from    => 'from@example.com',
+	:to      => 'to@example.com',
+	:subject => 'subject',
+	:content => 'content',
+      }
+      eq("From: from@example.com
+To: to@example.com
+Subject: subject
+Content-Type: text/plain; charset=\"ISO-2022-JP\"
 
-      mail = Qwik::Mail.new
-      mail.from = 'from@example.com'
-      mail.to = 'to@example.com'
-      mail.subject = 'subject'
-      mail.content = 'content'
-      ok_eq("From: from@example.com\nTo: to@example.com\nSubject: subject\nContent-Type: text/plain; charset=\"ISO-2022-JP\"\n\ncontent\n", sm.send(mail))
+content
+", sm.send(mail))
 
-      mail = Qwik::Mail.new
-      mail.from = 'from@example.com'
-      mail.to = 'to@example.com'
-      mail.subject = '‘è–¼'
-      mail.content = '–{•¶'
-      ok_eq("From: from@example.com\nTo: to@example.com\nSubject: =?ISO-2022-JP?B?GyRCQmpMPhsoQg==?=\nContent-Type: text/plain; charset=\"ISO-2022-JP\"\n\n\e$BK\\J8\e(B\n", sm.send(mail))
+      mail = {
+	:from    => 'from@example.com',
+	:to      => 'to@example.com',
+	:subject => '‘è–¼',
+	:content => '–{•¶',
+      }
+      eq("From: from@example.com
+To: to@example.com
+Subject: =?ISO-2022-JP?B?GyRCQmpMPhsoQg==?=
+Content-Type: text/plain; charset=\"ISO-2022-JP\"
+
+\e$BK\\J8\e(B
+", sm.send(mail))
 
     end
   end

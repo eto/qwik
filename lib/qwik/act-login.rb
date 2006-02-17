@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/mail'
 require 'qwik/password'
@@ -31,8 +22,8 @@ module Qwik
       sitename = @site.sitename
       pagename = @req.base
       href = '/.login'
-      href += "?site="+sitename if sitename
-      href += "&page="+pagename if pagename
+      href += "?site=#{sitename}" if sitename
+      href += "&page=#{pagename}" if pagename
       return [:a, {:href=>href}, msg]
     end
 
@@ -60,22 +51,16 @@ module Qwik
     def check_cookie
       userpass = @req.cookies['userpass']
       if userpass
-	#qp userpass
 	user, pass = userpass.split(',', 2)
       else
 	user = @req.cookies['user']
 	pass = @req.cookies['pass']
-	#qp user, pass
       end
 
       if user
-	#qp user, pass
-
 	return if user.nil? || user.empty?
-	#return unless MailAddress.new(user).valid?
 	return unless MailAddress.valid?(user)
 	gen = @memory.passgen
-	#qp gen.match?(user, pass)
 	return unless gen.match?(user, pass)
 
 	@req.user = user
@@ -105,7 +90,7 @@ module Qwik
 	return login_already_logged_in(@req.user)
       end
 
-      user = @req.query['user'] # login from query
+      user = @req.query['user']		# login from query
       pass = @req.query['pass']
 
       if !user
@@ -116,13 +101,12 @@ module Qwik
 
       begin
 	raise InvalidUserError if user.nil? || user.empty?
-	#raise InvalidUserError unless MailAddress.new(user).valid?
 	raise InvalidUserError unless MailAddress.valid?(user)
 	gen = @memory.passgen
 	raise InvalidUserError unless gen.match?(user, pass)
 
       rescue InvalidUserError
-	@res.clear_cookies	# important
+	@res.clear_cookies		# IMPORTANT!
 	return login_invalid_user	# password does not match
       end
 
@@ -153,7 +137,6 @@ module Qwik
 "
       style = ''
       return [:div, {:class=>'go_frontpage',:style=>''},
-#	[:a, {:href=>"/#{@req.sitename}/FrontPage.html", :style=>"
 	[:a, {:href=>'FrontPage.html', :style=>style}, 'FrontPage']]
     end
 
@@ -173,7 +156,6 @@ module Qwik
     end
 
     def login_show_login_suceed_page
-     #url = "/#{@req.sitename}/FrontPage.html"
       url = 'FrontPage.html'
       title = _('Login') + ' ' + _('succeed')
       return c_notice(title, url) {
@@ -229,7 +211,7 @@ if defined?($test) && $test
       res = session('/test/') {|req|
 	req.cookies.clear
       }
-      ok_title('Login')
+      ok_title 'Login'
       ok_xp([:meta, {:content=>"1; url=/test/.login",
 		'http-equiv'=>'Refresh'}],
 	    "//meta[2]")
@@ -238,7 +220,7 @@ if defined?($test) && $test
       res = session('/test/.login') {|req|
 	req.cookies.clear
       }
-      ok_title('Login')
+      ok_title 'Login'
       ok_xp([:input, {:istyle=>'3', :name=>'user', :class=>'focus'}],
 	    '//input')
       ok_xp([:a, {:href=>'.getpass'}, [:em, 'Get Password']], '//a')
@@ -262,7 +244,7 @@ if defined?($test) && $test
       res = session("/test/.login?user=user@e.com&pass=95988593") {|req|
 	req.cookies.clear
       }
-      ok_title('Login succeed')
+      ok_title 'Login succeed'
       #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
       ok_eq('sid', @res.cookies[0].name)
       ok_eq(32, @res.cookies[0].value.length)
@@ -275,7 +257,7 @@ if defined?($test) && $test
       res = session('/test/') {|req|
 	req.cookies.update({'user'=>'user@e.com', 'pass'=>'95988593'})
       }
-      ok_title('FrontPage')
+      ok_title 'FrontPage'
       assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'},
 		    @res.cookies)
       #      ok_eq('sid', @res.cookies[0].name)
@@ -285,7 +267,7 @@ if defined?($test) && $test
       res = session("POST /test/.login?user=user@e.com&pass=95988593") {|req|
 	req.cookies.clear
       }
-      ok_title('Login succeed')
+      ok_title 'Login succeed'
       ok_eq(200, @res.status)
       #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
       ok_eq('sid', @res.cookies[0].name)
@@ -305,7 +287,7 @@ if defined?($test) && $test
 
       # See the Logout page.
       res = session('/test/.logout')
-      ok_title('Logout Confirm')
+      ok_title 'Logout Confirm'
       ok_xp([:form, {:action=>'.logout', :method=>'POST'},
 	      [:input, {:value=>'yes', :type=>'hidden',
 		  :name=>'confirm'}], [:input, {:value=>'Do Logout',
@@ -317,7 +299,7 @@ if defined?($test) && $test
 
       # Confirm Logout.
       res = session("/test/.logout?confirm=yes")
-      ok_title('Logout done.')
+      ok_title 'Logout done.'
       assert_text('Logout done.', 'h1')
       ok_xp([:p, [:a, {:href=>'FrontPage.html'}, 'Go back']],
 	    "//div[@class='section']/p")
@@ -334,7 +316,7 @@ if defined?($test) && $test
       res = session('/test/') {|req|
 	req.cookies.clear
       }
-      ok_title('FrontPage')
+      ok_title 'FrontPage'
       ok_in(['Login'], "//div[@class='adminmenu']//a")
       ok_in([[:a, {:href=>'.login'}, 'Login'],
 	      ["\n"], ["\n"]],
@@ -344,7 +326,7 @@ if defined?($test) && $test
       res = session('/test/.login') {|req|
 	req.cookies.clear
       }
-      ok_title('Login')
+      ok_title 'Login'
     end
   end
 end

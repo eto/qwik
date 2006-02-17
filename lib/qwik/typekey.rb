@@ -84,9 +84,6 @@ class TypeKey
     message = message_ar.join('::')
 
     raise VerifyFailed if ! dsa_verify(message, sig, key)
-#    qp Time.now, Time.at(ts.to_i), @login_timeout
-#    qp Time.now.to_i, ts.to_i, @login_timeout
-#    qp (Time.now.to_i - ts.to_i) > @login_timeout
     raise TimeOutError if (Time.now.to_i - ts.to_i) > @login_timeout
     return true
   end
@@ -196,7 +193,7 @@ if defined?($test) && $test
 	key = tk.get_key
 	ok_eq(['p', 'q', 'pub_key', 'g'], key.keys)
       rescue
-	qp 'failed'
+	p 'failed'
       end
     end
 
@@ -220,7 +217,7 @@ if defined?($test) && $test
 	  result = tk.verify(email, name, nick, ts, sig)
 	}
       rescue => e
-	qp 'failed', e
+	p 'failed', e
       end
     end
   end

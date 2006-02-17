@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -38,10 +29,9 @@ module Qwik
       :aid		=> 'q02-22',		# Amazon associate id
 
       # Mailing list releation.
-      :reportmail		=> 'daily',
-      :reportfrom		=> '',
-      :ml_life_time		=> (60 * 60 * 24 * 31).to_s,	# 1 month
-
+      :reportmail	=> 'daily',
+      :reportfrom	=> '',
+      :ml_life_time	=> (60 * 60 * 24 * 31).to_s,	# 1 month
 =begin
       # Config for each group.
       :auto_unsubscribe_count	=> 5,
@@ -87,7 +77,7 @@ module Qwik
 	'open'		=> 'false',
 	'theme'		=> 'qwikgreen',
 	'sitename'	=> '',
-	'aid'		=> 'q02-22', # amazon associate id
+	'aid'		=> 'q02-22',	# amazon associate id
 	'ml_life_time'	=> (60 * 60 * 24 * 31).to_s,	# 1 month
 	'reportmail'	=> 'hourly',
 	'reportfrom'	=> '',
@@ -112,41 +102,41 @@ if defined?($test) && $test
     include TestSession
 
     def test_is_open?
-      ok_eq(false, @site.is_open?)
-      page = @site.create('_SiteConfig')
-      page.store(':open:true')
-      ok_eq(true, @site.is_open?)
-      page.store(':open:false')
-      ok_eq(false, @site.is_open?)
-      @site.delete('_SiteConfig')
-      ok_eq(false, @site.is_open?)
+      eq false, @site.is_open?
+      page = @site.create '_SiteConfig'
+      page.store ':open:true'
+      eq true, @site.is_open?
+      page.store ':open:false'
+      eq false, @site.is_open?
+      @site.delete '_SiteConfig'
+      eq false, @site.is_open?
     end
 
     def test_siteconfig
-      page = @site.create('_SiteConfig')
+      page = @site.create '_SiteConfig'
 
       # test_theme
-      assert_instance_of(String, @site.siteconfig['theme'])
+      assert_instance_of String, @site.siteconfig['theme']
       page.store(':theme:qwik')
 
       # test_sitename
-#      ok_eq('example.com', @site.siteconfig['sitename'])
-#      ok_eq('example.com/test', @site.title)
-      page.store(':sitename:TestSite')
-      ok_eq('TestSite', @site.siteconfig['sitename'])
-      ok_eq('TestSite', @site.title)
+#     eq 'example.com', @site.siteconfig['sitename']
+#     eq 'example.com/test', @site.title
+      page.store ':sitename:TestSite'
+      eq 'TestSite', @site.siteconfig['sitename']
+      eq 'TestSite', @site.title
 
       # test_title
-      page = @site.create('TestPage')
-      ok_eq('TestPage', page.get_title)
-#     ok_eq('TestPage - TestSite', @site.title('TestPage'))
-      ok_eq('TestSite', @site.title)
+      page = @site.create 'TestPage'
+      eq 'TestPage', page.get_title
+#     eq 'TestPage - TestSite', @site.title('TestPage')
+      eq 'TestSite', @site.title
 
-      page = @site.create('1')
-      ok_eq('1', page.get_title)
-#      ok_eq('1 - TestSite', @site.title('1'))
+      page = @site.create '1'
+      eq '1', page.get_title
+#      eq '1 - TestSite', @site.title('1')
       page.store('* TestTitle')
-#      ok_eq('TestTitle - TestSite', @site.title('1'))
+#      eq 'TestTitle - TestSite', @site.title('1')
     end
   end
 end

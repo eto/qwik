@@ -8,7 +8,7 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/wabisabi-get'
+require 'qwik/wabisabi-basic'
 
 module WabisabiTraverseModule
   def traverse_element(*tags, &b)
@@ -23,14 +23,12 @@ module WabisabiTraverseModule
   end
 
   def get_tag(tag)
-    #qp tag
     tag = tag.to_s
     tag, num = split_name_num(tag)
     find_nth_element(num, tag.intern)
   end
 
   def get_by_class(klass)
-    #qp klass
     get_has_attr(:class, klass)
   end
 
@@ -116,7 +114,6 @@ module WabisabiTraverseModule
     }
     return nil
   end
-
 end
 
 class Array
@@ -124,7 +121,7 @@ class Array
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -140,52 +137,52 @@ if defined?($test) && $test
 	  [:div, {:class=>'day'}, [:h2, 'bh2']],
 	  [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']]]]
       t_make_public(Array, :get_has_attr)
-      ok_eq([:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
-	    h.get_has_attr(:class, 'sidebar'))
-      ok_eq([:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
-	    h.get_path("//div[@class='sidebar']"))
-      ok_eq([:b, 'a'], h.get_path("//div[@class='sidebar']/b"))
-      ok_eq([:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
-	    h.get_a_path("div[@class='sidebar']"))
-      ok_eq([:b, 'a'],
-	    h.get_a_path("div[@class='sidebar']").get_a_path('b'))
+      assert_equal [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
+	h.get_has_attr(:class, 'sidebar')
+      assert_equal [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
+	h.get_path("//div[@class='sidebar']")
+      assert_equal [:b, 'a'], h.get_path("//div[@class='sidebar']/b")
+      assert_equal [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
+	h.get_a_path("div[@class='sidebar']")
+      assert_equal [:b, 'a'],
+	h.get_a_path("div[@class='sidebar']").get_a_path('b')
 
       # test_get_tag1
       h = [:a, {:href=>'t1', :alt=>'t2'}, 't3']
       e = h.get_tag('a')
-      ok_eq([:a, {:href=>'t1', :alt=>'t2'}, 't3'], e)
+      assert_equal [:a, {:href=>'t1', :alt=>'t2'}, 't3'], e
 
       # test_get_tag2
       h = [:a, [:b, [:c]]]
-      ok_eq([:c], h.get_tag('c'))
-      ok_eq([:b, [:c]], h.get_tag('b'))
+      assert_equal [:c], h.get_tag('c')
+      assert_equal [:b, [:c]], h.get_tag('b')
 
       # test_get_tag3
       h = [:a, [:b, 'tb'], [:b, 'tb2'], [:c]]
-      ok_eq([:b, 'tb'], h.get_tag('b'))
-      ok_eq(nil, h.get_tag('nosuchtag'))
-      ok_eq([:b, 'tb'], h.get_tag("b[1]"))
-      ok_eq([:b, 'tb2'], h.get_tag("b[2]"))
-      ok_eq([:b, 'tb'], h.get_tag('//b'))
+      assert_equal [:b, 'tb'], h.get_tag('b')
+      assert_equal nil, h.get_tag('nosuchtag')
+      assert_equal [:b, 'tb'], h.get_tag('b[1]')
+      assert_equal [:b, 'tb2'], h.get_tag('b[2]')
+      assert_equal [:b, 'tb'], h.get_tag('//b')
 
       # test_get_path_with_space
       h = [:html, [:div, {:class=>'main'},
 	  [:div, {:class=>'day edit'}, [:h2, 'bh2']],
 	  [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']]]]
-      ok_eq([:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
-	    h.get_path("//div[@class='sidebar']"))
-      ok_eq([:div, {:class=>'day edit'}, [:h2, 'bh2']],
-	    h.get_path("//div[@class='day edit']"))
+      assert_equal [:div, {:class=>'sidebar'}, [:h2, 'sh2', [:b, 'a'], 'sh2a']],
+	h.get_path("//div[@class='sidebar']")
+      assert_equal [:div, {:class=>'day edit'}, [:h2, 'bh2']],
+	h.get_path("//div[@class='day edit']")
 
       # test_get_has_attr
       h = [:html,
 	[:div, {:class=>'main'},
 	  [:div, {:id=>'menu'},
 	    [:h2, 'menuh2']]]]
-      ok_eq([:div, {:id=>'menu'}, [:h2, 'menuh2']],
-	    h.get_has_attr(:id, 'menu'))
-      ok_eq([:div, {:id=>'menu'}, [:h2, 'menuh2']],
-	    h.get_path("//div[@id='menu']"))
+      assert_equal [:div, {:id=>'menu'}, [:h2, 'menuh2']],
+	h.get_has_attr(:id, 'menu')
+      assert_equal [:div, {:id=>'menu'}, [:h2, 'menuh2']],
+	h.get_path("//div[@id='menu']")
     end
 
 
@@ -195,9 +192,9 @@ if defined?($test) && $test
       # test_parse_attr_selector
       t_make_public(Array, :parse_attr_selector)
      #assert_raise(RuntimeError){ e.parse_attr_selector('a') }
-      assert_raise(RuntimeError){ e.parse_attr_selector("a=b") }
-      ok_eq([:a, 'b'], e.parse_attr_selector("@a=b"))
-      ok_eq([:a, 'b c'], e.parse_attr_selector("@a='b c'"))
+      assert_raise(RuntimeError){ e.parse_attr_selector('a=b') }
+      assert_equal [:a, 'b'], e.parse_attr_selector('@a=b')
+      assert_equal [:a, 'b c'], e.parse_attr_selector("@a='b c'")
 
       # test_get_has_attr
 
@@ -205,9 +202,9 @@ if defined?($test) && $test
 
       # test_split_name_num
       t_make_public(Array, :split_name_num)
-      ok_eq(['sidebar', 1], e.split_name_num('sidebar'))
-      ok_eq(['sidebar', 1], e.split_name_num("sidebar[1]"))
-      ok_eq(['sidebar', 2], e.split_name_num("sidebar[2]"))
+      assert_equal ['sidebar', 1], e.split_name_num('sidebar')
+      assert_equal ['sidebar', 1], e.split_name_num('sidebar[1]')
+      assert_equal ['sidebar', 2], e.split_name_num('sidebar[2]')
 
       # test_find_nth_element
     end

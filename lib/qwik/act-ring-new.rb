@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-ring-common'
 require 'qwik/act-ring-user'
@@ -51,7 +42,7 @@ module Qwik
       message = _r(:NEW_FROM_SFCNEJP)
 
       host_mail = 'info@ring.sfc.ne.jp'	# dummy
-      page = c_get_superpage(RING_INVITE_MEMBER)
+      page = @site.get_superpage(RING_INVITE_MEMBER)
       page = @site.create('_'+RING_INVITE_MEMBER) if page.nil?
       now = @req.start_time
 

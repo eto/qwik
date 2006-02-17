@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -21,14 +12,12 @@ module Qwik
     end
 
     alias :_ :gettext
-
   end
 end
 
 if $0 == __FILE__
   require 'qwik/testunit'
   require 'qwik/catalog-factory'
-  require 'qwik/qp'
   $test = true
 end
 

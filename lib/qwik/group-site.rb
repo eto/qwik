@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/server-memory'
@@ -38,7 +29,8 @@ module QuickML
     def page_url
       key = @groupsite.key
       base = key ? key+'.html' : ''
-      return "http://#{@config.ml_domain}/#{@name}/#{base}"
+      #return "http://#{@config.ml_domain}/#{@name}/#{base}"
+      return "#{@config.public_url}#{@name}/#{base}"
     end
 
     def site_footer
@@ -159,7 +151,6 @@ module QuickML
     def self.file_with_num(filename, num)
       return "#{num}-#{filename}"
     end
-
   end
 end
 
@@ -183,7 +174,7 @@ if defined?($test) && $test
       c = QuickML::GroupSite
 
       # test_file_with_num
-      ok_eq('1-t', c.file_with_num('t', 1))
+      eq '1-t', c.file_with_num('t', 1)
     end
 
     def test_all
@@ -195,7 +186,7 @@ if defined?($test) && $test
       groupsite = group.groupsite
 
       # test_key
-      ok_eq(nil, groupsite.key)
+      eq nil, groupsite.key
 
       # test_make_content
       message =
@@ -207,46 +198,45 @@ Subject: test
 test.
 '
       mail = QuickML::Mail.generate { message }
-      ok_eq("{{mail(user@e.com,0)\ntest.\n}}\n",
-	    c.make_content(@site, nil, mail, Time.at(0)))
+      eq "{{mail(user@e.com,0)\ntest.\n}}\n",
+	c.make_content(@site, nil, mail, Time.at(0))
 
       # test_attach
-      ok_eq('
+      eq '
 {{file(t.txt)}}
 
 ',
-	    c.attach(@site, 'FrontPage', 't.txt', 'test.'))
+	c.attach(@site, 'FrontPage', 't.txt', 'test.')
       files = @site.files('FrontPage')
-      ok_eq(true, files.exist?('t.txt'))
-      ok_eq(['t.txt'], files.list)
+      eq true, files.exist?('t.txt')
+      eq ['t.txt'], files.list
 
       # test_attach_again
-      ok_eq('
+      eq '
 {{file(1-t.txt)}}
 
 ',
-	    c.attach(@site, 'FrontPage', 't.txt', 'test.'))
-      ok_eq(true, files.exist?('1-t.txt'))
-      ok_eq(['1-t.txt', 't.txt'], files.list)
+	c.attach(@site, 'FrontPage', 't.txt', 'test.')
+      eq true, files.exist?('1-t.txt')
+      eq ['1-t.txt', 't.txt'], files.list
 
       # test_page_url
       t_make_public(QuickML::Group, :page_url)
-      ok_eq('http://example.com/test/', group.page_url)
+      eq 'http://example.com/test/', group.page_url
       groupsite.instance_eval {
 	@key = 't'
       }
-      ok_eq('http://example.com/test/t.html', group.page_url)
+      eq 'http://example.com/test/t.html', group.page_url
 
       # test_attach
-      ok_eq('
+      eq '
 {{file(‚ .txt)}}
 
 ',
-	    c.attach(@site, 'FrontPage', '‚ .txt', 'test.'))
-      ok_eq(true, files.exist?('t.txt'))
-#     ok_eq(true, files.exist?('=82=A0.txt'))
-#      ok_eq(['1-t.txt', '=82=A0.txt', 't.txt'], files.list)
-
+	c.attach(@site, 'FrontPage', '‚ .txt', 'test.')
+      eq true, files.exist?('t.txt')
+      #eq true, files.exist?('=82=A0.txt')
+      #eq ['1-t.txt', '=82=A0.txt', 't.txt'], files.list
     end
   end
 end

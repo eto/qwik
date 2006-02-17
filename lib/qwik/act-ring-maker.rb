@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-ring-common'
 require 'qwik/act-ring-user'
@@ -71,7 +62,7 @@ module Qwik
       href = @req.base+'.html'
       mail = @req.user
 
-      ring_member_page = c_get_superpage(RING_MEMBER)
+      ring_member_page = @site.get_superpage(RING_MEMBER)
       ring_member_page = @site.create('_'+RING_MEMBER) if ring_member_page.nil?
       if ring_member_page.wikidb.exist?(mail)
 	return ring_make_already_exist(href)
@@ -107,7 +98,7 @@ module Qwik
     end
 
     def ring_make_create_newpage(user)
-      template_page = c_get_superpage(RING_PAGE_TEMPLATE)
+      template_page = @site.get_superpage(RING_PAGE_TEMPLATE)
 
       if template_page
 	content = template_page.load

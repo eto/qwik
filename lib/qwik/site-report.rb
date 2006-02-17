@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/farm'
@@ -92,7 +83,7 @@ module Qwik
 	begin
 	  sm.send(mail)
 	rescue => e
-	  qp 'error '+e
+	  p 'error '+e
 	end
       }
       self.delete('_SiteChanged')		# Destructive.
@@ -124,18 +115,17 @@ module Qwik
       f = self.siteconfig['reportfrom']
       from = self.ml_address
       from = f if f && ! f.empty?
-      mail = Mail.new
-      mail.from = from
-      mail.to = user
-
-     mail.subject = siteurl+' Report'
-#      mail.subject = siteurl+' '+_('Report')
-      mail.content = "Recent changes on #{siteurl}\n\n#{rep}"
+      mail = {
+	:from    => from,
+	:to      => user,
+	:subject => "#{siteurl} Report",
+	:content => "Recent changes on #{siteurl}\n\n#{rep}",
+      }
 
       lang = get_lang
       if lang == 'ja'
-	mail.subject = siteurl+' レポート'
-	mail.content = "#{siteurl} における、本日の編集記録です。\n\n#{rep}"
+	mail[:subject] = "#{siteurl} レポート"
+	mail[:content] = "#{siteurl} における、本日の編集記録です。\n\n#{rep}"
       end
 
       return mail
@@ -155,7 +145,6 @@ module Qwik
     def self.parse_charset(content)
       return (content.to_a.first || '').chomp
     end
-
   end
 end
 
@@ -174,29 +163,29 @@ if defined?($test) && $test
       # test_weekly_thread
       @day = Qwik::WeeklySendReportThread.new(farm)
       t = Time.now
-      ok_eq(true, 0 < @day.calc_sleep_time(t))
+      eq(true, 0 < @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 0, 0)	# 2000-01-01T00:00:00
-      ok_eq(86400*7, @day.calc_sleep_time(t))
+      eq(86400*7, @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 30, 0)	# 2000-01-01T00:30:00
-      ok_eq(603000, @day.calc_sleep_time(t))
+      eq(603000, @day.calc_sleep_time(t))
 
       # test_daily_thread
       @day = Qwik::DailySendReportThread.new(farm)
       t = Time.now
-      ok_eq(true, 0 < @day.calc_sleep_time(t))
+      eq(true, 0 < @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 0, 0)	# 2000-01-01T00:00:00
-      ok_eq(86400, @day.calc_sleep_time(t))
+      eq(86400, @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 30, 0)	# 2000-01-01T00:30:00
-      ok_eq(84600, @day.calc_sleep_time(t))
+      eq(84600, @day.calc_sleep_time(t))
 
       # test_hourly_thread
       @day = Qwik::HourlySendReportThread.new(farm)
       t = Time.now
-      ok_eq(true, 0 < @day.calc_sleep_time(t))
+      eq(true, 0 < @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 0, 0)	# 2000-01-01T00:00:00
-      ok_eq(3600, @day.calc_sleep_time(t))
+      eq(3600, @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 30, 0)	# 2000-01-01T00:30:00
-      ok_eq(1800, @day.calc_sleep_time(t))
+      eq(1800, @day.calc_sleep_time(t))
     end
   end
 
@@ -208,62 +197,62 @@ if defined?($test) && $test
 
       # test_get_lang
       t_make_public(Qwik::Site, :get_lang)
-      ok_eq('en', @site.get_lang)
+      eq('en', @site.get_lang)
 
       # test_generate_report_mail
       t_make_public(Qwik::Site, :generate_report_mail)
       mail = @site.generate_report_mail('user@e.com', 'test')
-      ok_eq('test@example.com', mail.from)
-      ok_eq('user@e.com', mail.to)
-      ok_eq('http://example.com/test/ Report', mail.subject)
-      ok_eq('Recent changes on http://example.com/test/
+      eq 'test@example.com', mail[:from]
+      eq 'user@e.com', mail[:to]
+      eq 'http://example.com/test/ Report', mail[:subject]
+      eq 'Recent changes on http://example.com/test/
 
-test', mail.content)
+test', mail[:content]
 
       # test_get_lang_ja
       page = @site.create('_GroupCharset')
       page.put('iso-2022-jp
 ')
-      ok_eq('ja', @site.get_lang)
+      eq('ja', @site.get_lang)
 
       # test_generate_report_mail_ja
       t_make_public(Qwik::Site, :generate_report_mail)
       mail = @site.generate_report_mail('user@e.com', 'test')
-      ok_eq('test@example.com', mail.from)
-      ok_eq('user@e.com', mail.to)
-      ok_eq('http://example.com/test/ レポート', mail.subject)
-      ok_eq('http://example.com/test/ における、本日の編集記録です。
+      eq 'test@example.com', mail[:from]
+      eq 'user@e.com', mail[:to]
+      eq 'http://example.com/test/ レポート', mail[:subject]
+      eq 'http://example.com/test/ における、本日の編集記録です。
 
-test', mail.content)
+test', mail[:content]
 
       # test_make_report
       t_make_public(Qwik::Site, :make_report)
       rep = @site.make_report
-      ok_eq(nil, rep)
+      eq(nil, rep)
 
       page = @site.create_new
       page.store('t')
 
       sitelog = @site.sitelog
       sitelog.add(0, 'user@e.com', 'save', '1')
-      ok_eq(',0,user@e.com,save,1
+      eq(',0,user@e.com,save,1
 ', @site['_SiteChanged'].load)
       sitelog.add(0, nil, 'save', '1')
-      ok_eq(',0,user@e.com,save,1
+      eq(',0,user@e.com,save,1
 ,0,,save,1
 ', @site['_SiteChanged'].load)
 
       # test_make_report2
-      ok_eq('09:00 user@e... save http://example.com/test/1.html
+      eq('09:00 user@e... save http://example.com/test/1.html
 09:00 anonymous save http://example.com/test/1.html
 ', @site.make_report)
-      ok_eq(',0,user@e.com,save,1
+      eq(',0,user@e.com,save,1
 ,0,,save,1
 ', @site['_SiteChanged'].load)
 
       # test_send_report
       @site.send_report
-      ok_eq(['test@example.com', 'user@e.com'], $smtp_sendmail[2..3])
+      eq(['test@example.com', 'user@e.com'], $smtp_sendmail[2..3])
       assert_match(/test@example.com/, $smtp_sendmail[4])
 
       header =
@@ -280,7 +269,8 @@ Content-Type: text/plain; charset=\"ISO-2022-JP\"
 09:00 anonymous save http://example.com/test/1.html
 
 '
-      ok_eq((header+body.set_sourcecode_charset.to_mail_charset), $smtp_sendmail[4])
+      eq((header+body.set_sourcecode_charset.to_mail_charset),
+	 $smtp_sendmail[4])
     end
   end
 end

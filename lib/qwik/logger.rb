@@ -1,13 +1,5 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'resolv'
+
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 
@@ -24,7 +16,6 @@ module Qwik
       @log = nil
     end
 
-    #IGNORE_ACTION = %w(theme)
     IGNORE_ACTION = %w(theme num)
     def log(wreq, wres, req, res)
       return if IGNORE_ACTION.include?(req.plugin)
@@ -68,7 +59,6 @@ end
 
 if $0 == __FILE__
   require 'qwik/testunit'
-  require 'qwik/qp'
   require 'qwik/util-pathname'
   require 'qwik/util-time'
   require 'qwik/request'

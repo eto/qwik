@@ -61,8 +61,6 @@ module QuickML
     alias org_safe_gets safe_gets
     def safe_gets
       line = org_safe_gets
-      #line = @inputs.gets
-      #qp line
       return nil if line.nil?
       line = line.xchomp+"\r\n"
       return line

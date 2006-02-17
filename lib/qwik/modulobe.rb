@@ -248,8 +248,8 @@ tr.model td pre {
 #      href = path+'/'+base+'.mdlb'
 
       model_file, model_relative = action.modulobe_model_link(@file)
-      model_absolute = action.c_relative_to_absolute(model_relative)
-      model_full     = action.c_relative_to_full(model_relative)
+      model_absolute = action.c_relative_to_root(model_relative)
+      model_full     = action.c_relative_to_absolute(model_relative)
 
       image_file, image_relative = action.modulobe_image_link(@file)
 
@@ -294,7 +294,7 @@ tr.model td pre {
       item << [:link, url]
 
       src = img[2][1][:src]
-      imgsrc = action.c_relative_to_full(src)
+      imgsrc = action.c_relative_to_absolute(src)
       html = "<p><img src=\"#{imgsrc}\" alt=\"#{name}\" width=\"100\" height=\"75\"/><br/>#{comment}</p>"
       item << [:description, html]
 
@@ -362,9 +362,9 @@ if defined?($test) && $test
       file, relative = @action.modulobe_model_link(model.file)
       ok_eq('c.files/test1.mdlb', relative)
       ok_eq('/c.files/test1.mdlb',
-		   @action.c_relative_to_absolute(relative))
+		   @action.c_relative_to_root(relative))
       ok_eq('http://wiki.example.com/c.files/test1.mdlb',
-		   @action.c_relative_to_full(relative))
+		   @action.c_relative_to_absolute(relative))
 
       # test_modulobe_image_link
       file, relative = @action.modulobe_image_link(model.file)

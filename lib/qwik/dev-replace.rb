@@ -1,11 +1,23 @@
 require 'pp'
-require 'qp'
 
-def replace_line(line)
+def nureplace_line(line)
   return line.gsub(%r|2003-2005|) {
     "2003-2006"
   }
 end
+
+def nu2replace_line(line)
+  return line.gsub(%r|c_relative_to_absolute|) {
+    "c_relative_to_root"
+  }
+end
+
+def replace_line(line)
+  return line.gsub(%r|c_relative_to_full|) {
+    "c_relative_to_absolute"
+  }
+end
+
 
 def dummy_replace_line(line)	# dummy
   return line
@@ -28,8 +40,6 @@ def main
     content.each {|line|
       newline = replace_line(line)
       if newline != line
-#	pp [fname, line]
-#	pp [fname, newline]
 	if last_fname != fname
 	  puts "¡"+fname
 	  last_fname = fname

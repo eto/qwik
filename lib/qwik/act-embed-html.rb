@@ -25,9 +25,9 @@ This is <font color='red'>red</font>.
 * Allowed elements
 You can input allowed elements only.
 ** valid tags
-#{WabisabiValidModule::VALID_TAGS.join(' ')}
+#{WabisabiValidator::VALID_TAGS.join(' ')}
 ** valid attributes
-#{WabisabiValidModule::VALID_ATTR.join(' ')}
+#{WabisabiValidator::VALID_ATTR.join(' ')}
 
 * Another example
  <html>
@@ -97,7 +97,7 @@ There are some exceptions for the plugin.
 
       wabisabi = HtmlToWabisabi.parse(str)
 
-      v = wabisabi.check_valid
+      v = WabisabiValidator.valid?(wabisabi)
       if v == true
 	return wabisabi
       else

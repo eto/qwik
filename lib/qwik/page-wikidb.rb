@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 class Array
@@ -104,6 +95,7 @@ module Qwik
 	ar = line.chomp.split(firstchar)
 	ar.shift		# Drop the first column.
 	k = ar.shift
+	ar = ar.map {|a| a.strip }
 	v = (firstchar == ':') ? ar.join(':') : ar
 	v.freeze
 	array << [k, v]
@@ -139,7 +131,6 @@ module Qwik
       str = nar.flatten.join(',')
       return str
     end
-
   end
 end
 
@@ -155,11 +146,25 @@ if defined?($test) && $test
     def test_class_method
       c = Qwik::WikiDB
 
+      # test_parse
+      eq [["k", ["v"]]], c.parse(',k,v')
+      eq [["k", ["v"]]], c.parse('|k|v')
+      eq [["k", "v"]], c.parse(':k:v')
+      eq [["k", "v"]], c.parse(':k: v')
+
       # test_encode_line
-      ok_eq(',k,v', c.encode_line('k', 'v'))
-      ok_eq(',k,v1,v2', c.encode_line('k', ['v1', 'v2']))
-      ok_eq(',k,v1,v2', c.encode_line('k', 'v1', 'v2'))
-      ok_eq(',k,,v2', c.encode_line('k', nil, 'v2'))
+      eq ',k,v', c.encode_line('k', 'v')
+      eq ',k,v1,v2', c.encode_line('k', ['v1', 'v2'])
+      eq ',k,v1,v2', c.encode_line('k', 'v1', 'v2')
+      eq ',k,,v2', c.encode_line('k', nil, 'v2')
+    end
+
+    def test_colon
+      page = @site.create_new
+      wdb  = Qwik::WikiDB.new(page)
+      page.store(':k: v')
+      eq true, wdb.exist?('k')
+      eq 'v', wdb['k']
     end
 
     def test_all
@@ -167,57 +172,57 @@ if defined?($test) && $test
       wdb  = Qwik::WikiDB.new(page)
 
       # test_exist?
-      ok_eq(false, wdb.exist?('k'))
+      eq false, wdb.exist?('k')
       wdb.add('k', 'v')
-      ok_eq(",k,v\n", page.load)
+      eq ",k,v\n", page.load
 
-      ok_eq(true,  wdb.exist?('k'))
-      ok_eq(['v'], wdb['k'])
-      ok_eq('v', wdb['k'][0])
-      ok_eq(false, wdb['k'][0].frozen?)
+      eq true,  wdb.exist?('k')
+      eq ['v'], wdb['k']
+      eq 'v', wdb['k'][0]
+      eq false, wdb['k'][0].frozen?
 
       # test_hash
-      ok_eq({'k'=>['v']}, wdb.hash)
+      eq({'k'=>['v']}, wdb.hash)
       wdb.add('k', 'v2')
-      ok_eq(['v2'], wdb['k']) # can get second value
-      
+      eq ['v2'], wdb['k']	# can get second value
+
       # test_remove
-      ok_eq(true,  wdb.remove('k')) # remove
-      ok_eq(false, wdb.remove('k')) # fail to remove
+      eq true,  wdb.remove('k')	# remove
+      eq false, wdb.remove('k')	# fail to remove
 
       # test_add
-      ok_eq(false, wdb.exist?('k'))
+      eq false, wdb.exist?('k')
       wdb.add('k', 'v1', 'v2')
-      ok_eq(true,  wdb.exist?('k'))
-      ok_eq(['v1', 'v2'], wdb['k'])
-      ok_eq({'k'=>['v1', 'v2']}, wdb.hash)
-      ok_eq(true,  wdb.remove('k')) # remove
-      ok_eq(false, wdb.remove('k')) # fail to remove
+      eq true,  wdb.exist?('k')
+      eq ['v1', 'v2'], wdb['k']
+      eq({'k'=>['v1', 'v2']}, wdb.hash)
+      eq true,  wdb.remove('k')	# remove
+      eq false, wdb.remove('k')	# fail to remove
 
       wdb.add('a', 'b')
       wdb.add('c', 'd')
-      ok_eq({'a'=>['b'], 'c'=>['d']}, wdb.hash)
+      eq({'a'=>['b'], 'c'=>['d']}, wdb.hash)
 
       # test_each
       wdb.each {|k, v|
-	ok_eq(false, k.frozen?)
+	eq false, k.frozen?
 	assert_instance_of(Array, v)
       }
 
-      ok_eq([['a', ['b']], ['c', ['d']]], wdb.array)
+      eq [['a', ['b']], ['c', ['d']]], wdb.array
       wdb.array.each {|name, args|
 	args = args.dup
 	t = args.shift
       }
-      ok_eq([['a', ['b']], ['c', ['d']]], wdb.array)
+      eq [['a', ['b']], ['c', ['d']]], wdb.array
 
       # test_nil
       page = @site.create_new
       wdb = Qwik::WikiDB.new(page)
-      ok_eq(false, wdb.exist?('k'))
+      eq false, wdb.exist?('k')
       wdb.add('k', nil, 'v2')
-      ok_eq(",k,,v2\n",  page.load)
-      ok_eq(['', 'v2'], wdb['k'])
+      eq ",k,,v2\n",  page.load
+      eq ['', 'v2'], wdb['k']
     end
   end
 end

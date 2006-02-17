@@ -17,7 +17,6 @@ require 'qwik/config'
 require 'qwik/ml-memory'
 require 'qwik/ml-server'
 require 'qwik/ml-sweeper'
-require 'qwik/qp'
 
 $ml_debug = false
 # $ml_debug = true

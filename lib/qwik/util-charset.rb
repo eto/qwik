@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-kconv'
 require 'qwik/util-iconv'
@@ -45,7 +36,7 @@ class String
     kconv_charset = Kconv::guess(self)
     charset = KCONV_TO_CHARSET[kconv_charset]
     if /\A\?/ =~ charset
-      qp kconv_charset, charset
+      #p kconv_charset, charset
     end
     return charset
   end
@@ -97,7 +88,6 @@ class String
   def to_utf8
    #raise 'Undefined charset.' if self.charset.nil?
     self.guess_charset! if self.charset.nil?
-    #qp self.charset
     case self.charset
     when 'ASCII';	return self
     when 'UTF-8';	return self
@@ -125,7 +115,6 @@ class String
   def page_to_xml
     self.set_page_charset.to_xml_charset
   end
-
 end
 
 module Qwik
@@ -135,32 +124,31 @@ module Qwik
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
-  require 'qwik/qp'
+  require 'test/unit'
   $test = true
 end
 
 if defined?($test) && $test
   class TestUtilCharset < Test::Unit::TestCase
     def test_all
-      #test_charset
+      # test_charset
       s = "\202\240"
-      ok_eq(nil, s.charset)
-      ok_eq("\202\240", s.set_charset('Shift_JIS'))
-      ok_eq('Shift_JIS', s.charset)
+      assert_equal nil, s.charset
+      assert_equal "\202\240", s.set_charset('Shift_JIS')
+      assert_equal 'Shift_JIS', s.charset
 
       # test_guess
-      ok_eq('UTF-8', "\343\201\202".guess_charset)
-      ok_eq('Shift_JIS', "\202\240".guess_charset)	# ‚ 
-      ok_eq('EUC-JP', "\244\242".guess_charset)
-      ok_eq('ISO-2022-JP', "\e$B$\"\e(B".guess_charset)
+      assert_equal 'UTF-8', "\343\201\202".guess_charset
+      assert_equal 'Shift_JIS', "\202\240".guess_charset	# ‚ 
+      assert_equal 'EUC-JP', "\244\242".guess_charset
+      assert_equal 'ISO-2022-JP', "\e$B$\"\e(B".guess_charset
 
       # test_to
       s = "\202\240".set_sjis
-      ok_eq("\343\201\202", s.to_utf8)
-      ok_eq("\202\240", s.to_sjis)
-      ok_eq("\244\242", s.to_euc)
-      ok_eq("\e$B$\"\e(B", s.to_jis)
+      assert_equal "\343\201\202", s.to_utf8
+      assert_equal "\202\240", s.to_sjis
+      assert_equal "\244\242", s.to_euc
+      assert_equal "\e$B$\"\e(B", s.to_jis
     end
   end
 end

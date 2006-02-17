@@ -49,7 +49,7 @@ module Qwik
 	  return parse_block(wabisabi)
 	end
 
-	qp "What? ", wabisabi; raise
+	p 'What? ', wabisabi; raise
       end
 
       if wabisabi.is_a?(String)
@@ -60,16 +60,16 @@ module Qwik
 	end
       end
 
-      qp "What? ", wabisabi; raise
+      p 'What? ', wabisabi; raise
     end
 
     SIMPLE_BLOCK = {
-      :h2 => ["* ", "\n"],
-      :h3 => ["** ", "\n"],
-      :h4 => ["*** ", "\n"],
-      :h5 => ["**** ", "\n"],
-      :h6 => ["***** ", "\n"],
-      :p  => ["", "\n\n"],
+      :h2 => ['* ', "\n"],
+      :h3 => ['** ', "\n"],
+      :h4 => ['*** ', "\n"],
+      :h5 => ['**** ', "\n"],
+      :h6 => ['***** ', "\n"],
+      :p  => ['', "\n\n"],
     }
 
     # ==================== block level
@@ -113,7 +113,7 @@ module Qwik
 
       # maybe, inline element.
       return parse_span(e)
-      #qp "What? ", e; raise
+      #p 'What? ', e; raise
     end
 
     def self.parse_dl(elem)
@@ -123,17 +123,17 @@ module Qwik
 	next if e == "\n"
 	if e[0] == :dt
 	  span = parse_span(e.inside)
-	  span.sub!(/\n+\z/, "")
+	  span.sub!(/\n+\z/, '')
 	  str << ':'+span
 	  in_dt = true
 	elsif e[0] == :dd
 	  str << ':' if ! in_dt
 	  span = parse_span(e.inside)
-	  span.sub!(/\n+\z/, "")
-	  str << ":"+span+"\n"
+	  span.sub!(/\n+\z/, '')
+	  str << ':'+span+"\n"
 	  in_dt = false
 	else
-	  qp "What? ", e; raise
+	  p 'What? ', e; raise
 	end
       }
       return str
@@ -144,7 +144,7 @@ module Qwik
     end
 
     def self.parse_ol(elem)
-      return parse_list("+", :ol, elem)
+      return parse_list('+', :ol, elem)
     end
 
     def self.parse_list(prefix, elementname, elem)
@@ -170,7 +170,7 @@ module Qwik
 	    str << prefix + line
 	  }
 	else
-	  qp "What? ", e
+	  p 'What? ', e
 	end
       }
       return str
@@ -181,7 +181,7 @@ module Qwik
       nstr = ''
       str.each {|line|
 	next if line == "\n"
-	nstr << "> "+line
+	nstr << '> '+line
       }
       return nstr
     end
@@ -192,7 +192,7 @@ module Qwik
 	if e.is_a?(String)
 	  str << e
 	else
-	  qp "What? ", e; raise
+	  p 'What? ', e; raise
 	end
       }
 
@@ -214,7 +214,7 @@ module Qwik
 	elsif e[0] == :tbody
 	  str << parse_table(e.inside)
 	else
-	  qp "What? ", e; raise
+	  p 'What? ', e; raise
 	end
       }
       return str
@@ -227,7 +227,7 @@ module Qwik
 	if e[0] == :td
 	  str << '|'+parse_span(e.inside)
 	else
-	  qp "What? ", e; raise
+	  p 'What? ', e; raise
 	end
       }
       return str
@@ -238,8 +238,8 @@ module Qwik
       method = e.attr[:method]
       data = e.text
       str = ''
-      str << "{{"+method
-      str << "("+param+")" if param && param != ''
+      str << '{{'+method
+      str << '('+param+')' if param && param != ''
       if data && data != ''
 	str << "\n"
 	data = data.normalize_eol
@@ -263,7 +263,7 @@ module Qwik
 	elsif e.is_a?(Array)
 	  str << parse_span_elem(e)
 	else
-	  qp "What? ", e
+	  p 'What? ', e
 	end
       }
       str
@@ -282,7 +282,7 @@ module Qwik
 	return '' if attr.nil?
 	src = attr[:src]
 	return '' if src.nil?
-	return "[["+src+"]]"
+	return '[['+src+']]'
 
       when :em
 	return "''"+parse_span(e.inside)+"''"
@@ -291,14 +291,14 @@ module Qwik
 	return "'''"+parse_span(e.inside)+"'''"
 
       when :del
-	return "=="+parse_span(e.inside)+"=="
+	return '=='+parse_span(e.inside)+'=='
 
       when :br
 	return "{{br}}\n"
 
       else
 	return ''
-	#qp "What? ", e; raise
+	#p 'What? ', e; raise
       end
     end
 
@@ -311,11 +311,11 @@ module Qwik
 
       text = e.text
       str = ''
-      str << "[["+text
+      str << '[['+text
       if href != text
 	str << '|'+href
       end
-      str << "]]"
+      str << ']]'
       return str
     end
 
@@ -324,15 +324,12 @@ end
 
 if $0 == __FILE__
   require 'qwik/testunit'
-  require 'qwik/qp'
   require 'qwik/html-to-wabisabi'
   $test = true
 end
 
 if defined?($test) && $test
-
   class TestWabisabiToWiki < Test::Unit::TestCase
-
     # In this situation, I use reverse order argument for covinience.
     def ok(w, e)
       ok_eq(e, Qwik::WabisabiToWiki.translate(w))
@@ -359,8 +356,8 @@ if defined?($test) && $test
       ok([[:h4, 't']], "*** t\n")
       ok([[:h5, 't']], "**** t\n")
       ok([[:h6, 't']], "***** t\n")
-      ok([[:h6, "*t"]], "***** *t\n")
-      ok([[:h6, "**t"]], "***** **t\n")
+      ok([[:h6, '*t']], "***** *t\n")
+      ok([[:h6, '**t']], "***** **t\n")
 
       # test_ignore_space
       ok([[:h2, 't']], "* t\n")
@@ -410,16 +407,16 @@ if defined?($test) && $test
       # test_table
       ok([[:table, [:tr, [:td, 't']]]], "|t\n")
       ok([[:table, [:tr, [:td, 't1'], [:td, 't2']]]], "|t1|t2\n")
-      ok([[:table, [:tr, [:td, ""], [:td, 't2']]]], "||t2\n")
+      ok([[:table, [:tr, [:td, ''], [:td, 't2']]]], "||t2\n")
       ok([[:table, [:tr, [:td, 's']], [:tr, [:td, 't']]]], "|s\n|t\n")
       ok([[:table, [:tr, [:td, 's1'], [:td, 's2']],
 		 [:tr, [:td, 't1'], [:td, 't2']]]], "|s1|s2\n|t1|t2\n")
 
       # test plugin
-      ok([[:plugin, {:method=>'t', :param=>""}]], "{{t}}\n")
+      ok([[:plugin, {:method=>'t', :param=>''}]], "{{t}}\n")
       ok([[:plugin, {:method=>'t', :param=>'a'}]], "{{t(a)}}\n")
-      ok([[:plugin, {:method=>'t', :param=>""}, "s\n"]], "{{t\ns\n}}\n")
-      ok([[:plugin, {:method=>'t', :param=>""}, "s1\ns2\n"]],
+      ok([[:plugin, {:method=>'t', :param=>''}, "s\n"]], "{{t\ns\n}}\n")
+      ok([[:plugin, {:method=>'t', :param=>''}, "s1\ns2\n"]],
 	     "{{t\ns1\ns2\n}}\n")
 
       # test_multiline
@@ -462,8 +459,8 @@ p2
 
       # test_html
       ok([[:html, "t\n"]], "t\n")
-      ok([[:div, {:class=>'error'}, "can not use [script]"]],
-	     "can not use [script]")
+      ok([[:div, {:class=>'error'}, 'can not use [script]']],
+	     'can not use [script]')
 
       # test_ref
       ok([[:ul, [:li, [:a, {:href=>'http://e.com/'}, 't']]]],
@@ -524,17 +521,17 @@ p2
 
     def test_basic
       # test div
-      ok("* h\n", "<H2>h</H2>")
-      ok("** h\n", "<H3>h</H3>")
-      ok("p\n", "<P>p</P>")
-      ok("p\n\np2\n", "<P>p</P><P>p2</P>")
-      #ok('', "<UL><LI>li</LI></UL>")
-      #ok('', "<UL><LI>li1</LI><UL><LI>li2</LI></UL></UL>")
-      #ok('', "<DL><DT>dt<DD>dd</DD></DL>")
-      #ok('', "<DL><DT>dt1<DD>dd1><DT>dt2<DD>dd2</DD></DL>")
-      ok("> 引用。\n", "<BLOCKQUOTE><P>引用。</P></BLOCKQUOTE>")
-      ok("> * h\n", "<BLOCKQUOTE><H2>h</H2></BLOCKQUOTE>")
-      ok("> x\n> y\n", "<BLOCKQUOTE><P>x</P><P>y</P></BLOCKQUOTE>")
+      ok("* h\n", '<H2>h</H2>')
+      ok("** h\n", '<H3>h</H3>')
+      ok("p\n", '<P>p</P>')
+      ok("p\n\np2\n", '<P>p</P><P>p2</P>')
+      #ok('', '<UL><LI>li</LI></UL>')
+      #ok('', '<UL><LI>li1</LI><UL><LI>li2</LI></UL></UL>')
+      #ok('', '<DL><DT>dt<DD>dd</DD></DL>')
+      #ok('', '<DL><DT>dt1<DD>dd1><DT>dt2<DD>dd2</DD></DL>')
+      ok("> 引用。\n", '<BLOCKQUOTE><P>引用。</P></BLOCKQUOTE>')
+      ok("> * h\n", '<BLOCKQUOTE><H2>h</H2></BLOCKQUOTE>')
+      ok("> x\n> y\n", '<BLOCKQUOTE><P>x</P><P>y</P></BLOCKQUOTE>')
 
       # test span
       ok("Go [[FrontPage]].\n",
@@ -695,6 +692,5 @@ p2
 "
       ok(e, s)
     end
-
   end
 end

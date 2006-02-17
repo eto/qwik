@@ -8,7 +8,7 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/wabisabi-get'
+require 'qwik/wabisabi-basic'
 
 module WabisabiTemplateModule
   def deep_copy
@@ -39,9 +39,6 @@ module WabisabiTemplateModule
   end
 
   def each_tag(*tags, &block)
-    #qp tags, caller(1)[0]
-    #qp tags, caller(1)[0], caller(2)[0]
-
     raise 'block not given' unless block_given?
 
     ar = []
@@ -141,7 +138,6 @@ module WabisabiTemplateModule
       nil
     }
   end
-
 end
 
 class Array
@@ -160,16 +156,16 @@ if defined?($test) && $test
       o = [:a, [:b, [:c]]]
       s = o.dup # shallow copy
       d = o.deep_copy
-      ok_eq(s, o)
-      ok_eq(d, o)
-      assert_not_equal(s.object_id, o.object_id)
-      assert_not_equal(d.object_id, o.object_id)
-      ok_eq(s[0].object_id, o[0].object_id)
-      ok_eq(d[0].object_id, o[0].object_id)
-      ok_eq(    s[1].object_id, o[1].object_id)
-      assert_not_equal(d[1].object_id, o[1].object_id)
-      ok_eq(    s[1][1].object_id, o[1][1].object_id)
-      assert_not_equal(d[1][1].object_id, o[1][1].object_id)
+      assert_equal     s, o
+      assert_equal     d, o
+      assert_not_equal s.object_id, o.object_id
+      assert_not_equal d.object_id, o.object_id
+      assert_equal     s[0].object_id, o[0].object_id
+      assert_equal     d[0].object_id, o[0].object_id
+      assert_equal     s[1].object_id, o[1].object_id
+      assert_not_equal d[1].object_id, o[1].object_id
+      assert_equal     s[1][1].object_id, o[1][1].object_id
+      assert_not_equal d[1][1].object_id, o[1][1].object_id
 
       # test_prepare
 
@@ -178,64 +174,63 @@ if defined?($test) && $test
       nw = w.each_tag(:a){|ww|
 	[ww]
       }
-      ok_eq([:p, ''], w)
-      ok_eq([:p, ''], nw)
+      assert_equal [:p, ''], w
+      assert_equal [:p, ''], nw
 
       w = [[:a, '']]
-      ok_eq([:a, ''], w[0])
+      assert_equal [:a, ''], w[0]
       nw = w.each_tag(:a){|ww|
 	www = ww.dup
 	www[-1] = 't'
 	www
       }
-      ok_eq([[:a, '']], w)
-      ok_eq([[:a, 't']], nw)
-
+      assert_equal [[:a, '']], w
+      assert_equal [[:a, 't']], nw
 
       # test_set_attr
       e = [:a, {:href=>'t.html'}, 't']
       e = e.clone_with(:href=>'s.html')
-      ok_eq([:a, {:href=>'s.html'}, 't'], e)
+      assert_equal [:a, {:href=>'s.html'}, 't'], e
       e = e.clone_with('s')
-      ok_eq([:a, {:href=>'s.html'}, 't', 's'], e)
+      assert_equal [:a, {:href=>'s.html'}, 't', 's'], e
 
       # test_each_tag
       org = [:a, [:b, [:c], [:d], [:c]]]
       xml = org.each_tag(:c){|e| nil }
-      ok_eq([:a, [:b, [:d]]], xml)
-      ok_eq([:a, [:b, [:d]]], xml)
+      assert_equal [:a, [:b, [:d]]], xml
+      assert_equal [:a, [:b, [:d]]], xml
       xml = org.each_tag(:c){|e| e }
-      ok_eq([:a, [:b, [:c], [:d], [:c]]], xml)
+      assert_equal [:a, [:b, [:c], [:d], [:c]]], xml
       xml = org.each_tag(:c){|e| [:cc] }
-      ok_eq([:a, [:b, [:cc], [:d], [:cc]]], xml)
+      assert_equal [:a, [:b, [:cc], [:d], [:cc]]], xml
       xml = org.each_tag(:c){|e| [:dd] }
-      ok_eq([:a, [:b, [:dd], [:d], [:dd]]], xml)
+      assert_equal [:a, [:b, [:dd], [:d], [:dd]]], xml
 
       # test_each_tag_with_clone
       org = [:a, [:b, [:c], [:d], [:c]]]
       xml = org.each_tag(:c){|e| e.clone_with('test1') }
-      ok_eq([:a, [:b, [:c, 'test1'], [:d], [:c, 'test1']]], xml)
+      assert_equal [:a, [:b, [:c, 'test1'], [:d], [:c, 'test1']]], xml
 
       # test_clone
       e = [:a, {:href=>'1.html'}, 't']
       xml = e.clone_with('test1')
-      ok_eq([:a, {:href=>'1.html'}, 't', 'test1'], xml)
+      assert_equal [:a, {:href=>'1.html'}, 't', 'test1'], xml
       xml = e.clone_with(:href=>'n.html')
-      ok_eq([:a, {:href=>'n.html'}, 't'], xml)
+      assert_equal [:a, {:href=>'n.html'}, 't'], xml
 
       # test_textarea
       org = [[:textarea, '']]
       xml = org.each_tag(:textarea){|e|
 	e.clone_with('text')
       }
-      ok_eq([[:textarea, '', 'text']], xml)
+      assert_equal [[:textarea, '', 'text']], xml
 
       # test_textarea_apply
       org = [[:textarea, {:id=>'contents'}, '']]
       data = {}
       data[:contents] = 'text'
       xml = org.apply(data)
-      ok_eq([[:textarea, {:id=>'contents'}, '', 'text']], xml)
+      assert_equal [[:textarea, {:id=>'contents'}, '', 'text']], xml
 
       # test_apply
       org = [:p, [:div, {:id=>'a'}, ''], [:div, {:id=>'b'}, '']]
@@ -243,63 +238,63 @@ if defined?($test) && $test
       data[:a] = 'a'
       data[:b] = [:b]
       h = org.apply(data)
-      ok_eq([:p, [:div, {:id=>'a'}, '', 'a'],
-		     [:div, {:id=>'b'}, '', [:b]]], h)
+      assert_equal [:p, [:div, {:id=>'a'}, '', 'a'],
+	[:div, {:id=>'b'}, '', [:b]]], h
 
       data = {}
       data[:a] = nil
       data[:b] = {:action => 'd.html'}
       h = org.apply(data)
-      ok_eq([:p, [:div, {:action=>'d.html', :id=>'b'}, '']], h)
+      assert_equal [:p, [:div, {:action=>'d.html', :id=>'b'}, '']], h
 
       data = {}
-      data[:a] = ['a', [:hr]] # OK.
+      data[:a] = ['a', [:hr]]		# OK.
       data[:b] = nil
       h = org.apply(data)
-      ok_eq([:p, [:div, {:id=>'a'}, '', ['a', [:hr]]]], h)
+      assert_equal [:p, [:div, {:id=>'a'}, '', ['a', [:hr]]]], h
 
       # test_replace
       h = [:a, [:b], [:c]]
-      h2 = h.each_tag {|e| e[0] == :c ? 'text' : e } # insert a text
-      ok_eq([:a, [:b], 'text'], h2)
-      h2 = h.each_tag(:nosuch) {|e| nil } # no effect
-      ok_eq([:a, [:b], [:c]], h2)
-      h2 = h.each_tag(:b) {|e| e } # no effect
-      ok_eq([:a, [:b], [:c]], h2)
-      h2 = h.each_tag(:b) {|e| nil } # delete it
-      ok_eq([:a, [:c]], h2)
-      h2 = h.each_tag(:b) {|e| 'text' } # insert a text
-      ok_eq([:a, 'text', [:c]], h2)
-      h2 = h.each_tag(:b) {|e| [:d] } # insert a element
-      ok_eq([:a, [:d], [:c]], h2)
-      h2 = h.each_tag(:b) {|e| [:d, 'text'] } # insert a element with text
-      ok_eq([:a, [:d, 'text'], [:c]], h2)
+      h2 = h.each_tag {|e| e[0] == :c ? 'text' : e }	# insert a text
+      assert_equal [:a, [:b], 'text'], h2
+      h2 = h.each_tag(:nosuch) {|e| nil }	# no effect
+      assert_equal [:a, [:b], [:c]], h2
+      h2 = h.each_tag(:b) {|e| e }		# no effect
+      assert_equal [:a, [:b], [:c]], h2
+      h2 = h.each_tag(:b) {|e| nil }		# delete it
+      assert_equal [:a, [:c]], h2
+      h2 = h.each_tag(:b) {|e| 'text' }		# insert a text
+      assert_equal [:a, 'text', [:c]], h2
+      h2 = h.each_tag(:b) {|e| [:d] }		# insert a element
+      assert_equal [:a, [:d], [:c]], h2
+      h2 = h.each_tag(:b) {|e| [:d, 'text'] }	# insert a element with text
+      assert_equal [:a, [:d, 'text'], [:c]], h2
 
       h = [:p, [:span, {:id=>'a'}], [:span, {:id=>'b'}]]
-      h2 = h.each_tag(:span){|e| e.attr(:id) } # insert the id as text
-      ok_eq([:p, 'a', 'b'], h2)
+      h2 = h.each_tag(:span){|e| e.attr(:id) }	# insert the id as text
+      assert_equal [:p, 'a', 'b'], h2
       h2 = h.each_tag(:span){|e| e.attr(:id) == 'b' ? e : nil }
-      ok_eq([:p, [:span, {:id=>'b'}]], h2)
+      assert_equal [:p, [:span, {:id=>'b'}]], h2
 
       h = [[:h2], [:h3], [:h4], [:h5], [:h6]] 
-      h2 = h.each_tag(:h3, :h4) {|e| [e[0], e[0].to_s] } # insert a text
-      ok_eq([[:h2], [:h3, 'h3'], [:h4, 'h4'], [:h5], [:h6]], h2)
-      h2 = h.each_tag {|e| e[0] == :h5 ? 'text' : e } # insert a text
-      ok_eq([[:h2], [:h3], [:h4], 'text', [:h6]], h2)
-      h2 = h.each_tag(:h4) {|e| [[:h3, 'h'], [:hr]] } # 
-      ok_eq([[:h2], [:h3], [:h3, 'h'], [:hr], [:h5], [:h6]], h2)
+      h2 = h.each_tag(:h3, :h4) {|e| [e[0], e[0].to_s] }	# insert a text
+      assert_equal [[:h2], [:h3, 'h3'], [:h4, 'h4'], [:h5], [:h6]], h2
+      h2 = h.each_tag {|e| e[0] == :h5 ? 'text' : e }	# insert a text
+      assert_equal [[:h2], [:h3], [:h4], 'text', [:h6]], h2
+      h2 = h.each_tag(:h4) {|e| [[:h3, 'h'], [:hr]] }
+      assert_equal [[:h2], [:h3], [:h3, 'h'], [:hr], [:h5], [:h6]], h2
 
       h = [[:span, '']]
       h2 = h.each_tag(:span){|e| [[:h3, 'h'], [:hr]] }
-      ok_eq([[:h3, 'h'], [:hr]], h2)
+      assert_equal [[:h3, 'h'], [:hr]], h2
       h2 = h.each_tag(:span){|e|
 	[[:h3, 'h3'], [:ul, [:li, [:a, {:href=>'1.html'}, '1']]]]
       }
-      ok_eq([[:h3, 'h3'], [:ul, [:li, [:a, {:href=>'1.html'}, '1']]]],
-		   h2)
+      assert_equal [[:h3, 'h3'], [:ul, [:li, [:a, {:href=>'1.html'}, '1']]]],
+		   h2
 
       # test_remove_comment
-      ok_eq([:p, 'a', 'c'], [:p, 'a', [:"!--", 'b'], 'c'].remove_comment)
+      assert_equal [:p, 'a', 'c'], [:p, 'a', [:"!--", 'b'], 'c'].remove_comment
     end
   end
 end

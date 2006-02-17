@@ -1,7 +1,6 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 require 'pp'
-require 'qwik/qp'
 require 'qwik/autoreload'
 require 'qwik/util-webrick'
 require 'qwik/webdavhandler'

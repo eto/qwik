@@ -66,7 +66,7 @@ module Qwik
       rss = [:rss, {:version=>'2.0', :'xmlns:creativeCommons'=>
 	  'http://backend.userland.com/creativeCommonsRssModule'}]
 
-      top_url = c_relative_to_full('/')
+      top_url = c_relative_to_absolute('/')
       channel = [:channel,
 	[:title, 'Modulobe model gallery'],
 	[:link, top_url],
@@ -79,7 +79,7 @@ module Qwik
 
       models.sort.each {|mtime, page, file, title, author, comment|
 	basename = file.basename
-	url = c_relative_to_full(page.key+'.files/'+basename)
+	url = c_relative_to_absolute(page.key+'.files/'+basename)
 
 	# Check thumb is exist.
 	thumb_file = file.dirname+'.thumb'+(file.basename('.mdlb').to_s+'.gif')
@@ -88,7 +88,7 @@ module Qwik
 	end
 
 	thumb = page.key+'.files/.thumb/'+file.basename('.mdlb').to_s+'.gif'
-	thumb_url = c_relative_to_full(thumb)
+	thumb_url = c_relative_to_absolute(thumb)
 	html = "<p><img src=\"#{thumb_url}\" alt=\"#{title}\" width=\"100\" height=\"75\"/><p>#{comment}</p>"
 
 	length = file.size
@@ -117,7 +117,7 @@ module Qwik
       xml << [:'?xml', '1.0', 'utf-8']
       rss = [:rss, {:version=>'2.0'}]
 
-      moved_url = c_relative_to_full('/model.xml')
+      moved_url = c_relative_to_absolute('/model.xml')
       channel = [:channel,
 	[:title, 'moved'],
 	[:link, moved_url],
