@@ -10,11 +10,13 @@ require 'qwik/util-pathname'
 
 module Qwik
   class MakeRelease
+    DIR = File.dirname(__FILE__)
+
     def self.main(argv)
       type = MakeRelease.parse_args(argv)
 
       config = Config.new
-      libdir = config.qwiklib_dir
+      libdir = DIR
       date = Time.now.ymd_s
       version = VERSION
       ml_version = QuickML::VERSION

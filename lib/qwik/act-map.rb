@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -96,8 +87,10 @@ module Qwik
       return nil
     end
 
+    GOOGLE_MAPS_API_KEY_FILE = 'google-maps-api-key.txt'
+
     def map_get_api_key
-      file = @config.etc_dir.path+'google-maps-api-key.txt'
+      file = @config.etc_dir.path+GOOGLE_MAPS_API_KEY_FILE
       return if !file.exist?
       return file.open {|f| f.gets }.chomp
     end

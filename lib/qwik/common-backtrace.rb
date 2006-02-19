@@ -1,17 +1,8 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    # Only for demonstration
+    # Only for demonstration for the PrettyBacktrace function.
     def plg__qwik_test_for_raise_exception
       no_such_local_variable
     end
@@ -82,13 +73,16 @@ if defined?($test) && $test
       page = @site.create_new
       page.store('{{nosuch}}')
       res = session('/test/1.html')
-      ok_eq([:div, {:class=>'section'}, ['nosuch plugin']],
-	    @res.body.get_path('//div[@class="section"]'))
-      ok_in(['nosuch plugin'], '//div[@class="section"]')
+      ok_in [:span, {:class=>"plg_error"}, "nosuch plugin | ",
+	[:strong, "nosuch"]], '//div[@class="section"]'
+      eq [:div, {:class=>"section"},
+	[[:span, {:class=>"plg_error"}, "nosuch plugin | ",
+	    [:strong, "nosuch"]]]],
+	@res.body.get_path('//div[@class="section"]')
 
       t_without_testmode {
-	page.store('{{_qwik_test_for_raise_exception}}')
-	session('/test/1.html')
+	page.store '{{_qwik_test_for_raise_exception}}'
+	res = session '/test/1.html'
 	assert_text(/\Aundefined local variable or method `no_such_local_variable' for #<Qwik::Action:/, 'h3')
       }
     end

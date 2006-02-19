@@ -2,10 +2,11 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/util-tail'
 require 'qwik/util-pathname'
+require 'qwik/logger'
 
 module Qwik
   class WatchLog
-    def self.main(argv)
+    def self.main(args)
       config = Config.new
       Config.load_args_and_config(config, 'qwikweb-watchlog', args)
       self.new(config).run
@@ -19,16 +20,16 @@ module Qwik
     def run
       pid_path = @config.web_pid_file.path
       if pid_path.exist?
-	str = pid_path.get
+	str = pid_path.read
 	puts 'Process id: '+str
       end
 
-      p @config.web_error_log
-      p @config.access_log
-      p @config.web_access_log
+      p error_log = @config.log_dir.path + Logger::WEB_ERROR_LOG
+      p access_log = @config.log_dir.path + Logger::ACCESS_LOG
+      p web_access_log = @config.log_dir.path + Logger::WEB_ACCESS_LOG
 
-      tail_f(@config.web_error_log)
-      tail_f(@config.web_access_log)
+      tail_f(error_log.to_s)
+      tail_f(web_access_log.to_s)
       while true
 	sleep 1
       end
@@ -61,8 +62,8 @@ end
 
 if $0 == __FILE__
   argv = ARGV
-  argv << '-d'
-  argv << '-c'
-  argv << 'config-debug.txt'
+#  argv << '-d'
+#  argv << '-c'
+#  argv << 'config-debug.txt'
   Qwik::WatchLog.main(argv)
 end

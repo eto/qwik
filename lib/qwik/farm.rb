@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site'
 require 'qwik/util-pathname'
@@ -136,7 +127,6 @@ module Qwik
       end
       return gravesitepath
     end
-
   end
 end
 
@@ -157,14 +147,14 @@ if defined?($test) && $test
       @dir.rmdir  if @dir.directory?
 
       # test_exist?
-      ok_eq(false, farm.exist?('test'))
-      ok_eq(nil, farm.get_site('test'))
+      eq false, farm.exist?('test')
+      eq nil, farm.get_site('test')
 
       # test_make_site
       farm.make_site('test')
-      ok_eq(true, farm.exist?('test'))
+      eq true, farm.exist?('test')
       site = farm.get_site('test')
-      ok_eq('test', site.sitename)
+      eq 'test', site.sitename
 
       # test_raise
       assert_raise(RuntimeError) {
@@ -178,7 +168,7 @@ if defined?($test) && $test
 
       # test_top_site
       site = farm.get_top_site
-      ok_eq(@config.default_sitename, site.sitename)
+      eq @config.default_sitename, site.sitename
 
       # test_each
       farm.each {|s|
@@ -194,12 +184,12 @@ if defined?($test) && $test
       page.put_with_time(':ml_life_time:0', 0)	# Die soon.
 
       # test_inactive?
-      ok_eq(true, site.inactive?)
+      eq true, site.inactive?
 
       # test_sweep
       buried = farm.sweep
       site = farm.get_site('test')
-      ok_eq(nil, site)
+      eq nil, site
 
       # Clean up the grave dir.
       buried.each {|gravesitepath|

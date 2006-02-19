@@ -16,6 +16,8 @@ require 'qwik/util-pathname'
 
 module QuickML
   class Logger
+    ML_LOG_FILE = 'quickml.log'
+
     def initialize (log_filename, verbose_mode = nil)
       @mutex = Mutex.new
       log_path = log_filename.path

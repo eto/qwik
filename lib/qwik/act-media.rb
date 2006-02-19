@@ -134,7 +134,7 @@ module Qwik
 	    'encode all']]
       end
 
-      return c_notice('movie file list'){[:ul, ul]}
+      return c_notice('movie file list') { [:ul, ul] }
     end
   end
 

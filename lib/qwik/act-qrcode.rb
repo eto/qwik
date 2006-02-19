@@ -57,18 +57,17 @@ module Qwik
   class QRCodeMemory
     def initialize(config, memory)
       @config = config
-      @memory = memory
       path = @config.qrcode_dir
       @qrcode = ::QRCode.new(path)
       @qrcodeimage = ::QRCodeView.new(path)
     end
 
     def have_qrcode_data
-      @qrcodeimage.have_qrcode_data
+      return @qrcode.have_qrcode_data
     end
 
     def generate_data(d)
-      return nil if ! @qrcodeimage.have_qrcode_data
+      return nil if ! @qrcode.have_qrcode_data
       begin
 	return @qrcode.make_qrcode(d)
       rescue
@@ -95,10 +94,11 @@ if defined?($test) && $test
     include TestSession
 
     def test_qrcode_plugin
+      return if $0 != __FILE__		# Only for separated test.
+
       $test_qrcode = true
 
       return if ! $have_gd
-
       return if ! @memory.qrcode.have_qrcode_data
 
       res = session

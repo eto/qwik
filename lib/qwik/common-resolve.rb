@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/wabisabi-template'
 
@@ -70,28 +61,28 @@ if defined?($test) && $test
     include TestSession
 
     def ok(e, w)
-      ok_eq(e, @action.resolve_plugin(w))
+      eq e, @action.resolve_plugin(w)
     end
 
     def test_resolve_plugin
       res = session
-      ok([], [:a])
-      ok([], [[:plugin]])	# error
-      ok([], [[:plugin, 't']])	# error
-      ok([:br], [:plugin, {:method=>'br', :param=>''}, ''])
+      ok [], [:a]
+      ok [], [[:plugin]]	# error
+      ok [], [[:plugin, 't']]	# error
+      ok [:br], [:plugin, {:method=>'br', :param=>''}, '']
     end
 
     def ok_all(e, w)
       w.make_index
-      ok_eq(e, @action.resolve_all_plugin(w))
+      eq e, @action.resolve_all_plugin(w)
     end
 
     def test_resolve_all_plugin
       res = session
-
-      ok_all([[:br]], [[:plugin, {:method=>'br', :param=>''}, '']])
-      ok_all(['nosuch plugin'],
-	     [[:plugin, {:method=>'nosuchplugin', :param=>''}, '']])
+      ok_all [[:br]], [[:plugin, {:method=>'br', :param=>''}, '']]
+      ok_all [[:span, {:class=>"plg_error"}, "nosuch plugin | ",
+	  [:strong, "nosuchplugin"]]],
+	     [[:plugin, {:method=>'nosuchplugin', :param=>''}, '']]
     end
   end
 end

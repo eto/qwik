@@ -26,8 +26,8 @@ module Qwik
       # Server setting.
       :server_type	=> 'webrick',
       #:server_type	=> 'mongrel',
-      :user		=> 'nobody',
-      :group		=> 'nobody',
+      :user		=> 'daemon',
+      :group		=> 'daemon',
       :bind_address	=> '0.0.0.0',
       :web_port		=> 9190,
       :ml_port		=> 9195,
@@ -69,27 +69,41 @@ module Qwik
       :ml_alert_time		=> 86400 * 24,
       :ml_life_time		=> 86400 * 31,
 
-      # Setting for directories and files.
-      :lib_dir		=> BASEDIR+'/lib',
-      :qwiklib_dir	=> BASEDIR+'/lib/qwik',
-      :sites_dir	=> BASEDIR+'/data',
-      :grave_dir	=> BASEDIR+'/grave',
-      :cache_dir	=> BASEDIR+'/cache',
+      # Setting for production mode.
+      :sites_dir	=> '/var/lib/qwik/data',
+      :grave_dir	=> '/var/lib/qwik/grave',
+      :cache_dir	=> '/var/cache/qwik',
+      :super_dir	=> '/usr/share/qwik/super',
+      :theme_dir	=> '/usr/share/qwik/theme',
+      :template_dir	=> '/usr/share/qwik/template',
+      :qrcode_dir	=> '/usr/share/qwik/qrcode',
+      :etc_dir		=> '/etc/qwik',
+      :config_file	=> '/etc/qwik/config.txt',
+      :log_dir		=> '/var/log/qwik',
+      :web_pid_file	=> '/var/run/qwik/qwikweb.pid',
+      :ml_pid_file	=> '/var/run/qwik/quickml.pid',
+    }
+
+    DebugConfig = {
+      # Setting for debug mode.
       :super_dir	=> BASEDIR+'/share/super',
       :theme_dir	=> BASEDIR+'/share/theme',
       :template_dir	=> BASEDIR+'/share/template',
       :qrcode_dir	=> BASEDIR+'/share/qrcode',
-      :etc_dir		=> BASEDIR+'/etc',
-      :config_file	=> BASEDIR+'/etc/config.txt',
-      :pass_file	=> BASEDIR+'/etc/password.txt',
-      :generation_file	=> BASEDIR+'/etc/generation.txt',
-      :log_dir		=> BASEDIR+'/log',
-      :web_error_log	=> BASEDIR+'/log/qwik-error.log',
-      :web_access_log	=> BASEDIR+'/log/qwik-access.log',
-      :access_log	=> BASEDIR+'/log/access.log',
-      :ml_log_file	=> BASEDIR+'/log/quickml.log',
-      :web_pid_file	=> BASEDIR+'/log/qwikweb.pid',
-      :ml_pid_file	=> BASEDIR+'/log/quickml.pid',
+#      :web_pid_file	=> BASEDIR+'/log/qwikweb.pid',
+#      :ml_pid_file	=> BASEDIR+'/log/quickml.pid',
+    }
+
+    TestConfig = {
+      # Setting for test mode.
+      :debug		=> true,
+      :test		=> true,	# Do not send mail.
+      :public_url	=> 'http://example.com/',
+      :sites_dir	=> '.',
+      :grave_dir	=> '.',
+      :cache_dir	=> '.',
+      :etc_dir		=> '.',
+      :log_dir		=> '.',
     }
 
     def initialize
@@ -153,6 +167,8 @@ module Qwik
       when /\A(\d+)h\z/;	return $1.to_i * 60 * 60
       when /\A(\d+)d\z/;	return $1.to_i * 60 * 60 * 24
       when /\A(\d+)w\z/;	return $1.to_i * 60 * 60 * 24 * 7
+      when /\A(\d+)KB\z/;	return $1.to_i * 1024
+      when /\A(\d+)MB\z/;	return $1.to_i * 1024 * 1024
       end
       v.gsub!('$BASEDIR') { BASEDIR }
       return v
@@ -200,7 +216,7 @@ module Qwik
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -210,47 +226,49 @@ if defined?($test) && $test
       c = Qwik::Config
 
       # test_parse_config
-      eq({}, c.parse_config('::'))
-      eq({}, c.parse_config('::v'))
-      eq({:k=>''}, c.parse_config(':k:'))
-      eq({:k=>''}, c.parse_config(':k:	'))
+      assert_equal({}, c.parse_config('::'))
+      assert_equal({}, c.parse_config('::v'))
+      assert_equal({:k=>''}, c.parse_config(':k:'))
+      assert_equal({:k=>''}, c.parse_config(':k:	'))
 
-      eq({:k=>'v'}, c.parse_config(':k:v'))
-      eq({:k=>'v:v'}, c.parse_config(':k:v:v'))
-      eq({:k=>'v'}, c.parse_config("\#c\n:k:v"))
-      eq({:k=>'v'}, c.parse_config(':k:v#comment'))
-      eq({:k=>'v'}, c.parse_config(':k:v #comment'))
+      assert_equal({:k=>'v'}, c.parse_config(':k:v'))
+      assert_equal({:k=>'v:v'}, c.parse_config(':k:v:v'))
+      assert_equal({:k=>'v'}, c.parse_config("\#c\n:k:v"))
+      assert_equal({:k=>'v'}, c.parse_config(':k:v#comment'))
+      assert_equal({:k=>'v'}, c.parse_config(':k:v #comment'))
 
-      eq({:k=>4}, c.parse_config(':k:	2 * 2'))
-      eq({:k=>'1.1'}, c.parse_config(':k:1.1'))
+      assert_equal({:k=>4}, c.parse_config(':k:	2 * 2'))
+      assert_equal({:k=>'1.1'}, c.parse_config(':k:1.1'))
 
-      eq({:k=>Qwik::Config::BASEDIR}, c.parse_config(':k:$BASEDIR'))
+      assert_equal({:k=>Qwik::Config::BASEDIR}, c.parse_config(':k:$BASEDIR'))
 
       # test_parse_value
-      eq true, c.parse_value('true')
-      eq false, c.parse_value('false')
-      eq nil, c.parse_value('nil')
+      assert_equal true, c.parse_value('true')
+      assert_equal false, c.parse_value('false')
+      assert_equal nil, c.parse_value('nil')
 
-      eq 1, c.parse_value('1')
-      eq 4, c.parse_value('2*2')
-      eq 4, c.parse_value('2 * 2')
+      assert_equal 1, c.parse_value('1')
+      assert_equal 4, c.parse_value('2*2')
+      assert_equal 4, c.parse_value('2 * 2')
 
-      eq     60, c.parse_value('1m')
-      eq   3600, c.parse_value('1h')
-      eq  86400, c.parse_value('1d')
-      eq 604800, c.parse_value('1w')
+      assert_equal     60, c.parse_value('1m')
+      assert_equal   3600, c.parse_value('1h')
+      assert_equal  86400, c.parse_value('1d')
+      assert_equal 604800, c.parse_value('1w')
+      assert_equal   1024, c.parse_value('1KB')
+      assert_equal 1048576, c.parse_value('1MB')
 
       # test_parse_args
-      eq({:debug=>true}, c.parse_args('myprog', ['-d']))
+      assert_equal({:debug=>true}, c.parse_args('myprog', ['-d']))
     end
 
     def test_all
       # test_new
       config = Qwik::Config.new
-      eq(false, config.debug)
-      eq(false, config.test)
+      assert_equal false, config.debug
+      assert_equal false, config.test
       config[:debug] = true
-      eq(true, config.debug)
+      assert_equal true, config.debug
     end
   end
 end

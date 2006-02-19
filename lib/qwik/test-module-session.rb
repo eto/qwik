@@ -26,15 +26,8 @@ module TestSession
     if ! defined?($test_config)
       config = Qwik::Config.new
       $test_org_sites_dir = config[:sites_dir].dup
-      hash = {
-	:debug			=> true,
-	:test			=> true,	# Do not send mail.
-	:pass_file		=> 'password.txt',
-	:generation_file	=> 'generation.txt',
-	:sites_dir		=> '.',
-	:public_url		=> 'http://example.com/',
-      }
-      config.update(hash)
+      config.update(Qwik::Config::DebugConfig)
+      config.update(Qwik::Config::TestConfig)
       $test_config = config
     end
     @config = $test_config

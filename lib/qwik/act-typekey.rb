@@ -68,8 +68,10 @@ because qwikWeb uses mailaddress for authentication.
       return c_nredirect('Go TypeKey', url)	# Redirect to TypeKey
     end
 
+    TYPEKEY_SITETOKEN_FILE = 'typekey-sitetoken.txt'
+
     def typekey_get_sitetoken
-      file = @config.etc_dir.path+'typekey-sitetoken.txt'
+      file = @config.etc_dir.path+TYPEKEY_SITETOKEN_FILE
       return nil if ! file.exist?
       return file.read.chomp
     end
@@ -141,7 +143,7 @@ if defined?($test) && $test
     end
 
     def nutypekey_get_sitetoken
-      file = @config.etc_dir.path+'typekey-sitetoken.txt'
+      file = @config.etc_dir.path+Qwik::Action::TYPEKEY_SITETOKEN_FILE
       return file.read.chomp
     end
 

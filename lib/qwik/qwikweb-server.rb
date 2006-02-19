@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/loadlib'
@@ -23,7 +14,7 @@ module Qwik
       Config.load_args_and_config(config, $0, args)
 
       # Load all actions here.
-      LoadLibrary.load_libs(config.lib_dir, 'qwik/act-*.rb')
+      LoadLibrary.load_libs_here('qwik/act-*.rb')
 
       if config[:server_type] == 'webrick'
 	server = Server.new(config)

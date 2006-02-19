@@ -29,17 +29,17 @@ if defined?($test) && $test
       # $KCODE = 's'
 
       # test_gettext
-      t.ok_eq('hello', gettext('hello'))
+      t.assert_equal 'hello', gettext('hello')
 
       # test_set_catalog
       cf = Qwik::CatalogFactory.new
-      cf.load_all_catalogs('.')
+      cf.load_all_here('catalog-??.rb')
       catalog_ja = cf.get_catalog('ja')
       set_catalog(catalog_ja)
 
       # test_gettext_ja
-      t.ok_eq("‚±‚ñ‚É‚¿‚Í", gettext('hello'))
-      t.ok_eq("‚±‚ñ‚É‚¿‚Í", _('hello'))
+      t.assert_equal '‚±‚ñ‚É‚¿‚Í', gettext('hello')
+      t.assert_equal '‚±‚ñ‚É‚¿‚Í', _('hello')
     end
   end
 

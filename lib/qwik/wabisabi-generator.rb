@@ -81,11 +81,10 @@ if $0 == __FILE__
   $test = true
 end
 
-
 if defined?($test) && $test
   class TestWabisabiGenerator < Test::Unit::TestCase
     def ok(e, s)
-      ok_eq(e, s)
+      assert_equal e, s
     end
 
     def test_all
@@ -141,7 +140,7 @@ if defined?($test) && $test
 
   class TestWabisabiHtmlGenerator < Test::Unit::TestCase
     def ok(e, s)
-      ok_eq(e, s)
+      assert_equal e, s
     end
 
     def test_htree_html_generator
@@ -225,7 +224,7 @@ if defined?($test) && $test
     include Qwik::WabisabiGeneratorModule
 
     def ok(e, s)
-      ok_eq(e, s.rb_format_xml(-1, -1))
+      assert_equal e, s.rb_format_xml(-1, -1)
     end
 
     def test_generator_module
@@ -243,7 +242,7 @@ if defined?($test) && $test
     include Qwik::WabisabiHtmlGeneratorModule
 
     def ok(e, s)
-      ok_eq(e, s.rb_format_xml(-1, -1))
+      assert_equal e, s.rb_format_xml(-1, -1)
     end
 
     def test_all

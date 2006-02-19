@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-csv-tokenizer'
 
@@ -19,10 +10,11 @@ module Qwik
       args.each {|s|
 	s.set_page_charset
       }
-      method = 'plg_'+method
+      m = "plg_#{method}"
       begin
-	return self.send(method, *args, &b) if self.respond_to?(method)
-	return 'nosuch plugin'
+	return self.send(m, *args, &b) if self.respond_to?(m)
+	return [:span, {:class=>'plg_error'}, "nosuch plugin | ",
+	  [:strong, method]]
       rescue
         #raise if @config.test || @config.debug
 	raise if @config.test
@@ -31,7 +23,8 @@ module Qwik
 	if Action.from_local?(h)
 	  return PrettyBacktrace.to_html($!)	# common-backtrace
 	else
-	  return "plugin error"
+	  return [:span, {:class=>'plg_error'}, "plugin error | ",
+	    [:strong, method]]
 	end
       end
     end
@@ -71,19 +64,19 @@ if defined?($test) && $test
     include TestSession
 
     def ok(e, s)
-      ok_eq(e, Qwik::Action.plugin_parse_args(s))
-    end
-
-    def ok_plugin(e, ar)
-      ok_eq(e, @action.c_call_plugin(*ar))
+      eq e, Qwik::Action.plugin_parse_args(s)
     end
 
     def test_parse_args
-      ok(['a'], "'a'")
-      ok(['a'], "\"a\"")
-      ok(['<'], '<')
-      ok(['<'], "'<'")
-      ok(['a b'], 'a b')
+      ok ['a'], "'a'"
+      ok ['a'], "\"a\""
+      ok ['<'], '<'
+      ok ['<'], "'<'"
+      ok ['a b'], 'a b'
+    end
+
+    def ok_plugin(e, ar)
+      eq e, @action.c_call_plugin(*ar)
     end
 
     def test_all
@@ -91,25 +84,26 @@ if defined?($test) && $test
 
       # test_from_local?
       c = Qwik::Action
-      eq(true, c.from_local?("localhost"))
-      eq(true, c.from_local?("127.0.0.1"))
-      eq(true, c.from_local?("192.168.0.1"))
-      eq(true, c.from_local?("192.168.2.1"))
-      eq(false, c.from_local?("www.example.com"))
+      eq true, c.from_local?("localhost")
+      eq true, c.from_local?("127.0.0.1")
+      eq true, c.from_local?("192.168.0.1")
+      eq true, c.from_local?("192.168.2.1")
+      eq false, c.from_local?("www.example.com")
 
       # test_call_plugin
-      ok_plugin('test', ['qwik_test', ''])
-      ok_plugin('nosuch plugin', ['nosuch', ''])
+      ok_plugin 'test', ['qwik_test', '']
+      ok_plugin [:span, {:class=>"plg_error"}, "nosuch plugin | ",
+	[:strong, "nosuch"]], ['nosuch', '']
 
       # test_null
-      ok_wi([''], '{{qwik_null}}')
+      ok_wi [''], '{{qwik_null}}'
 
       # test_test
-      ok_wi(['test'], '{{qwik_test}}')
+      ok_wi ['test'], '{{qwik_test}}'
 
       t_without_testmode {
 	res = @action.c_call_plugin('_qwik_test_for_raise_exception', '')
-	ok_eq(:h3, res[0][0])
+	eq :h3, res[0][0]
       }
     end
   end

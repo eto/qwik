@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-pathname'
 
@@ -87,8 +78,9 @@ if defined?($test) && $test
   class TestBackupDB < Test::Unit::TestCase
     def test_backupdb
       config = Qwik::Config.new
-
-      path = './test/'.path
+      config.update Qwik::Config::DebugConfig
+      config.update Qwik::Config::TestConfig
+      path = 'test/'.path
       path.setup
 
       spath = config.super_dir.path
@@ -110,7 +102,7 @@ if defined?($test) && $test
 	assert_instance_of(Time, time)
 	s = budb.get('1', time)
 	assert_instance_of(String, s)
-	ok_eq(v, s)
+	eq v, s
       }
 
       #put

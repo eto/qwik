@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-timeline'
 
@@ -42,8 +33,9 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
       site_min = timeline.site_min
       site_duration = timeline.site_duration
 
+      return [:p, "No files here."] if times.nil?
       page_num = times.length	# Total page number
-      return [:p, "no file here"] if page_num == 0
+      return [:p, "No files here."] if page_num == 0
 
       h_span = TIME_WALKER_HEIGHT/page_num
       x_offset = 60

@@ -93,10 +93,11 @@ module QuickML
       uid = Etc::getpwnam(config.user).uid 
       gid = Etc::getgrnam(config.group).gid
       FileUtils.touch(config.ml_pid_file)
-      FileUtils.touch(config.ml_log_file)
+      ml_log_file = (config[:log_dir].path + Logger::ML_LOG_FILE).to_s
+      FileUtils.touch(ml_log_file)
       File.chown(uid, gid, config.sites_dir)
       File.chown(uid, gid, config.ml_pid_file)
-      File.chown(uid, gid, config.ml_log_file)
+      File.chown(uid, gid, ml_log_file)
       Process.uid  = uid
       Process.gid  = gid
       Process.euid = uid

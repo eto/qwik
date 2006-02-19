@@ -1,17 +1,17 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
+require 'qwik/parser'
+require 'qwik/server-memory'
+require 'qwik/template'
+require 'qwik/tokenizer'
+require 'qwik/wabisabi'
+
 # Load utils.
 require 'qwik/util-basic'
 require 'qwik/util-charset'
 require 'qwik/util-filename'
 require 'qwik/util-iconv'
 require 'qwik/util-time'
-
-require 'qwik/parser'
-require 'qwik/server-memory'
-require 'qwik/template'
-require 'qwik/tokenizer'
-require 'qwik/wabisabi'
 
 # Load common actions.
 require 'qwik/common-backtrace'
@@ -107,7 +107,7 @@ module Qwik
 	  return action_member_only_form(user, ml)
 	end
 
-	# do action
+	# Do action.
 	if @req.plugin
 	  action = @req.plugin
 	  method = "act_#{action}"
@@ -118,7 +118,7 @@ module Qwik
 	  end
 	end
 
-	# do ext action
+	# Do ext action.
 	ext = @req.ext
 	method = "ext_#{ext}"
 	if self.respond_to?(method)
@@ -233,7 +233,6 @@ module Qwik
     def pre_ext_
       sitename = @req.base
       title = "redirect to site : #{sitename}"
-      #url = "/#{sitename}/"
       url = c_relative_to_root("#{sitename}/")
       c_notice(title, url) {
 	[:h2, title]
@@ -256,7 +255,7 @@ if defined?($test) && $test
       ok_title 'No such site'
       assert_text 'No such site', 'h1'
       assert_text 'nosuchsite', 'b'
-      #eq 404, @res.status
+      eq 404, @res.status
     end
 
     def test_private_site
@@ -275,7 +274,6 @@ if defined?($test) && $test
     def test_nonexistent_ext
       t_add_user
       res = session '/test/1.nosuch'
-     #ok_title 'no such extention : nosuch'
       ok_title "No such file"
     end
 

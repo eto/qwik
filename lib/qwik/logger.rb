@@ -5,11 +5,16 @@ require 'qwik/config'
 
 module Qwik
   class Logger
-    def initialize(config, log_file)
-      @config = config
+    WEB_ACCESS_LOG = 'qwik-access.log'
+    WEB_ERROR_LOG  = 'qwik-error.log'
+    ACCESS_LOG = 'access.log'
+
+    def initialize(log_file)
       @log = open(log_file, 'ab+')
       @log.sync = true
+      @verbose = false
     end
+    attr_writer :verbose
 
     def close
       @log.close
@@ -19,12 +24,12 @@ module Qwik
     IGNORE_ACTION = %w(theme num)
     def log(wreq, wres, req, res)
       return if IGNORE_ACTION.include?(req.plugin)
-      format = format_log_line(req, wres)
+      format = Logger.format_log_line(req, wres)
       @log << format
-      $stdout << format if @config.debug && ! @config.test
+      $stdout << format if @verbose
     end
 
-    # FIXEM: Ad hoc reopen support.
+    # FIXME: Ad hoc reopen support.
     def reopen
       @log.close
       log_file = @log.path
@@ -34,7 +39,7 @@ module Qwik
 
     private
 
-    def format_log_line(req, wres)
+    def self.format_log_line(req, wres)
       time     = req.start_time.rfc_date
       fromhost = req.fromhost
       user     = req.user || '-'
@@ -53,7 +58,6 @@ module Qwik
 	return ip
       end
     end
-
   end
 end
 
@@ -69,34 +73,31 @@ end
 if defined?($test) && $test
   class TestLogger < Test::Unit::TestCase
     def test_logger
-      config = Qwik::Config.new
-      path = 'test-logger.txt'.path
-      path.unlink if path.exist?
-      ok_eq(false, path.exist?)
-
-      # test_init
-      logger = Qwik::Logger.new(config, path.to_s)
-      ok_eq(true, path.exist?)
+      c = Qwik::Logger
 
       # test_format_log_line
-      Qwik::Logger.instance_eval {
-	public :format_log_line
-      }
+      config = Qwik::Config.new
       req = Qwik::Request.new(config)
       res = Qwik::Response.new(config)
-      str = logger.format_log_line(req, res)
-      ok_eq("1970-01-01T09:00:00  - \"\" 200 -\n", str)
+      assert_equal "1970-01-01T09:00:00  - \"\" 200 -\n",
+	c.format_log_line(req, res)
+
+      path = 'test.txt'.path
+      path.unlink if path.exist?
+
+      # test_init
+      logger = Qwik::Logger.new(path.to_s)
+      assert_equal true, path.exist?
 
       # test_log
       logger.log(req, res, req, res)
-      str = path.open {|f| f.read }
-      ok_eq("1970-01-01T09:00:00  - \"\" 200 -\n", str)
+      assert_equal "1970-01-01T09:00:00  - \"\" 200 -\n", path.read
 
       # test_close
       logger.close
 
       path.unlink if path.exist?
-      ok_eq(false, path.exist?)
+      assert_equal false, path.exist?
     end
   end
 end

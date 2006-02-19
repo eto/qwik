@@ -20,8 +20,8 @@ end
 module TestServerModule
   def setup_server(bind_address = '127.0.0.1')
     config = Qwik::Config.new
-    config[:debug] = true
-    config[:test] = true	# do not show webrick log
+    config.update Qwik::Config::DebugConfig
+    config.update Qwik::Config::TestConfig
     config[:bind_address] = bind_address
 
     server = Qwik::Server.new(config)

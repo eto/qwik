@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 #require 'qwik/farm'	# Do not add farm here.
 
@@ -41,7 +32,7 @@ module Qwik
     def catalog
       unless defined? @catalog
 	@catalog = CatalogFactory.new
-	@catalog.load_all_catalogs(@config.qwiklib_dir)
+	@catalog.load_all_here('catalog-??.rb')
       end
       @catalog
     end
@@ -63,6 +54,5 @@ module Qwik
       @sessiondb = SessionDB.new(@config) unless defined? @sessiondb
       @sessiondb
     end
-
   end
 end

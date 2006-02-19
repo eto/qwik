@@ -87,7 +87,7 @@ class TestSuite
   end
 
   def load_by_loadlib(arg)
-    Qwik::LoadLibrary.load_libs('..', arg)
+    Qwik::LoadLibrary.load_libs_here(arg)
   end
 end
 

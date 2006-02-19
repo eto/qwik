@@ -51,12 +51,12 @@ if defined?($test) && $test
       dc = TestModulePublicDummyClass.new
 
       # test_t_make_public
-      assert_equal true, dc.private_methods.include?('hello')
+      assert_equal true,  dc.private_methods.include?('hello')
       assert_equal false, dc.public_methods.include?('hello')
       t_make_public(TestModulePublicDummyClass, :hello)
       assert_equal 'hello', dc.hello
       assert_equal false, dc.private_methods.include?('hello')
-      assert_equal true, dc.public_methods.include?('hello')
+      assert_equal true,  dc.public_methods.include?('hello')
 
       # test_t_make_readable
       t_make_readable(TestModulePublicDummyClass, :var)

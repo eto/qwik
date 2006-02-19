@@ -1,17 +1,10 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-pathname'
 
 module Qwik
   class CatalogFactory
+    LIBDIR = File.dirname(__FILE__)
+
     def initialize
       @catalogs = {}
     end
@@ -20,27 +13,37 @@ module Qwik
       return @catalogs[lang]
     end
 
-    def catalog_re
-      return /\Acatalog-(..)\.rb\z/
-    end
-
-    def load_all_catalogs(dir)
-      # lang is two letters long.
-      @catalogs = load_all_catalogs_internal(dir, catalog_re)
+    def load_all_here(glob)
+      # lang is two letters length.
+      @catalogs = load_all(LIBDIR, glob)
     end
 
     private
 
-    def load_all_catalogs_internal(dir, re)
-      catalogs = Hash.new
+    def load_all(dir, glob)
+      files = get_files(dir, glob) 
+      catalogs = load_all_files(files)
+      return catalogs
+    end
+
+    def get_files(dir, glob)
+      files = []
       path = dir.path
       path = dir.path.realpath if defined?($test) && $test
-      path.each_entry {|file|
-	if re =~ file.to_s
+      return list if ! path.exist?
+      Pathname.glob("#{path}/#{glob}") {|file|
+	files << file.to_s
+      }
+      return files
+    end
+
+    def load_all_files(files)
+      catalogs = {}
+      files.each {|file|
+	if /(..)\.rb\z/ =~ file
 	  lang = $1
-	  fullpath = path + file
-	  require fullpath
-	  catalogs[lang] = self.class.send('catalog_'+lang)
+	  require file
+	  catalogs[lang] = self.class.send("catalog_#{lang}")
 	end
       }
       catalogs['en'] = Hash.new {|h, k| k }
@@ -50,17 +53,35 @@ module Qwik
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
+  require 'qwik/qp'
   $test = true
 end
 
 if defined?($test) && $test
+  require 'qwik/test-module-public'
+
   class TestCatalogFactory < Test::Unit::TestCase
+    include TestModulePublic
+
     def test_all
       cf = Qwik::CatalogFactory.new
-      cf.load_all_catalogs('.')
+
+      # test_get_files
+      t_make_public(Qwik::CatalogFactory, :get_files)
+      files = cf.get_files('.', 'catalog-??.rb')
+      assert 0 < files.length
+
+      # test_load_all_files
+      t_make_public(Qwik::CatalogFactory, :load_all_files)
+      catalogs = cf.load_all_files(['catalog-ja.rb'])
+      assert 0 < catalogs.length
+
+      # test_load_all_here
+      cf.load_all_here('catalog-??.rb')
+
       catalog_ja = cf.get_catalog('ja')
-      ok_eq(true, catalog_ja != nil)
+      assert_equal true, catalog_ja != nil
     end
   end
 end

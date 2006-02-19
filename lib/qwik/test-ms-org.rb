@@ -38,7 +38,7 @@ class TestMLSessionOriginal < Test::Unit::TestCase
       # Files and directories.
       :sites_dir	=> '.',			# *TEST*
       :ml_pid_file	=> 'quickml.pid',	# *TEST*
-      :ml_log_file	=> 'quickml.log',	# *TEST*
+      :log_dir		=> '.',
     }
 
     config[:logger] = QuickML::MockLogger.new

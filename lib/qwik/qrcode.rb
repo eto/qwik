@@ -766,6 +766,7 @@ if defined?($test) && $test
 
     def ok(e, s)
       config = Qwik::Config.new
+      config.update Qwik::Config::DebugConfig
       q = QRCode.new(config.qrcode_dir)
       qrcode_data = q.make_qrcode(s)
       hex = to_hex(qrcode_data)
@@ -776,6 +777,7 @@ if defined?($test) && $test
       return if $0 != __FILE__		# Only for separated test.
 
       config = Qwik::Config.new
+      config.update Qwik::Config::DebugConfig
       q = QRCode.new(config.qrcode_dir)
       return if ! q.have_qrcode_data
 
@@ -831,14 +833,14 @@ if defined?($test) && $test
       return if $0 != __FILE__		# Only for separated test.
 
       config = Qwik::Config.new
-      q = QRCodeView.new(config.qrcode_dir)
+      config.update Qwik::Config::DebugConfig
+      q = QRCode.new(config.qrcode_dir)
       return if ! q.have_qrcode_data
 
-      qrcode = q.instance_eval { @qrcode }
       d = nil
       # 100times: 23.628 seconds.
       (1..1).each {
-	d = qrcode.make_qrcode('0')
+	d = q.make_qrcode('0')
 	assert_equal(
 '111111101111101111111
 100000100110101000001
@@ -865,7 +867,5 @@ if defined?($test) && $test
 	      d)
       }
     end
-
   end
 end
-

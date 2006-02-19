@@ -7,7 +7,8 @@ require 'qwik/util-safe'
 module QuickML
   class ServerMemory
     def self.init_logger(memory, config)
-      memory[:logger] = Logger.new(config[:ml_log_file], config[:verbose_mode])
+      ml_log_file = (config[:log_dir].path + Logger::ML_LOG_FILE).to_s
+      memory[:logger] = Logger.new(ml_log_file, config[:verbose_mode])
     end
 
     def self.init_mutex(memory)
@@ -23,7 +24,7 @@ module QuickML
       memory[:catalog] = nil
       if memory[:message_catalog]
 	cf = CatalogFactory.new
-	cf.load_all_catalogs('.')
+	cf.load_all_here('catalog-ml-??.rb')
 	memory[:catalog] = cf.get_catalog('ja')
       end
     end
@@ -42,7 +43,7 @@ if defined?($test) && $test
 
       # test_init_logger
       memory = {}
-      config = {:ml_log_file=>'test.txt'}
+      config = {:log_dir=>'.'}
       c.init_logger(memory, config)
       assert_instance_of(QuickML::Logger, memory[:logger])
 

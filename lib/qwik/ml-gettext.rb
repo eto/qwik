@@ -94,7 +94,7 @@ if defined?($test) && $test
 
       # test_set_catalog
       cf = QuickML::CatalogFactory.new
-      cf.load_all_catalogs('.')
+      cf.load_all_here('catalog-ml-??.rb')
       catalog_ja = cf.get_catalog('ja')
       set_catalog(catalog_ja)
 

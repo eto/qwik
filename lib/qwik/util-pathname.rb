@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'pathname'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -36,9 +27,10 @@ class Pathname
   end
   alias put write
 
-  def add(str)
+  def append(str)
     return self.open('ab') {|f| f.print str }
   end
+  alias add append
 
   def get_first
     return self.open('rb') {|f| f.gets }
@@ -47,7 +39,7 @@ class Pathname
   def check_directory
     if self.exist?
       if ! self.directory?
-	raise "#{self.to_s} is not directory. failed."
+	raise "#{self} is not directory. failed."
       end
       return	# The directory is already exist.
     end
@@ -75,7 +67,7 @@ class Pathname
 	self.rmtree
 	self.rmdir if self.directory?
       else
-	raise self.to_s+' is not directory. failed.'
+	raise "#{self} is not directory. failed."
       end
     end
   end
@@ -91,43 +83,43 @@ if defined?($test) && $test
   class TestUtilPathname < Test::Unit::TestCase
     def test_all
       # test_string_path
-      assert_instance_of(Pathname, 't'.path)
-      ok_eq('t', 't'.path.to_s)
+      assert_instance_of Pathname, 't'.path
+      assert_equal 't', 't'.path.to_s
 
       # test_path_path
-      assert_instance_of(Pathname, 't'.path.path)
+      assert_instance_of Pathname, 't'.path.path
 
       # test_to_win_dir
-      ok_eq('c:/t', '/cygdrive/c/t'.path.to_win_dir)
+      assert_equal 'c:/t', '/cygdrive/c/t'.path.to_win_dir
 
       # test_extname
-      ok_eq('', 't'.path.extname)
-      ok_eq('.txt', 't.txt'.path.extname)
-      ok_eq('.gz', 't.tar.gz'.path.extname)
+      assert_equal '', 't'.path.extname
+      assert_equal '.txt', 't.txt'.path.extname
+      assert_equal '.gz', 't.tar.gz'.path.extname
 
       # test_ext
-      ok_eq('txt', 't.txt'.path.ext)
-      ok_eq('gz', 't.tar.gz'.path.ext)
+      assert_equal 'txt', 't.txt'.path.ext
+      assert_equal 'gz', 't.tar.gz'.path.ext
 
-      # test_put
-      'test.txt'.path.put('t')
+      # test_write
+      'test.txt'.path.write('t')
 
       # test_read
-      eq('t', 'test.txt'.path.read)
+      assert_equal 't', 'test.txt'.path.read
 
-      # test_add
-      'test.txt'.path.add('t')
-      eq('tt', 'test.txt'.path.read)
+      # test_append
+      'test.txt'.path.append('t')
+      assert_equal 'tt', 'test.txt'.path.read
 
       # test_get_first
-      'test.txt'.path.put("s\nt\n")
-      eq("s\nt\n", 'test.txt'.path.read)
-      eq("s\n", 'test.txt'.path.get_first)
+      'test.txt'.path.write("s\nt\n")
+      assert_equal "s\nt\n", 'test.txt'.path.read
+      assert_equal "s\n", 'test.txt'.path.get_first
 
       # teardown
-      eq(true, 'test.txt'.path.exist?)
+      assert_equal true, 'test.txt'.path.exist?
       'test.txt'.path.unlink
-      eq(false, 'test.txt'.path.exist?)
+      assert_equal false, 'test.txt'.path.exist?
     end
 
     def test_check_directory
@@ -137,17 +129,17 @@ if defined?($test) && $test
       dir.erase_all if dir.exist?
       dir.rmtree if dir.exist?
       dir.rmdir if dir.exist?
-      ok_eq(false, dir.exist?)
+      assert_equal false, dir.exist?
 
       dir.check_directory
-      ok_eq(true, dir.exist?)
+      assert_equal true, dir.exist?
 
       dir.check_directory		# Check again cause no error.
-      ok_eq(true, dir.exist?)
+      assert_equal true, dir.exist?
 
       dir.erase_all
       dir.rmdir
-      ok_eq(false, dir.exist?)
+      assert_equal false, dir.exist?
     end
 
     def test_check_directory_raise
@@ -155,7 +147,7 @@ if defined?($test) && $test
 
       # Make a plain text file.
       file = 't.txt'.path
-      file.put('t')
+      file.write('t')
 
       # Try to create a directory with the same name cause exception.
       assert_raise(RuntimeError) {
@@ -169,12 +161,12 @@ if defined?($test) && $test
       dir.check_directory		# mkdir
 
       file = 'test/t.txt'.path		# Create a dummy file.
-      file.put('t')
-      ok_eq(true, file.exist?)
+      file.write('t')
+      assert_equal true, file.exist?
 
       dir.erase_all
-      ok_eq(false, file.exist?)		# The file is deleted.
-      ok_eq(true, dir.exist?)		# But the directory is remained here.
+      assert_equal false, file.exist?	# The file is deleted.
+      assert_equal true, dir.exist?	# But the directory is remained here.
     end
 
     def test_check_pathname
@@ -183,13 +175,13 @@ if defined?($test) && $test
       dir.rmdir  if dir.exist?
 
       dir.mkdir
-      ok_eq(true, dir.exist?)
+      assert_equal true, dir.exist?
 
       file = dir+'t'
-      file.put('test')
-      ok_eq(true, file.exist?)
+      file.write('test')
+      assert_equal true, file.exist?
       dir.rmtree
-      ok_eq(false, dir.exist?)
+      assert_equal false, dir.exist?
     end
 
     def test_chdir     
@@ -197,7 +189,7 @@ if defined?($test) && $test
       Dir.chdir('/') {
 	assert_not_equal(pwd, Dir.pwd)
       }
-      ok_eq(pwd, Dir.pwd)
+      assert_equal pwd, Dir.pwd
     end
   end
 end

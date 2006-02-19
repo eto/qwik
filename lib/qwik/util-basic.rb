@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-escape'
 
@@ -23,7 +14,7 @@ class Hash
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -31,8 +22,8 @@ if defined?($test) && $test
   class TestUtilBasic < Test::Unit::TestCase
     def test_all
       # test_hash_to_query_string
-      eq("k=v", {:k=>'v'}.to_query_string)
-      eq("k1=v1&k2=v2", {:k1=>'v1', :k2=>'v2'}.to_query_string)
+      assert_equal 'k=v', {:k=>'v'}.to_query_string
+      assert_equal 'k1=v1&k2=v2', {:k1=>'v1', :k2=>'v2'}.to_query_string
     end
   end
 end

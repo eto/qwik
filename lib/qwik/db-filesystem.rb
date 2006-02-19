@@ -174,12 +174,11 @@ module Qwik
       } 
       return ar
     end
-
   end
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   require 'qwik/config'
   require 'qwik/test-module-path'
   $test = true
@@ -190,39 +189,40 @@ if defined?($test) && $test
     def test_fsdb
       # setup
       config = Qwik::Config.new
-#      config[:debug] = true
+      config.update Qwik::Config::DebugConfig
+      config.update Qwik::Config::TestConfig
       spath = config.super_dir.path
-      path = './test/'.path
+      path = 'test/'.path
       path.setup
       db = Qwik::FileSystemDB.new(path, spath)
 
       # test_exist?
-      ok_eq(false, db.exist?('1'))
+      assert_equal false, db.exist?('1')
 
       # test_create
       db.create('1')
-      ok_eq(true, db.exist?('1'))
-      ok_eq('', db.get('1'))
+      assert_equal true, db.exist?('1')
+      assert_equal '', db.get('1')
 
       # test_put
       db.put('1', 't')
-      ok_eq('t', db.get('1'))
+      assert_equal 't', db.get('1')
 
       # test_put_with_time
       db.put('1', 't', Time.at(0))
-      ok_eq(0, db.mtime('1').to_i)	# test_mtime
+      assert_equal 0, db.mtime('1').to_i	# test_mtime
       # test_put_with_time_num
       db.put('1', 't', 1)
-      ok_eq(1, db.mtime('1').to_i)
+      assert_equal 1, db.mtime('1').to_i
 
       # test_last_page_time
-      ok_eq(Time.at(1), db.last_page_time)
+      assert_equal Time.at(1), db.last_page_time
       # test_last_article_time
-      ok_eq(Time.at(1), db.last_article_time)
+      assert_equal Time.at(1), db.last_article_time
 
       # test_add
       db.add('1', 's')
-      ok_eq('ts', db.get('1'))
+      assert_equal 'ts', db.get('1')
 
       # test_get_dir_list
       ar = []
@@ -230,7 +230,7 @@ if defined?($test) && $test
 	dir = @path.to_s
 	ar += get_dir_list(dir)
       }
-      ok_eq(['1'], ar)
+      assert_equal ['1'], ar
 
       # test_get_dir_list_spath
       ar = []
@@ -238,7 +238,7 @@ if defined?($test) && $test
 	dir = @spath.to_s
 	ar += get_dir_list(dir)
       }
-      ok_eq(true, ar.include?('FrontPage'))
+      assert_equal true, ar.include?('FrontPage')
 
       # test_each
       db.each {|f|
@@ -261,11 +261,11 @@ if defined?($test) && $test
 
       # test_delete
       db.delete('1')
-      ok_eq(false, db.exist?('1'))
+      assert_equal false, db.exist?('1')
 
       # test_super_pages
-      ok_eq(true,  db.exist?('_SideMenu'))
-      ok_eq(false, db.baseexist?('_SideMenu'))
+      assert_equal true,  db.exist?('_SideMenu')
+      assert_equal false, db.baseexist?('_SideMenu')
 
       # teardown
       path.teardown

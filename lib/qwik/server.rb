@@ -10,6 +10,7 @@ require 'qwik/request'
 require 'qwik/response'
 
 require 'qwik/util-pid'
+require 'qwik/qp'
 
 module Qwik
   class Server < WEBrick::HTTPServer
@@ -44,7 +45,8 @@ module Qwik
     end
 
     def init_webrick_conf(config, memory)
-      web_error_log = config.web_error_log	# qwik-error.log
+      # qwik-error.log
+      web_error_log = (config.log_dir.path + Logger::WEB_ERROR_LOG).to_s
       pidfile = config.web_pid_file	# qwikweb.pid
       servertype = WEBrick::Daemon
       if config.debug
@@ -55,13 +57,17 @@ module Qwik
       end
 
       # qwik-access.log
-      memory[:qwik_access_log] = Qwik::Logger.new(config, config.web_access_log)
+      log = config.log_dir.path + Logger::WEB_ACCESS_LOG
+      logger = Qwik::Logger.new(log.to_s)
+      logger.verbose = true if config.debug && ! config.test
+      memory[:qwik_access_log] = logger
 
       web_error_logger = WEBrick::Log.new(web_error_log, WEBrick::Log::INFO)
       memory[:logger] = web_error_logger
 
-      accesslog =
-	[[WEBrick::BasicLog.new(config.access_log, WEBrick::Log::INFO),
+      access_log_file = (config.log_dir.path + Logger::ACCESS_LOG).to_s
+      accesslog_logger =
+	[[WEBrick::BasicLog.new(access_log_file, WEBrick::Log::INFO),
 	  WEBrick::AccessLog::COMBINED_LOG_FORMAT]]
 
       server = Server.server_name
@@ -75,7 +81,7 @@ module Qwik
 	:ServerType	=> servertype,
 	:StartCallback	=> Proc.new { start_server; },
 	:StopCallback	=> Proc.new { stop_server; },
-	:AccessLog	=> accesslog,
+	:AccessLog	=> accesslog_logger,
 	:ServerSoftware	=> server,
 	:QwikConfig	=> config,
 	:QwikMemory	=> memory,
@@ -116,8 +122,8 @@ module Qwik
 
     def reopen
       # qwik-access.log is an instance of Qwik::Logger
-      web_access_log = @memory[:qwik_access_log]
-      web_access_log.reopen
+      logger = @memory[:qwik_access_log]
+      logger.reopen
 
       # qwik-error.log is an instance of WEBrick::Log
       logger = @memory[:logger]

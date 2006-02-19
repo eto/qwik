@@ -101,8 +101,11 @@ module Qwik
       }
       optionparser.parse!(args)
       if cmd.empty?
-	print 'To show help,
+	print '
+To show help,
+
  % qwik-service --help
+
 '
       exit
 	
