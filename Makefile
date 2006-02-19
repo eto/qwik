@@ -1,10 +1,10 @@
 RUBY=ruby
 
 debug:
-	$(RUBY) -Ilib bin/qwikweb-server -d -c etc/config.txt
+	$(RUBY) -Ilib bin/qwikweb-server -d -c etc/config-debug.txt
 
 mldebug:
-	$(RUBY) -Ilib bin/quickml-server -d -c etc/config.txt
+	$(RUBY) -Ilib bin/quickml-server -d -c etc/config-debug.txt
 
 run:
 	$(RUBY) -Ilib bin/qwikweb-server -c etc/config.txt
