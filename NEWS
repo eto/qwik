@@ -1,6 +1,11 @@
-Overview of Changes in qwikWeb 0.8.1 - 2006-02-01
+Overview of Changes in qwikWeb 0.8.1 - 2006-02-20
 
-* Bug fix.  You can now use setup.rb to install.
+* There are fewer parameters in 'config.txt'.
+  It is easier to setup configuration now.
+
+* You can now use setup.rb to install.
+
+* Updated plugin: code.  You can see line number now.
 
 Overview of Changes in qwikWeb 0.8.0 - 2006-02-01
 

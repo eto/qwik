@@ -15,9 +15,13 @@ To edit the page, use following guest acount.
 
 * Install
  % sudo ruby setup.rb
-Then, edit the config file.
+ % rehash
+ % qwik-service --web-start
+Then, go Wiki site.
+- http://localhost:9190/
+
+Please edit configuration before make it public.
 - /etc/qwik/config.txt
-You have to stet config after "Setting for production mode." line.
 
 * Make site password
 Before make public your qwikWeb site,
