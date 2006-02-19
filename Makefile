@@ -31,7 +31,7 @@ upload:	dist
 	$(RUBY) -Ilib lib/qwik/dev-release.rb --upload
 
 clean:
-	-rm *~
+	-rm *~ InstalledFiles
 
 realclean:	clean
 	-rm MANIFEST
