@@ -200,8 +200,8 @@ lib/qwik/dev-
     end
 
     def self.make_default_password(base)
-     #etc_copy_file(base, 'etc/config-dist.txt')
       etc_copy_file(base, 'etc/config.txt')
+      etc_copy_file(base, 'etc/config-debug.txt')
     end
 
     def self.etc_copy_file(base, file)
