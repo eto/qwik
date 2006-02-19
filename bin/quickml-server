@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#!/usr/bin/ruby
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__)+'/../lib')
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__)+'/../ext')
 require 'qwik/compat/add_load_path'
