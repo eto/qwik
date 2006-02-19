@@ -23,7 +23,9 @@ module Qwik
       # init_trap
       trap(:TERM) { shutdown; }
       trap(:INT)  { shutdown; }
-      trap(:HUP)  { reopen; }
+      if Signal.list.key?("HUP")
+        trap(:HUP)  { reopen; }
+      end
 
       init_directory(@qconfig)
 

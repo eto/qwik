@@ -53,7 +53,9 @@ module QuickML
       sweeper = Sweeper.new(config)
       trap(:TERM) { server.shutdown; sweeper.shutdown }
       trap(:INT)  { server.shutdown; sweeper.shutdown }
-      trap(:HUP)  { config.logger.reopen }
+      if Signal.list.key?("HUP")
+        trap(:HUP)  { config.logger.reopen }
+      end
       sweeper_thread = Thread.new { sweeper.start }
       sweeper_thread.abort_on_exception = true
 
