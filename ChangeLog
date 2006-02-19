@@ -1,3 +1,21 @@
+2006-02-19  Kouichirou Eto  <2006 eto.com>
+
+	* etc/config-debug.txt: New config file for debug.
+	* Makefile: Update to use it.
+
+	* config.rb: Delete not necessary configurations.
+	* password.rb: Use each file name.
+	* password.rb: Refactoring.
+	* qwikweb-watchlog.rb: Changed.
+	* server.rb: Updated.
+	* logger.rb: Updated.
+
+	* loadlib.rb: use LIBDIR.
+
+	* catalog-factory.rb: Use LIBDIR.
+
+	* common-plugin.rb: Make plugin error pretty.
+
 2006-02-17  Kouichirou Eto  <2006 eto.com>
 
 	* common-url.rb: Rename methods.
