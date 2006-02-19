@@ -100,6 +100,20 @@ a.external {
 }
 
 /* ================================================== action */
+/* ========== common-plugin */
+span.plg_error {
+  margin: 12px 0;
+  padding: 0 4px;
+  background: #fff;
+  border: 1px solid #c00;
+  color: #c00;
+  font-size: small;
+}
+
+span.plg_error strong {
+  color: #c00;
+}
+
 /* ========== act-aa */
 .aa {
   background: transparent;
