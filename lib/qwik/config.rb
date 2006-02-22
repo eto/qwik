@@ -90,20 +90,23 @@ module Qwik
       :theme_dir	=> BASEDIR+'/share/theme',
       :template_dir	=> BASEDIR+'/share/template',
       :qrcode_dir	=> BASEDIR+'/share/qrcode',
-#      :web_pid_file	=> BASEDIR+'/log/qwikweb.pid',
-#      :ml_pid_file	=> BASEDIR+'/log/quickml.pid',
     }
 
     TestConfig = {
       # Setting for test mode.
       :debug		=> true,
       :test		=> true,	# Do not send mail.
-      :public_url	=> 'http://example.com/',
+#      :public_url	=> 'http://example.com/q/',
+#      :default_sitename	=> 'top',
+#      :ml_domain	=> 'q.example.com',
+#      :ml_postmaster	=> 'postmaster@q.example.com',
       :sites_dir	=> '.',
       :grave_dir	=> '.',
       :cache_dir	=> '.',
       :etc_dir		=> '.',
       :log_dir		=> '.',
+      :web_pid_file	=> 'qwikweb.pid',
+      :ml_pid_file	=> 'quickml.pid',
     }
 
     def initialize
@@ -243,9 +246,9 @@ if defined?($test) && $test
       assert_equal({:k=>Qwik::Config::BASEDIR}, c.parse_config(':k:$BASEDIR'))
 
       # test_parse_value
-      assert_equal true, c.parse_value('true')
+      assert_equal  true, c.parse_value('true')
       assert_equal false, c.parse_value('false')
-      assert_equal nil, c.parse_value('nil')
+      assert_equal   nil, c.parse_value('nil')
 
       assert_equal 1, c.parse_value('1')
       assert_equal 4, c.parse_value('2*2')
