@@ -1,12 +1,15 @@
-Overview of Changes in qwikWeb 0.8.1 - 2006-02-20
+Overview of Changes in qwikWeb 0.8.1 - 2006-02-22
 
-* There are fewer parameters in 'config.txt'.
-  It is easier to setup configuration now.
+* The parameters of 'config.txt' become fewer.
+  It is easier to setup configuration file now.
 
 * You can now use setup.rb to install.
   Check README to how to install.
 
 * Updated plugin: code.  You can see line number now.
+
+* Some commands are merged to qwik-service
+  You can use qwik-service instead of these commands.
 
 Overview of Changes in qwikWeb 0.8.0 - 2006-02-01
 
