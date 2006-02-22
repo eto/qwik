@@ -4,6 +4,7 @@ Overview of Changes in qwikWeb 0.8.1 - 2006-02-20
   It is easier to setup configuration now.
 
 * You can now use setup.rb to install.
+  Check README to how to install.
 
 * Updated plugin: code.  You can see line number now.
 
