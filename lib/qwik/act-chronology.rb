@@ -121,7 +121,7 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestActTimeWalker < Test::Unit::TestCase
+  class TestActChronology < Test::Unit::TestCase
     include TestSession
 
     def test_all
