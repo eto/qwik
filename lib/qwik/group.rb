@@ -10,7 +10,7 @@
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/mail'
-require 'qwik/ml-config'
+require 'qwik/config'
 require 'qwik/ml-gettext'
 require 'qwik/ml-exception'
 require 'qwik/ml-generator'
