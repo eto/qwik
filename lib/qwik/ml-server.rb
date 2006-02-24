@@ -35,7 +35,7 @@ module QuickML
 
     def start
       raise 'server already started' if @status != :stop
-      write_pid_file(@config.ml_pid_filedir)
+      write_pid_file(@config.ml_pid_file)
       @logger.log sprintf('Server started at %s:%d [%d]',
                           'localhost', @config.ml_port, Process.pid)
       accept
