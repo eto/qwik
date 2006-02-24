@@ -9,7 +9,8 @@ module Qwik
       :dc => "* How to
  [[.time_walker]]
 Please follow this link to see the chronology of this site. [[.time_walker]]
-" }
+"
+    }
 
     def act_time_walker
       c_require_pagename

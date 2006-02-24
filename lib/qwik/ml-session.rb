@@ -115,7 +115,7 @@ module QuickML
       while line = @socket.safe_gets
 	line = line.xchomp
 	command, arg = line.split(/\s+/, 2)
-	return if command.nil?
+	return if command.nil? || command.empty?
 	command = command.downcase.intern  # 'HELO' => :helo
 	if @command_table.include?(command)
 	  @logger.vlog "Command: #{line}"

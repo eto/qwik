@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/test-module-ml'
@@ -20,7 +11,7 @@ class TestMSAppleMail < Test::Unit::TestCase
 
   def test_all
     send_normal_mail('bob@example.net')		# Bob creates a new ML.
-    sendmail('bob@example.net', 'test@example.com', 'Apple Mail') {
+    sendmail('bob@example.net', 'test@q.example.com', 'Apple Mail') {
 "Mime-Version: 1.0 (Apple Message framework v623)
 Content-Type: multipart/mixed; boundary=Apple-Mail-1-134582006
 Subject: Apple Mail
@@ -46,18 +37,19 @@ UEsDBBQAAAAAAHiWSDMAAAAAAAAAAAAAAAANAAAAMDUxMDA3c291bmRzL1BLAwQUAAAACAB4lkgz
 dW5kcy91bnJlYWwvZ25kX3YzLmFpZlBLBQYAAAAAEQARAMEEAACdHAYAAAA=
 
 --Apple-Mail-1-134582006--
-" }
-    ok_eq('Apple Mail', @site['1'].get_title)
-    ok_eq("* Apple Mail
+"
+    }
+    eq 'Apple Mail', @site['1'].get_title
+    eq "* Apple Mail
 {{mail(bob@example.net,0)
 I attach a file using Apple Mail.
 
 {{file(sounds.zip)}}
 }}
 ",
-	  @site['1'].load)
+	  @site['1'].load
 
     files = @site.files('1')
-    ok_eq(true, files.exist?('sounds.zip'))
+    eq true, files.exist?('sounds.zip')
   end
 end

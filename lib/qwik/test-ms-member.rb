@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/test-module-ml'
@@ -93,14 +84,16 @@ class TestMSMember < Test::Unit::TestCase
   end
 
   def add_member(cc)
-    sendmail('alice@example.net', 'test@example.com', 'addmember', cc) { 'add' }
+    sendmail('alice@example.net', 'test@q.example.com', 'addmember', cc) {
+      'add'
+    }
   end
 
   def remove_member(from, member)
-    sendmail(from, 'test@example.com', 'remove', member) { '' }
+    sendmail(from, 'test@q.example.com', 'remove', member) { '' }
   end
 
   def join_ml(from)
-    sendmail(from, 'test@example.com', 'join', 'alice@example.net') { 'join' }
+    sendmail(from, 'test@q.example.com', 'join', 'alice@example.net') { 'join' }
   end
 end

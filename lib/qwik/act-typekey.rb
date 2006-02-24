@@ -8,17 +8,6 @@ end
 
 module Qwik
   class Action
-    D_typekey = {
-      :dt => 'TypeKey login',
-      :dd => 'You can login by using TypeKey authentication.',
-      :dc => "* How to
-In login screen, you can see 'Login by TypeKey' link.
-Follow the link and login at the TypeKey screen.
-It is necessary to select tell mail address,
-because qwikWeb uses mailaddress for authentication.
-"
-    }
-
     def pre_act_typekey
       if @req.query.length == 0
 	return typekey_redirect_to_typekey

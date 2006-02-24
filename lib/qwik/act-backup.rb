@@ -1,24 +1,17 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/wabisabi-diff'
 
 module Qwik
   class Action
     D_backup = {
-      :dt => 'Show Backup pages',
+      :dt => 'Backup pages function',
       :dd => 'You can see backup files.',
-      :dc => "* Example
-{{backup_list}}
- {{backup_list}}
-" }
+      :dc => "* How to use
+nAt the first, please go to edit page.
+Then, follow '''Backup'' link in right column.
+You can see the backup list of the pages.
+"
+    }
 
     def plg_backup_list
       return if @req.user.nil?
@@ -44,10 +37,7 @@ module Qwik
     def backup_show(site, key, args)
       page = site[key]
 
-      # error check
       return c_nerror('only one time stamp') if 1 < args.length
-
-      # should be a number
       time = args.shift
       return c_nerror('should be number') unless /\A[0-9]+\z/ =~ time
 
@@ -57,11 +47,8 @@ module Qwik
 	return c_notfound('not found')
       end
 
-      # Get the old content.
-      str = site.backupdb.get(key, time)
-
-      # Get the list.
-      list = backup_list(site, key)
+      str = site.backupdb.get(key, time)	# Get the old content.
+      list = backup_list(site, key)		# Get the list.
 
       # Get the index of the content.
       index = nil
@@ -80,11 +67,10 @@ module Qwik
 	msg = [:div, {:class=>'differ'}, *diff]
       end
 
-      return c_plain(key+' @ '+time.ymdax){
+      return c_plain("#{key} @ #{time.ymdax}") {
 	[[:div, {:class=>'day'},
 	    [:h2, _('Diff from the previous page')],
-	    [:div, {:class=>'section'},
-	      msg]],
+	    [:div, {:class=>'section'}, msg]],
 	  [:div, {:class=>'day'},
 	    [:h2, _('Original data')],
 	    [:div, {:class=>'section'},
@@ -110,7 +96,7 @@ module Qwik
       list = backup_list(site, key)
 
       ul = list.map {|v, time|
-	[:li, [:a, {:href=>key+'.'+time.to_s+'.backup'},
+	[:li, [:a, {:href=>"#{key}.#{time}.backup"},
 	    Time.at(time).format_date]]
       }
       if 0 < ul.length
@@ -136,91 +122,91 @@ if defined?($test) && $test
     include TestSession
 
     def test_plg_backup_list
-      ok_wi([:span, {:class=>'attribute'},
-	      [:a, {:href=>'1.backup'}, 'Show backup']],
-	    "{{backup_list}}")
+      ok_wi [:span, {:class=>'attribute'},
+	[:a, {:href=>'1.backup'}, 'Show backup']],
+	"{{backup_list}}"
     end
 
     def test_act_backup2
       #return if $0 != __FILE__
 
       # Only members can see the page.
-      res = session('/test/1.html')
-      ok_title('Member Only')
-      res = session('/test/1.backup')
-      ok_title('Member Only')
+      res = session '/test/1.html'
+      ok_title 'Member Only'
+      res = session '/test/1.backup'
+      ok_title 'Member Only'
 
       t_add_user
 
       # You can see backup page even if the page does not exist.
-      res = session('/test/1.html')
-      ok_title('Page not found.')
-      res = session('/test/1.backup')
-      ok_in(['backup list'], '//title')
+      res = session '/test/1.html'
+      ok_title 'Page not found.'
+      res = session '/test/1.backup'
+      ok_in ['backup list'], '//title'
 
       page = @site.create_new
       page.put_with_time('t', 0)
 
-      res = session('/test/1.html')
-      ok_title('1')
-      res = session('/test/1.backup')
-      ok_in(['backup list'], '//title')
+      res = session '/test/1.html'
+      ok_title '1'
+      res = session '/test/1.backup'
+      ok_in ['backup list'], '//title'
 
       # Error check.
-      res = session('/test/1.backup/0')
-      ok_title('Require no path args')
-      res = session('/test/1.100.200.backup')
-      ok_title('only one time stamp')
-      res = session('/test/1.hoge.backup')
-      ok_title('should be number')
+      res = session '/test/1.backup/0'
+      ok_title 'Require no path args'
+      res = session '/test/1.100.200.backup'
+      ok_title 'only one time stamp'
+      res = session '/test/1.hoge.backup'
+      ok_title 'should be number'
 
       list = @action.backup_list(@site, '1')
-      ok_eq('t', list[0][0])
-      ok_eq('', list[1][0])
-      ok_eq(nil, list[2])
+      eq 't', list[0][0]
+      eq '',  list[1][0]
+      eq nil, list[2]
 
       t1 = list[0][1]
-      res = session("/test/1.#{t1}.backup")
+      res = session "/test/1.#{t1}.backup"
       assert_text(/\A1 @ /, 'title')
-      assert_text('t', 'pre')
+      assert_text 't', 'pre'
 
       # Edit the page again.
-      page.put_with_time('t2', 1)
+      page.put_with_time 't2', 1
 
       list = @action.backup_list(@site, '1')
-      ok_eq('t', list[0][0])
-      ok_eq('t2', list[1][0])
-      ok_eq('', list[2][0])
-      ok_eq(nil, list[3])
+      eq 't',  list[0][0]
+      eq 't2', list[1][0]
+      eq '',   list[2][0]
+      eq nil,  list[3]
 
       diff = @action.backup_diff(list, 0, 1)
-      ok_eq([[:del, 't'], [:br], [:ins, 't2'], [:br]], diff)
+      eq [[:del, 't'], [:br], [:ins, 't2'], [:br]], diff
 
       t2 = list[1][1]
-      session("/test/1.#{t2}.backup")
+      res = session "/test/1.#{t2}.backup"
       assert_text(/\A1 @ /, 'title')
       assert_text('t2', 'pre')
-      ok_in([[:del, 't'], [:br], [:ins, 't2'], [:br]],
-	    "//div[@class='differ']")
+      ok_in [[:del, 't'], [:br], [:ins, 't2'], [:br]],
+	"//div[@class='differ']"
 
       # Edit the page again. The 3rd times.
       page.put_with_time('t3', 2)
 
       list = @action.backup_list(@site, '1')
-      ok_eq('t', list[0][0])
-      ok_eq('t2', list[1][0])
-      ok_eq('t3', list[2][0])
-      ok_eq('', list[3][0])
-      ok_eq(nil, list[4])
+      eq 't', list[0][0]
+      eq 't2', list[1][0]
+      eq 't3', list[2][0]
+      eq '', list[3][0]
+      eq nil, list[4]
 
       diff = @action.backup_diff(list, 1, 2)
-      ok_eq([[:del, 't2'], [:br], [:ins, 't3'], [:br]], diff)
+      eq [[:del, 't2'], [:br], [:ins, 't3'], [:br]], diff
 
       t3 = list[2][1]
-      session("/test/1.#{t3}.backup")
-      assert_text('t3', 'pre')
-      ok_in([[:del, 't2'], [:br], [:ins, 't3'], [:br]],
-		"//div[@class='differ']")
+      res = session "/test/1.#{t3}.backup"
+      assert_text 't3', 'pre'
+      ok_in [[:del, 't2'], [:br], [:ins, 't3'], [:br]],
+		"//div[@class='differ']"
     end
   end
 end

@@ -6,7 +6,7 @@ require 'qwik/version'
 module Qwik
   class Config
     LIBDIR = File.dirname(__FILE__)
-    BASEDIR = File.expand_path(LIBDIR+'/../../')
+    DEBUG_BASEDIR = File.expand_path(Dir.pwd+'/../../')
 
     QuickMLInternal = {
       # QuickML Internal use.
@@ -86,10 +86,10 @@ module Qwik
 
     DebugConfig = {
       # Setting for debug mode.
-      :super_dir	=> BASEDIR+'/share/super',
-      :theme_dir	=> BASEDIR+'/share/theme',
-      :template_dir	=> BASEDIR+'/share/template',
-      :qrcode_dir	=> BASEDIR+'/share/qrcode',
+      :super_dir	=> DEBUG_BASEDIR+'/share/super',
+      :theme_dir	=> DEBUG_BASEDIR+'/share/theme',
+      :template_dir	=> DEBUG_BASEDIR+'/share/template',
+      :qrcode_dir	=> DEBUG_BASEDIR+'/share/qrcode',
     }
 
     TestConfig = {
@@ -98,8 +98,8 @@ module Qwik
       :test		=> true,	# Do not send mail.
 #      :public_url	=> 'http://example.com/q/',
 #      :default_sitename	=> 'top',
-#      :ml_domain	=> 'q.example.com',
-#      :ml_postmaster	=> 'postmaster@q.example.com',
+      :ml_domain	=> 'q.example.com',
+      :ml_postmaster	=> 'postmaster@q.example.com',
       :sites_dir	=> '.',
       :grave_dir	=> '.',
       :cache_dir	=> '.',
@@ -173,7 +173,7 @@ module Qwik
       when /\A(\d+)KB\z/;	return $1.to_i * 1024
       when /\A(\d+)MB\z/;	return $1.to_i * 1024 * 1024
       end
-      v.gsub!('$BASEDIR') { BASEDIR }
+      v.gsub!('$BASEDIR') { DEBUG_BASEDIR }
       return v
     end
 
@@ -243,7 +243,8 @@ if defined?($test) && $test
       assert_equal({:k=>4}, c.parse_config(':k:	2 * 2'))
       assert_equal({:k=>'1.1'}, c.parse_config(':k:1.1'))
 
-      assert_equal({:k=>Qwik::Config::BASEDIR}, c.parse_config(':k:$BASEDIR'))
+      assert_equal({:k=>Qwik::Config::DEBUG_BASEDIR},
+		   c.parse_config(':k:$BASEDIR'))
 
       # test_parse_value
       assert_equal  true, c.parse_value('true')

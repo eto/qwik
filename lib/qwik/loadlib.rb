@@ -2,11 +2,11 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class LoadLibrary
-    DIR = File.dirname(__FILE__)
-    LIBDIR = File.expand_path(DIR+'/../')
+    LIBDIR = File.dirname(__FILE__)
+    ROOTLIBDIR = File.expand_path(LIBDIR+'/../')
 
     def self.load_libs_here(glob)
-      dir = LIBDIR
+      dir = ROOTLIBDIR
       ar = list_files(dir, glob)
       add_load_path(dir)
       require_files(ar)
@@ -38,8 +38,6 @@ end
 
 if $0 == __FILE__
   require 'qwik/test-common'
-  #require 'qwik/testunit'
-  #require 'qwik/config'
   $test = true
 end
 
@@ -53,7 +51,7 @@ if defined?($test) && $test
       org_libs = $".dup
 
       # test list_files
-      dir = Qwik::LoadLibrary::LIBDIR
+      dir = Qwik::LoadLibrary::ROOTLIBDIR
       glob = 'qwik/act-*.rb'
       files = c.list_files(dir, glob)
       ok_eq(true, 0 < files.length)

@@ -10,13 +10,13 @@ require 'qwik/util-pathname'
 
 module Qwik
   class MakeRelease
-    DIR = File.dirname(__FILE__)
+    LIBDIR = File.dirname(__FILE__)
 
     def self.main(argv)
       type = MakeRelease.parse_args(argv)
 
       config = Config.new
-      libdir = DIR
+      libdir = LIBDIR
       date = Time.now.ymd_s
       version = VERSION
       ml_version = QuickML::VERSION
@@ -89,7 +89,7 @@ module QuickML
   VERSION =  '#{ml_version}'
 end
 "
-      (libdir+'/version.rb').path.write(version_str)
+      "#{libdir}/version.rb".path.write(version_str)
     end
   end
 

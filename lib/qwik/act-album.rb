@@ -1,26 +1,13 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-theme'
 
 module Qwik
   class Action
-    D_album = {
+    D_plugin_album = {
       :dt => 'Album plugin',
       :dd => 'Show attached images in a window.',
       :dc => "* Example
  {{album}}
-{{album}}
-
-You see nothing here because this is only a description page.
-
 * Thanks
 I use '[[Nameraka Alubum|http://sappari.org/na.html]]'
 by Mr. Keisuke Kambralto show the album.

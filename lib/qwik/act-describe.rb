@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/description'
 require 'qwik/description-ja'
@@ -22,15 +13,26 @@ module Qwik
 [[basic.describe]]
 
 You can see the list below.
-" }
+"
+    }
 
-    def plg_description_list
+    def plg_description_list_dl
       list = [:dl]
       self.description_list(@req.accept_language).each {|name|
 	hash = description_get(name, @req.accept_language)
 	list << [:dt, [:a, {:href=>"#{name}.describe"},
-	    "#{name} | #{hash[:dt]}"]]
+	    [:em, name], "  | ", [:strong, hash[:dt]]]]
 	list << [:dd, hash[:dd]]
+      }
+      return [:div, {:class=>'description-list'}, list]
+    end
+
+    def plg_description_list
+      list = [:ul]
+      self.description_list(@req.accept_language).each {|name|
+	hash = description_get(name, @req.accept_language)
+	list << [:li, [:a, {:href=>"#{name}.describe"},
+	    [:em, name], ' ', [:strong, hash[:dt]]], ' ', hash[:dd]]
       }
       return [:div, {:class=>'description-list'}, list]
     end
@@ -64,7 +66,7 @@ You can see the list below.
 * #{_('Functions list')}
 {{description_list}}
 "
-      @req.base = 'FrontPage'	# Fake.
+      @req.base = 'FrontPage'		# Fake.
       w = c_res(content)
       w = TDiaryResolver.resolve(@config, @site, self, w)
       title = "#{_('Function')} | #{hash[:dt]}"
@@ -97,15 +99,14 @@ if defined?($test) && $test
 
     def test_all
       t_add_user
-      res = session('/test/describe.describe')
-      ok_title('Function | Description of functions')
-      ok_in([:p, 'You can see the description of each functions of qwikWeb.'],
-	    '//div[@class="section"]')
+      res = session '/test/describe.describe'
+      ok_title 'Function | Description of functions'
+      ok_in [:p, 'You can see the description of each functions of qwikWeb.'],
+	'//div[@class="section"]'
 
       # test_description_list
       list = @action.description_list
-      eq(true, 0 < list.length)
-#     eq(true, list.include?('describe'))
+      eq true, 0 < list.length
     end
   end
 end

@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_calc = {
+    D_plugin_calc = {
       :dt => 'Calicurator plugin',
       :dd => 'You can sum numbers by simple table.',
       :dc => "* Example

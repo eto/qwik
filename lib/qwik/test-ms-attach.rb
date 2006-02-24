@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/test-module-ml'
@@ -20,7 +11,7 @@ class TestMSAttach < Test::Unit::TestCase
 
   def test_submit_multipart
     send_normal_mail('bob@example.net')		# Bob creates a new ML.
-    sendmail('bob@example.net', 'test@example.com', 'multipart test') {
+    sendmail('bob@example.net', 'test@q.example.com', 'multipart test') {
 "MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary=\"boundary\"
 Content-Transfer-Encoding: 7bit
@@ -39,14 +30,14 @@ test2
 
 --boundary--
 " }
-    ok_eq('multipart test', @site['1'].get_title)
-    ok_eq("* multipart test
+    eq 'multipart test', @site['1'].get_title
+    eq "* multipart test
 {{mail(bob@example.net,0)
 test1
 
 test2
 }}
-", @site["1"].load)
+", @site["1"].load
   end
 
   def test_submit_with_text
@@ -74,20 +65,20 @@ dGVzdA0K
 "
     sm('text file attach test') { str }
     page = @site.get_by_title('text file attach test')
-    ok_eq('text file attach test', page.get_title)
-    ok_eq('1', page.key)
-    ok_eq("* text file attach test
+    eq 'text file attach test', page.get_title
+    eq '1', page.key
+    eq "* text file attach test
 {{mail(bob@example.net,0)
 test
 
 {{file(t.txt)}}
 }}
-", page.load)
+", page.load
     files = @site.files('1')
-    ok_eq(true, files.exist?('t.txt'))
-    ok_eq('./test/1.files/t.txt', files.path('t.txt').to_s)
+    eq true, files.exist?('t.txt')
+    eq './test/1.files/t.txt', files.path('t.txt').to_s
     str = files.path('t.txt').read
-    ok_eq("test\r\n", str)
+    eq "test\r\n", str
 
     # The same mail is sent to the ML again.
     sm('text file attach test') { str }
@@ -95,7 +86,7 @@ test
 
   # FIXME: abandon...
   def nu
-    ok_eq("* text file attach test
+    eq "* text file attach test
 {{mail(bob@example.net,0)
 test
 
@@ -106,13 +97,13 @@ test
 
 {{file(1-t.txt)}}
 }}
-", page.load)
-    ok_eq(true, @site.files(page.key).exist?('1-t.txt'))
+", page.load
+    eq true, @site.files(page.key).exist?('1-t.txt')
 
     # Once again.
     group.site_post(mail, true)
     page = @site.get_by_title('text file attach test')
-    ok_eq("* text file attach test
+    eq "* text file attach test
 {{mail(bob@example.net,0)
 test
 
@@ -128,8 +119,8 @@ test
 
 {{file(2-t.txt)}}
 }}
-", page.load)
-    ok_eq(true, @site.files(page.key).exist?('2-t.txt'))
+", page.load
+    eq true, @site.files(page.key).exist?('2-t.txt')
   end
 
   def nutest_submit_with_image
@@ -164,15 +155,15 @@ AAAAAElFTkSuQmCC
 " }
 
     group.site_post(mail, true)
-    ok_eq('Attach Test', @site['1'].get_title)
-    ok_eq("* Attach Test
+    eq 'Attach Test', @site['1'].get_title
+    eq "* Attach Test
 {{mail(bob@example.net,0)
 This is a test.
 
 {{file(1x1.png)}}
 }}
 ",
-	  @site['1'].load)
-    ok_eq(true, @site.files('1').exist?('1x1.png'))
+	  @site['1'].load
+    eq true, @site.files('1').exist?('1x1.png')
   end
 end

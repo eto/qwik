@@ -74,7 +74,7 @@ if defined?($test) && $test
       eq 'http://example.com/', site.host_url
       eq 'http://example.com/test/', site.site_url
       eq 'http://example.com/test/1.html', site.page_url('1')
-      eq 'test@example.com', site.ml_address
+      eq 'test@q.example.com', site.ml_address
       t_without_testmode {
 	eq 'example.com/test', site.title
 	eq 'example.com/test - 1', site.get_page_title('1')
@@ -95,7 +95,7 @@ if defined?($test) && $test
       eq 'http://example.com/', site.host_url
       eq 'http://example.com/', site.site_url
       eq 'http://example.com/1.html', site.page_url('1')
-      eq 'www@example.com', site.ml_address
+      eq 'www@q.example.com', site.ml_address
       t_without_testmode {
 	eq 'example.com', site.title
 	eq 'example.com - 1', site.get_page_title('1')
@@ -110,7 +110,7 @@ if defined?($test) && $test
       eq 'http://example.org/', site.host_url
       eq 'http://example.org/', site.site_url
       eq 'http://example.org/1.html', site.page_url('1')
-      eq 'test@example.com', site.ml_address	# FIXME: Umm.
+      eq 'test@q.example.com', site.ml_address		# FIXME: Umm.
       siteconfig.add(":siteml:info@example.org\n")
       eq 'info@example.org', site.ml_address
       t_without_testmode {
@@ -127,7 +127,7 @@ if defined?($test) && $test
       eq 'https://example.net/', site.host_url
       eq 'https://example.net/', site.site_url
       eq 'https://example.net/1.html', site.page_url('1')
-      eq 'test@example.com', site.ml_address	# FIXME: Umm.
+      eq 'test@q.example.com', site.ml_address		# FIXME: Umm.
       siteconfig.add(":siteml:info@example.net\n")
       eq 'info@example.net', site.ml_address
       t_without_testmode {

@@ -118,10 +118,10 @@ module Qwik
       return [:div, {:class=>'section edithistory'},
 	[:h2, _('Page functions')],
 	[:ul,
-	  [:li, [:a, {:href=>pagename+'.backup'}, _('Backup')]],
-	  [:li, [:a, {:href=>pagename+'.history'}, _('Time machine')]],
-	  [:li, [:a, {:href=>pagename+'.presen'}, _('Presentation mode')]],
-	  [:li, [:a, {:href=>pagename+'.wysiwyg'}, _('Edit in this page')]]
+	  [:li, [:a, {:href=>"#{pagename}.backup"},  _('Backup')]],
+	  [:li, [:a, {:href=>"#{pagename}.history"}, _('Time machine')]],
+	  [:li, [:a, {:href=>"#{pagename}.presen"},  _('Presentation mode')]],
+	  [:li, [:a, {:href=>"#{pagename}.wysiwyg"}, _('Edit in this page')]]
 	]]
     end
 
@@ -231,48 +231,48 @@ if defined?($test) && $test
       @action.generate_editor_page('title', 'h1', 'msg', ['ma'], ['si'])
       eq 200, res.status
       ok_title 'title'
-      ok_xp([:div, {:class=>'message'}, 'msg'], "//div[@class='message']")
-      ok_xp([:div, {:class=>'main'}, 'ma'], "//div[@class='main']")
-      ok_xp([:div, {:class=>'sidebar'}, 'si'], "//div[@class='sidebar']")
+      ok_xp [:div, {:class=>'message'}, 'msg'], "//div[@class='message']"
+      ok_xp [:div, {:class=>'main'}, 'ma'], "//div[@class='main']"
+      ok_xp [:div, {:class=>'sidebar'}, 'si'], "//div[@class='sidebar']"
 
       t_add_user
 
-      res = session('/test/.test_editor')
-      #ok_xp([:title, 'Edit | 1'], 'title', res)
-      #ok_xp([:title, 'act_test_editor'], 'title', res)
+      res = session '/test/.test_editor'
+      #ok_xp [:title, 'Edit | 1'], 'title', res
+      #ok_xp [:title, 'act_test_editor'], 'title', res
 
       page = @site.create_new
-      page.store('t')
+      page.store 't'
       @action.c_editor(@site, '1')
       ok_title 'Edit | 1'
-      ok_xp([:div, {:class=>'message'}, ['']],
-	    "//div[@class='message']")
+      ok_xp [:div, {:class=>'message'}, ['']],
+	"//div[@class='message']"
 
       # edit form
       assert_rattr({:action=>'1.save', :method=>'POST'},
 		   "//div[@class='day edit']/form")
-      ok_xp([:textarea, {:id=>'contents', :name=>'contents',
+      ok_xp [:textarea, {:id=>'contents', :name=>'contents',
 		:cols=>'70', :rows=>'20', :class=>'focus'}, 't'],
-	    "//div[@class='day edit']/form/textarea")
-      ok_xp([:input, {:value=>'e358efa489f58062f10dd7316b65649e',
+	    "//div[@class='day edit']/form/textarea"
+      ok_xp [:input, {:value=>'e358efa489f58062f10dd7316b65649e',
 		:type=>'hidden', :name=>'md5hex'}],
-	    "//div[@class='day edit']/form/input")
-      ok_xp([:input, {:value=>'Save', :type=>'submit',
+	    "//div[@class='day edit']/form/input"
+      ok_xp [:input, {:value=>'Save', :type=>'submit',
 		:class=>'submit', :name=>'save'}],
-	    "//div[@class='day edit']/form/input[2]")
+	    "//div[@class='day edit']/form/input[2]"
 
       # attach form
       assert_rattr({:enctype=>'multipart/form-data',
 		     :action=>'1.files', :method=>'POST'},
 		   "//div[@class='day attach']/form")
-      ok_xp([:input, {:type=>'file', :name=>'content'}],
-	    "//div[@class='day attach']/form/input")
-      ok_xp([:input, {:value=>'Attach', :type=>'submit', :class=>'submit'}],
-	    "//div[@class='day attach']/form/input[2]")
-      ok_in([:a, {:href=>'1.files'}, 'Attach many files'],
-	    "//div[@class='day attach']//div[@class='right attach_many']")
-#      ok_xp([:a, {:href=>'_SiteMenu.html'}, 'SiteMenu'],
-#	    "//div[@class='sidebar']//a")
+      ok_xp [:input, {:type=>'file', :name=>'content'}],
+	    "//div[@class='day attach']/form/input"
+      ok_xp [:input, {:value=>'Attach', :type=>'submit', :class=>'submit'}],
+	    "//div[@class='day attach']/form/input[2]"
+      ok_in [:a, {:href=>'1.files'}, 'Attach many files'],
+	    "//div[@class='day attach']//div[@class='right attach_many']"
+#      ok_xp [:a, {:href=>'_SiteMenu.html'}, 'SiteMenu'],
+#	    "//div[@class='sidebar']//a"
     end
 
     def test_editor
@@ -280,28 +280,27 @@ if defined?($test) && $test
 
       # test_edit_page_generator
       page = @site.create_new
-      page.store("* test\ntestbody\n** h3\nh3body\n* h2\nh2body\n")
+      page.store "* test\ntestbody\n** h3\nh3body\n* h2\nh2body\n"
       side = @site['_SideMenu']
-      side.store('* side\nsidebody [[1]]')
+      side.store '* side\nsidebody [[1]]'
 
       res = session
       @action.c_editor(@site, '1', 'contents', 'msg')
       ok_title 'Edit | test'
-      assert_text('Edit | test', 'h1')
-      ok_xp([:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
-	    '//meta')
-      ok_in(['msg'], "//div[@class='message']")
+      assert_text 'Edit | test', 'h1'
+      ok_xp [:meta, {:content=>'NOINDEX,NOFOLLOW', :name=>'ROBOTS'}],
+	    '//meta'
+      ok_in ['msg'], "//div[@class='message']"
       assert_attr({:action=>'1.save', :method=>'POST'}, 'form')
-      assert_text('contents', 'textarea')
-      ok_xp([:input, {:value=>'98bf7d8c15784f0a3d63204441e1e2aa',
-		:type=>'hidden', :name=>'md5hex'}], '//input')
-      ok_xp([:input, {:value=>'Save', :type=>'submit', :class=>'submit',
-		:class=>'submit', :name=>'save'}],
-	    '//input[2]')
-#      ok_xp([:a, {:href=>'_SiteMenu.html'}, 'SiteMenu'],
-#	    '//div[@class='sidebar']//a')
-#      ok_xp([:a, {:href=>'1.presen'}, 'Presentation mode'],
-#	    "//div[@class='sidebar']//a")
+      assert_text 'contents', 'textarea'
+      ok_xp [:input, {:value=>'98bf7d8c15784f0a3d63204441e1e2aa',
+		:type=>'hidden', :name=>'md5hex'}], '//input'
+      ok_xp [:input, {:value=>'Save', :type=>'submit', :class=>'submit',
+		:class=>'submit', :name=>'save'}], '//input[2]'
+#      ok_xp [:a, {:href=>'_SiteMenu.html'}, 'SiteMenu'],
+#	    '//div[@class='sidebar']//a'
+#      ok_xp [:a, {:href=>'1.presen'}, 'Presentation mode'],
+#	    "//div[@class='sidebar']//a"
    end
   end
 end

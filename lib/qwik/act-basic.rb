@@ -1,35 +1,39 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_basic = {
+    D_plugin_basic = {
       :dt => 'Basic plugins',
       :dd => "Simple and Basic plugins.",
       :dc => "* Description
 ** BR plugin
-You can input <br> inline.
+You can break a line by using <br> element.
  This is {{br}} a test.
 This is {{br}} a test.
-
-** Window plugin
-Open with new window plugin
-
+** Open with new window plugin
 You can make a link to show the page in a new window.
  {{window(http://qwik.jp/)}}
 {{window(http://qwik.jp/)}}
-Open the link in a new window.
-
+** Show last modified plugin
+You can show last modified by this plugin.
+ {{last_modified}}
+{{last_modified}}
+** Information only for a group
+You can specify content only for guests or for members.
+{{only_guest
+You are a guest.
+}}
+{{only_member
+You are a member.
+}}
+ {{only_guest
+ You are a guest.
+ }}
+ {{only_member
+ You are a member.
+ }}
 ** Comment out plugin
-You can comment it out.
+You can comment out the content.
  {{com
  You can not see this line.
  You can not see this line also.
@@ -38,31 +42,8 @@ You can comment it out.
 You can not see this line.
 You can not see this line also.
 }}
-You see nothing here.
-
-** Last modified plugin
-You can show last modified date by this plugin.
- {{last_modified}}
-{{last_modified}}
-
-** Information only for guests and only for members
-You can specify the content is only for guests or only for members.
- {{only_guest
- This string is '''only for guest'''.
- }}
-{{only_guest
-This string is '''only for guest'''.
-}}
-If you are a guest, you see \"This string is '''only for guest'''.\"
-
- {{only_member
- This string is '''only for member'''.
- }}
-{{only_member
-This string is '''only for member'''.
-}}
-If you are a member, you see \"This string is '''only for member'''.\"
-" }
+"
+    }
 
     # ==============================
     def plg_qwik_null

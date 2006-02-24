@@ -2,9 +2,9 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_book = {
+    D_plugin_book = {
       :dt => 'Book and ISBN plugins',
-      :dd => 'Add a link to a book or a link to searcha book.',
+      :dd => 'Add a link to a book or to search by a phrase.',
       :dc => "* Example
 ** ISBN plugin
 Add a link to a book by isbn.

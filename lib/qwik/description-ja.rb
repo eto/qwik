@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 module Qwik
   class Action
     Dja_album = {
@@ -14,13 +5,9 @@ module Qwik
       :dd => '添付された画像ファイルを一度に見ることができます。',
       :dc => '* 例
  {{album}}
-{{album}}
-
-これは説明画面のため、ここにはアルバムは表示されません。
-
 * 感謝
-神原 啓介氏による「なめらかアルバム」機能を使用しております。
-感謝いたします。
+神原 啓介氏による「[[なめらかアルバム|http://sappari.org/na.html]]」機能を
+使用しております。どうもありがとうございます。
 ' }
 
     Dja_calc = {
@@ -220,9 +207,7 @@ s<sup>5</sup>
       :dt => 'qwikWeb機能一覧',
       :dd => 'qwikWebの機能一覧です。',
       :dc => '
-* 使い方
-下記に、qwikWebの機能一覧を示します。
-'
+下記に、qwikWebの機能一覧を示します。'
 =begin
 # :[[textformat.describe]]:書式一覧です。
 # * 基本機能

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/test-module-ml'
@@ -21,7 +12,7 @@ class TestMSBasic < Test::Unit::TestCase
   def test_all
     logs = @ml_config.logger.get_log
 
-    # Bob tries to create a new ML.
+    # Bob send a mail to create a new ML.
     send_normal_mail('bob@example.net')
     ok_log(['[test]: New ML by bob@example.net',
 	 '[test]: Add: bob@example.net',

@@ -1,14 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
-# Thanks to Mr. Shuhei Yamamoto.
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -21,10 +10,9 @@ module Qwik
       return @site.ml_address
     end
 
+    # Thanks to Mr. Shuhei Yamamoto.
     def plg_ml_submit_form
-      href = '/formmail.php'
-      href += "?user=#{@req.user}"
-      href += "&site=#{@site.sitename}"
+      href = "/formmail.php?user=#{@req.user}&site=#{@site.sitename}"
       return [:a, {:href=>href, :target=>'_new'}, _('Mlcommit')]
     end
   end
@@ -43,15 +31,15 @@ if defined?($test) && $test
       res = session
 
       # test_plg_thissitename
-      ok_eq('', @action.plg_thissitename)
+      eq '', @action.plg_thissitename
 
       # test_plg_thislist
-      ok_eq('test@example.com', @action.plg_thislist)
+      eq 'test@q.example.com', @action.plg_thislist
 
       # test_plg_ml_submit_form
-      ok_eq([:a, {:href=>"/formmail.php?user=user@e.com&site=test",
-		:target=>'_new'}, 'Mlcommit'],
-	    @action.plg_ml_submit_form)
+      eq [:a, {:href=>"/formmail.php?user=user@e.com&site=test",
+	  :target=>'_new'}, 'Mlcommit'],
+	@action.plg_ml_submit_form
     end
   end
 end

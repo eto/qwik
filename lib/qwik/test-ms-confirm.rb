@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/test-module-ml'
@@ -28,7 +19,7 @@ class TestMSConfirm < Test::Unit::TestCase
     logs = @ml_config.logger.get_log
     ok_eq("[test]: New ML by bob@example.net", logs[0])
     if Regexp.new(Regexp.escape("[test]: Send confirmation: ")+
-		  "(confirm\\+\\d+\\+test@example\\.com)"+
+		  "(confirm\\+\\d+\\+test@q\\.example\\.com)"+
 		  Regexp.escape(' bob@example.net')) =~ logs[1]
       confirmation_to = $1
     end
@@ -38,7 +29,7 @@ class TestMSConfirm < Test::Unit::TestCase
     ok_log(["[test]: Add: bob@example.net",
 	     "[test]: QwikPost: test",
 	     "[test:1]: Send:",
-	     "[test]: Accept confirmation:  test@example.com"])
+	     "[test]: Accept confirmation:  test@q.example.com"])
 
     # Bob send a mail.
     send_normal_mail('bob@example.net')

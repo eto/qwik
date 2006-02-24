@@ -202,7 +202,7 @@ if defined?($test) && $test
       # test_generate_report_mail
       t_make_public(Qwik::Site, :generate_report_mail)
       mail = @site.generate_report_mail('user@e.com', 'test')
-      eq 'test@example.com', mail[:from]
+      eq 'test@q.example.com', mail[:from]
       eq 'user@e.com', mail[:to]
       eq 'http://example.com/test/ Report', mail[:subject]
       eq 'Recent changes on http://example.com/test/
@@ -218,7 +218,7 @@ test', mail[:content]
       # test_generate_report_mail_ja
       t_make_public(Qwik::Site, :generate_report_mail)
       mail = @site.generate_report_mail('user@e.com', 'test')
-      eq 'test@example.com', mail[:from]
+      eq 'test@q.example.com', mail[:from]
       eq 'user@e.com', mail[:to]
       eq 'http://example.com/test/ レポート', mail[:subject]
       eq 'http://example.com/test/ における、本日の編集記録です。
@@ -252,11 +252,11 @@ test', mail[:content]
 
       # test_send_report
       @site.send_report
-      eq(['test@example.com', 'user@e.com'], $smtp_sendmail[2..3])
-      assert_match(/test@example.com/, $smtp_sendmail[4])
+      eq(['test@q.example.com', 'user@e.com'], $smtp_sendmail[2..3])
+      assert_match(/test@q.example.com/, $smtp_sendmail[4])
 
       header =
-"From: test@example.com
+"From: test@q.example.com
 To: user@e.com
 Subject: http://example.com/test/ =?ISO-2022-JP?B?GyRCJWwlXSE8JUgbKEI=?=
 Content-Type: text/plain; charset=\"ISO-2022-JP\"

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 require 'pp'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -49,11 +40,10 @@ module TestModuleML
   def ml_setup
     # setup quickml config
     if ! defined?($quickml_config) || $quickml_config.nil?
-      hash = prepare_quickml_config
-      hash[:logger] = QuickML::MockLogger.new
-
       config = Qwik::Config.new
-      config.update(hash)
+      config[:logger] = QuickML::MockLogger.new
+      config.update(Qwik::Config::DebugConfig)
+      config.update(Qwik::Config::TestConfig)
       QuickML::ServerMemory.init_mutex(config)
       QuickML::ServerMemory.init_catalog(config)
 
@@ -69,23 +59,6 @@ module TestModuleML
     @ml_message_charset = 'iso-2022-jp'
 
     t_make_public(QuickML::Group, :site_post)
-  end
-
-  def prepare_quickml_config
-    {
-      # For test and debug.
-      :debug		=> true,	# *TEST*
-      :test		=> true,	# *TEST*
-
-      # Server setting.
-      :ml_port		=> 9196,	# *TEST*
-
-      # Files and directories.
-      :sites_dir	=> '.',			# *TEST*
-      :ml_pid_file	=> 'quickml.pid',	# *TEST*
-      :log_dir		=> '.',
-      :config_file	=> 'config.txt',	# *TEST*
-    }
   end
 
   # ============================== teardown
@@ -131,15 +104,15 @@ QUIT
   end
 
   def send_normal_mail(from)
-    sendmail(from, 'test@example.com', 'test') { 'test' }
+    sendmail(from, 'test@q.example.com', 'test') { 'test' }
   end
 
   def unsubscribe(from)
-    sendmail(from, 'test@example.com', 'unsubscribe') { '' }
+    sendmail(from, 'test@q.example.com', 'unsubscribe') { '' }
   end
 
   def sm(sub, &b)
-    sendmail('bob@example.net', 'test@example.com', sub, &b)
+    sendmail('bob@example.net', 'test@q.example.com', sub, &b)
   end
 
   # ============================== assert
