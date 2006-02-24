@@ -1,5 +1,11 @@
 2006-02-24  Kouichirou Eto  <2006 eto.com>
 
+	* Refactoring descriptions.
+
+	* act-comment.rb: Merge hcomment, mcomment.
+
+2006-02-24  Kouichirou Eto  <2006 eto.com>
+
 	* config.rb: Change ml_domain to 'q.example.com' to make clear.
 	The other files are also changed.
 	* test-module-ml.rb: Change to use TestConfig.
