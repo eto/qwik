@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -54,17 +45,6 @@ module Qwik
       w << msg
 
       template
-    end
-
-    JAVASCRIPT_FILES = %w(prototype scriptaculous base niftypp debugwindow)
-    def self.generate_js
-      return JAVASCRIPT_FILES.map {|f|
-	generate_script("js/#{f}")
-      }
-    end
-
-    def self.generate_script(f)
-      return [:script, {:type=>'text/javascript', :src=>".theme/#{f}.js"}, '']
     end
   end
 end
@@ -116,18 +96,6 @@ if defined?($test) && $test
       ok_eq([:div, {:class=>'main'}, 'msg'],
 	    res.get_path("//div[@class='main']"))
       ok_eq(nil, res.get_tag('meta[2]')) # not redirected
-    end
-
-    def test_generate_js
-      c = Qwik::Action
-      eq([:script, {:src=>'.theme/t.js', :type=>'text/javascript'}, ''],
-	 c.generate_script('t'))
-#      eq([[:script, {:src=>'.theme/js/base.js', :type=>'text/javascript'}, ''],
-#	   [:script, {:src=>'.theme/js/niftypp.js', :type=>'text/javascript'},
-#	     ''],
-#	   [:script, {:src=>'.theme/js/debugwindow.js',
-#	       :type=>'text/javascript'}, '']],
-#	 c.generate_js)
     end
   end
 end
