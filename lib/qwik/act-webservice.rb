@@ -1,17 +1,8 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_webservice = {
+    D_plugin_webservice = {
       :dt => 'Web service plugins',
       :dd => 'You can use several external Web services.',
       :dc => "
@@ -48,7 +39,8 @@ You can show an translation link.
 Specify translate English to Japanese link.
  {{translate_je}}
 Specify translate Japanese to English link.
-" }
+"
+    }
 
     # ========== hatena point
     def plg_hatena_point(hatena_account)

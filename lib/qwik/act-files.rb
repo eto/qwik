@@ -1,21 +1,11 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_files = {
+    D_ext_files = {
       :dt => 'Attach file function',
       :dd => 'You can use attach files onto pages.',
-      :dc => "
-* Attach files to a page
+      :dc => "* Attach files to a page
 You can attach files to a page.
 At the first, go to the edit page.
 You see attach file form on the bottom of the edit page.
@@ -30,7 +20,27 @@ So that you can see the link to the attached file from the page.
 {{show_files}}
  {{show_files}}
 You can show the list of attached files.
-" }
+"
+    }
+
+    Dja_ext_files = {
+      :dt => 'ファイル添付機能 ',
+      :dd => 'ページにファイルを添付できます。',
+      :dc => '* ページへのファイル添付
+まず編集画面に行きます。
+ページの一番下に、ファイル添付のためのフォームがあります。
+「たくさん添付する」というリンクをたどると、たくさんのファイルを一度に
+添付するためのフォーム画面にとびます。
+
+添付をすると、ページの一番下に自動的にその添付ファイルへのリンクがつきます。
+ {{file("somefile.txt")}}
+そのようにして、そのページから添付ファイルへアクセスできるようになります。
+
+* ファイル一覧プラグイン
+ {{show_files}}
+ファイル一覧を表\示できます。
+'
+    }
 
     # ============================== files list
     def plg_show_files

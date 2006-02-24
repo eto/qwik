@@ -6,14 +6,25 @@ module Qwik
   $wema_redirect = true
 
   class Action
-    D_wema = {
+    D_plugin_wema = {
       :dt => 'Post-it plugin',
       :dd => 'You can put post-it notes on the page.',
       :dc => "* How to
 From the page attribute, please click 'New Post-it' link.
 You can see a small window.  Enter some text and save it.
 You can move the small window and click set for setting the position.
-" }
+"
+    }
+
+    Dja_plugin_wema = {
+      :dt => '附箋機能 ',
+      :dd => '附箋をはることができます。',
+      :dc => '* 使用法
+ページの下に、「New Post-it」というリンクがあるので、押してください。
+小さなWindowが表示さます。なにかテキストをいれ、セーブしてください。
+Windowを動かして、「set」を押すと位置をセットします。
+'
+    }
 
     def plg_wema
       page = @site[@req.base]

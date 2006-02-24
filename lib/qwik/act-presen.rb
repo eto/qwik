@@ -1,18 +1,9 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_presen = {
-      :dt => 'Presentaion plugin',
+    D_ext_presen = {
+      :dt => 'Presentaion mode',
       :dd => 'You can show the page in presentation mode.',
       :dc => "* Example
  [[FrontPage.presen]]
@@ -27,9 +18,29 @@ You can show a link to presentation mode.
 You can specify the presentation theme by this plugin.
 
 * Thanks
-I use 's5' by Mr. Eric Meyer for this presentation mode.
-Thank you very much.
-" }
+I use [[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
+by Mr. Eric Meyer for this presentation mode.  Thank you very much.
+"
+    }
+
+    Dja_ext_presen = {
+      :dt => 'プレゼン・モード',
+      :dd => 'プレゼン・モードで表示します。',
+      :dc => '* 例
+ [[FrontPage.presen]]
+[[FrontPage.presen]]
+このリンクをたどると、FrontPageをプレゼンモードで表示します。
+ {{presen}}
+そのページ自身をプレゼンモードにするリンクを表示したい場合は、
+このプラグインをご利用下さい。
+** プレゼンテーマ指定
+ {{presen_theme(qwikblack)}}
+このようにして、プレゼンテーマを指定できます。
+* 感謝
+プレゼンモードには、Eric Meyer氏による[[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
+を使わせていただいております。どうもありがとうございます。
+'
+    }
 
     def plg_presen
       return '' if !defined?(@req.base) || @req.base.nil?

@@ -12,7 +12,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_summary = {
+    D_plugin_summary = {
       :dt => 'Show summary of a target page',
       :dd => 'You can include summary of target page.',
       :dc => "

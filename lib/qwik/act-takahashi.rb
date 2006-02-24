@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_takahashi = {
+    D_plugin_takahashi = {
       :dt => 'Takahashi method plugin',
       :dd => 'You can do your presentaion in Takahashi method.',
       :dc => "* Example
@@ -25,7 +25,7 @@ you.
 "
     }
 
-    Dja_takahashi = {
+    Dja_plugin_takahashi = {
       :dt => '高橋メソッドプラグイン',
       :dd => '高橋メソッドでプレゼンできます。',
       :dc => '* 例

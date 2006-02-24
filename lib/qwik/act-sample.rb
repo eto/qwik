@@ -6,7 +6,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_sample = {
+    D_plugin_sample = {
       :dt => 'Sample plugins',
       :dd => 'These are sample plugins.',
       :dc => "* Example
@@ -41,7 +41,46 @@ This is a text to quote.
  This is a text to quote.
  }}
 You can make block quote of the string.
-" }
+"
+    }
+
+    Dja_plugin_sample = {
+      :dt => 'サンプル・プラグイン',
+      :dd => 'プラグインのサンプルです。',
+      :dc => '
+qwikWebのプラグインを自分で作ってみる際の参考となるプラグインを提供し
+ています。このプラグインを改造して、自由に自分なりのプラグインを作って
+みてください。
+
+詳しくは、こちらのURLをごらんください。
+http://qwik.jp/HowToMakePlugin.html
+
+* 例
+** ハローワールド・プラグイン
+{{hello}}
+ {{hello}}
+有名な「hello, world!」を画面に表示させることができます。
+{{hello(\"qwik users\")}}
+ {{hello(\"qwik users\")}}
+引数をとることもできます。
+** ハローワールド・アクション
+[[.hello]]
+ [[.hello]]
+「hello, world!」と表示されます。
+** 等幅プラグイン
+{{tt(\"This is a test.\")}}
+ {{tt(\"This is a test.\")}}
+等幅を指定します。
+** 引用プラグイン
+{{quote
+This is a text to quote.
+}}
+ {{quote
+ This is a text to quote.
+ }}
+引用できます。
+'
+    }
 
     def plg_hello(target='world')
       return [:strong, "hello, #{target}!"]

@@ -31,7 +31,7 @@ You can see bigger one.
 "
     }
 
-    Dja_christel = {
+    Dja_plugin_christel = {
       :dt => '滝川クリステルプラグイン',
       :dd => '滝川クリステルさんに代りにしゃべってもらいます。',
       :dc => "* Example

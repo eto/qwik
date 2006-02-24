@@ -2,13 +2,14 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_sitelog = {
-      :dt => 'Show SiteLog',
+    D_ext_sitelog = {
+      :dt => 'Show SiteLog mode',
       :dd => 'You can see sitelog of this site.',
       :dc => "* How to
  [[.sitelog]]
 Follow this link. [[.sitelog]]
-" }
+"
+    }
 
     # sitelog viewer
     def plg_sitelog

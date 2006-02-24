@@ -2,7 +2,7 @@
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-timeline'
-require 'qwik/act-time-walker'
+require 'qwik/act-chronology'
 
 module Qwik
   class Action
@@ -71,21 +71,21 @@ if defined?($test) && $test
       t_add_user
 
       page = @site.create_new
-      page.put_with_time('* t1', Time.at(0)) # Store the first.
-      page.put_with_time('* t2', Time.at(1)) # Store the second.
+      page.put_with_time('* t1', Time.at(0))	# Store this page the first.
+      page.put_with_time('* t2', Time.at(1))	# Store this page the second.
 
       # test_act_day
-      res = session('/test/.day')
-#      ok_in(['max'], '//title')
+      res = session '/test/.day'
+     #ok_in ['max'], '//title'
 
       # test_ext_day
       # There is a page in 1970-01-01.
-      res = session('/test/19700101.day')
-      ok_in(["A day | 19700101"], '//title')
+      res = session '/test/19700101.day'
+      ok_in ["A day | 19700101"], '//title'
 
       # There is no page in 1970-01-02.
-      res = session('/test/19700102.day')
-      ok_in(['no contents'], '//title')
+      res = session '/test/19700102.day'
+      ok_in ['no contents'], '//title'
     end
   end
 end

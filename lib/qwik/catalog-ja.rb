@@ -115,6 +115,10 @@ class Qwik::CatalogFactory
       'Message' => 'メッセージ',
       'Message is added.' => 'メッセージを追加しました',
 
+      # act-chronology
+      'Time walker' => '時間旅行',
+      'Chronology' => ' 年表 ',
+
       # act-day
       'A day' => '一日',
 
@@ -369,10 +373,6 @@ class Qwik::CatalogFactory
 
       # act-takahashi
       'Show in fullscreen.' => 'フルスクリーンで見る',
-
-      # act-time-walker
-      'Time walker' => '時間旅行',
-      'Chronology' => ' 年表 ',
 
       # act-toc
       'contents' => '目次',

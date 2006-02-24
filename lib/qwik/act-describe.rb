@@ -5,15 +5,26 @@ require 'qwik/description-ja'
 
 module Qwik
   class Action
-    D_describe = {
+    D_ext_describe = {
       :dt => 'Description of functions',
       :dd => 'You can see the description of each functions of qwikWeb.',
       :dc => "* Example
- [[basic.describe]]
-[[basic.describe]]
+ [[qwikweb.describe]]
+[[qwikweb.describe]]
 
 You can see the list below.
 "
+    }
+
+    Dja_ext_describe = {
+      :dt => '機能説明',
+      :dd => 'qwikWebの機能説明を見ることができます。',
+      :dc => '* 例
+ [[qwikweb.describe]]
+[[qwikweb.describe]]
+
+機能説明の一覧は、この下についてきます。
+'
     }
 
     def plg_description_list_dl
@@ -99,10 +110,10 @@ if defined?($test) && $test
 
     def test_all
       t_add_user
-      res = session '/test/describe.describe'
-      ok_title 'Function | Description of functions'
-      ok_in [:p, 'You can see the description of each functions of qwikWeb.'],
-	'//div[@class="section"]'
+      res = session '/test/qwikweb.describe'
+      ok_title 'Function | qwikWeb functions'
+#      ok_in [:p, 'You can see the description of each functions of qwikWeb.'],
+#	'//div[@class="section"]'
 
       # test_description_list
       list = @action.description_list

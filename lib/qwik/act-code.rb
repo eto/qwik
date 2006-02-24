@@ -7,7 +7,7 @@ end
 
 module Qwik
   class Action
-    D_code = {
+    D_plugin_code = {
       :dt => 'Code input plugin',
       :dd => 'You can input code on the page.',
       :dc => "* Examples
@@ -19,7 +19,28 @@ module Qwik
 puts \"hello, world!\"
 puts \"hello, qwik users!\"
 }}
+{{code
+\#include <stdio.h>
 
+void main(){
+  printf(\"hello, world!\\n\");
+}
+}}
+"
+    }
+
+    Dja_plugin_code = {
+      :dt => 'コード・プラグイン',
+      :dd => 'ページ中にコードをうめこむときに使えます。',
+      :dc => "* 例
+ {{code
+ puts \"hello, world!\"
+ puts \"hello, qwik users!\"
+ }}
+{{code
+puts \"hello, world!\"
+puts \"hello, qwik users!\"
+}}
 {{code
 \#include <stdio.h>
 

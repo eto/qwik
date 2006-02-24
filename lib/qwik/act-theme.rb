@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_theme_list = {
+    D_plugin_theme_list = {
       :dt => 'Theme list',
       :dd => 'You can see theme list.',
       :dc => "* Example
@@ -11,7 +11,20 @@ module Qwik
 You can see the list of themes.
 
 You can specify the theme of this site from [[_SiteConfig]].
-" }
+"
+    }
+
+    Dja_plugin_theme_list = {
+      :dt => 'テーマ一覧',
+      :dd => '選択可能なテーマ一覧が表示されます。',
+      :dc => '* 例
+ {{theme_list}}
+{{theme_list}}
+選択可能なテーマ一覧です。
+
+[[_SiteConfig]]ページにて、テーマを設定できます。
+'
+    }
 
     def plg_theme_list
       return [:ul, theme_list.map {|t| [:li, t] }]

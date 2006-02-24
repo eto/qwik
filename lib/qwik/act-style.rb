@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_style = {
+    D_plugin_style = {
       :dt => 'Style plugin',
       :dd => 'You can specify styles of the page.',
       :dc => "* Examples

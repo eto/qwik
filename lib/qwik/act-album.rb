@@ -15,6 +15,17 @@ Thank you very much.
 "
     }
 
+    Dja_plugin_album = {
+      :dt => 'アルバム・プラグイン',
+      :dd => '添付された画像ファイルを一度に見ることができます。',
+      :dc => '* 例
+ {{album}}
+* 感謝
+神原 啓介氏による「[[なめらかアルバム|http://sappari.org/na.html]]」機能を
+使用しております。どうもありがとうございます。
+'
+    }
+
     # http://co/qwik/HelloQwik/ActAlbum.html
     def plg_album
       c_require_page_exist

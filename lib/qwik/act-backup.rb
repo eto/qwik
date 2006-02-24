@@ -3,12 +3,12 @@ require 'qwik/wabisabi-diff'
 
 module Qwik
   class Action
-    D_backup = {
+    D_ext_backup = {
       :dt => 'Backup pages function',
       :dd => 'You can see backup files.',
       :dc => "* How to use
-nAt the first, please go to edit page.
-Then, follow '''Backup'' link in right column.
+At the first, please go to edit page.
+Then, follow 'Backup' link in right column.
 You can see the backup list of the pages.
 "
     }

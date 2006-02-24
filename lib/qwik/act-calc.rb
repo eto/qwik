@@ -25,6 +25,29 @@ module Qwik
 "
     }
 
+    Dja_plugin_calc = {
+      :dt => '計算プラグイン',
+      :dd => '簡単な表計算を行うことができます。',
+      :dc => "* 例
+ {{calc
+ ,$100	,CPU
+ ,$100	,Memory
+ ,$20.5	,Cable
+ ,$250	,Graphic Card
+ ,$250	,HDD
+ ,$400	,Mother Board
+ }}
+{{calc
+,$100	,CPU
+,$100	,Memory
+,$20.5	,Cable
+,$250	,Graphic Card
+,$250	,HDD
+,$400	,Mother Board
+}}
+"
+    }
+
     def plg_calc
       str = yield
 

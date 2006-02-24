@@ -1,18 +1,9 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-member'
 
 module Qwik
   class Action
-    D_member = {
+    NotYet_D_ext_member = {
       :dt => 'Member control function',
       :dd => 'Member control.',
       :dc => "* How to

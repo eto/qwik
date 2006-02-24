@@ -1,18 +1,9 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/html-to-wabisabi'
 
 module Qwik
   class Action
-    D_embed_html = {
+    D_plugin_embed_html = {
       :dt => 'Embed HTML plugin',
       :dd => 'You can embed bare HTML in the page.',
       :dc => "* Example
@@ -29,15 +20,16 @@ You can input allowed elements only.
 ** valid attributes
 #{WabisabiValidator::VALID_ATTR.join(' ')}
 
-* Another example
- <html>
- s<sup>5</sup>
- </html>
-<html>
-s<sup>5</sup>
-</html>
-You can embed html like this.
+* HTMLの中へのプラグインの埋め込み
+You can also embed plugins like this.
+ {{html
+ <plugin param=\"1\" method=\"recent\"></plugin>
+ }}
+{{html
+<plugin param=\"1\" method=\"recent\"></plugin>
+}}
 
+* Example
 <html>
 <H3>Header 2</H3>
 <H4>Header 3</H4>
@@ -84,10 +76,74 @@ You can embed html like this.
 
 <PLUGIN param=\"1\" method=\"recent\"></PLUGIN>
 </html>
+"
+    }
 
- <PLUGIN param=\"1\" method=\"recent\"></PLUGIN>
-You can also embed plugins like this.
-There are some exceptions for the plugin.
+    Dja_plugin_embed_html = {
+      :dt => 'html埋め込み機能 ',
+      :dd => 'htmlをそのままはりこむことができます。',
+      :dc => "* 例
+ {{html
+ This is <font color='red'>red</font>.
+ }}
+{{html
+This is <font color='red'>red</font>.
+}}
+* 使える要素
+任意のタグが使えるわけではなく，使える要素は限られています．
+** 使えるタグ
+#{WabisabiValidator::VALID_TAGS.join(' ')}
+** 使えるアトリビュート
+#{WabisabiValidator::VALID_ATTR.join(' ')}
+
+* HTMLの中へのプラグインの埋め込み
+HTML記述の中にqwikWebのプラグインを埋込むこともできます。
+ {{html
+ <plugin param=\"1\" method=\"recent\"></plugin>
+ }}
+{{html
+<plugin param=\"1\" method=\"recent\"></plugin>
+}}
+
+* 例
+<html>
+<H3>見出し2</H3>
+<H4>見出し3</H4>
+<H5>見出し4</H5>
+<H6>見出し5</H6>
+<UL>
+<LI>箇条書レベル1
+<UL>
+<LI>箇条書レベル2
+<UL>
+<LI>箇条書レベル3</LI></UL></LI></UL></LI></UL>
+<OL>
+<LI>順序リスト1
+<OL>
+<LI>順序リスト2
+<OL>
+<LI>順序リスト3</LI></OL></LI></OL></LI></OL><PRE>整形済みテキスト。</PRE>
+<BLOCKQUOTE>
+<P>引用。</P></BLOCKQUOTE>
+<DL>
+<DT>Wiki
+<DD>書き込み可能なWebページ
+<DT>QuickML
+<DD>簡単に作れるメーリングリストシステム</DD></DL>
+<TABLE>
+<TBODY>
+<TR>
+<TD>項目1-1</TD>
+<TD>項目1-2</TD>
+<TD>項目1-3</TD></TR>
+<TR>
+<TD>項目2-1</TD>
+<TD>項目2-2</TD>
+<TD>項目2-3</TD></TR></TBODY></TABLE>
+<P><EM>強調</EM>、<STRONG>さらに強調</STRONG>、<DEL>取り消し線</DEL> <A href=\"http://qwik.jp/.theme/new.png\">new</A> <A href=\"FrontPage.html\">FrontPage</A> <A href=\"http://www.yahoo.co.jp/\">Yahoo!</A></P>
+
+<PLUGIN param=\"1\" method=\"recent\"></PLUGIN>
+</html>
 "
     }
 

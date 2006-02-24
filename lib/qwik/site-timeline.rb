@@ -8,7 +8,7 @@ module Qwik
       }.max
     end
 
-    # called from act-time-walker
+    # called from act-chronology
     def timeline
       @timeline = SiteTimeLine.new(self) unless defined? @timeline
       return @timeline

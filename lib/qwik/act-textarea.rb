@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_textarea = {
+    D_plugin_textarea = {
       :dt => 'Textarea plugin',
       :dd => 'You can show a simple textarea field.',
       :dc => "

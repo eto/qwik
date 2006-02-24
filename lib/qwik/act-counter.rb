@@ -1,25 +1,8 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    Dja_counter = {
-      :dt => 'カウンター・プラグイン',
-      :dd => 'アクセスカウンターを埋め込むことができます。',
-      :dc => '* 例
- {{counter}}
-{{counter}}
-' }
-
-    D_counter = {
+    D_plugin_counter = {
       :dt => 'Counter plugin',
       :dd => 'You can show a conter for the page.',
       :dc => '* Example
@@ -27,18 +10,23 @@ module Qwik
 {{counter}}
 ' }
 
-    # http://colinux:9190/HelloQwik/ActCounter.html
+    Dja_plugin_counter = {
+      :dt => 'カウンター・プラグイン',
+      :dd => 'アクセスカウンターを埋め込むことができます。',
+      :dc => '* 例
+ {{counter}}
+{{counter}}
+' }
+
     def plg_counter
-      h = "#{@req.base}.counter"
-      div = [:div, {:class=>'counter'},
-	[:iframe, {:src=>h,
+      return [:div, {:class=>'counter'},
+	[:iframe, {:src=>"#{@req.base}.counter",
 	    :style=>'
 margin:0;
 padding:0;
 width:5em;height:1em;
 border: 0;
 '}, '']]
-      return div
     end
 
     def ext_counter
@@ -60,15 +48,14 @@ body {
   font-size: xx-small;
   text-align: right;
 }
-'],
-	],
+']],
 	[:body, [:div, {:class=>'counter'}, new_counter_str]]]
       return nil
     end
 
     def counter_increment_count
       pagename = @req.base
-      counter_pagename = '_counter_'+pagename
+      counter_pagename = "_counter_#{pagename}"
 
       counter_page = @site[counter_pagename]
       if counter_page.nil?
@@ -121,12 +108,12 @@ if defined?($test) && $test
 	    "//div[@class='counter']")
 
       counter_page = @site['_counter_1']
-      ok_eq('1', counter_page.load)
+      eq '1', counter_page.load
 
       res = session('/test/1.counter')
       ok_xp([:div, {:class=>'counter'}, '2'],
 	    "//div[@class='counter']")
-      ok_eq('2', counter_page.load)
+      eq '2', counter_page.load
     end
   end
 end

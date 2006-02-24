@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/tokenizer'
 require 'qwik/act-media'
@@ -14,7 +5,7 @@ require 'qwik/smil-time'
 
 module Qwik
   class Action
-    D_smil = {
+    D_plugin_smil = {
       :dt => 'Video editing plugin',
       :dd => 'You can control the timeline of the video.',
       :dc => "* Example

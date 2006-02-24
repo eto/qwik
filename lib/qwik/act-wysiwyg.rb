@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-edit'
 require 'qwik/html-to-wabisabi'
@@ -16,7 +7,7 @@ require 'qwik/act-md5'
 
 module Qwik
   class Action
-    D_wysiwyg = {
+    D_ext_wysiwyg = {
       :dt => 'WYSIWYG editing mode',
       :dd => 'You can edit a page in wysiwyg mode.',
       :dc => "* Example
@@ -25,7 +16,20 @@ You can access [[edit FrontPage|FrontPage.wysiwyg]] in wysiwyg mode.
 You can show a link to wysiwyg mode by this plugin.
  {{wysiwyg}}
 {{wysiwyg}}
-" }
+"
+    }
+
+    Dja_ext_wysiwyg = {
+      :dt => '見たまま編集モード',
+      :dd => 'ページを見たままの状態で編集できます。',
+      :dc => "* 例
+たとえば、[[edit FrontPage|FrontPage.wysiwyg]]からFrontPageを見たままの状態で編集する画面にとびます。
+
+そのページから見たまま編集画面に飛ぶには、下記のプラグインを使います。
+ {{wysiwyg}}
+{{wysiwyg}}
+"
+    }
 
     def plg_wysiwyg
       return if @req.user.nil?

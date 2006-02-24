@@ -4,10 +4,12 @@ module Qwik
       :dt => 'qwikWeb functions',
       :dd => 'You can see brief descriptions of qwikWeb functions.',
       :dc => "
-* How to
+'''qwikWeb''' is a group communication system that integrate
+WikiWikiWeb and mailing list.
+
+Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] to the detail.
+
 You can see the list of qwikWeb functions below.
-# * TextFormat
-# :[[textformat.describe]]:You can see text format.
 "
     }
 
@@ -60,7 +62,8 @@ Please also access the [[full text format|textformat.describe]].
 [[Yahoo!|http://www.yahoo.co.jp/]]
 {{recent(1)}}
 }}}
-" }
+"
+    }
 
     D_textformat = {
       :dt => 'TextFormat',
@@ -194,6 +197,7 @@ You can describe a link to the other Wiki sites.
 - [[google:qwikWeb]]
 - [[isbn:4797318325]]
 - [[amazon:Wiki]]
-" }
+"
+    }
   end
 end

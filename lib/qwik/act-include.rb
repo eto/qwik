@@ -1,24 +1,15 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_include = {
+    D_plugin_include = {
       :dt => 'Include plugin',
       :dd => 'You can include other page.',
       :dc => "* Example
 {{include('FrontPage')}}
  {{include('FrontPage')}}
-FrontPageÇÇ∆ÇËÇ±ÇÒÇ≈ï\é¶ÇµÇ‹Ç∑ÅB
-" }
+"
+    }
 
     def plg_include(pagename)
       pagename = pagename.to_s
@@ -159,6 +150,5 @@ if defined?($test) && $test
 		  :class=>'label'}, "Å°"], "t2!"],
 	    "//div[@class='day']/h2")
     end
-
   end
 end

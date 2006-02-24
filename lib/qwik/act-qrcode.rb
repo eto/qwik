@@ -5,12 +5,21 @@ require 'qwik/act-text'
 
 module Qwik
   class Action
-    D_qrcode = {
+    D_plugin_qrcode = {
       :dt => 'QR-Code plugin',
       :dd => 'You can input QR-Code to the page.',
       :dc => "* Example
 {{qrcode(\"http://qwik.jp/\")}}
  {{qrcode(\"http://qwik.jp/\")}}
+You can also input multi lines.
+{{qrcode
+This is a test.
+This is a test, too.
+}}
+ {{qrcode
+ This is a test.
+ This is a test, too.
+ }}
 "
     }
 

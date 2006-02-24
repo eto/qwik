@@ -12,7 +12,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_secdb = {
+    D_plugin_secdb = {
       :dt => 'Show a table of each section data',
       :dd => 'You can create a table from data embedded as CSV format in each section.',
       :dc => "

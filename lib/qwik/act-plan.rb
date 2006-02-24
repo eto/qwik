@@ -1,32 +1,25 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-plan'
 
 module Qwik
   class Action
-    D_plan = {
-      :dt => 'Sharing plan plugin',
-      :dd => 'You can show the plan of the site.',
+    D_plugin_plan = {
+      :dt => 'Show plan plugin',
+      :dd => 'You can show the plan of this group.',
       :dc => "* Example
  {{plan}}
 {{plan}}
-You can show links to the plan.
-This plan plugin is in sidebar.
-
-* How to specify plan.
-Input a date tag to the title line of the page.
+You can see plans of this group.
+If there are no plan for this group, you see nothing.
+* How to input your plan.
+You can specify your new plan from the tag to the title line of each page.
+For example,
  * [2005-08-10] Next meeting
-Input this line to the first line of the page.
+input this line to the first line of the page.
+(Fix the date to recent days.)
 Then, you'll see the plan on the sidemenu.
-" }
+"
+    }
 
     def plg_plan
       pages = @site.get_pages_with_date

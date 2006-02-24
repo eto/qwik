@@ -2,10 +2,32 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_menu = {
+    D_plugin_menu = {
       :dt => 'Menu plugin',
       :dd => 'You can show a pull down menu.',
       :dc => "* Example
+{{hmenu
+- [[Yahoo!|http://www.yahoo.co.jp/]]
+-- [[map|http://map.yahoo.co.jp/]]
+-- [[auctions|http://aunctions.yahoo.co.jp/]]
+- [[Google|http://www.google.co.jp/]]
+-- [[news|http://news.google.com/]]
+-- [[map|http://map.google.com/]]
+- [[qwik|http://qwik.jp/]]
+-- [[hello|http://qwik.jp/HelloQwik/]]
+}}
+
+{{br}}
+{{br}}
+{{br}}
+{{br}}
+"
+    }
+
+    Dja_plugin_menu = {
+      :dt => 'メニュープラグイン',
+      :dd => 'プルダウン型メニューを作れます。',
+      :dc => "* 例
 {{hmenu
 - [[Yahoo!|http://www.yahoo.co.jp/]]
 -- [[map|http://map.yahoo.co.jp/]]

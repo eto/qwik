@@ -1,18 +1,8 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    # http://co/qwik/qwikweb/list.describe
-    D_list = {
+    NotYet_D_plugin_list = {
       :dt => 'List editing plugin',
       :dd => 'You can edit a list in the page.',
       :dc => "* Example

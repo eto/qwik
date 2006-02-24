@@ -3,13 +3,24 @@ require 'qwik/site-timeline'
 
 module Qwik
   class Action
-    D_chronology = {
+    D_ext_chronology = {
       :dt => 'Chronology of site',
       :dd => "You can see when the pages are created and updated.",
       :dc => "* How to
  [[.time_walker]]
 Please follow this link to see the chronology of this site. [[.time_walker]]
 "
+    }
+
+    Dja_ext_chronology = {
+      :dt => '年表機能 ',
+      :dd => "サイトのページがいつ作成され、編集されてきたのかを一覧できます。",
+      :dc => '* 使い方
+ [[.time_walker]]
+[[.time_walker]]
+
+このリンクをたどると年表が表示さます。
+'
     }
 
     def act_time_walker
@@ -108,7 +119,6 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
       ar << [:script,
 	{:type=>'text/javascript',:src=>'.theme/js/history.js'}, '']
 
-      #title = _('Time walker') + ' | ' + @site.sitename
       title = _('Chronology') + ' | ' + @site.sitename
       return c_plain(title) { ar }
     end
@@ -128,12 +138,11 @@ if defined?($test) && $test
       t_add_user
 
       page = @site.create_new
-      page.store('* t1') # store the first
-      page.store('* t2') # store the second
+      page.store('* t1')	# Store this page the first
+      page.store('* t2')	# Store this page the second
 
-      res = session('/test/.time_walker')
-      #ok_in(['Time walker | test'], '//title')
-      ok_in(['Chronology | test'], '//title')
+      res = session '/test/.time_walker'
+      ok_in ['Chronology | test'], '//title'
     end
   end
 end
