@@ -1,3 +1,14 @@
+2006-02-24  Kouichirou Eto  <2006 eto.com>
+
+	* config.rb: Change ml_domain to 'q.example.com' to make clear.
+	The other files are also changed.
+	* test-module-ml.rb: Change to use TestConfig.
+
+	* config.rb: Delete LIBDIR.  Use DEBUG_LIBDIR instead.
+
+	* act-describe.rb: Change listing to use ul.
+	The descriptions are also changed.
+
 2006-02-22  Kouichirou Eto  <2006 eto.com>
 
 	* qwikWeb 0.8.1 is released.
