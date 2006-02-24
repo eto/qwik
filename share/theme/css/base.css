@@ -1,6 +1,13 @@
-/* Copyright (C) 2003-2005 Kouichirou Eto, All rights reserved.
-This is free software with ABSOLUTELY NO WARRANTY.
-You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+/*
+
+ Copyright (C) 2003-2006 Kouichirou Eto
+     All rights reserved.
+     This is free software with ABSOLUTELY NO WARRANTY.
+
+ You can redistribute it and/or modify it under the terms of 
+ the GNU General Public License version 2.
+
+*/
 
 /* ================================================== wema */
 /*@import 'wema.css';*/
@@ -109,7 +116,6 @@ span.plg_error {
   color: #c00;
   font-size: small;
 }
-
 span.plg_error strong {
   color: #c00;
 }
@@ -119,7 +125,7 @@ span.plg_error strong {
   background: transparent;
   border: 0;
   line-height: 1.05;
-  font-family: "‚l‚r ‚oƒSƒVƒbƒN";
+  font-family: "‚l‚r ‚oƒSƒVƒbƒN";	/* IMPORTANT */
 }
 
 /* ========== act-calc */
@@ -144,49 +150,29 @@ span.plg_error strong {
   background: no-repeat 0% 50%;
   width: 100%;
 }
-/*
-.code .odd {
-  background-color: #fee;
-}
-.code .even {
-  background-color: #fdd;
-}
-*/
 
 /* ========== act-describe */
-.descriptio
-n-list {
-/*
-  border: 1px solid #ccc;
-  margin: 0 0.7em 0 0;
-  padding: 0 0.7em 0 0;
-  border-right: 2px dotted;
-  font-family: Georgia,serif;
-*/
-}
-
-.description-list {
-/*
-  width: 100%;
-  display: run-in;
-  overflow: auto;
-*/
-}
-
-.description-list li {
-/*
-  display: inline;
-*/
-}
-
-.description-list a {
+.description-list ul {
+  margin: 0;
+  padding: 0;
   font-size: smaller;
+  list-style: none;
+
+}
+.description-list ul a {
+  margin: 0 4px 0 0;
+  padding: 0 4px;
   background: #eee;
-  margin: 0 2px;
-  padding: 0 2px;
-  text-decoration: none;
-  border-bottom: 0;
   border: 1px solid #ccc;
+  text-decoration: none;
+}
+.description-list ul a em {
+  font-weight: normal;
+  padding: 0 4px 0 0;
+  border-right: 1px solid #ccc;
+  color: #999;
+}
+.description-list ul a strong {
 }
 
 /* ========== act-date */
@@ -298,15 +284,8 @@ table.exception {
 }
 .delete a:link	{ color: #999; }
 .delete a:visited	{ color: #999; }
-/*
-.delete a:active,
-.delete a:hover { color: #fff; background-color: #c00; }
-*/
 
 .download a {
-/*
-  background: url("../i/icon_download.gif") no-repeat 0% 50%;
- */
   background: url("../i/arrow_down.gif") no-repeat 0% 50%;
   padding-left: 15px;
 }
@@ -711,7 +690,6 @@ table.qrcode {
 .wysiwyg ol {
   margin-left: 2em;
 }
-
 .wysiwyg em {
   font-style: italic;
   font-weight: normal;
@@ -731,7 +709,6 @@ table.qrcode {
   }
   h1, h2, h3, h4, em, strong, th {
     font-family: Osaka,"‚l‚r ‚oƒSƒVƒbƒN",sans-serif ! important;
-/*    font-weight: bold ! important;*/
     font-weight: normal ! important;
     background: transparent ! important;
   }
