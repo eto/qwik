@@ -343,6 +343,17 @@ a:visited.label	{ color: #fff; }
 a:active.label,
 a:hover.label { color: #fff; background-color: #000; }
 
+/* ========== act-keywords */
+.keywords {
+  margin: 0;
+  line-height: 1;
+}
+.keywords a {
+  margin: 0 2px;
+  text-decoration: none;
+}
+.keywords a:link { color: #000; }
+
 /* ========== act-license */
 .license {
   float: right;

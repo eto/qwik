@@ -117,14 +117,19 @@ strong {
 }
 
 a {
+/*
   text-decoration: none;
   border-bottom: 1px dashed #3c3;
+   */
+}
 }
 a:link		{ color: #0c0; }
 a:visited	{ color: #060; }
 a:active, a:hover { color: #fff; background-color: #0c0;
   text-decoration: none;
+/*
   border-bottom-width: 0;
+*/
 }
 
 /* ========== container */
@@ -174,7 +179,9 @@ a:active, a:hover { color: #fff; background-color: #0c0;
 }
 .adminmenu a {
  text-decoration: none;
+/*
  border-bottom-width: 0;
+*/
 }
 .adminmenu a:link	{ color: #f66; }
 .adminmenu a:visited	{ color: #c33; }
