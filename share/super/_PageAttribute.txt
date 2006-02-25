@@ -4,6 +4,7 @@
 {{generate_time}}
 }}
 
-{{wema}}
+#{{wema}}
+{{wema_compat}}
 
 # ページアトリビュート
