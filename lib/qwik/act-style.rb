@@ -1,4 +1,5 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+require 'qwik/util-css'
 
 module Qwik
   class Action
@@ -120,7 +121,7 @@ This is a {{small(\"small\")}} string.
 
 ** Ascii Art plugin
 You can include ascii art.
-This plugin specify a style sheet for ascii art.
+This plugin specifies style sheet for ascii art.
 
 {{{
 {{aa
@@ -146,8 +147,7 @@ This plugin specify a style sheet for ascii art.
 @@‚µ\-J 
 }}
 
-The style sheet simply set the font to 'MS P Gothic' and
-set the line height to 100%.
+The style sheet simply set 'MS P Gothic' font and the line height.
 
 ** Code plugin
 You can show codes by this plugin.
@@ -159,8 +159,7 @@ You can show codes by this plugin.
 puts \"hello, world!\"
 puts \"hello, qwik users!\"
 }}
-There are small differences between 'pre' and 'code'.
-The line height is set to 100% in code plugin.
+You can see line number in the left of each line.
 
 ** Notice plugin
 You can show a notice by this plugin.
@@ -171,10 +170,11 @@ You can show a notice by this plugin.
  '''WARNING''': This is just a sample!
  }}
 
-" }
+"
+    }
 
     def plg_a(page, text=page)
-      return [:a, {:href=>page+'.html'}, text]
+      return [:a, {:href=>"#{page}.html"}, text]
     end
 
     def plg_img(f, alt=f)
@@ -187,40 +187,42 @@ You can show a notice by this plugin.
       b = yield if block_given?
       msg = a.to_s + b.to_s
       x = c_res(msg)
-      return [:div, {:style=>style}, x]
+      x << '' if x.empty?
+      return [:div, {:style=>style}, *x]
     end
-    
+
     def plg_block_div(div_class='',a='', &b)
       return unless CSS.valid?(div_class)
       b = ''
       b = yield if block_given?
       msg = a.to_s + b.to_s
       x = c_res(msg)
-      return [:div, {:class=>div_class}, x]
+      x << '' if x.empty?
+      return [:div, {:class=>div_class}, *x]
     end
     
     def plg_float_left(a='', &b)
-      return plg_style_div("float:left;", &b)
+      return plg_style_div('float:left;', &b)
     end
 
     def plg_float_right(a='', &b)
-      return plg_style_div("float:right;", &b)
+      return plg_style_div('float:right;', &b)
     end
 
     def plg_left(a='', &b)
-      return plg_style_div("text-align:left;", &b)
+      return plg_style_div('text-align:left;', &b)
     end
 
     def plg_center(a='', &b)
-      return plg_style_div("text-align:center;", &b)
+      return plg_style_div('text-align:center;', &b)
     end
 
     def plg_right(a='', &b)
-      return plg_style_div("text-align:right;", &b)
+      return plg_style_div('text-align:right;', &b)
     end
 
     def style_strip_p(str)
-      return str.delete("\n").sub(/^<p>/, "").sub(%r|</p>$|, "")
+      return str.delete("\n").sub(/^<p>/, '').sub(%r|</p>$|, '')
    end
 
     def plg_style_span(style='', a='')
@@ -245,7 +247,7 @@ You can show a notice by this plugin.
     end
 
     def plg_small(a='', &b)
-      return plg_style_span("font-size:smaller;", a, &b)
+      return plg_style_span('font-size:smaller;', a, &b)
     end
 
     def plg_css
@@ -267,9 +269,9 @@ if defined?($test) && $test
     include TestSession
 
     def test_style_span
-      ok_wi("<img alt=\"t\" src=\"t\"/>", "{{img(t)}}")
-      ok_wi("<img alt=\"m\" src=\"t\"/>", "{{img(t, m)}}")
-      ok_wi("<span style=\"font-size:smaller;\">a</span>", "{{small(a)}}")
+      ok_wi("<img alt=\"t\" src=\"t\"/>", '{{img(t)}}')
+      ok_wi("<img alt=\"m\" src=\"t\"/>", '{{img(t, m)}}')
+      ok_wi("<span style=\"font-size:smaller;\">a</span>", '{{small(a)}}')
       ok_wi("<span style=\"font-size:smaller;\">a</span>",
 	    "{{small\na\n}}")
       ok_wi("<span style=\"font-size:smaller;\">a</span>",
@@ -277,19 +279,29 @@ if defined?($test) && $test
       ok_wi("<span style=\"font-size:smaller;\">aa</span>",
 	    "{{small(a)\na\n}}")
       ok_wi("<span style=\"font-size:smaller;\"></span>", "{{small\n}}")
-      ok_wi("<span style=\"font-size:smaller;\"><img alt=\"t\" src=\"t\"/></span>", "{{small\n{{img(t)}}\n}}")
+      ok_wi [:span, {:style=>"font-size:smaller;"},
+	[:img, {:alt=>"t", :src=>"t"}]], "{{small\n{{img(t)}}\n}}"
     end
 
     def test_style_div
-      ok_wi("<div style=\"text-align:center;\"></div>", "{{center(a)}}")
+      ok_wi [:div, {:style=>"text-align:center;"}, [:p, "y"]],
+	    "{{style_div(text-align:center;)\ny\n}}"
+      ok_wi("<div style=\"text-align:center;\"><p>&lt;</p></div>",
+	    "{{style_div(text-align:center;)\n<\n}}")
+      ok_wi('', "{{style_div(@i)\ny\n}}")
+
+      ok_wi("<div style=\"text-align:center;\"></div>", '{{center(a)}}')
       ok_wi("<div style=\"text-align:center;\"></div>", "{{center(a)\n}}")
-      ok_wi("<div style=\"text-align:center;\"><p>y</p></div>", "{{center\ny\n}}")
-      ok_wi("<div style=\"text-align:center;\"><img alt=\"t\" src=\"t\"/></div>", "{{center\n{{img(t)}}\n}}")
-      ok_wi("<div style=\"text-align:right;\"><img alt=\"t\" src=\"t\"/></div>", "{{right\n{{img(t)}}\n}}")
-      ok_wi("<div style=\"text-align:center;\"><p>y</p></div>", "{{style_div(text-align:center;)\ny\n}}")
-      ok_wi("<div style=\"text-align:center;\"><p>&lt;</p></div>", "{{style_div(text-align:center;)\n<\n}}")
-      ok_wi("", "{{style_div(@i)\ny\n}}")
-      ok_wi("<br/>", "{{br}}")
+      ok_wi("<div style=\"text-align:center;\"><p>y</p></div>",
+	    "{{center\ny\n}}")
+      ok_wi [:div, {:style=>"text-align:center;"},
+	[:img, {:alt=>"t", :src=>"t"}]], "{{center\n{{img(t)}}\n}}"
+      ok_wi [:div, {:style=>"text-align:right;"},
+	[:img, {:alt=>"t", :src=>"t"}]], "{{right\n{{img(t)}}\n}}"
+      ok_wi('<br/>', '{{br}}')
+
+      ok_wi [:div, {:class=>"notice"}, [:p, "y"]],
+	    "{{block_div(notice)\ny\n}}"
     end
 
     def test_css_plugin

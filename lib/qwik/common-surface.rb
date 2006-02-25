@@ -30,7 +30,7 @@ module Qwik
       end
       data = {
 	:title		=> title,
-	:theme_path	=> @site.theme_path,
+	:theme_path	=> site_theme_path,
 	:adminmenu	=> adminmenu,
 	:toc		=> nil,		# Do not use toc.
 	:h1		=> title,	# same as title.
@@ -57,7 +57,7 @@ module Qwik
       template = @memory.template.get('surface')
       data = {
 	:title		=> @site.get_page_title(pagename),
-	:theme_path	=> @site.theme_path,
+	:theme_path	=> site_theme_path,
 	:adminmenu	=> c_page_res('_AdminMenu'),
 	:toc		=> toc_inside,
 	:h1		=> page.get_title,

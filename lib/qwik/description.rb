@@ -175,7 +175,14 @@ and this word.
 You can describe pre-formated text by using ' ' or 'tab'.
  This is a
  pre formatted text.
-You can also use '{{{' and '}}}' for specifing pre-formated text.
+You can also use '{{{' and
+'}}}' for specifing pre-formated text.
+ {{{
+ void main()
+ {
+     printf(\"hello, world\n\");
+ }
+ }}}
 {{{
 void main()
 {

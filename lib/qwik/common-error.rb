@@ -10,7 +10,7 @@ module Qwik
       generate_notice_page(status, title, url, msg)
     end
 
-    def c_notfound(title, &b)
+    def c_notfound(title=_('Not found.'), &b)
       return c_nerror(title, nil, 404, &b)
     end
   end

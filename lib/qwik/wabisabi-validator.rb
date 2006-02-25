@@ -87,12 +87,6 @@ style
   module_function :valid?
 end
 
-class Array
-  def nucheck_valid
-    return WabisabiValidator.valid?(self)
-  end
-end
-
 if $0 == __FILE__
   require 'test/unit'
   $test = true
@@ -110,7 +104,7 @@ if defined?($test) && $test
       ok :script, [:script, 't']
       ok true, [:img, {:src=>'s', :alt=>'a'}, 't']
       ok :onload, [:img, {:onload=>'o'}, 't']
-      ok "Invalid URL", [:img, {:src=>'javascript:do something'}]
+      ok 'Invalid URL', [:img, {:src=>'javascript:do something'}]
       ok true, [:img, {:src=>'http://example.net/a.jpg'}]
       ok true, [:img, {:src=>'https://example.net/a.jpg'}]
     end

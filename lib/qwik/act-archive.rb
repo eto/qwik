@@ -134,7 +134,7 @@ static Web site.
       ar << 'i/external.png'
       ar << 'i/new.png'
 
-      t = site.theme
+      t = action.site_theme
       list = action.theme_files(t)
       list.each {|f|
 	ar << "#{t}/#{f}"
