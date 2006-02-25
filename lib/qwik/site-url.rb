@@ -109,20 +109,20 @@ if defined?($test) && $test
       }
     end
 
-    def test_url_example_org
-      site = @site
-      page = site.create_new
-      siteconfig = site.create('_SiteConfig')
-      siteconfig.store(":siteurl:http://example.org/\n")
-      eq 'http://example.org', site.host_url
-      eq 'http://example.org/', site.site_url
-      eq 'http://example.org/1.html', site.page_url('1')
-      eq 'test@q.example.com', site.ml_address		# FIXME: Umm.
-      siteconfig.add(":siteml:info@example.org\n")
-      eq 'info@example.org', site.ml_address
-      t_without_testmode {
-	eq 'example.org', site.title
-	eq 'example.org - 1', site.get_page_title('1')
+    def test_url_siteurl
+      page = @site.create_new
+      t_with_siteurl {
+	eq 'http://example.org', @site.host_url
+	eq 'http://example.org/q/', @site.site_url
+	eq 'http://example.org/q/1.html', @site.page_url('1')
+	eq 'test@q.example.com', @site.ml_address		# FIXME: Umm.
+	siteconfig = @site['_SiteConfig']
+	siteconfig.add(":siteml:info@example.org\n")
+	eq 'info@example.org', @site.ml_address
+	t_without_testmode {
+	  eq 'example.org/q', @site.title
+	  eq 'example.org/q - 1', @site.get_page_title('1')
+	}
       }
     end
 

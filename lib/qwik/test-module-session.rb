@@ -170,6 +170,13 @@ module TestSession
     @config[:public_url] = org_public_url
   end
 
+  def t_with_siteurl(url='http://example.org/q/')
+    siteconfig = @site['_SiteConfig']
+    siteconfig.store ":siteurl:#{url}\n"
+    yield
+    siteconfig.store ""
+  end
+
   # ==================== assert xpath module
   def assert_path(e, w, user=DEFAULT_USER, path="//div[@class='section']", &b)
     t_add_user if user

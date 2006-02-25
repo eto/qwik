@@ -90,13 +90,15 @@ there are several inhibited pattern. Please see [[plugin_style.describe]].
       files = @site.files(SITE_THEME)
       if files && files.exist?(THEME_FILE)
 	#return "/#{@site.sitename}/.css/theme.css"
-	return c_relative_to_root(".css/theme.css")
+	#return c_relative_to_root(".css/theme.css")
+	return ".css/theme.css"
       end
 
       t = site_theme
       if /\Ahttp:\/\// =~ t
 	#return "/#{@site.sitename}/.css/#{t}"
-	return c_relative_to_root(".css/#{t}")
+	#return c_relative_to_root(".css/#{t}")
+	return ".css/#{t}"
       end
 
       return ".theme/#{t}/#{t}.css"
@@ -252,10 +254,14 @@ if defined?($test) && $test
       page.store 't'
       files = @site.files('_SiteTheme')
       files.put 'theme.css', 't'
-      eq '/test/.css/theme.css', @action.site_theme_path
+      eq '.css/theme.css', @action.site_theme_path
 
       t_with_path {
-	eq '/qwik/test/.css/theme.css', @action.site_theme_path
+	eq '.css/theme.css', @action.site_theme_path
+      }
+
+      t_with_siteurl {
+	eq '.css/theme.css', @action.site_theme_path
       }
     end
 
