@@ -159,11 +159,11 @@ if defined?($test) && $test
       header =
 "From: test@q.example.com
 To: user@e.com
-Subject: Your password on http://example.com/
+Subject: Your password on http://example.com
 Content-Type: text/plain; charset=\"ISO-2022-JP\"
 
 "
-      body = 'This is your user name and the password on http://example.com/
+      body = 'This is your user name and the password on http://example.com
 
 Username:	user@e.com
 Password:	95988593
@@ -188,12 +188,12 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
       header =
 "From: test@q.example.com
 To: user@e.com
-Subject: =?ISO-2022-JP?B?GyRCJVElOSVvITwlSRsoQiA=?=: http://example.com/
+Subject: =?ISO-2022-JP?B?GyRCJVElOSVvITwlSRsoQiA=?=: http://example.com
 Content-Type: text/plain; charset=\"ISO-2022-JP\"
 
 "
       body =
-'このサイトにおけるユーザ名とパスワードです : http://example.com/
+'このサイトにおけるユーザ名とパスワードです : http://example.com
 
 ユーザ名:	user@e.com
 パスワード:	95988593
@@ -241,8 +241,8 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
       t_make_public(Qwik::Action, :generate_password_mail)
       mail = @action.generate_password_mail 'user@e.com'
       eq({:from=>"test@q.example.com", :to=>"user@e.com",
-	   :subject=>"Your password on http://example.com/",
-	   :content=>"This is your user name and the password on http://example.com/\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.com/test/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
+	   :subject=>"Your password on http://example.com",
+	   :content=>"This is your user name and the password on http://example.com\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.com/test/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
 	 }, mail)
 
       @action.instance_eval {
@@ -254,8 +254,8 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
       mail = @action.generate_password_mail 'user@e.com'
       $KCODE = "s"
       eq({:from=>"test@q.example.com", :to=>"user@e.com",
-	   :subject=>"パスワード : http://example.com/",
-	   :content=>"このサイトにおけるユーザ名とパスワードです : http://example.com/\n\nユーザ名:\tuser@e.com\nパスワード:\t95988593\n\nログインページにアクセスしてください : http://example.com/test/.login\n\n下記URLにアクセスすると、自動的にユーザー名とパスワードを入力します。\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
+	   :subject=>"パスワード : http://example.com",
+	   :content=>"このサイトにおけるユーザ名とパスワードです : http://example.com\n\nユーザ名:\tuser@e.com\nパスワード:\t95988593\n\nログインページにアクセスしてください : http://example.com/test/.login\n\n下記URLにアクセスすると、自動的にユーザー名とパスワードを入力します。\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
 	 }, mail)
     end
 
@@ -277,8 +277,8 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
       mail = @action.generate_password_mail 'user@e.com'
       eq({:from=>"info@example.org",
 	   :to=>"user@e.com",
-	   :subject=>"Your password on http://example.org/",
-	   :content=>"This is your user name and the password on http://example.org/\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.org/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.org/.login?user=user@e.com&pass=95988593\n"}, mail)
+	   :subject=>"Your password on http://example.org",
+	   :content=>"This is your user name and the password on http://example.org\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.org/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.org/.login?user=user@e.com&pass=95988593\n"}, mail)
     end
 
   end

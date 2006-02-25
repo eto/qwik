@@ -2,6 +2,14 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    NotYet_D_ext_config = {
+      :dt => 'Config mode',
+      :dd => 'You can edit configurations.',
+      :dc => "* Example
+[[site.config]]
+"
+    }
+
     def ext_config
       method = "config_#{@req.base}"
       return c_nerror(_('Error')) if ! self.respond_to?(method)

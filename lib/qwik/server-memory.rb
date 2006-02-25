@@ -37,12 +37,6 @@ module Qwik
       @catalog
     end
 
-    # act-qrcode
-    def qrcode
-      @qrcode = QRCodeMemory.new(@config, self) unless defined? @qrcode
-      @qrcode
-    end
-
     # act-theme
     def theme
       @theme = ThemeFactory.new(@config) unless defined? @theme

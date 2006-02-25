@@ -23,10 +23,7 @@ module Qwik
 #      }
     end
 
-    # http://colinux:9190/HelloQwik/20050808.day
-    # http://colinux:9190/HelloQwik/20050807.day
-    # http://co/qwik/qwikweb/20051126.day
-    # http://eto.com/d/20051204.day
+    # http://co/qwik/20051126.day
     def ext_day
       day = @req.base
       return c_nerror('require arg') if day.nil?
@@ -39,6 +36,7 @@ module Qwik
 
       timeline = @site.timeline
       timeline.calc_history
+      #pp timeline
 
       ymd = time.ymd_s
       keys = timeline.get_keys_by_day(ymd)
@@ -71,8 +69,8 @@ if defined?($test) && $test
       t_add_user
 
       page = @site.create_new
-      page.put_with_time('* t1', Time.at(0))	# Store this page the first.
-      page.put_with_time('* t2', Time.at(1))	# Store this page the second.
+      page.put_with_time('* t1', 0)	# Store this page first.
+      page.put_with_time('* t2', 1)	# Store this page second.
 
       # test_act_day
       res = session '/test/.day'

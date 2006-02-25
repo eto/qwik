@@ -1,4 +1,4 @@
-# Under contruction.
+# Under construction.
 
 require 'mongrel'
 

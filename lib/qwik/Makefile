@@ -36,6 +36,8 @@ x:
 
 # clean
 clean:
+	-rm -rf compat/.cache
+	-rm -rf compat/compat
 	-rm -rf test www sid
 	-rm access.log qwik-access.log qwik-error.log quickml.log
 	-rm t .#* *~ *.stackdump

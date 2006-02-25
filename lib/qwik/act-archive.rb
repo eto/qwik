@@ -22,6 +22,37 @@ You can download your site as an archive file.
 '
     end
 
+    D_ext_archive = {
+      :dt => 'Site archive',
+      :dd => 'You can obtain a site archive.',
+      :dc => "* Example
+{{zip}}
+
+You can get an archive which contains all text files of this Wiki site.
+
+The archive also contains static HTML files of the all Wiki pages.
+If you place the HTML files on your Web site, it will be a simple
+static Web site.
+"
+    }
+
+    Dja_ext_archive = {
+      :dt => 'サイト・アーカイブ',
+      :dd => 'サイト・アーカイブを取得できます。',
+      :dc => '* 使い方
+{{zip}}
+
+このリンクをクリックすると、サイトの内容をまるごと一つのアーカイブにま
+とめて、ローカルに保存できます。
+
+ファイルには、元となるテキストファイルだけではなく、静的なHTMLページも
+保持しており、解凍してWebサイトに置けば、そのまま普通のWebページとして
+公開できます。
+'
+    }
+
+
+
     def plg_zip
       return page_attribute('zip', _('site archive'), @site.sitename)
     end
@@ -115,6 +146,7 @@ You can download your site as an archive file.
       ar << 's5/i18n/pretty.css'
       ar << 's5/i18n/bg-shade.png'
       ar << 's5/i18n/bg-slide.jpg'
+
       ar << 's5/default/outline.css'
       ar << 's5/default/print.css'
       ar << 's5/default/opera.css'

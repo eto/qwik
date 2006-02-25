@@ -7,8 +7,7 @@ module Qwik
       :dt => 'Chronology of site',
       :dd => "You can see when the pages are created and updated.",
       :dc => "* How to
- [[.time_walker]]
-Please follow this link to see the chronology of this site. [[.time_walker]]
+Please go [[.chronology]] page to see the chronology of this site.
 "
     }
 
@@ -16,27 +15,25 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
       :dt => '年表機能 ',
       :dd => "サイトのページがいつ作成され、編集されてきたのかを一覧できます。",
       :dc => '* 使い方
- [[.time_walker]]
-[[.time_walker]]
-
-このリンクをたどると年表が表示さます。
+[[.chronology]]ページで、このサイトの年表が表示さます。
 '
     }
 
-    def act_time_walker
+    def act_chronology
       c_require_pagename
      #c_require_member
 
       timeline = @site.timeline
       timeline.calc_history
-      divs = time_walker_make_divs(timeline)
-      return time_walker_show(divs)
+      divs = chronology_make_divs(timeline)
+      return chronology_show(divs)
     end
+    alias act_time_walker act_chronology	# Obsolete
 
-    TIME_WALKER_WIDTH  = 950
-    TIME_WALKER_HEIGHT = 550
+    CHRONOLOGY_WIDTH  = 950
+    CHRONOLOGY_HEIGHT = 550
 
-    def time_walker_make_divs(timeline)
+    def chronology_make_divs(timeline)
 #      height = 
 
       times = timeline.times
@@ -49,7 +46,7 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
       page_num = times.length	# Total page number
       return [:p, "No files here."] if page_num == 0
 
-      h_span = TIME_WALKER_HEIGHT/page_num
+      h_span = CHRONOLOGY_HEIGHT / page_num
       x_offset = 60
       y_offset = 50
 
@@ -61,14 +58,14 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
 	pm_time = page_min[key]
 
 	x = 10
-	y = y_offset + TIME_WALKER_HEIGHT * num / page_num
+	y = y_offset + CHRONOLOGY_HEIGHT * num / page_num
 
 	page = @site[key]
 	next if page.nil?
 	title = page.get_title
 	url = page.url
 
-	divs << [:div, {:title=>title+" | "+pm_time.ymd,
+	divs << [:div, {:title=>"#{title} | #{pm_time.ymd}",
 	    :class=>'time_title',
 	    :style=>"position:absolute;left:#{x}px;top:#{y}px;height:#{h_span}px;"},
 	  [:a, {:href=>url}, title]]
@@ -76,8 +73,8 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
 	num += 1
 	ar.each {|time|
 	  past_time = time - site_min
-	  x = x_offset + (TIME_WALKER_WIDTH-x_offset) * past_time / site_duration
-	  divs << [:div, {:title=>title+" | "+time.ymd,
+	  x = x_offset + (CHRONOLOGY_WIDTH-x_offset) * past_time / site_duration
+	  divs << [:div, {:title=>"#{title} | #{time.ymd}",
 	      :class=>'time_update',
 	      :style=>"left:#{x}px;top:#{y}px;width:10px;height:#{h_span}px;"},
 	    [:a, {:href=>url}, '_']]
@@ -87,7 +84,7 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
       return divs
     end
 
-    def time_walker_show(divs)
+    def chronology_show(divs)
       ar = []
 
       ar << [:style, "@import '.theme/css/wema.css';"]
@@ -107,7 +104,7 @@ Please follow this link to see the chronology of this site. [[.time_walker]]
 "]
 
       section = []
-      section << [:div, {:id=>"time_walker"}, '']
+      section << [:div, {:id=>"chronology"}, '']
       section << divs
       section << [:div, {:id=>'lines'}, '']
       ar << [:div, {:class=>'day'},
@@ -138,10 +135,10 @@ if defined?($test) && $test
       t_add_user
 
       page = @site.create_new
-      page.store('* t1')	# Store this page the first
-      page.store('* t2')	# Store this page the second
+      page.store '* t1'		# Store this page first
+      page.store '* t2'		# Store this page second
 
-      res = session '/test/.time_walker'
+      res = session '/test/.chronology'
       ok_in ['Chronology | test'], '//title'
     end
   end

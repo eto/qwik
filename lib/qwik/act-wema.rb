@@ -10,9 +10,16 @@ module Qwik
       :dt => 'Post-it plugin',
       :dd => 'You can put post-it notes on the page.',
       :dc => "* How to
-From the page attribute, please click 'New Post-it' link.
-You can see a small window.  Enter some text and save it.
+ {{wema}}
+{{wema}}
+
+Embed this wema plugin to your page.
+Click 'New Post-it' link, then you see a small window.
+Enter some text and save it.
 You can move the small window and click set for setting the position.
+* Thanks
+I start development from [[wema|http://wema.sourceforge.jp/]]
+by Mr. Kan Fushihara.  Thank you very much.
 "
     }
 
@@ -20,28 +27,43 @@ You can move the small window and click set for setting the position.
       :dt => '附箋機能 ',
       :dd => '附箋をはることができます。',
       :dc => '* 使用法
-ページの下に、「New Post-it」というリンクがあるので、押してください。
-小さなWindowが表示さます。なにかテキストをいれ、セーブしてください。
+ {{wema}}
+{{wema}}
+
+ページ中に上記のようにwemaプラグインをうめこみます。
+「New Post-it」というリンクを押すと、小さなWindowが表示されます。
+なにかテキストをいれ、セーブしてください。
 Windowを動かして、「set」を押すと位置をセットします。
+* 感謝
+伏原幹氏による「[[wema|http://wema.sourceforge.jp/]]」を元に開発いたし
+ました。どうもありがとうございます。
 '
     }
 
-    def plg_wema
-      page = @site[@req.base]
-      return unless defined?(page)
-      return if page.nil?
+    # Show only if there is already wema.
+    def plg_wema_compat
+      return if @site[@req.base].nil?
       return if defined?(@wema_generated)
+      wp = WemaPage.new(@site, @site[@req.base])
+      wemas = wp.get_wemas
+      return if wemas.empty?
       @wema_generated = true
-      wp = WemaPage.new(@site, page)
-      gen = WemaHtmlGenerator.new(self, wp)
-      return gen.generate
+      return WemaHtmlGenerator.generate(wemas, @req.base)
+    end
+
+    def plg_wema
+      return if @site[@req.base].nil?
+      return if defined?(@wema_generated)
+      wp = WemaPage.new(@site, @site[@req.base])
+      wemas = wp.get_wemas
+      @wema_generated = true
+      return WemaHtmlGenerator.generate(wemas, @req.base)
     end
 
     def ext_wema
       c_require_post
 
-      page = @site[@req.base]
-      wp = WemaPage.new(@site, page)
+      wp = WemaPage.new(@site, @site[@req.base])
       redirect = "#{@req.base}.html"
       redirect = nil if $wema_debug
 
@@ -63,6 +85,7 @@ Windowを動かして、「set」を押すと位置をセットします。
 	  msg = _('New post-it is created.')
 	else
 	  id = wid.sub(/\Aid/, '').to_i
+	  wp.get_wemas
 	  wema = wp[id]
 	  msg = _('Edit done.')
 	end
@@ -78,6 +101,7 @@ Windowを動かして、「set」を押すと位置をセットします。
 	end
 
 	id = wid.sub(/\Aid/, '').to_i
+	wp.get_wemas
 	wema = wp[id]
 	wp.delete(id)
 	c_make_log('wemadelete') # WEMADELETE
@@ -89,6 +113,7 @@ Windowを動かして、「set」を押すと位置をセットします。
 	return c_nerror('wid is nil') if wid.nil?
 	  
 	id = wid.sub(/\Aid/, '').to_i
+	wp.get_wemas
 	wema = wp[id]
 	return c_nerror('can not get wema') if wid.nil?
 	wema.setpos(left, top)
@@ -101,11 +126,6 @@ Windowを動かして、「set」を押すと位置をセットします。
 	return c_nerror("Unknown mode: [#{mode}]")
 
       end
-    end
-
-    def hash(ha)
-      return nil if ha.nil? || ha.length == 0
-      return [:dl, ha.sort.map {|k, v| [[:dt, k], [:dd, v]] }.flatten]
     end
 
     def wema_jump(msg, url)
@@ -123,24 +143,24 @@ Windowを動かして、「set」を押すと位置をセットします。
       @pagename = @page.key
       @wemas = []
     end
-    attr_reader :site, :pagename, :wemas
+    attr_reader :site, :pagename
 
-    def touch
-      @page.touch
+    def get_wemas
+      @wemas = get_list.map {|id|
+	Wema.new(self, id)
+      }
+      return @wemas
+    end
+
+    def [](id)
+      @wemas.each {|wema|
+	return wema if wema.id == id
+      }
+      return nil
     end
 
     def create_new
       return create(get_new_id)
-    end
-
-    def get_new_id
-      list = get_list
-      return 1 if list.empty?
-      list.max + 1
-    end
-
-    def create(id)
-      Wema.new(self, id)
     end
 
     def delete(k)
@@ -148,28 +168,26 @@ Windowを動かして、「set」を押すと位置をセットします。
       @wemas[k] = nil
     end
 
+    private
+
+    def get_new_id
+      list = get_list
+      return 1 if list.empty?
+      return list.max + 1
+    end
+
+    def create(id)
+      return Wema.new(self, id)
+    end
+
     def get_list
       list = []
-      @site.to_a(true).each {|page| # true means get all
+      @site.to_a(true).each {|page|	# true means get all pages.
 	if /\A_#{@pagename}_wema_([0-9]+)\z/ =~ page.key
 	  list << $1.to_i
 	end
       }
       list
-    end
-
-    def [](id)
-      get_wemas
-      @wemas.each {|wema|
-	return wema if wema.id == id
-      }
-      nil
-    end
-
-    def get_wemas
-      @wemas = get_list.map {|id|
-	Wema.new(self, id)
-      }
     end
 
     def get_lines
@@ -196,16 +214,45 @@ Windowを動かして、「set」を押すと位置をセットします。
     end
     attr_reader :id, :connected, :x, :y, :fg, :bg, :text
 
+    def get_data
+      data = {
+	:id	=> @id,
+	:connected => @connected,
+	:x	=> @x,
+	:y	=> @y,
+	:fg	=> @fg,
+	:bg	=> @bg,
+	:text	=> @text,
+      }
+      return data
+    end
+
+    def set(connected, x, y, fg, bg, text)
+      set_px(x) {|a| @x = a }
+      set_px(y) {|a| @y = a }
+      set_color(fg) {|a| @fg = a }
+      set_color(bg) {|a| @bg = a }
+      set_text(text) {|a| @text = a }
+      set_str(connected) {|a| @connected = a }
+      store
+    end
+
+    def setpos(x, y)
+      set(nil, x, y, nil, nil, nil)
+    end
+
     def get_id
       return "id#{@id}"
     end
 
-    def key(id)
-      return "_#{@wemapage.pagename}_wema_#{id}"
-    end
-
     def delete
       @site.delete(key(id))
+    end
+
+    private
+
+    def key(id)
+      return "_#{@wemapage.pagename}_wema_#{id}"
     end
 
     def parse(str)
@@ -217,24 +264,10 @@ Windowを動かして、「set」を押すと位置をセットします。
       @text = lines.join('')
     end
 
-    def set(connected, x, y, fg, bg, text)
-      set_px(x){|a| @x = a }
-      set_px(y){|a| @y = a }
-      set_color(fg){|a| @fg = a }
-      set_color(bg){|a| @bg = a }
-      set_text(text){|a| @text = a }
-      set_str(connected){|a| @connected = a }
-      store
-    end
-
     def store
       str = [nil, @connected, @x, @y, @fg, @bg].join(',')+"\n"
       str << @text.to_s
       @page.store(str)
-    end
-
-    def setpos(x, y)
-      set(nil, x, y, nil, nil, nil)
     end
 
     private
@@ -267,42 +300,36 @@ Windowを動かして、「set」を押すと位置をセットします。
   end
 
   class WemaHtmlGenerator
-    def initialize(action, wemapage)
-      @action = action
-      @wemapage = wemapage
-      @site = @wemapage.site
-    end
-
-    def _(s)
-      @action._(s)
-    end
-
-    def generate
+    def self.generate(wemas, pagename)
       ar = [:div]
+      ar << load_css		# At the first, load CSS.
+      ar << make_menu		# Then, make menu.
+      wemas.each {|wema|
+	ar << get_div(wema)	# Create all divs for wemas.
+      }
+      ar << editor_html(pagename)	# Create an editor.
+      ar << load_js		# At the last, load JavaScript.
+      return ar
+    end
 
-      # load the CSS first.
-      ar << [:style, "@import '.theme/css/wema.css';"]
+    private
 
-      ar << [:span, {:class=>'attribute'}, 'Post-it', ': ',
+    def self.load_css
+      return [:style, "@import '.theme/css/wema.css';"]
+    end
+
+    def self.make_menu
+      return [:span, {:class=>'attribute'}, 'Post-it', ': ',
 	[:a, {:href=>'javascript:wema_editor_show()'}, 'New Post-it'],
 	' (', [:a, {:href=>'javascript:wema_help_show()'}, 'help'], ')']
+    end
 
-      # make divs of the all wemas.
-      @wemapage.get_wemas
-      @wemapage.wemas.each {|wema|
-	ar << get_div(wema)
-      }
-
-      ar << editor_html(@wemapage.pagename)
-
-      # load JavaScript the last.
-      ar << [:script, {:type=>'text/javascript', :src=>'.theme/js/wema.js'}, '']
-
-      ar
+    def self.load_js
+      [:script, {:type=>'text/javascript', :src=>'.theme/js/wema.js'}, '']
     end
 
     # ============================== wema window
-    def get_div(wema)
+    def self.get_div(wema)
       k = wema.get_id
 
       text = wema.text || ''
@@ -322,7 +349,7 @@ Windowを動かして、「set」を押すと位置をセットします。
       x = wema.x
       y = wema.y
 
-      [:div, {:id=>k, :class=>'wema',
+      div = [:div, {:id=>k, :class=>'wema',
 	  :style=>"left:#{x}px;top:#{y}px;color:#{fg};background:#{bg};",
 	  :wema_tc=>wema.fg,
 	  :wema_bg=>wema.bg,
@@ -334,9 +361,10 @@ Windowを動かして、「set」を押すと位置をセットします。
 	    [:a, {:href=>"javascript:wema_edit('#{k}')"}, 'edit'],
 	    [:a, {:href=>"javascript:wema_link('#{k}')"}, 'link']]],
 	[:div, {:class=>'cont'}, h]]
+      return div
     end
 
-    def resolve_href(wabisabi)
+    def self.resolve_href(wabisabi)
       wabisabi.each_tag(:a){|w|
 	ww = resolve_ref(w)
 	w = ww ? ww : [w]
@@ -344,7 +372,7 @@ Windowを動かして、「set」を押すと位置をセットします。
       }
     end
 
-    def resolve_ref(w)
+    def self.resolve_ref(w)
       attr = w[1]
       return nil if attr.nil? || !attr.is_a?(Hash)
       href = attr[:href].to_s
@@ -359,9 +387,9 @@ Windowを動かして、「set」を押すと位置をセットします。
     end
 
     # ============================== editor window
-    def editor_html(pagename)
-      action = pagename+'.wema'
-      [:div, {:id=>'editor', :class=>'wema'},
+    def self.editor_html(pagename)
+      action = "#{pagename}.wema"
+      return [:div, {:id=>'editor', :class=>'wema'},
 	[:div, {:class=>'menubar'},
 	  [:span, {:class=>'handle'}, 'editor'],
 	  [:span, {:class=>'close'},
@@ -374,51 +402,50 @@ Windowを動かして、「set」を押すと位置をセットします。
 	    [:textarea, {:name=>'body', :cols=>'40', :rows=>'7'}, ''],
 	    font_color,
 	    bg_color,
-	    [:p, 'Draw Line'+': ', text('ln')],
+	    [:p, 'Draw Line: ', text('ln')],
 	    [:p, 'x:', text('l'), ' y:', text('t')],
 	    param('id', ''),
 	    param('mode', 'edit')]]]
     end
 
-    def font_color
-      ar = ['Text color'+': ', [:input, {:id=>'tc', :name=>'tc'}]]
+    def self.font_color
+      ar = ['Text color: ', [:input, {:id=>'tc', :name=>'tc'}]]
       ar += ['#000', '#600', '#060', '#006'].map {|c| radio_color('tc', c) }
-      [:p, ar]
+      return [:p, ar]
     end
 
-    def bg_color
+    def self.bg_color
       ar = ['Background'+': ', [:input, {:id=>'bg', :name=>'bg'}]]
       ar += ['#fff', '#fcc', '#cfc', '#ccf', '#ffc', '#000'].map {|c|
 	radio_color('bg', c)
       }
-      [:p, ar]
+      return [:p, ar]
     end
 
-    def radio_color(name, color)
-      [:a, {:href=>"javascript:wema_set_color('#{name}', '#{color}')",
+    def self.radio_color(name, color)
+      return [:a, {:href=>"javascript:wema_set_color('#{name}', '#{color}')",
 	  :class=>'color',
 	  :style=>"color:#{color};background:#{color};"}, '[_]']
     end
 
-    def param(*a)
+    def self.param(*a)
       return text(*a) if $wema_debug
       return hidden(*a)
     end
 
-    def text(a='', b=nil)
+    def self.text(a='', b=nil)
       h = {}
       h.update(:name=>a) if a
       h.update(:value=>b) if b
       return [:input, h]
     end
 
-    def hidden(a='', b=nil)
+    def self.hidden(a='', b=nil)
       h = {:type=>'hidden'}
       h.update(:name=>a) if a
       h.update(:value=>b) if b
       return [:input, h]
     end
-    private :param, :text, :hidden
   end
 end
 
@@ -435,7 +462,7 @@ if defined?($test) && $test
       t_add_user
 
       page = @site['_PageAttribute']
-      page.store('{{wema}}')
+      page.store '{{wema}}'
 
       page = @site.create_new
 
@@ -443,7 +470,7 @@ if defined?($test) && $test
       ok_title 'Need POST'
 
       res = session 'POST /test/1.wema'
-      assert_text('Unknown mode: []', 'title')
+      assert_text 'Unknown mode: []', 'title'
 
       res = session 'POST /test/1.wema?mode=edit&body='
       ok_title 'No action.'
@@ -451,54 +478,54 @@ if defined?($test) && $test
       res = session 'POST /test/1.wema?mode=edit&body=t'
       ok_title 'New post-it is created.'
       page = @site['_1_wema_1']
-      ok_eq(",,,,,\nt\n", page.load)
+      eq ",,,,,\nt\n", page.load
 
       res = session 'POST /test/1.wema?mode=edit&id=id1&body=t2'
       ok_title 'Edit done.'
       page = @site['_1_wema_1']
-      ok_eq(",,,,,\nt2\n", page.load)
+      eq ",,,,,\nt2\n", page.load
 
       res = session 'POST /test/1.wema?mode=setpos&id=id1&l=1&t=2'
       ok_title 'Set position.'
       page = @site['_1_wema_1']
-      ok_eq(",,1,2,,\nt2\n", page.load)
+      eq ",,1,2,,\nt2\n", page.load
 
       res = session '/test/1.html'
       ok_title '1'
-      ok_in(['t2'], "//div[@class='wema']/p")
-      ok_in([:p, 't2'], "//div[@class='wema']/div[@class='cont']")
+      ok_in ['t2'], "//div[@class='wema']/p"
+      ok_in [:p, 't2'], "//div[@class='wema']/div[@class='cont']"
 
       res = session 'POST /test/1.wema?mode=edit&id=id1&body=* t3'
       ok_title 'Edit done.'
       page = @site['_1_wema_1']
-      ok_eq(",,1,2,,\n* t3\n", page.load)
+      eq ",,1,2,,\n* t3\n", page.load
 
       res = session '/test/1.html'
-      ok_in([:h2, 't3'], "//div[@class='wema']/div[@class='cont']")
+      ok_in [:h2, 't3'], "//div[@class='wema']/div[@class='cont']"
 
       res = session 'POST /test/1.wema?mode=edit&id=id1&body={{recent}}'
       ok_title 'Edit done.'
       page = @site['_1_wema_1']
-      ok_eq(",,1,2,,\n{{recent}}\n", page.load)
+      eq ",,1,2,,\n{{recent}}\n", page.load
 
       res = session '/test/1.html'
-      ok_in([:plugin, {:method=>'recent', :param=>''}],
-	    "//div[@class='wema']/div[@class='cont']")
+      ok_in [:plugin, {:method=>'recent', :param=>''}],
+	"//div[@class='wema']/div[@class='cont']"
 
       res = session 'POST /test/1.wema?mode=edit&id=id1&body=http://e.com/'
       ok_title 'Edit done.'
       page = @site['_1_wema_1']
-      ok_eq(",,1,2,,\nhttp://e.com/\n", page.load)
+      eq ",,1,2,,\nhttp://e.com/\n", page.load
 
       res = session '/test/1.html'
-      ok_xp([:a, {:href=>'.redirect?url=http://e.com/',
-		:rel=>'nofollow', :class=>'external'}, 'http://e.com/'],
-	    "//div[@class='wema']/p/a")
+      ok_xp [:a, {:href=>'.redirect?url=http://e.com/',
+	  :rel=>'nofollow', :class=>'external'}, 'http://e.com/'],
+	"//div[@class='wema']/p/a"
 
       res = session 'POST /test/1.wema?mode=edit&id=id1&body='
       ok_title 'Delete a Post-it.'
       page = @site['_1_wema_1']
-      ok_eq(nil, page)
+      eq nil, page
     end
   end
 end

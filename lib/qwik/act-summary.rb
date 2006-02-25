@@ -22,7 +22,8 @@ the first section of the page.
 You can see summary of FrontPage here.
  {{summary(FrontPage)}}
 {{summary(FrontPage)}}
-" }
+"
+    }
 
     def plg_summary(pagename, no_title = false)
       return nil if defined?(@summary_running) && @summary_running

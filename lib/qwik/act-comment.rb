@@ -10,12 +10,14 @@ module Qwik
 You can show a multi line comment field.
 {{mcomment}}
  {{mcomment}}
-If you specify (1) as the argment, the newest comment is placed on the top.
+Add (1) to args, then you see the newest comment on the top.
  {{mcomment(1)}}
 * Hiki like comment plugin
 You can show a Hiki like comment field.
  {{hcomment}}
 {{hcomment}}
+Add (1) to args, then you see the newest comment on the top.
+ {{hcomment(1)}}
 * Old comment plugin
 This plugin is obsolete.  Please use 'mcomment' plugin instead.
  {{comment}}
@@ -37,6 +39,8 @@ This plugin is obsolete.  Please use 'mcomment' plugin instead.
 Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 {{hcomment}}
  {{hcomment}}
+同様に、(1)をつけると、新しいコメントが一番上につくようになります。
+ {{hcomment(1)}}
 * 旧コメント・プラグイン
 古い仕様のコメントプラグインですので、利用は推奨しません。
 「mcomment」プラグインを推奨します。

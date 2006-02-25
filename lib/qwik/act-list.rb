@@ -16,7 +16,8 @@ You can see a list with three lines.
 - By clicking the item, you can edit the item.
 - You can drag-and-drop the list.
 The system automatically save your editing by Ajax method.
-" }
+"
+    }
 
     PLG_LIST_SCRIPT = "
 function qwikSetInPlaceEditor(id, action) {

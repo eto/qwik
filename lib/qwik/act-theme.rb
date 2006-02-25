@@ -30,7 +30,7 @@ You can specify the theme of this site from [[_SiteConfig]].
       return [:ul, theme_list.map {|t| [:li, t] }]
     end
 
-    THEME_IGNORE_DIR = %(CVS icons s5 i ap js css swf sfcring)
+    THEME_IGNORE_DIR = %(css i js s5 swf)
 
     def theme_list
       themes = []
@@ -39,7 +39,6 @@ You can specify the theme of this site from [[_SiteConfig]].
 	s = d.to_s
 	next if /\A\./ =~ s
 	next if THEME_IGNORE_DIR.include?(s)
-
 	dir = theme_path+d
 	next unless dir.directory?
 	themes << d.to_s
@@ -50,14 +49,8 @@ You can specify the theme of this site from [[_SiteConfig]].
     def pre_act_theme
       args = @req.path_args
       filename = args.join('/')
-      return theme_send_file(filename)
-    end
-
-    def theme_send_file(filename)
       path = @config.theme_dir.path+filename
-      ext = path.ext
-      type = @res.mimetypes[ext]
-      return c_simple_send(path, type)
+      return c_simple_send(path)
     end
 
     # from act-archive.rb
@@ -75,6 +68,34 @@ You can specify the theme of this site from [[_SiteConfig]].
 	files << f.to_s
       }
       return files
+    end
+  end
+
+  class Site
+    def theme
+      return self.siteconfig['theme']
+    end
+
+    SITE_THEME = '_SiteTheme'
+    THEME_FILE = 'theme.css'
+
+    def theme_path
+      files = self.files(SITE_THEME)
+      if files && files.exist?(THEME_FILE)
+	return '_SiteTheme.files/theme.css'
+      end
+
+      ac = "#{@sitename}.css"
+      if self.files.exist?(ac)
+	return "/#{@sitename}/.css/#{ac}"
+      end
+
+      t = self.theme
+      if /\Ahttp:\/\// =~ t
+	return '/.css/'+t
+      end
+
+      return ".theme/#{t}/#{t}.css"
     end
   end
 end
@@ -110,6 +131,32 @@ if defined?($test) && $test
       eq ['qwikborder.css', 'qwikborder_ball.png',
 	'qwikborder_h2.png', 'qwikborder_li.png'], list.sort
       eq true, 4 <= list.length		# at least 4 themes
+    end
+  end
+
+  class TestSiteTheme < Test::Unit::TestCase
+    include TestSession
+
+    def test_all
+      site = @memory.farm.get_top_site
+
+      # test_theme
+      eq 'qwikgreen', site.theme
+
+      # test_theme_path
+      eq '.theme/qwikgreen/qwikgreen.css', site.theme_path
+
+      page = site['_SiteConfig']
+      page.store(':theme:t')
+      eq 't', site.theme
+      eq '.theme/t/t.css', site.theme_path
+
+      # test_site_theme
+      page = site['_SiteTheme']
+      page.store('t')
+      files = site.files('_SiteTheme')
+      files.put('theme.css', 't')
+      eq "_SiteTheme.files/theme.css", site.theme_path
     end
   end
 end

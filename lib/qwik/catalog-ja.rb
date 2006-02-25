@@ -97,6 +97,7 @@ class Qwik::CatalogFactory
       'SiteConfig' => 'サイト設定',
       'TimeLine' => '年表 ',
       'Group members' => 'グループメンバー',
+      'SiteArchive' => 'サイトアーカイブ',
 
       'Functions' => '機能の説明',
       'Page List' => 'ページ一覧',

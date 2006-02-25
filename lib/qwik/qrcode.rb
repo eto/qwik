@@ -7,7 +7,6 @@
 class QRCode
   def initialize(path)
     @path = path
-    @have_qrcode_data = File.exist?(path)
     @option = {
       :version			=> 0,
       :version_used		=> 0,
@@ -17,7 +16,10 @@ class QRCode
       :structureappend_parity	=> '',
     }
   end
-  attr_reader :have_qrcode_data
+
+  def have_data?
+    return File.exist?(@path)    
+  end
 
   def set_version(z)
     if 0 <= z && z <= 40
@@ -38,7 +40,7 @@ class QRCode
   end
 
   def make_qrcode(str)
-    return nil unless @have_qrcode_data
+    return nil unless have_data?
     QRCode.make_qrcode_internal(str, @path, @option)
   end
 
@@ -759,7 +761,7 @@ end
 if defined?($test) && $test
   class TestQRCode < Test::Unit::TestCase
     def to_hex(d)
-      d.map {|line|
+      return d.map {|line|
 	'%x' % ('0b'+line.chomp).oct
       }.join(':')
     end
@@ -779,7 +781,7 @@ if defined?($test) && $test
       config = Qwik::Config.new
       config.update Qwik::Config::DebugConfig
       q = QRCode.new(config.qrcode_dir)
-      return if ! q.have_qrcode_data
+      return if ! q.have_data?
 
       assert_equal(
 '111111101111101111111
@@ -804,9 +806,7 @@ if defined?($test) && $test
 100000100100011010110
 111111101100111000111
 ',
-	    q.make_qrcode('0'))
-#      assert_equal(0, q.qrcode_version)
-#      assert_equal(1, q.qrcode_version_used)
+		   q.make_qrcode('0'))
 
       ok '1fdf7f:104d41:17445d:175c5d:17555d:105e41:1fd57f:1300:117ef9:5272b:12567c:1d18d4:1079c7:11c7:1fd982:104328:17567f:17472b:174a7c:1048d6:1fd9c7', '0'
       ok '1fdb7f:105441:174d5d:17585d:174c5d:104c41:1fd57f:1800:16e44b:2b52c:12f1f2:1a258a:3f290:1ca1:1fd0d6:1057c5:174a41:175496:175694:104b5b:1fd322', '01234567'
@@ -835,7 +835,7 @@ if defined?($test) && $test
       config = Qwik::Config.new
       config.update Qwik::Config::DebugConfig
       q = QRCode.new(config.qrcode_dir)
-      return if ! q.have_qrcode_data
+      return if ! q.have_data?
 
       d = nil
       # 100times: 23.628 seconds.

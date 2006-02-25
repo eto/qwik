@@ -9,9 +9,14 @@ module Qwik
       :dt => 'QR-Code plugin',
       :dd => 'You can input QR-Code to the page.',
       :dc => "* Example
+{{qrcode}}
+ {{qrcode}}
+You see a QR-Code for this site.
+
 {{qrcode(\"http://qwik.jp/\")}}
  {{qrcode(\"http://qwik.jp/\")}}
-You can also input multi lines.
+You can embed a URL to the QR-Code.
+
 {{qrcode
 This is a test.
 This is a test, too.
@@ -20,12 +25,13 @@ This is a test, too.
  This is a test.
  This is a test, too.
  }}
+You can also embed multiple lines.
 "
     }
 
     def plg_qrcode(str=nil)
       y = yield if block_given?
-      str = y.chomp if y && y != ''
+      str = y.chomp if y && ! y.empty?
 
       if str
 	str = str.to_s
@@ -36,59 +42,33 @@ This is a test, too.
       end
 
       f = "qrcode-#{n}.png"
-      files = @site.files('FrontPage')
+      files = @site.files(@req.base)
       if ! files.exist?(f)
 	return nil if @config.test && !(defined?($test_qrcode) && $test_qrcode)
 
-	q = @memory.qrcode
+	png = qrcode_generate_png(str)
+	return nil if png.nil?		# no data or no GD.
 
-	begin
-	  png = q.generate_png(str)
-	  return nil if png.nil?
-	rescue
-	  return nil	# no GD library
-	end
-
-	files = @site.files('FrontPage')
 	files.put(f, png)
       end
 
       ar = [
-	[:img, {:src=>".files/#{f}", :alt=>str}],
+	[:img, {:src=>"#{@req.base}.files/#{f}", :alt=>str}],
 	[:br]
       ] + c_pre_text { str }
       ar = [[:a, {:href=>str}] + ar] if is_valid_url?(str)
       div = [:div, {:class=>'qrcode'}] + ar
       return div
     end
-  end
 
-  class QRCodeMemory
-    def initialize(config, memory)
-      @config = config
-      path = @config.qrcode_dir
-      @qrcode = ::QRCode.new(path)
-      @qrcodeimage = ::QRCodeView.new(path)
-    end
+    def qrcode_generate_png(d)
+      qrcode = QRCode.new(@config.qrcode_dir)
+      return nil if ! qrcode.have_data?
+      data = qrcode.make_qrcode(d)
 
-    def have_qrcode_data
-      return @qrcode.have_qrcode_data
-    end
-
-    def generate_data(d)
-      return nil if ! @qrcode.have_qrcode_data
-      begin
-	return @qrcode.make_qrcode(d)
-      rescue
-	p $!
-	p $!.backtrace
-	return ''
-      end
-    end
-
-    def generate_png(d)
-      return nil if ! @qrcodeimage.have_qrcode_data
-      @qrcodeimage.generate_png_from_data(generate_data(d))
+      png = QRCodeView.generate_png(data)
+      return nil if ! png.nil?
+      return png
     end
   end
 end
@@ -108,39 +88,41 @@ if defined?($test) && $test
       $test_qrcode = true
 
       return if ! $have_gd
-      return if ! @memory.qrcode.have_qrcode_data
+
+      qrcode = QRCode.new(@config.qrcode_dir)
+      return if ! qrcode.have_data?
 
       res = session
 
       # test_plg_qrcode
-      ok_wi([:div, {:class=>'qrcode'},
-	      [:a, {:href=>'http://example.com/test/'},
-		[:img, {:src=>'.files/qrcode-test.png',
-		    :alt=>'http://example.com/test/'}], [:br],
-		[:p, [:a, {:class=>'external',
-		      :href=>'http://example.com/test/'},
-		    'http://example.com/test/']]]],
-	    '{{qrcode}}')
+      ok_wi [:div, {:class=>'qrcode'},
+	[:a, {:href=>'http://example.com/test/'},
+	  [:img, {:src=>'1.files/qrcode-test.png',
+	      :alt=>'http://example.com/test/'}], [:br],
+	  [:p, [:a, {:class=>'external',
+		:href=>'http://example.com/test/'},
+	      'http://example.com/test/']]]],
+	'{{qrcode}}'
 
-      files = @site.files('FrontPage')
+      files = @site.files('1')
 
-      ok_eq(true, files.exist?('qrcode-test.png'))
+      eq true, files.exist?('qrcode-test.png')
       str = files.path('qrcode-test.png').read
-      assert_match(/\A\211PNG\r\n/, str)
+      assert_match /\A\211PNG\r\n/, str
 
-      ok_wi([:div, {:class=>'qrcode'},
-	      [:img, {:alt=>'0',
-		  :src=>'.files/qrcode-cfcd208495d565ef66e7dff9f98764da.png'}],
-		[:br], [:p, '0']],
-	    '{{qrcode(0)}}')
+      ok_wi [:div, {:class=>'qrcode'},
+	[:img, {:alt=>'0',
+	    :src=>'1.files/qrcode-cfcd208495d565ef66e7dff9f98764da.png'}],
+	[:br], [:p, '0']],
+	'{{qrcode(0)}}'
 
-      ok_eq(true, files.exist?('qrcode-cfcd208495d565ef66e7dff9f98764da.png'))
+      eq true, files.exist?('qrcode-cfcd208495d565ef66e7dff9f98764da.png')
 
-      ok_wi([:div, {:class=>'qrcode'},
-	      [:img, {:alt=>'0',
-		  :src=>'.files/qrcode-cfcd208495d565ef66e7dff9f98764da.png'}],
-		[:br], [:p, '0']],
-	    "{{qrcode\n0\n}}")
+      ok_wi [:div, {:class=>'qrcode'},
+	[:img, {:alt=>'0',
+	    :src=>'1.files/qrcode-cfcd208495d565ef66e7dff9f98764da.png'}],
+	[:br], [:p, '0']],
+	"{{qrcode\n0\n}}"
 
       $test_qrcode = nil
     end

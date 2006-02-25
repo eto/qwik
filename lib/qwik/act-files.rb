@@ -45,7 +45,7 @@ You can show the list of attached files.
     # ============================== files list
     def plg_show_files
       div = [:div, {:class=>'files'},
-	  [:h5, [:a, {:href=>@req.base+'.files'}, _('Files')]]]
+	[:h5, [:a, {:href=>"#{@req.base}.files"}, _('Files')]]]
       list = files_list
       div << [:ul, *list] if list
       return div
@@ -232,7 +232,6 @@ You can show the list of attached files.
       basename = filename.sub(/\A.*[\/\\]([^\/\\]+)\z/) { $1 }
       return basename
     end
-
   end
 end
 
@@ -556,6 +555,5 @@ if defined?($test) && $test
       ok_eq('text/plain', res['Content-Type'])
       ok_eq('t', res.body)
     end
-
   end
 end

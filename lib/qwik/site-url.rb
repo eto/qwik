@@ -1,11 +1,17 @@
+require 'uri'
+
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Site
     def host_url
-      siteurl = self.siteconfig['siteurl']
-      return siteurl if ! siteurl.empty?
-      return @config.public_url
+      host_url =  self.siteconfig['siteurl']
+      if host_url.empty?
+	host_url = @config.public_url
+      end
+      uri = URI(host_url)
+      uri.path = ""
+      return uri.to_s
     end
 
     def site_url
@@ -35,6 +41,7 @@ module Qwik
       if sitetitle.empty?
 	return '' if @config.test
 	sitetitle = self.site_url.sub(%r|\Ahttp://|, "").sub(%r|/\z|, "")
+	#sitetitle = sitetitle.sub(%r|\Awww\.|, "")
       end
       return sitetitle
     end
@@ -71,7 +78,7 @@ if defined?($test) && $test
     def test_url_test
       site = @site
       page = site.create_new
-      eq 'http://example.com/', site.host_url
+      eq 'http://example.com', site.host_url
       eq 'http://example.com/test/', site.site_url
       eq 'http://example.com/test/1.html', site.page_url('1')
       eq 'test@q.example.com', site.ml_address
@@ -92,7 +99,7 @@ if defined?($test) && $test
       site = @memory.farm.get_top_site
       page = site.create_new
       eq true, site.top_site?
-      eq 'http://example.com/', site.host_url
+      eq 'http://example.com', site.host_url
       eq 'http://example.com/', site.site_url
       eq 'http://example.com/1.html', site.page_url('1')
       eq 'www@q.example.com', site.ml_address
@@ -107,7 +114,7 @@ if defined?($test) && $test
       page = site.create_new
       siteconfig = site.create('_SiteConfig')
       siteconfig.store(":siteurl:http://example.org/\n")
-      eq 'http://example.org/', site.host_url
+      eq 'http://example.org', site.host_url
       eq 'http://example.org/', site.site_url
       eq 'http://example.org/1.html', site.page_url('1')
       eq 'test@q.example.com', site.ml_address		# FIXME: Umm.
@@ -124,7 +131,7 @@ if defined?($test) && $test
       page = site.create_new
       siteconfig = site.create('_SiteConfig')
       siteconfig.store(":siteurl:https://example.net/\n")
-      eq 'https://example.net/', site.host_url
+      eq 'https://example.net', site.host_url
       eq 'https://example.net/', site.site_url
       eq 'https://example.net/1.html', site.page_url('1')
       eq 'test@q.example.com', site.ml_address		# FIXME: Umm.
@@ -133,6 +140,21 @@ if defined?($test) && $test
       t_without_testmode {
 	eq 'https://example.net', site.title
 	eq 'https://example.net - 1', site.get_page_title('1')
+      }
+    end
+
+    def test_url_example_org_with_path
+      t_with_path {
+	site = @site
+	page = site.create_new
+	eq 'http://www.example.org', site.host_url
+	eq 'http://www.example.org/qwik/test/', site.site_url
+	eq 'http://www.example.org/qwik/test/1.html', site.page_url('1')
+	eq 'test@q.example.com', site.ml_address
+	t_without_testmode {
+	  eq 'www.example.org/qwik/test', site.title
+	  eq 'www.example.org/qwik/test - 1', site.get_page_title('1')
+	}
       }
     end
   end

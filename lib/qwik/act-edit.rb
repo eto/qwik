@@ -129,10 +129,11 @@ module Qwik
       return [:div, {:class=>'section edithistory'},
 	[:h2, _('Site admin')],
 	[:ul,
-	  [:li, [:a, {:href=>'_SiteMenu.html'}, _('SiteMenu')]],
+	  [:li, [:a, {:href=>'site_management.describe'}, _('SiteMenu')]],
 	  [:li, [:a, {:href=>'_SiteConfig.html'}, _('SiteConfig')]],
-	  [:li, [:a, {:href=>'.time_walker'}, _('TimeLine')]],
+	  [:li, [:a, {:href=>'.chronology'}, _('Chronology')]],
 	  [:li, [:a, {:href=>'_GroupMembers.html'}, _('Group members')]],
+	  [:li, [:a, {:href=>"#{@site.sitename}.zip"}, _('SiteArchive')]],
 	]]
     end
 

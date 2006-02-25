@@ -41,6 +41,7 @@ require 'qwik/act-interwiki'
 require 'qwik/act-login'
 require 'qwik/act-new'		# newpage_form
 require 'qwik/act-sitelog'
+require 'qwik/act-theme'
 require 'qwik/act-toc'
 
 module Qwik

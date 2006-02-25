@@ -26,37 +26,49 @@ module Qwik
     end
     alias plg_search plg_search_form
 
-    def search_form(focus=false)
+    def search_form(focus=false, query=nil)
       query_attr = {:name=>'q'}
       query_attr[:class] = 'focus' if focus
+      query_attr[:value] = query if query
       return [:form, {:action=>'.search'},
 	[:input, query_attr],
 	[:input, {:type=>'submit', :value=>_('Search')}]]
     end
 
     def act_search
-      query = @req.query['q']
-      if query.nil? || query.empty?
-	return search_form_page
-      end
+      query = search_get_query
+      return search_form_page if query.nil?
 
       ar = @site.search(query)
       if ar.empty?
-	return search_notfound_page
+	return search_notfound_page(query)
       end
 
       return search_result(@site, ar)
     end
+    alias ext_search act_search
 
-    def search_form_page(title=_('Search'), notice=nil)
+    def search_get_query
+      query = @req.query['q']
+      return query if query && ! query.empty?
+
+      query = @req.base
+      #qp @req.base
+      return query if query && ! query.empty? && query != "FrontPage"
+
+      return nil
+    end
+
+    def search_form_page(title=_('Search'), notice=nil, query=nil)
       body = []
       body << [:h2, notice] if notice
-      body << [:div, {:class=>'form'}, search_form(true)]
+      body << [:div, {:class=>'form'}, search_form(true, query)]
       return c_notice(title) { body }
     end
 
-    def search_notfound_page
-      return search_form_page(_('Search result'), _('No match.'))
+    # called from act-isearch.rb
+    def search_notfound_page(query)
+      return search_form_page(_('Search result'), _('No match.'), query)
     end
 
     def search_result(site, ar)
@@ -121,9 +133,23 @@ if defined?($test) && $test
 		[:span, {:class=>'content'}, 'This is a keyword.']]],
 	    "//div[@class='search_result']")
 
+      res = session("/test/keyword.search")	# Both OK.
+      ok_in([:ul, [:li,
+		[:a, {:href=>'1.html'}, '1'], ' : ',
+		[:em, {:class=>'linenum'}, '0'], ' : ',
+		[:span, {:class=>'content'}, 'This is a keyword.']]],
+	    "//div[@class='search_result']")
+
       page = @site.create_new	# 2.txt
       page.store("Š¿Žš")
       res = session("/test/.search?q=Žš")
+      ok_in([:ul, [:li,
+		[:a, {:href=>'2.html'}, '2'], ' : ',
+		[:em, {:class=>'linenum'}, '0'], ' : ',
+		[:span, {:class=>'content'}, "Š¿Žš"]]],
+	    "//div[@class='search_result']")
+
+      res = session("/test/Žš.search")		# Both OK.
       ok_in([:ul, [:li,
 		[:a, {:href=>'2.html'}, '2'], ' : ',
 		[:em, {:class=>'linenum'}, '0'], ' : ',

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-index'
 require 'qwik/act-search'
@@ -29,7 +20,7 @@ module Qwik
 
       ar = @site.isearch(query)
       if ar.nil? || ar.empty?
-	search_notfound_page
+	search_notfound_page(query)
 	isearch_patch(@res.body)
 	return
       end
@@ -77,27 +68,27 @@ if defined?($test) && $test
     def test_act_isearch
       t_add_user
 
-      res = session('/test/.isearch')
-      ok_xp([:form, {:action=>'.isearch'},
+      res = session '/test/.isearch'
+      ok_xp [:form, {:action=>'.isearch'},
 	      [:input, {:class=>'focus', :name=>'q'}],
 	      [:input, {:value=>'Search', :type=>'submit'}]],
-	    '//form')
+	    '//form'
 
-      res = session("/test/.isearch?q=nosuchkey")
-      assert_text('Search result', 'h1')
-      ok_in(['No match.'], '//h2')
+      res = session "/test/.isearch?q=nosuchkey"
+      assert_text 'Search result', 'h1'
+      ok_in ['No match.'], '//h2'
 
       page = @site.create_new
-      page.store('This is a keyword.')
-      res = session("/test/.isearch?q=keyword")
-#      ok_in([:ul, [:li, [:a, {:href=>'1.html'}, '1']]],
-#	    "//div[@class='search_result']")
+      page.store 'This is a keyword.'
+      res = session "/test/.isearch?q=keyword"
+#      ok_in [:ul, [:li, [:a, {:href=>'1.html'}, '1']]],
+#	    "//div[@class='search_result']"
 
       page = @site.create_new	# 2.txt
-      page.store("Š¿Žš")
-      res = session("/test/.isearch?q=Žš")
-#      ok_in([:ul, [:li, [:a, {:href=>'2.html'}, '2']]],
-#	    "//div[@class='search_result']")
+      page.store "Š¿Žš"
+      res = session "/test/.isearch?q=Žš"
+#      ok_in [:ul, [:li, [:a, {:href=>'2.html'}, '2']]],
+#	    "//div[@class='search_result']"
     end
   end
 end

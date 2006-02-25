@@ -15,16 +15,16 @@ module Qwik
 
     def path(k, time) # k: String, t: Time
       t = time.to_i.to_s
-      @backup_path+(t+'_'+k)
+      return @backup_path+"#{t}_#{k}"
     end
     private :path
 
     def exist?(k, time)
-      path(k, time).exist?
+      return path(k, time).exist?
     end
 
     def get(k, time)
-      path(k, time).read
+      return path(k, time).read
     end
 
     def check(k, v)

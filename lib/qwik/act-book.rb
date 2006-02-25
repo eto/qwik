@@ -10,9 +10,15 @@ module Qwik
 Add a link to a book by isbn.
  {{isbn(4797318325)}}
 {{isbn(4797318325)}}
+ {{isbn_amazon(4797318325)}}
+{{isbn_amazon(4797318325)}}
+ {{isbn_amazon(4797318325,書名)}}
+{{isbn_amazon(4797318325,書名)}}
 ** Book Serach plugin
  {{book(Wiki)}}
 {{book(Wiki)}}
+ {{book(ブログ)}}
+{{book(ブログ)}}
 You can edit the book stores list on [[_BookSearch]].
 "
     }

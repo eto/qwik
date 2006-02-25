@@ -8,7 +8,6 @@ require 'qwik/site-config'
 require 'qwik/site-log'
 require 'qwik/site-member'
 require 'qwik/site-url'
-require 'qwik/site-theme'
 require 'qwik/site-pages'
 require 'qwik/site-group'
 require 'qwik/site-files'
@@ -16,6 +15,8 @@ require 'qwik/site-files'
 module Qwik
   class Site
     include Enumerable
+
+    CACHE_DIR = '.cache'
 
     def initialize(config, memory, sitename)
       @config = config
@@ -26,7 +27,7 @@ module Qwik
       @path = @dir.path
       @pages = Pages.new(@config, @path)
 
-      @cache_path = @path+'.cache'
+      @cache_path = @path+CACHE_DIR
       @cache_path.check_directory
 
       @cache = {}
@@ -34,7 +35,6 @@ module Qwik
       init_group_config
     end
     attr_reader :sitename
-#   attr_reader :dir
     attr_reader :path
     attr_reader :cache_path
     attr_reader :cache

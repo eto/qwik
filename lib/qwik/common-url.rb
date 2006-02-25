@@ -61,6 +61,15 @@ if defined?($test) && $test
       eq 'http://example.org/1.html', @action.c_relative_to_absolute('1.html')
     end
 
+    def test_with_path
+      t_with_path {
+	res = session
+	eq '/qwik/test/1.html', @action.c_relative_to_root('1.html')
+	eq 'http://www.example.org/qwik/test/1.html',
+	  @action.c_relative_to_absolute('1.html')
+      }
+    end
+
     def test_anomaly
       res = session
       eq '/.theme', @action.c_relative_to_root('/.theme')

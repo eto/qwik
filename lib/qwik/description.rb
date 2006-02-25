@@ -1,8 +1,9 @@
 module Qwik
   class Action
     D_qwikweb = {
-      :dt => 'qwikWeb functions',
-      :dd => 'You can see brief descriptions of qwikWeb functions.',
+      :dt => 'How to qwikWeb',
+      :dd => 'How you can use qwikWeb',
+#You can see brief descriptions of qwikWeb functions.
       :dc => "
 '''qwikWeb''' is a group communication system that integrate
 WikiWikiWeb and mailing list.
@@ -11,6 +12,47 @@ Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] to the detail.
 
 You can see the list of qwikWeb functions below.
 "
+    }
+
+    D_site_management = {
+      :dt => 'Site management',
+      :dd => 'Site management menu.',
+      :dc => '
+* Site management function
+You can access site management pages from the right side of edit page.
+You can aceess the same pages here.
+- [[Config|_SiteConfig]] Site configuration page
+- [[Chronology|.chronology]] You can see the chronology of this site.
+- [[Members|_GroupMembers]] You can add or delete the members of this group.
+-- Please enter a mail address in each line.  (Do not use comma separated values form.)
+-- \'\'\'Warning:\'\'\' If you delete your mail from this page, you can not login this site again.
+- {{zip}} You can get a site archive.
+-- The archive includes the static HTML pages. You can place the HTML pages onto a web site.
+* Site pages configuration
+You can edit menus, such as sidemenu, from here.
+- [[AdminMenu|_AdminMenu]] On the top of this page.
+- [[SideMenu|_SideMenu]] On the side of this page.
+- [[PageAttribute|_PageAttribute]] As the page attribute.
+- [[EditorFooter|_EditorFooter]] The footer of edit page.
+You can also edit several configurations.
+- [[_SiteTheme]] You can attach your own css file to this page.
+- [[_InterWikiName]] Inter wiki link.
+- [[_IsbnLink]] Used for isbn plugin.
+- [[_BookSearch]] Used for book search plugin.
+
+These pages are inherited from the parent pages.
+If you edited the pages, the content is copied from the parent pages.
+Even if the parent pages are edited, the changes will not be appeared.
+
+If so, please save the content of the current page to your editor,
+erase the page.  Then you\'ll see the content of the parent page.
+After that, please re-edit the page.
+
+* Etc.
+- [[SandBox]]
+- [[SiteLog|_SiteLogView]]
+Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] for detail.
+'
     }
 
     D_textformat_simple = {

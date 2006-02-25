@@ -111,7 +111,7 @@ if defined?($test) && $test
     def test_all
       t_add_user
       res = session '/test/qwikweb.describe'
-      ok_title 'Function | qwikWeb functions'
+      ok_title 'Function | How to qwikWeb'
 #      ok_in [:p, 'You can see the description of each functions of qwikWeb.'],
 #	'//div[@class="section"]'
 
