@@ -1,2 +1,0 @@
-#! /bin/sh
-qwik-service --incgen $1
