@@ -1,5 +1,7 @@
 2006-02-26  Kouichirou Eto  <2006 eto.com>
 
+	* version.rb: Change version from 0.8.1 to 0.8.2p
+
 	* site-url.rb: Bug fix.  Add test to use with path.
 
 	* act-qrcode.rb: Refactoring.  Delete QRCodeMemory.
