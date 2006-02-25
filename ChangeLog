@@ -1,8 +1,50 @@
+2006-02-26  Kouichirou Eto  <2006 eto.com>
+
+	* site-url.rb: Bug fix.  Add test to use with path.
+
+	* act-qrcode.rb: Refactoring.  Delete QRCodeMemory.
+	* qrcode.rb: Ditto.
+	* qrcode-view.rb: Ditto.
+	* server-memory.rb: Ditto.
+
+	* act-theme.rb: Add _SiteTheme page function.
+	* site-theme.rb: Merged to act-theme.rb
+	* super/_SiteTheme.txt: New file for SiteTheme.
+
+	* act-search.rb: Show query if there is no hit.
+	* act-isearch.rb: Ditto.  Add query if notfound.
+
+	* act-wema.rb: New plugin wema_compat.  Show only if there is wema.
+	* act-wema.rb: Refactoring.
+	* super/_PageAttribute.txt: Change wema to wema_compat
+
+	* descriptions.rb: Make a site management page here.
+	* descriptions-ja.rb: Japanese version.
+	* act-edit.rb: Change link to there.
+	* act-edit.rb: Add a site archive link.
+	* super/_SiteMenu.txt: Almost deleted.
+	* super/QwikWebPlugin.txt: Deleted.
+	* super/QwikWebStructure.txt: Deleted.
+
+	* act-keywords.rb: New plugin keywords.
+	* css/base.css: Add keywords class.
+
+	* qwikborder.css: Do not user border-bottom for a link.
+	* qwikgreen.css: Ditto.
+
+	* act-day.rb: I don't know why but it doesn't pass the test.
+
+	* act-chronology.rb: Renamed from time_walker.
+
 2006-02-24  Kouichirou Eto  <2006 eto.com>
 
 	* Refactoring descriptions.
 
 	* act-comment.rb: Merge hcomment, mcomment.
+
+	* act-config.rb: New file for config.  Under construction.
+
+	* common-javascript.rb: New file.  Splited from common-plain.rb
 
 2006-02-24  Kouichirou Eto  <2006 eto.com>
 
