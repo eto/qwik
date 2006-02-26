@@ -1,5 +1,29 @@
 2006-02-26  Kouichirou Eto  <2006 eto.com>
 
+	* site.rb: Delete @dir
+	Related files are also changed.
+	site-files.rb, site-group.rb, 
+
+	* act-password.rb: Refactoring.
+
+2006-02-26  Kouichirou Eto  <2006 eto.com>
+
+	* act-style.rb: Fix. Extract content in sytle_div.
+
+	* act-theme.rb: You can use SiteTheme now.
+	* act-theme.rb: site.theme is moved to Action.
+	Related files are also changed.
+	* common-surface.rb: Ditto.
+	* act-archive.rb: Ditto.
+	* act-theme.rb: Merge act-css.rb
+	* check-act-theme.rb: Renamed from check-ext-css.rb
+
+	* super/_SideMenu.txt: Change TitleList and RecentList for archive.
+
+	* act-theme.rb: Do not use relative_to_root
+
+2006-02-26  Kouichirou Eto  <2006 eto.com>
+
 	* version.rb: Change version from 0.8.1 to 0.8.2p
 
 	* site-url.rb: Bug fix.  Add test to use with path.
