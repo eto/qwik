@@ -21,6 +21,19 @@ module Qwik
 {{br}}
 {{br}}
 {{br}}
+
+{{{
+{{hmenu
+- [[Yahoo!|http://www.yahoo.co.jp/]]
+-- [[map|http://map.yahoo.co.jp/]]
+-- [[auctions|http://aunctions.yahoo.co.jp/]]
+- [[Google|http://www.google.co.jp/]]
+-- [[news|http://news.google.com/]]
+-- [[map|http://map.google.com/]]
+- [[qwik|http://qwik.jp/]]
+-- [[hello|http://qwik.jp/HelloQwik/]]
+}}
+}}}
 "
     }
 
@@ -43,6 +56,19 @@ module Qwik
 {{br}}
 {{br}}
 {{br}}
+
+{{{
+{{hmenu
+- [[Yahoo!|http://www.yahoo.co.jp/]]
+-- [[map|http://map.yahoo.co.jp/]]
+-- [[auctions|http://aunctions.yahoo.co.jp/]]
+- [[Google|http://www.google.co.jp/]]
+-- [[news|http://news.google.com/]]
+-- [[map|http://map.google.com/]]
+- [[qwik|http://qwik.jp/]]
+-- [[hello|http://qwik.jp/HelloQwik/]]
+}}
+}}}
 "
     }
 
