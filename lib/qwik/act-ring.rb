@@ -4,7 +4,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_ext_ring = {
+    NotUse_D_ext_ring = {
       :dt => 'Ring mode',
       :dd => 'This is a special mode for Ring.',
       :dc => "* How to
