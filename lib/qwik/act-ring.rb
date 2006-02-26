@@ -1,6 +1,8 @@
-# Special mode.
+# Special mode for Ring.
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+
+$KCODE = 's'
 
 module Qwik
   class Action
@@ -49,7 +51,7 @@ module Qwik
       t = catalog[text]
       return t if t
 
-      raise if @config.test	# Only for test.
+      #raise if @config.test	# Only for test.
 
       return text.to_s		# abandon
     end
@@ -62,7 +64,7 @@ module Qwik
     end
 
     def ring_generate_catalog
-      catalog = ring_generate_catalog_default
+      catalog = {}
       page = @site.get_superpage(RING_CATALOG)
       if page.nil?
 	page = @site.create("_#{RING_CATALOG}")
@@ -77,32 +79,26 @@ module Qwik
       return catalog
     end
 
-    def ring_generate_catalog_default
-      catalog = {
-	# test
-	:TEST		=> "テスト",
-
-	# common
-	:RIGHT_ARROW	=> "→",
-	:BULLET		=> "●",
-	:USER		=> "ユーザ名",
-	:YOUR_MAIL	=> "あなたのメール",
-	:YOUR_USER	=> "あなたのユーザ名",
-	:YOUR_NAME	=> "あなたの名前",
-	:MAIL		=> "メール",
-	:USER_NAME	=> "ユーザネーム",
-	:MESSAGE	=> "メッセージ",
-	:REALNAME	=> "本名",
-      }
-      return catalog
-    end
-
     RING_CATALOG_CONTENT = '
-* Ring catalog
-
-# common
+:TEST:テスト
+:RIGHT_ARROW:→
+:BULLET:●
+:USER:ユーザ名
+:YOUR_MAIL:あなたのメール
+:YOUR_USER:あなたのユーザ名
+:YOUR_NAME:あなたの名前
+:MAIL:メール
+:USER_NAME:ユーザネーム
+:MESSAGE:メッセージ
+:REALNAME:本名
 :THANKYOU:どうもありがとうございました。
 :CONFIRM_YOUR_INPUT:もう一度入力を確認してください。
+:NAME:名前
+:NYUGAKU:入学
+:YEAR:年
+'
+    NU_RING_CATALOG_CONTENT = '
+# common
 :GOBACK:ブラウザの「戻るボタン」で入力画面に戻り、もう一度入力を確認してください。
 
 # invite
@@ -139,11 +135,6 @@ module Qwik
 # new
 :NEW_CREATED:アカウントが作成されました。
 :NEW_FROM_SFCNEJP:sfc.ne.jpよりの登録です。
-
-# user
-:USER_NAME:名前
-:USER_NYUGAKU:入学
-:USER_YEAR:年
 '
 
     # ============================== invite
@@ -337,7 +328,7 @@ http://ring.sfc.keio.ac.jp/.getpass?mail=#{guest_mail}
 	      [:th, _r(:BULLET)+_r(:MAIL)],
 	      [:td, mail]],
 	    [:tr,
-	      [:th, _r(:BULLET)+_r(:USER_NAME)],
+	      [:th, _r(:BULLET)+_r(:NAME)],
 	      [:td, [:input, {:name=>'username'}]]],
 	    [:tr,
 	      [:td, {:class=>'msg', :colspan=>2}, _r(:MAKER_USER_NAME_DESC)]],
@@ -526,14 +517,6 @@ http://ring.sfc.keio.ac.jp/.getpass?mail=#{guest_mail}
     end
 
     # ============================== new
-    # http://ring.sfc.ne.jp/.ring_new?id=gotz@1996.sfc.ne.jp&mail=gotz@gotz.jp 
-    # ログインID
-    # 学籍番号
-    # 卒業年
-    # 名前
-    # 読み
-    # 電子メール
-
     def pre_act_ring_new
       id   = @req.query['id']
       mail = @req.query['mail']
@@ -651,10 +634,10 @@ http://ring.sfc.keio.ac.jp/.getpass?mail=#{guest_mail}
     # see the personal information of this page
     def plg_ring_personal_info
       return [:dl,
-	[:dt, _r(:USER_NAME)+' E-mail'],
+	[:dt, _r(:NAME)+' E-mail'],
 	[:dd, plg_ring_see(:name), " <", plg_ring_see(:mail), ">"],
-	[:dt, _r(:USER_NYUGAKU)],
-	[:dd, plg_ring_see(:year), _r(:USER_YEAR)+' ', plg_ring_see(:faculty)]]
+	[:dt, _r(:NYUGAKU)],
+	[:dd, plg_ring_see(:year), _r(:YEAR)+' ', plg_ring_see(:faculty)]]
     end
 
     # ring_user_link
@@ -722,14 +705,14 @@ if defined?($test) && $test
 
       res = session('/test/1.ring_invite')
       ok_xp([:div, {:class=>'section'},
-	      [[:h3, "招待状は送られませんでした"],
+	      [[:h3, "INVITE_NOSEND"],
 		[:p, "もう一度入力を確認してください。"],
 		[:p, [:a, {:href=>'1.html'}, 'Go back']]]],
 	    "//div[@class='section']")
 
       res = session("/test/1.ring_invite?guest_mail=g@e.com&message=hi")
       ok_xp([:div, {:class=>'section'},
-	      [[:h3, "招待状が送られました"],
+	      [[:h3, "INVITE_MAIL_IS_SENT"],
 		[:dl, [:dt, "メッセージ"], [:dd, 'hi']],
 		[:p, "どうもありがとうございました。"],
 		[:p, [:a, {:href=>'1.html'}, 'Go back']]]],
@@ -778,11 +761,11 @@ if defined?($test) && $test
 
       # Try to invite, but it cause error.
       res = session("/test/1.ring_invite?guest_mail=invalid@mailaddress")
-      ok_in(["招待状は送られませんでした"], '//h3')
+      ok_in(["INVITE_NOSEND"], '//h3')
 
       # Try to invite again.
       res = session("/test/1.ring_invite?guest_mail=gu@e.com&message=invite")
-      ok_in(["招待状が送られました"], '//h3')
+      ok_in(["INVITE_MAIL_IS_SENT"], '//h3')
       eq ",gu@e.com,,user@e.com,invite,0\n", @site['_RingInvitedMember'].load
       eq "Alan Smithy <user@e.com>", $smtp_sendmail[2]
       eq 'gu@e.com', $smtp_sendmail[3]
@@ -792,7 +775,7 @@ if defined?($test) && $test
 
       # Try to invite another person.
       res = session("/test/1.ring_invite?guest_mail=fe@e.com&message=youtoo")
-      ok_in(["招待状が送られました"], '//h3')
+      ok_in(["INVITE_MAIL_IS_SENT"], '//h3')
       eq ",gu@e.com,,user@e.com,invite,0\n,fe@e.com,,user@e.com,youtoo,0\n",
 	@site['_RingInvitedMember'].load
       eq "Alan Smithy <user@e.com>", $smtp_sendmail[2]
@@ -845,16 +828,16 @@ if defined?($test) && $test
 
       res = session('/test/1.ring_make')
       ok_xp([:div, {:class=>'section'},
-	      [[:h3, "登録されませんでした。"],
+	      [[:h3, "MAKER_NOT_REGISTERD"],
 		[:p, "もう一度入力を確認してください。"],
 		[:p, [:a, {:href=>'1.html'}, 'Go back']]]],
 	    "//div[@class='section']")
 
       res = session("/test/1.ring_make?username=u&realname=r&faculty=f&year=1990")
       ok_xp([:div, {:class=>'section'},
-	      [[:h3, "登録されました"],
+	      [[:h3, "MAKER_REGISTERD"],
 		[:dl, [:dt, "ユーザ名"], [:dd, 'u'], [:dt, "本名"], [:dd, 'r']],
-		[:p, [:a, {:href=>'2.html'}, "作ったページ"], "を見る。"]]],
+		[:p, [:a, {:href=>'2.html'}, "MAKER_THE_PAGE"], "MAKER_SEE"]]],
 	    "//div[@class='section']")
       page = @site['2']
       ok_eq('u', page.load)
@@ -889,11 +872,11 @@ if defined?($test) && $test
 	pass = @memory.passgen.generate('gu@e.com')
 	req.cookies.update({'user'=>'gu@e.com', 'pass'=>pass})
       }
-      ok_in(["登録されました"], "//div[@class='section']//h3")
+      ok_in(["MAKER_REGISTERD"], "//div[@class='section']//h3")
       ok_in(["ゲスト"], "//div[@class='section']//dd[1]")
       ok_in(["山田太郎"], "//div[@class='section']//dd[2]")
-      ok_in(["作ったページ"], "//div[@class='section']//a")
-      ok_xp([:a, {:href=>'1.html'}, "作ったページ"], "//div[@class='section']//a")
+      ok_in(["MAKER_THE_PAGE"], "//div[@class='section']//a")
+      ok_xp([:a, {:href=>'1.html'}, "MAKER_THE_PAGE"], "//div[@class='section']//a")
       ok_eq("* ゲスト
 * profile
 {{ring_personal_info}}
@@ -978,15 +961,15 @@ if defined?($test) && $test
 
       # Try to write, but it cause error.
       res = session('/test/1.ring_msg')
-      ok_in(["メッセージを入力してください"], '//h3')
+      ok_in(["MSG_INPUT_MESSAGE"], '//h3')
 
       # Try to write, but it cause error.
       res = session("/test/1.ring_msg?message=")
-      ok_in(["メッセージを入力してください"], '//h3')
+      ok_in(["MSG_INPUT_MESSAGE"], '//h3')
 
       # Send a message.
       res = session("/test/1.ring_msg?message=Hi")
-      ok_in(["メッセージを追加しました"], '//h3')
+      ok_in(["MSG_MESSAGE_IS_ADDED"], '//h3')
 
       # Check the content.
       ok_eq(":{{ring_ul(user@e.com)}} ({{ring_date(0)}}):Hi\n", page.load)
@@ -1012,10 +995,10 @@ if defined?($test) && $test
       ok_title 'No id nor mail'
 
       res = session("/test/.ring_new?id=d@1990.sfc.ne.jp&mail=d@g.jp")
-      ok_title 'アカウントが作成されました。'
+      ok_title 'NEW_CREATED'
 
       invite_member_page = @site['_'+Qwik::Action::RING_INVITE_MEMBER]
-      ok_eq(",d@1990.sfc.ne.jp,,info@ring.sfc.ne.jp,sfc.ne.jpよりの登録です。,0\n", invite_member_page.load)
+      ok_eq(",d@1990.sfc.ne.jp,,info@ring.sfc.ne.jp,NEW_FROM_SFCNEJP,0\n", invite_member_page.load)
 
       member_page = @site['_SiteMember']
       ok_eq(",d@1990.sfc.ne.jp,info@ring.sfc.ne.jp\n", member_page.load)
