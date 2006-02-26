@@ -7,13 +7,13 @@ module Qwik
     def files(k = 'FrontPage')
       page = self[k]
       return nil if page.nil?
-      page.files = PageFiles.new(@dir, k) if page.files.nil?
+      page.files = PageFiles.new(@path.to_s, k) if page.files.nil?
       return page.files
     end
 
     # obsolete
     def attach
-      @attach = SiteAttach.new(@dir) unless defined? @attach
+      @attach = SiteAttach.new(@path.to_s) unless defined? @attach
       return @attach
     end
   end

@@ -52,13 +52,14 @@ module Qwik
     end
 
     def editor_edit_form(pagename, str, md5hex)
-      return [:form, {:method=>'POST', :action=>pagename+'.save'},
+      form = [:form, {:method=>'POST', :action=>"#{pagename}.save"},
 	[:textarea, {:name=>'contents', :id=>'contents',
 	    :cols=>'70', :rows=>'20', :class=>'focus'}, str],
 	[:div, {:class=>'right'},
 	  [:input, {:type=>'hidden', :name=>'md5hex', :value=>md5hex}],
 	  [:input, {:class=>'submit', :type=>'submit',
 	      :name=>'save', :value=>_('Save')}]]]
+      return form
     end
 
     def editor_attach_form(pagename)
@@ -77,7 +78,7 @@ module Qwik
 	  [:div, {:class=>'section section_attach'},
 	    attach_form,
 	    [:div, {:class=>'right attach_many'},
-	      [:a, {:href=>pagename+'.files'}, _('Attach many files')]]]]
+	      [:a, {:href=>"#{pagename}.files"}, _('Attach many files')]]]]
       ]
 
       if attach_list

@@ -10,9 +10,10 @@ module Qwik
 You can lock your page by setting this password plugin.
 
 '''Warning:''' There is no way to unlock the page.
-If you forgot your password, you can not edit the page anymorre.
-Be careful.
-" }
+If you forgot your password, you can not edit the page.
+Please be careful.
+"
+    }
 
     def plg_password(pass=nil)
       # password plugin is parsed in act-edit.rb
@@ -20,40 +21,34 @@ Be careful.
     end
   end
 
-  module SitePassword # has relation with cmd_save
-    def password
-      return SitePassword.get_pass(load)
+  # has relation with cmd_save
+  class Page
+    def get_password
+      return Page.get_password(self.load)
     end
 
-    def have_password?
-      return (self.password != nil)
-    end
-
-    def embed_password(v)
-      new_pass = SitePassword.get_pass(v)
-      return v if new_pass.nil?
-      return v.sub(/\{\{password\((.+)\)\}\}/) {
-	"{{password(#{$1.md5hex})}}"
-      }
-    end
-
-    def match_password?(v)
-      return true if ! have_password?	# go on
-      old_pass_md5 = self.password
-      new_pass_md5 = SitePassword.get_pass(v)	# assume already become md5
-      return false if ! new_pass_md5	# can not go if there is no pass
-      return false if new_pass_md5 != old_pass_md5	# should be correct pass
-      return true	# go on
-    end
-
-    def self.get_pass(str)
+    def self.get_password(str)
       return $1 if str && /\{\{password\((.+)\)\}\}/ =~ str
       return nil
     end
-  end
 
-  class Page
-    include SitePassword
+    def self.embed_password(content)
+      new_pass = get_password(content)
+      return content if new_pass.nil?		# Nothing to embed.
+      new_content = content.sub(/\{\{password\((.+)\)\}\}/) {
+	"{{password(#{$1.md5hex})}}"
+      }
+      return new_content
+    end
+
+    def match_password?(v)
+      old_pass_md5 = self.get_password
+      return true if old_pass_md5.nil?		# No password.  Go on.
+      new_pass_md5 = Page.get_password(v)	# assume already become md5
+      return false if new_pass_md5.nil?		# Can not go if there is no pass
+      return false if new_pass_md5 != old_pass_md5	# should be correct pass
+      return true	# Go on.
+    end
   end
 end
 
@@ -70,26 +65,26 @@ if defined?($test) && $test
       @pages = Qwik::Pages.new(@config, @dir)
       page = @pages.create('1')
       page.store('test2')
-      ok_eq('test2', page.load)
+
+      eq 'test2', page.load
       # The text is rewrite to the text with embeded password.
-      text = page.embed_password('take1 {{password(testpassword)}}')
-      assert_match(/\{\{password\(/, text)
-      # There should be no original password.
-      assert_no_match(/testpassword/, text)
+      text = Qwik::Page.embed_password('take1 {{password(testpassword)}}')
+      eq "take1 {{password(e16b2ab8d12314bf4efbd6203906ea6c)}}", text
       page.store(text)
-      ok_eq(true, page.have_password?)
 
-      take2 = page.embed_password('take2 {{password(notcorrectpassword)}}')
-      ok_eq(false, page.match_password?(take2)) # NG
+      eq "e16b2ab8d12314bf4efbd6203906ea6c", page.get_password
 
-      take3 = page.embed_password('take3 {{password(testpassword)}}')
-      ok_eq(true, page.match_password?(take3))
+      take2 = Qwik::Page.embed_password('take2 {{password(notcorrectpassword)}}')
+      eq false, page.match_password?(take2)	# NG
+
+      take3 = Qwik::Page.embed_password('take3 {{password(testpassword)}}')
+      eq true, page.match_password?(take3)
       page.store(take3) # OK
       assert_match(/take3/, page.load)
+      eq "take3 {{password(e16b2ab8d12314bf4efbd6203906ea6c)}}", page.load
 
-      ok_eq(true, page.have_password?)
-      ok_eq(32, page.password.length)
-      ok_eq('testpassword'.md5hex, page.password)
+      eq "e16b2ab8d12314bf4efbd6203906ea6c", page.get_password
+      eq 'testpassword'.md5hex, page.get_password
       @pages.erase_all
     end
 
@@ -125,8 +120,8 @@ if defined?($test) && $test
 
       res = session('/test/1.save?contents=t3%0A{{password(test)}}%0A')
       ok_title('Page is saved.')
-      ok_eq("t3\n{{password(098f6bcd4621d373cade4e832627b4f6)}}\n",
-	    page.load)
+      eq "t3\n{{password(098f6bcd4621d373cade4e832627b4f6)}}\n",
+	page.load
     end
   end
 end

@@ -23,7 +23,7 @@ module Qwik
     end
 
     def is_valid_url?(str)
-      return (%r!\Ahttp://[\-\_\.\/\?A-Za-z]+\z! =~ str) != nil
+      return %r!\Ahttp://[\-\_\.\/\?A-Za-z]+\z! =~ str
     end
   end
 end
@@ -79,8 +79,8 @@ if defined?($test) && $test
 
     def test_is_valid_url?
       res = session
-      eq true, @action.is_valid_url?('http://e.com/')
-      eq true, @action.is_valid_url?("http://e.com/?")
+      eq true, !!@action.is_valid_url?('http://e.com/')
+      eq true, !!@action.is_valid_url?("http://e.com/?")
     end
   end
 end

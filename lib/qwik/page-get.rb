@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -130,7 +121,7 @@ module Qwik
 
     # ============================== class method
     def self.valid_as_pagekey?(t)
-      return (/^[A-Za-z_0-9]+$/ =~ t) != nil
+      return /^[A-Za-z_0-9]+$/ =~ t
     end
 
   end
@@ -184,8 +175,8 @@ if defined?($test) && $test
   class TestPageClassMethod < Test::Unit::TestCase
     def test_valid_as_pagekey?
       c = Qwik::Page
-      ok_eq(true,  c.valid_as_pagekey?('t'))
-      ok_eq(false, c.valid_as_pagekey?('t t'))
+      ok_eq(true,  !!c.valid_as_pagekey?('t'))
+      ok_eq(false, !!c.valid_as_pagekey?('t t'))
     end
 
     def ok_title(e, s)

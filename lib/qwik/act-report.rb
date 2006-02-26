@@ -9,11 +9,10 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require "qwik/common-plain"
+require 'qwik/common-plain'
 
 module Qwik
   class Action
-
     def act_report
       c_require_login
 
@@ -25,9 +24,9 @@ module Qwik
       end
 
       if ids.empty?
-        return c_notice(_("New Report Page"), '.new', 200) {	# 200
-          [[:h2, _("Make a new report.")],
-            [:p, [:a, {:href=>'.new'}, _("Make a rew repor.")]]]
+        return c_notice(_('New Report Page'), '.new', 200) {	# 200
+          [[:h2, _('Make a new report.')],
+            [:p, [:a, {:href=>'.new'}, _('Make a rew repor.')]]]
         }
       end
 
@@ -48,11 +47,14 @@ module Qwik
           :rows=>'20', :cols=>'80'}, 
         pages + "\n# Summary\n" + summaries]
       form << ta
-      form << [:div, [:input, {:type=>'submit', :value=>_('Save'), :class=>'submit'}]]
+      form << [:div,
+	[:input, {:type=>'submit', :value=>_('Save'), :class=>'submit'}]]
 
       div = [:div]
       div << form
-      return c_plain(_('Make a Report')) { TDiaryResolver.resolve(@config, @site, self, div) }
+      return c_plain(_('Make a Report')) {
+	TDiaryResolver.resolve(@config, @site, self, div)
+      }
     end
 
     def act_save_report
@@ -74,11 +76,11 @@ module Qwik
       end
 
       key = @site.get_new_id
-      create_save_page(key, '* ' + title + "\n" + content)
+      create_save_page(key, "* #{title}\n#{content}")
 
       url = key + '.html'
-      return c_notice(_("Report is saved."), url){
-        [:p, [:a, {:href=>url}, _("Read your report.")]]
+      return c_notice(_('Report is saved.'), url){
+        [:p, [:a, {:href=>url}, _('Read your report.')]]
       }
     end
 
@@ -90,18 +92,19 @@ module Qwik
         return save_conflict(content)
       end
       c_make_log('create', key)		# CREATE
-      c_monitor('create' + key)		# CREATE
+      c_monitor("create#{key}")		# CREATE
 
       require 'qwik/act-save'
+
       ### BEGIN from act-save.rb
-      newcontent = page.embed_password(content) # embed the password
+      newcontent = Page.embed_password(content) # embed the password
       if !page.match_password?(newcontent)
 	return save_password_does_not_match(content)
       end
       content = newcontent
 
-      content = content.gsub(/\r/, "")
-      md5hex = @req.query["md5hex"]
+      content = content.gsub(/\r/, '')
+      md5hex = @req.query['md5hex']
       md5hex = nil if page.have_password?
       begin
 	page.put_with_md5(content, md5hex) # STORE
@@ -109,9 +112,9 @@ module Qwik
 	return save_conflict(content)
       end
 
-      c_make_log("save", key) # STORE
-      c_monitor("save") # STORE
-      c_event("save") # STORE
+      c_make_log('save', key) # STORE
+      c_monitor('save') # STORE
+      c_event('save') # STORE
       
       return
     end
@@ -119,7 +122,7 @@ module Qwik
 end
 
 if $0 == __FILE__
-  require "qwik/test-common"
+  require 'qwik/test-common'
   $test = true
 end
 
@@ -127,7 +130,6 @@ if defined?($test) && $test
   class TestActReport < Test::Unit::TestCase
     include TestSession
 
-    
     def test_act_report
       res = session('/test/.report')
       ok_title('Member Only')

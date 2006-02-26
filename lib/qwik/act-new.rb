@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-monitor'
 require 'qwik/page-title'
@@ -51,7 +42,7 @@ module Qwik
 
       page.store("* #{title}\n")	# with tag
 
-      url = key+'.edit'
+      url = "#{key}.edit"
       return c_notice(_('New page'), url, 201) {	# 201, Created
 	[[:h2, _('Created.')],
 	  [:p, [:a, {:href=>url}, _('Edit new page')]]]

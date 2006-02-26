@@ -154,7 +154,7 @@ module Qwik
 
     def windows?
       r = RUBY_PLATFORM
-      (r.index('cygwin') || r.index('mswin32') || r.index('mingw32')) != nil
+      return (r.index('cygwin') || r.index('mswin32') || r.index('mingw32'))
     end
 
     def publish_file(site, input)

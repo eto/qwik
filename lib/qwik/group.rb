@@ -88,7 +88,7 @@ module QuickML
 
     def self.valid_name? (name)
       # Do not allow '_' and '.' for the name.
-      return (/\A[0-9a-zA-Z-]+\z/ =~ name) != nil
+      return /\A[0-9a-zA-Z-]+\z/ =~ name
     end
 
     def self.generate_return_address(address, name, use_qmail_verp)
@@ -125,14 +125,14 @@ if defined?($test) && $test
       ok_eq('test', c.get_name('test@example.com'))
 
       # test_vaild_name
-      ok_eq(true,  c.valid_name?('t'))
-      ok_eq(true,  c.valid_name?('t-t'))
-      ok_eq(false, c.valid_name?('t_t'))
-      ok_eq(false, c.valid_name?('t.t'))
-      ok_eq(false, c.valid_name?('test@example.com'))
-      ok_eq(false, c.valid_name?('test@qwik@jp'))
-      ok_eq(true,  c.valid_name?('test'))
-      ok_eq(false, c.valid_name?('te.st'))
+      ok_eq(true,  !!c.valid_name?('t'))
+      ok_eq(true,  !!c.valid_name?('t-t'))
+      ok_eq(false, !!c.valid_name?('t_t'))
+      ok_eq(false, !!c.valid_name?('t.t'))
+      ok_eq(false, !!c.valid_name?('test@example.com'))
+      ok_eq(false, !!c.valid_name?('test@qwik@jp'))
+      ok_eq(true,  !!c.valid_name?('test'))
+      ok_eq(false, !!c.valid_name?('te.st'))
 
       # test_generate_return_address
       ok_eq("test=return@example.com",

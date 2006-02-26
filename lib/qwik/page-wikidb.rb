@@ -47,7 +47,7 @@ module Qwik
     end
 
     def exist?(key)
-      return self[key] != nil
+      return self[key]
     end
 
     def each
@@ -163,7 +163,7 @@ if defined?($test) && $test
       page = @site.create_new
       wdb  = Qwik::WikiDB.new(page)
       page.store(':k: v')
-      eq true, wdb.exist?('k')
+      eq true, !!wdb.exist?('k')
       eq 'v', wdb['k']
     end
 
@@ -172,11 +172,11 @@ if defined?($test) && $test
       wdb  = Qwik::WikiDB.new(page)
 
       # test_exist?
-      eq false, wdb.exist?('k')
+      eq false, !!wdb.exist?('k')
       wdb.add('k', 'v')
       eq ",k,v\n", page.load
 
-      eq true,  wdb.exist?('k')
+      eq true, !!wdb.exist?('k')
       eq ['v'], wdb['k']
       eq 'v', wdb['k'][0]
       eq false, wdb['k'][0].frozen?
@@ -191,9 +191,9 @@ if defined?($test) && $test
       eq false, wdb.remove('k')	# fail to remove
 
       # test_add
-      eq false, wdb.exist?('k')
+      eq false, !!wdb.exist?('k')
       wdb.add('k', 'v1', 'v2')
-      eq true,  wdb.exist?('k')
+      eq true,  !!wdb.exist?('k')
       eq ['v1', 'v2'], wdb['k']
       eq({'k'=>['v1', 'v2']}, wdb.hash)
       eq true,  wdb.remove('k')	# remove
@@ -219,7 +219,7 @@ if defined?($test) && $test
       # test_nil
       page = @site.create_new
       wdb = Qwik::WikiDB.new(page)
-      eq false, wdb.exist?('k')
+      eq false, !!wdb.exist?('k')
       wdb.add('k', nil, 'v2')
       eq ",k,,v2\n",  page.load
       eq ['', 'v2'], wdb['k']

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 # Special mode, not for general use.
@@ -14,7 +5,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class EmodePreProcessor
     def self.emode?(str)
-      (/\A============================================================/ =~ str) != nil
+      /\A============================================================/ =~ str
     end
 
     HMARK = {
@@ -92,8 +83,8 @@ if defined?($test) && $test
       c = Qwik::EmodePreProcessor
 
       # test_emode?
-      eq(false, c.emode?(''))
-      eq(true, c.emode?("============================================================"))
+      eq(false, !!c.emode?(''))
+      eq(true,  !!c.emode?("============================================================"))
 
       # test_preprocess
       ok('*t', "œt")

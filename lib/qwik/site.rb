@@ -23,8 +23,7 @@ module Qwik
       @memory = memory
 
       @sitename = sitename
-      @dir = "#{@config.sites_dir}/#{sitename}"
-      @path = @dir.path
+      @path = "#{@config.sites_dir}/#{sitename}".path
       @pages = Pages.new(@config, @path)
 
       @cache_path = @path+CACHE_DIR

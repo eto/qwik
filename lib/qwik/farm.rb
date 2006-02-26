@@ -47,7 +47,7 @@ module Qwik
     end
 
     def exist?(sitename)
-      return self.get_site(sitename) != nil
+      return self.get_site(sitename)
     end
 
     def each
@@ -147,12 +147,12 @@ if defined?($test) && $test
       @dir.rmdir  if @dir.directory?
 
       # test_exist?
-      eq false, farm.exist?('test')
+      eq false, !!farm.exist?('test')
       eq nil, farm.get_site('test')
 
       # test_make_site
       farm.make_site('test')
-      eq true, farm.exist?('test')
+      eq true, !!farm.exist?('test')
       site = farm.get_site('test')
       eq 'test', site.sitename
 

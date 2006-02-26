@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-password'
 require 'qwik/wabisabi-diff'
@@ -25,22 +16,22 @@ module Qwik
 
       page = @site[@req.base]
       # Do not delete a page with password
-      if contents.size == 0 && !page.have_password?
+      if contents.empty? && ! page.get_password
 	@site.delete(@req.base)	# DELETE
 	c_make_log('delete')	# DELETE
 	c_monitor('delete')	# DELETE
 	return save_page_deleted
       end
 
-      newcontents = page.embed_password(contents)	# embed the password
-      if !page.match_password?(newcontents)
+      newcontents = Page.embed_password(contents)	# embed the password
+      if ! page.match_password?(newcontents)
 	return save_password_does_not_match(contents)
       end
       contents = newcontents
 
       contents = contents.gsub(/\r/, '')
       md5hex = @req.query['md5hex']
-      md5hex = nil if page.have_password?
+      md5hex = nil if page.get_password
       begin
 	page.put_with_md5(contents, md5hex)	# STORE
       rescue PageCollisionError	# failed to save?
@@ -51,7 +42,7 @@ module Qwik
       c_monitor('save')		# STORE
       c_event('save')		# STORE
 
-      url = @req.base+'.'+ext
+      url = "#{@req.base}.#{ext}"
       return save_page_is_saved(url)
     end
 

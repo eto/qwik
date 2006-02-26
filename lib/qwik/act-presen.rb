@@ -18,7 +18,8 @@ You can show a link to presentation mode.
 You can specify the presentation theme by this plugin.
 
 * Thanks
-I use [[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
+I use
+[[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
 by Mr. Eric Meyer for this presentation mode.  Thank you very much.
 "
     }
@@ -37,13 +38,14 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
  {{presen_theme(qwikblack)}}
 このようにして、プレゼンテーマを指定できます。
 * 感謝
-プレゼンモードには、Eric Meyer氏による[[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
+プレゼンモードには、Eric Meyer氏による
+[[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
 を使わせていただいております。どうもありがとうございます。
 '
     }
 
     def plg_presen
-      return '' if !defined?(@req.base) || @req.base.nil?
+      return nil if ! defined?(@req.base) || @req.base.nil?
       return page_attribute('presen', _('Presentation mode'))
     end
     alias plg_show_presen plg_presen

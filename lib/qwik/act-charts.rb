@@ -1,15 +1,8 @@
 #
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 # reference: http://www.maani.us/charts/ PHP/SWF Charts
 # charts.php v4.1
 # Copyright (c) 2003-2006, maani.us
+#
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
@@ -91,11 +84,11 @@ a
       html << "width=" + width.to_s +
 	" height=" + height.to_s + " id='charts' align=''>"
       html << "<param name=movie value='" + flash_file + "?library_path=" + library_path + "&php_source=" + php_source
-      html << "&license=" + license if license != nil
+      html << "&license=" + license if license
       html << "'><param name=quality value=high><param name=bgcolor value=#" + bg_color + ">"
       html << "<param name=wmode value=transparent>" if transparent
       html << "<embed src='" + flash_file + "?library_path=" + library_path + "&php_source=" + php_source
-      html << "&license=" + license if license != nil
+      html << "&license=" + license if license
       html << "' quality=high bgcolor=#" + bg_color +
 	" width=" + width.to_s + " height=" + height.to_s +
 	" name='charts' align='' "

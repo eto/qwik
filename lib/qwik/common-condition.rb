@@ -4,7 +4,7 @@ module Qwik
   class Action
     # ========== error check
     def c_login?
-      return @req.user != nil
+      return @req.user
     end
 
     def c_require_login # You must logged in.
@@ -67,7 +67,7 @@ if defined?($test) && $test
       res = session
 
       # test_c_login
-      ok_eq(true, @action.c_login?)
+      ok_eq(true, !!@action.c_login?)
 
       # test_c_require_login
       @action.c_require_login # ok, nothing happen.
