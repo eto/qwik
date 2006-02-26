@@ -3,9 +3,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Action
     def act_list
-      msg = _('Page List')
-      #c_plain(msg) {
-      c_surface(msg, true) {
+      c_surface(_('Page List'), true) {
 	[:div, {:class=>'day'},
 	  [:div, {:class=>'section'},
 	  plg_title_list]]
@@ -14,16 +12,14 @@ module Qwik
 
     def plg_title_list
       str = @site.title_list.map {|page|
-	'- '+page.mtime.ymd+" : [[#{page.key}]]"
+	"- #{page.mtime.ymd} : [[#{page.key}]]"
       }.join("\n")
       return c_res(str)
     end
 
     def act_recent(max = -1)
-      msg = _('Recent Changes')
       str = recent_str(max)
-      #c_plain(msg) {
-      c_surface(msg, true) {
+      c_surface(_('Recent Changes'), true) {
 	[:div, {:class=>'day'},
 	  [:div, {:class=>'section'}, c_res(str)]]
       }
@@ -50,9 +46,10 @@ module Qwik
 	difftime = now.to_i - time.to_i
 	timestr = time.ymdx.to_s
 	li = [:li,
-	  [:a, {:href=>page.key+'.html', :title=>timestr}, page.get_title]]
+	  [:a, {:href=>"#{page.key}.html", :title=>timestr}, page.get_title]]
 	if @req.user
-	  li += [' ', [:span, {:class=>'ago'}, int_to_time(difftime)+_(' ago')]]
+	  li += [' ', [:span, {:class=>'ago'},
+	      int_to_time(difftime)+_(' ago')]]
 	end
 	ar << li
       }
@@ -118,19 +115,19 @@ if defined?($test) && $test
       ok_wi(/<h3>/, "{{recent_list(1)}}")
     end
 
-    def assert_time(e, n)
-      ok_eq(e, @action.int_to_time(n))
+    def ok_time(e, n)
+      eq e, @action.int_to_time(n)
     end
 
     def test_time
       res = session
-      assert_time('1sec.', 1)
-      assert_time('1min.', 60)
-      assert_time('1hour', 60*60)
-      assert_time('1day', 60*60*24)
-      assert_time('1month', 60*60*24*30)
-      assert_time('1year', 60*60*24*365)
-      assert_time('1century', 60*60*24*365*100)
+      ok_time '1sec.',	1
+      ok_time '1min.',	60
+      ok_time '1hour',	60*60
+      ok_time '1day',	60*60*24
+      ok_time '1month',	60*60*24*30
+      ok_time '1year',	60*60*24*365
+      ok_time '1century',	60*60*24*365*100
     end
   end
 end

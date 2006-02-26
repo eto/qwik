@@ -14,7 +14,7 @@ module Qwik
       user, pass = Base64.decode64($1).split(':', 2)
       return if user.nil?
 
-      raise InvalidUserError if user.nil? || user == ''
+      raise InvalidUserError if user.nil? || user.empty?
       raise InvalidUserError unless MailAddress.valid?(user)
       gen = @memory.passgen
       raise InvalidUserError if !gen.match?(user, pass)

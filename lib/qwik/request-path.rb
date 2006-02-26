@@ -171,7 +171,7 @@ module Qwik
 
     def self.sitename?(pa)
       ff = pa.split('.')
-      return false if ff.first == '' # action
+      return false if ff.first.empty? # action
       len = ff.length
       return true if len == 1
       # contain dot, and last is com or jp is external site

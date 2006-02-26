@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -18,7 +9,7 @@ module Qwik
 
     def plg_form(dest=nil, method=nil)
       str = yield
-      dest = @req.base unless dest && dest != ''
+      dest = @req.base unless dest && ! dest.empty?
       action = dest.to_s.escape
       action += '.html' if action[0] != ?.
       http_method = nil
@@ -88,7 +79,7 @@ module Qwik
 	      td << [:span, action.plg_ring_show(*aa)]
 
 	    when 'member_user'
-	      #td << [:span, action.plg_member_user]
+	     #td << [:span, action.plg_member_user]
 	      td << [:span, action.req_user]
 
 	    end
@@ -103,8 +94,8 @@ module Qwik
 	end
       }
 
-      action = pagename.to_s.escape+'.html'
-      action = dest.to_s.escape+'.html' if dest && dest != ''
+      action = "#{pagename.to_s.escape}.html"
+      action = "#{dest.to_s.escape}.html" if dest && ! dest.empty?
 
       div = [:div, {:class=>'form'},
 	[:form, {:method=>'POST', :action=>action},

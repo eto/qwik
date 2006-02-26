@@ -85,8 +85,8 @@ module Qwik
 	    end
 	  end
 	  ar = [:dl]
-	  ar << ((dt && dt != '') ? dt.to_s.strip : nil)
-	  ar << ((dd && dd != '') ? dd.to_s.strip : nil)
+	  ar << ((dt && ! dt.empty?) ? dt.to_s.strip : nil)
+	  ar << ((dd && ! dd.empty?) ? dd.to_s.strip : nil)
 	  tokens << ar
 	when /\A([*!]{1,5})\s*(.+)\s*\z/		# h
 	  h = $1

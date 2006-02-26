@@ -29,7 +29,7 @@ Then, you'll see the plan on the sidemenu.
     end
 
     def plan_make_html(pages)
-      day = 60*60*24
+      day = 60 * 60 * 24
       nowi = @req.start_time.to_i
       pages = pages.select {|pagekey, datei|
 	page = @site[pagekey]
@@ -48,14 +48,12 @@ Then, you'll see the plan on the sidemenu.
 	now = Time.at(nowi)
 	date_abbr = Action.date_abbr(now, date)
 	em_title = Action.date_emphasis(now, date, title)
-	ul << [:li, date_abbr, ' ', [:a, {:href=>pagekey+'.html'}, em_title]]
+	ul << [:li, date_abbr, ' ', [:a, {:href=>"#{pagekey}.html"}, em_title]]
       }
       div = [:div, {:class=>'plan'}, [:h2, _('Plan')]]
       div << ul
       return div
     end
-
-    # TODO: Add plan to the mail.
   end
 end
 

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-string'
 
@@ -181,7 +172,7 @@ module Qwik
       nstr = ''
       str.each {|line|
 	next if line == "\n"
-	nstr << '> '+line
+	nstr << "> #{line}"
       }
       return nstr
     end
@@ -200,7 +191,7 @@ module Qwik
       str.each {|line|
 	next if line == "\n"
 	line = line.normalize_eol
-	nstr << ' '+line
+	nstr << " #{line}"
       }
       return nstr
     end
@@ -210,7 +201,7 @@ module Qwik
       elem.each_child {|e|
 	next if e == "\n"
 	if e[0] == :tr
-	  str << parse_tr(e)+"\n"
+	  str << "#{parse_tr(e)}\n"
 	elsif e[0] == :tbody
 	  str << parse_table(e.inside)
 	else
@@ -225,7 +216,7 @@ module Qwik
       elem.each_child {|e|
 	next if e == "\n"
 	if e[0] == :td
-	  str << '|'+parse_span(e.inside)
+	  str << "|#{parse_span(e.inside)}"
 	else
 	  p 'What? ', e; raise
 	end
@@ -238,9 +229,9 @@ module Qwik
       method = e.attr[:method]
       data = e.text
       str = ''
-      str << '{{'+method
-      str << '('+param+')' if param && param != ''
-      if data && data != ''
+      str << "{{#{method}"
+      str << "(#{param})" if param && ! param.empty?
+      if data && ! data.empty?
 	str << "\n"
 	data = data.normalize_eol
 	str << data
@@ -282,16 +273,16 @@ module Qwik
 	return '' if attr.nil?
 	src = attr[:src]
 	return '' if src.nil?
-	return '[['+src+']]'
+	return "[[#{src}]]"
 
       when :em
-	return "''"+parse_span(e.inside)+"''"
+	return "''#{parse_span(e.inside)}''"
 
       when :strong
-	return "'''"+parse_span(e.inside)+"'''"
+	return "'''#{parse_span(e.inside)}'''"
 
       when :del
-	return '=='+parse_span(e.inside)+'=='
+	return "==#{parse_span(e.inside)}=="
 
       when :br
 	return "{{br}}\n"
@@ -311,14 +302,13 @@ module Qwik
 
       text = e.text
       str = ''
-      str << '[['+text
+      str << "[[#{text}"
       if href != text
-	str << '|'+href
+	str << "|#{href}"
       end
       str << ']]'
       return str
     end
-
   end
 end
 

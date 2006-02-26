@@ -21,7 +21,7 @@ Please be careful.
     end
   end
 
-  # has relation with cmd_save
+  # These methods will be used in ext_save
   class Page
     def get_password
       return Page.get_password(self.load)

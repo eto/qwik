@@ -40,7 +40,7 @@ module Qwik
       each_media_entry {|f|
 	file = f.basename
 	ar = []
-	ar << [:a, {:href=>c_relative_to_root('.media_server/'+file.to_s)},
+	ar << [:a, {:href=>c_relative_to_root(".media_server/#{file}")},
 	  file.to_s]
 	output = ms.output_file(@site, file)
 	if output.exist?
@@ -48,7 +48,7 @@ module Qwik
 	  uri = URI(@config.public_url)
 	  url = "rtsp://#{uri.host}:554/#{uri.path}#{@site.sitename}/#{outbase}"
 	  ar << ' [' << [:a, {:href=>url}, outbase] << '] '
-	  url = [:a, {:href=>c_relative_to_root('.media_server/'+file.to_s+'?delete=yes')}, 'delete']
+	  url = [:a, {:href=>c_relative_to_root(".media_server/#{file}?delete=yes")}, 'delete']
 	  ar << url
 	end
 	ul << [:li, ar]
@@ -82,7 +82,7 @@ module Qwik
 
     def act_encode
       rp = RealProducer.new(@config, @site)
-      if 0 < @req.path_args.length # has target file
+      if 0 < @req.path_args.length	# has target file
 	filename = @req.path_args.shift
 
 	if filename == 'all'
@@ -117,7 +117,7 @@ module Qwik
       each_movie_entry {|f|
 	file = f.basename
 	ar = []
-	ar << [:a, {:href=>c_relative_to_root('.encode/'+file.to_s)},
+	ar << [:a, {:href=>c_relative_to_root(".encode/#{file}")},
 	  file.to_s]
 	output = rp.output_file(file)
 	if output.exist?
@@ -183,7 +183,7 @@ module Qwik
       path = @real_server_content_dir.path+@site.sitename
       base = input.basename.to_s
       base = base.sub(%r!\A(.+)\.(\w+)!){|a| $1 }
-      outbase = base+'.rm'
+      outbase = "#{base}.rm"
       output = path+outbase
       output
     end
@@ -286,7 +286,7 @@ module Qwik
       @table.each {|tab|
 	dur = (tab[:cend] - tab[:cbegin]).to_i
 	
-	ar = [{'region'=>'v'}, {'begin'=>time.to_s+'s'}, {'src'=>tab[:url]}]
+	ar = [{'region'=>'v'}, {'begin'=>"#{time}s"}, {'src'=>tab[:url]}]
 	ar << {'clip-begin'=>tab[:cbegin]} if tab[:cbegin]
 	ar << {'clip-end'=>tab[:cend]} if tab[:cend]
 	par << g.video(ar)
@@ -324,7 +324,7 @@ module Qwik
       }
       [:div, {:class=>'box'},
 	[:table, *table],
-	[:p, [:a, {:href=>'.attach/'+@name+'.smil'}, @name]]]
+	[:p, [:a, {:href=>".attach/#{@name}.smil"}, @name]]]
     end
   end
 
@@ -342,11 +342,14 @@ module Qwik
 	@min = ar.pop
 	@hour = ar.empty? ? 0 : ar.pop
       end
-      @t = Time.gm(2000, 1, 1, @hour, @min, @sec, 0) # start 2000/01/01 00:00
+      # start 2000/01/01 00:00
+      @t = Time.gm(2000, 1, 1, @hour, @min, @sec, 0)
     end
     attr_reader :t
 
-    def -(v) @t-v.t; end
+    def -(v)
+      @t-v.t
+    end
 
     def +(v)
       return @t+v if v.kind_of? Numeric

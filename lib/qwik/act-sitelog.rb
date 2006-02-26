@@ -16,10 +16,10 @@ Follow this link. [[.sitelog]]
       dl = [:dl]
       @site.sitelog.list.each {|k, v|
 	user, cmd, pagename = v
-	user = 'anonymous' if user.nil? || user == ''
-	user = MailAddress.obfuscate(user) if user != ''
-	dl << [:dt, Time.at(k.to_i).ymdx+' - '+user]
-	dl << [:dd, cmd+': ', [:a, {:href=>pagename+'.html'}, pagename]]
+	user = 'anonymous' if user.nil? || user.empty?
+	user = MailAddress.obfuscate(user) if ! user.empty?
+	dl << [:dt, "#{Time.at(k.to_i).ymdx} - #{user}"]
+	dl << [:dd, "#{cmd}: ", [:a, {:href=>"#{pagename}.html"}, pagename]]
       }
       return dl
     end

@@ -5,18 +5,17 @@ module Qwik
     D_ext_presen = {
       :dt => 'Presentaion mode',
       :dd => 'You can show the page in presentation mode.',
-      :dc => "* Example
+      :dc => "* How to
  [[FrontPage.presen]]
 [[FrontPage.presen]]
 Follow this link and you'll see the presen mode of the FrontPage.
-
  {{presen}}
 You can show a link to presentation mode.
-
 ** Specify Presentation theme
  {{presen_theme(qwikblack)}}
 You can specify the presentation theme by this plugin.
-
+{{presen_theme_list}}
+You can choose from this list.
 * Thanks
 I use
 [[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
@@ -27,18 +26,20 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
     Dja_ext_presen = {
       :dt => 'プレゼン・モード',
       :dd => 'プレゼン・モードで表示します。',
-      :dc => '* 例
+      :dc => '* 使い方
  [[FrontPage.presen]]
 [[FrontPage.presen]]
-このリンクをたどると、FrontPageをプレゼンモードで表示します。
+このリンクをたどると、FrontPageをプレゼン・モードで表示します。
  {{presen}}
-そのページ自身をプレゼンモードにするリンクを表示したい場合は、
+あるページをプレゼン・モードにするリンクを表示したい場合は、
 このプラグインをご利用下さい。
 ** プレゼンテーマ指定
  {{presen_theme(qwikblack)}}
 このようにして、プレゼンテーマを指定できます。
+{{presen_theme_list}}
+この一覧の中から選べます。
 * 感謝
-プレゼンモードには、Eric Meyer氏による
+プレゼン・モードには、Eric Meyer氏による
 [[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
 を使わせていただいております。どうもありがとうございます。
 '
@@ -51,13 +52,32 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
     alias plg_show_presen plg_presen
 
     def plg_presen_theme(theme)
-      # @presen_theme = theme	# global to this action.
-      return	# ignore.
+      return	# Do nothing.
     end
 
+    def plg_presen_theme_list
+      return [:ul, *presen_theme_list.map {|t| [:li, t] }]
+    end
+
+    PRESEN_THEME_IGNORE_DIR = %(default)
+
+    def presen_theme_list
+      themes = []
+      theme_path = @config.theme_dir.path+'s5'
+      theme_path.each_entry {|d|
+	s = d.to_s
+	next if /\A\./ =~ s
+	next if PRESEN_THEME_IGNORE_DIR.include?(s)
+	dir = theme_path+d
+	next unless dir.directory?
+	themes << d.to_s
+      }
+      return themes.sort
+    end
+
+    # ============================== ext_presen
     PRESEN_DEFAULT_THEME = 'qwikworld'
 
-    # http://colinux:9190/HelloQwik/ActPresen.presen
     def ext_presen
       c_require_pagename
       c_require_page_exist
@@ -124,7 +144,6 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
       }
       theme
     end
-
   end
 
   class PresenGenerator
@@ -216,33 +235,31 @@ if defined?($test) && $test
     include TestSession
 
     def test_plg_show_presen
-      ok_wi([:span, {:class=>'attribute'}, [:a, {:href=>'1.presen'},
-		'Presentation mode']], "{{show_presen}}")
+      ok_wi [:span, {:class=>'attribute'}, [:a, {:href=>'1.presen'},
+		'Presentation mode']], '{{show_presen}}'
     end
 
     def test_plg_presen_theme
-      ok_wi([], "{{presen_theme(q)}}")
+      ok_wi [], '{{presen_theme(q)}}'
     end
 
-    # http://colinux:9190/HelloQwik/ActPresen.html
-    # http://colinux:9190/HelloQwik/ActPresen.presen
     def test_act_presen
       t_add_user
 
       page = @site.create_new
-      page.store("* あ")
+      page.store('* あ')
       res = session('/test/1.presen')
-      assert_text("あ", 'title')
+      assert_text('あ', 'title')
     end
 
     def test_get_theme
       res = session
       ok_eq(nil, @action.presen_get_theme('a'))
-      ok_eq('q', @action.presen_get_theme("{{presen_theme(q)}}"))
-      ok_eq('q', @action.presen_get_theme("a
+      ok_eq('q', @action.presen_get_theme('{{presen_theme(q)}}'))
+      ok_eq('q', @action.presen_get_theme('a
 {{presen_theme(q)}}
 b
-"))
+'))
     end
   end
 
@@ -287,7 +304,7 @@ b
       wabisabi = @action.c_page_res(page.key)
       w = c.generate(@site, page.key, wabisabi)
 
-      wpage = [[:"!DOCTYPE",
+      wpage = [[:'!DOCTYPE',
 	  'html',
 	  'PUBLIC',
 	  '-//W3C//DTD HTML 4.01 Transitional//EN',

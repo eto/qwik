@@ -25,7 +25,7 @@ module Qwik
     }
 
     Dja_plugin_menu = {
-      :dt => 'メニュープラグイン',
+      :dt => 'メニュー・プラグイン',
       :dd => 'プルダウン型メニューを作れます。',
       :dc => "* 例
 {{hmenu

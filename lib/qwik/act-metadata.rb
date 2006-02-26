@@ -190,7 +190,7 @@ module Qwik
 	[:title, @title],
 	[:link, {:rel=>'alternate', :type=>'text/html', :href=>@site_url}],
 	[:link, {:rel=>'self', :type=>'application/atom+xml',
-	    :href=>@site_url+'atom.xml'}],
+	    :href=>"#{@site_url}atom.xml"}],
 	[:generator, gen_attr, @generator],
 	[:updated, @updated]]
 
@@ -311,7 +311,6 @@ Since this site is in private mode, the feed includes minimum data.'
 	yield(page, title, url, description, pub_date, updated)
       }
     end
-
   end
 end
 

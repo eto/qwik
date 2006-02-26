@@ -174,6 +174,12 @@ You can show a notice by this plugin.
 {{license(cc)}}
  {{license(cc)}}
 You can inidicate the license of this Wiki site.
+
+* Monta method plugin
+You can hide a part of text by using JavaScript.
+ {{monta(\"This is an example.\")}}
+{{monta(\"This is an example.\")}}
+Click this black box and you see the text.
 "
     }
 
@@ -260,6 +266,22 @@ You can inidicate the license of this Wiki site.
       return [:style, str]
     end
     alias plg_style plg_css
+
+    # ============================== monta
+    MONTA_STYLE = 'background-color:black;text:black;'
+    MONTA_SCRIPT = "this.style.backgroundColor='transparent';this.style.text='inherited';return true;"
+    def plg_monta(*a)
+      element = :span
+      txt = a.shift
+      if block_given?
+	element = :div
+	txt = yield
+      end
+
+      return if txt.nil?
+
+      return [element, {:style=>MONTA_STYLE, :onmouseup=>MONTA_SCRIPT}, txt]
+    end
   end
 end
 
@@ -321,6 +343,16 @@ if defined?($test) && $test
 	    "{{center\nt\n}}")
       ok_wi("<div style=\"text-align:center;\">test</div>",
 	    "{{center\n{{qwik_test}}\n}}")
+    end
+
+    def test_monta
+      ok_wi([], '{{monta}}')
+      ok_wi([:span, {:style=>'background-color:black;text:black;',
+		:onmouseup=>"this.style.backgroundColor='transparent';this.style.text='inherited';return true;"},
+	      't'], '{{monta(t)}}')
+      ok_wi([:div, {:style=>'background-color:black;text:black;',
+		:onmouseup=>"this.style.backgroundColor='transparent';this.style.text='inherited';return true;"},
+	      "t\n"], "{{monta\nt\n}}")
     end
   end
 end

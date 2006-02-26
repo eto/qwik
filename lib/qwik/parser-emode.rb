@@ -56,7 +56,7 @@ module Qwik
       end
 
       ignore_chars = [?\s, ?-, ?*, ?>, ?|, ?,, ?{, ?}]
-      if ignore_chars.include?(line[0]) || line == ''
+      if ignore_chars.include?(line[0]) || line.empty?
 	ar << line
 	return next_line
       end

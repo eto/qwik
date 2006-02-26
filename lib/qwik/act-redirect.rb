@@ -1,16 +1,35 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    D_ext_redirect = {
+      :dt => 'Redirect mode',
+      :dd => 'You can use redirect at all external link on your site.',
+      :dc => '* How to
+Go to [[_SiteConfig]] page, find this line.
+ :redirect:false
+Change the line to this.
+ :redirect:true
+
+All external links will be redirect link.  When you are using redirect,
+nobody can see the referere to know where the link come from.
+'
+    }
+
+    Dja_ext_redirect = {
+      :dt => 'リダイレクト・モード',
+      :dd => 'Wikiサイトの外部リンクを全てリダイレクトにします。',
+      :dc => '* 使い方
+[[_SiteConfig]]のページにいき、
+ :redirect:false
+という行を、
+ :redirect:true
+としてください。サイト内の外部URLへのリンクが、一旦リダイレクトされて
+から飛ぶようになります。こうすると、どのWikiページからリンクされている
+のかが、リファラを見てもわからないようになります。
+'
+    }
+
     def pre_act_redirect
       url = @req.query['url']
       if url
