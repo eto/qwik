@@ -38,7 +38,7 @@ module Qwik
       end
 
       c_make_log('create', key)		# CREATE
-      c_monitor('create' + key)		# CREATE
+      c_monitor("create#{key}")		# CREATE
 
       page.store("* #{title}\n")	# with tag
 
@@ -104,7 +104,6 @@ module Qwik
 	]
       }
     end
-
   end
 end
 

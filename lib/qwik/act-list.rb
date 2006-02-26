@@ -58,7 +58,6 @@ function qwikCreateSortable(list_id, list_action) {
 }
 "
 
-    # http://co/qwik/qwikweb/ActListEdit.html
     def plg_list
       content = nil
       content = yield if block_given?
@@ -121,7 +120,7 @@ function qwikCreateSortable(list_id, list_action) {
     def ext_list_edit
       list_num = @req.ext_args[0].to_i
       item_num = @req.ext_args[1].to_i
-      return c_nerror(_('Error')) if list_num < 1 || item_num < 1
+      return c_nerror if list_num < 1 || item_num < 1
 
       query = @req.query
       # [{""=>"ok", "value"=>"Aa", "_"=>""}]
@@ -170,7 +169,7 @@ function qwikCreateSortable(list_id, list_action) {
 
     def ext_list_pos
       list_num = @req.ext_args[0].to_i
-      return c_nerror(_('Error')) if list_num < 1
+      return c_nerror if list_num < 1
 
       item_list = @req.query["sortable_list[]"].list
 
@@ -213,7 +212,6 @@ function qwikCreateSortable(list_id, list_action) {
       }
       return tokens_to_s(new_tokens)
     end
-
   end
 end
 
@@ -280,7 +278,6 @@ if defined?($test) && $test
 
       res = session("POST /test/1.1.2.list_edit?value=d")
       eq("{{list\n- c\n- d\n}}\n", page.load)
-
     end
   end
 end

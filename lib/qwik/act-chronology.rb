@@ -116,7 +116,7 @@ Please go [[.chronology]] page to see the chronology of this site.
       ar << [:script,
 	{:type=>'text/javascript',:src=>'.theme/js/history.js'}, '']
 
-      title = _('Chronology') + ' | ' + @site.sitename
+      title = _('Chronology') + " | #{@site.sitename}"
       return c_plain(title) { ar }
     end
   end

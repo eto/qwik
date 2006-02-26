@@ -12,16 +12,6 @@ require 'qwik/act-theme'
 
 module Qwik
   class Action
-    # http://qwik.jp/zip.describe
-    def describe_zip
-      '* Archive plugin
-You can download your site as an archive file.
-* Example
- {{zip}}
-{{zip}}
-'
-    end
-
     D_ext_archive = {
       :dt => 'Site archive',
       :dd => 'You can obtain a site archive.',
@@ -51,8 +41,6 @@ static Web site.
 '
     }
 
-
-
     def plg_zip
       return page_attribute('zip', _('site archive'), @site.sitename)
     end
@@ -60,7 +48,6 @@ static Web site.
     def ext_zip
       c_require_member
       c_require_base_is_sitename
-
       path = ZipGenerator.generate(@config, @site, self)
       return c_simple_send(path, 'application/zip')
     end
@@ -72,7 +59,7 @@ static Web site.
       site_cache_path = site.cache_path
       site_cache_path.check_directory
 
-      zip_file = sitename+'.zip'
+      zip_file = "#{sitename}.zip"
       zip_path = site_cache_path + zip_file
 
       Zip::ZipOutputStream.open(zip_path.to_s) {|zos|
@@ -88,11 +75,11 @@ static Web site.
     private
 
     def self.add_page(config, site, action, zos, site_cache_path, page)
-      base = site.sitename+'/'+page.key
+      base = "#{site.sitename}/#{page.key}"
       add_txt(zos, base, page)
 
       # Generate html files.
-      html_path = site_cache_path+(page.key+'.html')
+      html_path = site_cache_path+"#{page.key}.html"
       action.view_page_cache_generate(page.key) if ! html_path.exist?
       #return unless html_path.exist? # what?
       raise unless html_path.exist? # what?
@@ -101,16 +88,16 @@ static Web site.
       add_entry(zos, file, str)
 
       # Generate presen files.
-      html_path = site_cache_path+(page.key+'-presen.html')
+      html_path = site_cache_path+"#{page.key}-presen.html"
       wabisabi = action.c_page_res(page.key)
       w = PresenGenerator.generate(site, page.key, wabisabi)
       str = w.format_xml
-      file = base+'-presen.html'
+      file = "#{base}-presen.html"
       return add_entry(zos, file, str)
     end
 
     def self.add_txt(zos, base, page)
-      file = base+'.txt'
+      file = "#{base}.txt"
       str = page.load
       return add_entry(zos, file, str)
     end
@@ -154,8 +141,8 @@ static Web site.
 
       theme_dir = config.theme_dir
       ar.each {|b|
-	file  = site.sitename+'/.theme/'+b
-	local = theme_dir+'/'+b
+	file  = "#{site.sitename}/.theme/#{b}"
+	local = "#{theme_dir}/#{b}"
 	str = local.path.read
 	add_entry(zos, file, str)
       }

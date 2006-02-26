@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-event'
 
@@ -19,7 +10,7 @@ module Qwik
 
       pagename ||= @req.base
 
-      url = pagename+'.event'
+      url = "#{pagename}.event"
       url = c_relative_to_root(url)
 
       ar = []
@@ -95,9 +86,9 @@ g_eventwatcher.start();
     def event_tell(event)
       time, user, key, ext, cmd = event
       ar = []
-      title = Time.at(time).ymd+' : '+cmd
+      title = "#{Time.at(time).ymd} : #{cmd}"
       user = MailAddress.obfuscate(user)
-      msg = user+': '+cmd+' '+key
+      msg = "#{user}: #{cmd} #{key}"
       ar << [:h2, title]
       ar << [:p, msg]
       return event_send(ar)
@@ -109,7 +100,6 @@ g_eventwatcher.start();
       @res['Pragma'] = 'no-cache'
       @res.body = body
     end
-
   end
 end
 

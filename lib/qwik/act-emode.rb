@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/parser-emode'
 require 'qwik/act-include'
@@ -97,6 +88,60 @@ if defined?($test) && $test
 		[:div, {:class=>'section'},
 		  [[:p, '01/10']]]]],
 	    '{{emode_include_recent}}')
+    end
+
+    def ok(e, w, user=DEFAULT_USER)	# assert_body_main
+      assert_path(e, w, user, "//div[@class='body_main']")
+    end
+
+    def test_emode_include
+      page = @site.create_new
+      page.store("* t
+* t")
+      page2 = @site.create_new
+      page2.store("* t2
+* t2")
+      key = page2.key
+
+      config = @site['_SiteConfig']
+      config.store(':emode_titlelink:true')
+      ok([:div,
+	   {:class=>'day'},
+	   '',
+	   [:div,
+	     {:class=>'body'},
+	     [:div,
+	       {:class=>'section'},
+	       [[:div,
+		   {:class=>'day'},
+		   [:h2,
+		     [:a, {:href=>"2.html#t2", :name=>'t2', :class=>'label'},
+		       "Å°"],
+		     't2'],
+		   [:div, {:class=>'body'},
+		     [:div, {:class=>'section'}, []]]]]]]],
+	 "{{include(#{key})}}")
+
+      config.store('')
+    end
+
+    def test_emode_include_with_titlelink
+      t_add_user
+
+      page = @site.create('t1')
+      page.store("* t1
+{{include(t2)}}")
+      page2 = @site.create('t2')
+      page2.store("* t2!
+* t2!")
+
+      config = @site['_SiteConfig']
+      config.store(':emode_titlelink:true')
+      res = session('/test/t1.html')
+      ok_in([[:a, {:href=>"t2.html#Xb_M6_lBLMaGGH88jpd-rQ",
+		  :name=>'Xb_M6_lBLMaGGH88jpd-rQ',
+		  :class=>'label'}, "Å°"], "t2!"],
+	    "//div[@class='day']/h2")
     end
   end
 end

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-text'
 
@@ -61,31 +52,33 @@ if defined?($test) && $test
 	     [:div, {:class=>'section'}, [[:p, 'a']]]]],
 	 "{{mail\na\n}}")
       ok([:div,
- {:class=>'day'},
- [:h2, {:id=>'From'}, 'From:'],
- [:div,
-  {:class=>'body'},
-  [:div, {:class=>'section'}, [[:p, 'テストです。'], ["\n"]]]]],
+	   {:class=>'day'},
+	   [:h2, {:id=>'From'}, 'From:'],
+	   [:div,
+	     {:class=>'body'},
+	     [:div, {:class=>'section'}, [[:p, 'テストです。'], ["\n"]]]]],
 	 "* テスト\n{{mail\nテストです。\n\n}}")
       ok([:div,
- {:class=>'day'},
- [:h2, {:id=>'979dff15c789fca0315256fc8af6fa64'}, 'From: t@e...'],
- [:div, {:class=>'body'}, [:div, {:class=>'section'}, [[:p, 'ス'], ["\n"]]]]],
+	   {:class=>'day'},
+	   [:h2, {:id=>'979dff15c789fca0315256fc8af6fa64'}, 'From: t@e...'],
+	   [:div, {:class=>'body'}, [:div, {:class=>'section'},
+	       [[:p, 'ス'], ["\n"]]]]],
 	 "* テ\n{{mail(t@e.com)\nス\n\n}}")
       ok([:div,
- {:class=>'day'},
- [:h2,
-  {:id=>'979dff15c789fca0315256fc8af6fa64'},
-  [:span, {:class=>'date'}, 'Jan 1, 1970'],
-  ' From: t@e...'],
- [:div, {:class=>'body'}, [:div, {:class=>'section'}, [[:p, 'ス'], ["\n"]]]]],
+	   {:class=>'day'},
+	   [:h2,
+	     {:id=>'979dff15c789fca0315256fc8af6fa64'},
+	     [:span, {:class=>'date'}, 'Jan 1, 1970'],
+	     ' From: t@e...'],
+	   [:div, {:class=>'body'}, [:div, {:class=>'section'},
+	       [[:p, 'ス'], ["\n"]]]]],
 	 "* テ\n{{mail(t@e.com,0)\nス\n\n}}")
       ok([:div,
- {:class=>'day'},
- [:h2, {:id=>'979dff15c789fca0315256fc8af6fa64'}, 'From: t@e...'],
- [:div,
-  {:class=>'body'},
-  [:div, {:class=>'section'}, [[:p, 't@e...'], ["\n"]]]]],
+	   {:class=>'day'},
+	   [:h2, {:id=>'979dff15c789fca0315256fc8af6fa64'}, 'From: t@e...'],
+	   [:div,
+	     {:class=>'body'},
+	     [:div, {:class=>'section'}, [[:p, 't@e...'], ["\n"]]]]],
 	 "* テ\n{{mail(t@e.com)\nt@e.com\n\n}}")
     end
 
@@ -158,6 +151,5 @@ if defined?($test) && $test
 	      ' b'],
 	    'a {{mail(a,0)}} b')
     end
-
   end
 end

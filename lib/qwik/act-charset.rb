@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 # $use_charset = true
 if defined?($use_charset) && $use_charset
 
@@ -46,26 +37,27 @@ module Qwik
       }
 
       if h['my']
-	er ="&my-"+h['my']+";"
+	er ="&my-#{h['my']};"
 	c = er.de_er.char
 	h.each {|k, v|
 	  c[k] = v
 	}
       end
-      ''
+
+      return ''
     end
 
     def my_char_ids(arg)
       arg = arg.to_s
       return '' if arg !~ /^[0-9]+$/
-      er ="&my-"+arg+";"
+      er ="&my-#{arg};"
       c = er.de_er.char
       ids = c.ids
-      ids.to_s
+      return ids.to_s
     end
 
     def my_char_kage_url
-      'http://127.0.0.1:5100/'
+      return 'http://127.0.0.1:5100/'
     end
 
     def plg_my_char(arg)
@@ -95,9 +87,8 @@ module Qwik
       pngfile = ar.join('')+'.gothic.png'
       url = my_char_kage_url
       s = [:img, {:src=>(url+pngfile), :style=>"width:1em;", :alt=>pngfile}]
-      s
+      return s
     end
-
   end
 end
 
@@ -150,8 +141,8 @@ if defined?($test) && $test
       page.store("{{my_char(a)}}")
       ok_wi('', page.load)
 
-      #    page.store("&my-3;") #‚»‚ñ‚È‚Ì‘¶İ‚µ‚Ä‚¢‚È‚¢
-      #    ok_wi("<p></p>\n", page.load) #‚â‚Á‚Ï‚è’†‚Í‹ó‚ÆB
+      #page.store("&my-3;")		# does not exist.
+      #ok_wi("<p></p>\n", page.load)	# It's empty.
 
       page.store("{{my_char_ids(1)}}")
       ok_wi("<p>#0–ØX</p>\n", page.load)
@@ -183,7 +174,7 @@ if defined?($test) && $test
 "
       page.store(str)
 
-      ok_wi('', page.load) # eval the _chartest here.
+      ok_wi('', page.load)	# Eval the _chartest here.
       ok_eq("#0–ØX", "&my-1;".de_er.char.ids)
       ok_eq("#0XX", "&my-2;".de_er.char.ids)
       ok_eq("–Ø", "&U-6728;".de_er)
@@ -198,7 +189,7 @@ if defined?($test) && $test
     end
   end
 
-  #class TestChiseBasic < Test::Unit::TestCase
+ #class TestChiseBasic < Test::Unit::TestCase
   class TestChiseBasic
     include TestSession
 

@@ -2,7 +2,6 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    # http://qwik.jp/HelloQwik/ActMap.html
     def plg_map(clat, clng, mag=0)
       # Prepare maplink div.
       href = "/.map?s=#{@req.sitename}&k=#{@req.base}"
@@ -11,7 +10,7 @@ module Qwik
 	    :style=>'width:700px;height:400px;border:0;'}, ''],
 	[:br],
 	[:div, {:style=>'margin: 0 0 1em 0;'},
-	  [:a, {:href=>href+'&m=full', :style=>'font-size:x-small;'},
+	  [:a, {:href=>"#{href}&m=full", :style=>'font-size:x-small;'},
 	    _('Show map in fullscreen.')]]]
       content = yield
       elements = c_res(content)
@@ -19,8 +18,6 @@ module Qwik
       return div
     end
 
-    # http://qwik.jp/.map?s=etoeto&k=TestMap
-    # http://colinux:9190/.map?s=qtest&k=Map
     def pre_act_map
       sitename = @req.query['s']
       pagekey  = @req.query['k']
@@ -53,7 +50,6 @@ module Qwik
       ar << maparea
 
       title = 'map'
-      #title = 'map : '+@site.title
       c_plain(title){ar}
 
       head = @res.body.get_path('/head')
@@ -73,7 +69,7 @@ module Qwik
 
     def map_make_page_utf8
       @res.body = @res.body.format_xml.page_to_xml
-      @res['Content-Type'] = 'text/html; charset='+Charset::UTF8
+      @res['Content-Type'] = "text/html; charset=#{Charset::UTF8}"
     end
 
     def get_first_plugin(page, method)
@@ -91,7 +87,7 @@ module Qwik
 
     def map_get_api_key
       file = @config.etc_dir.path+GOOGLE_MAPS_API_KEY_FILE
-      return if !file.exist?
+      return if ! file.exist?
       return file.open {|f| f.gets }.chomp
     end
 
@@ -104,7 +100,7 @@ body { background: #fff; }']
       key = map_get_api_key
       #return if key.nil?	# Fatal error.
       key ||= ''	# Ad hoc.
-      src = 'http://maps.google.com/maps?file=api&v=1&key='+key
+      src = "http://maps.google.com/maps?file=api&v=1&key=#{key}"
       return [:script, {:src=>src, :type=>'text/javascript'}, '']
     end
 

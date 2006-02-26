@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'base64'
 
@@ -14,7 +5,8 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    def check_basicauth # ref. webrick/httpauth.rb
+    # ref: webrick/httpauth.rb
+    def check_basicauth
       auth = @req['Authorization']
       return if auth.nil?
       return unless /^Basic\s+(.*)/o =~ auth
@@ -31,8 +23,9 @@ module Qwik
       return
     end
 
-    def pre_act_basicauth # ref. webrick/httpauth.rb
-      if ! @req.user # Try to Login by using Basic Auth.
+    # ref: webrick/httpauth.rb
+    def pre_act_basicauth
+      if ! @req.user	# Try to Login by using Basic Auth.
 	realm = 'qwik'
 	@res['WWW-Authenticate'] = "Basic realm=\"#{realm}\""
 	# status code must be 401
@@ -45,7 +38,7 @@ module Qwik
       end
 
       # Already logged in.
-      if @req.auth != 'basicauth' # But, the method is not Basic Auth.
+      if @req.auth != 'basicauth'	# But, the method is not Basic Auth.
 	return c_notice(_('Login by cookie')) {
 	  [[:h2, _('You are already login by cookie.')],
 	    [:hr],

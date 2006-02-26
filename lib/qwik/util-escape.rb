@@ -38,11 +38,10 @@ class String
     string = self
     return string.gsub(/[&"<>]/n) {|x| EscapeTable[x] }
   end
-
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -50,31 +49,31 @@ if defined?($test) && $test
   class TestEscape < Test::Unit::TestCase
     def test_all
       # test_escape
-      ok_eq('A', 'A'.escape)
-      ok_eq("+", ' '.escape)
-      ok_eq('%2B', "+".escape)
-      ok_eq('%21', "!".escape)
-      ok_eq("ABC%82%A0%82%A2%82%A4+%2B%23", "ABC‚ ‚¢‚¤ +#".escape)
+      assert_equal('A', 'A'.escape)
+      assert_equal("+", ' '.escape)
+      assert_equal('%2B', "+".escape)
+      assert_equal('%21', "!".escape)
+      assert_equal("ABC%82%A0%82%A2%82%A4+%2B%23", "ABC‚ ‚¢‚¤ +#".escape)
 
       # test_unescape
-      ok_eq('A', '%41'.unescape)
-      ok_eq(' ', "+".unescape)
-      ok_eq("!", '%21'.unescape)
-      ok_eq("ABC‚ ‚¢‚¤ +#", "ABC%82%A0%82%A2%82%A4+%2B%23".unescape)
+      assert_equal('A', '%41'.unescape)
+      assert_equal(' ', "+".unescape)
+      assert_equal("!", '%21'.unescape)
+      assert_equal("ABC‚ ‚¢‚¤ +#", "ABC%82%A0%82%A2%82%A4+%2B%23".unescape)
 
       # test_escapeHTML
-      ok_eq("&lt;", "<".escapeHTML)
-      ok_eq("&gt;", ">".escapeHTML)
-      ok_eq("&amp;", "&".escapeHTML)
-      ok_eq("&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;",
-	    '<a href="http://e.com/">e.com</a>'.escapeHTML)
+      assert_equal("&lt;", "<".escapeHTML)
+      assert_equal("&gt;", ">".escapeHTML)
+      assert_equal("&amp;", "&".escapeHTML)
+      assert_equal("&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;",
+		   '<a href="http://e.com/">e.com</a>'.escapeHTML)
 
       # test_unescapeHTML
-      ok_eq("<", "&lt;".unescapeHTML)
-      ok_eq(">", "&gt;".unescapeHTML)
-      ok_eq("&", "&amp;".unescapeHTML)
-      ok_eq("<a href='http://e.com/'>e.com</a>",
-	    "&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;".unescapeHTML)
+      assert_equal("<", "&lt;".unescapeHTML)
+      assert_equal(">", "&gt;".unescapeHTML)
+      assert_equal("&", "&amp;".unescapeHTML)
+      assert_equal("<a href='http://e.com/'>e.com</a>",
+		   "&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;".unescapeHTML)
     end
   end
 end

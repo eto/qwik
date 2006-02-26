@@ -6,7 +6,7 @@ module Qwik
     # Method for testing page design.
     def act_test_notice
       w = login_show_login_page('http://example.com/HelloQwik/')
-      c_notice('act_test_notice'){w}
+      c_notice('act_test_notice') { w }
     end
 
     def c_notice(title, url=nil, status=200, sec=0, &b)

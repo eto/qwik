@@ -18,7 +18,7 @@ end
 
 module Qwik
   class Action
-    NU_D_charts = {
+    NotUse_D_charts = {
       :dt => 'Charts plugin',
       :dd => 'You can make a chart using charts plugin.',
       :dc => '* Example
@@ -32,12 +32,11 @@ a
 '
     }
 
-    # http://colinux:9190/HelloQwik/ActCharts.html
     def plg_chart
       return 'error' if @req.ext != 'html'
 
       # @chart_num is global for an action.
-      @chart_num = 0 if !defined?(@chart_num)
+      @chart_num = 0 if ! defined?(@chart_num)
       @chart_num += 1	# Start from 1
       num = @chart_num
 
@@ -81,17 +80,15 @@ a
       library_path = library_path.escape
       html = ''
       html << "<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0' "
-      html << "width=" + width.to_s +
-	" height=" + height.to_s + " id='charts' align=''>"
-      html << "<param name=movie value='" + flash_file + "?library_path=" + library_path + "&php_source=" + php_source
-      html << "&license=" + license if license
+      html << "width=#{width} height=#{height} id='charts' align=''>"
+      html << "<param name=movie value='#{flash_file}?library_path=#{library_path}&php_source=#{php_source}"
+      html << "&license=#{license}" if license
       html << "'><param name=quality value=high><param name=bgcolor value=#" + bg_color + ">"
       html << "<param name=wmode value=transparent>" if transparent
-      html << "<embed src='" + flash_file + "?library_path=" + library_path + "&php_source=" + php_source
-      html << "&license=" + license if license
+      html << "<embed src='#{flash_file}?library_path=#{library_path}&php_source=#{php_source}"
+      html << "&license=#{license}" if license
       html << "' quality=high bgcolor=#" + bg_color +
-	" width=" + width.to_s + " height=" + height.to_s +
-	" name='charts' align='' "
+	" width=#{width} height=#{height} name='charts' align='' "
       html << "wmode=transparent " if transparent
       html << "type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer'></embed></object>"
       return html
@@ -102,7 +99,7 @@ a
       chart.each {|k1, c1|
 	if ! (c1.is_a?(Array) || c1.is_a?(Hash))
 	  # test_case1: chart type, etc.
-	  xml << "  <"+k1+">"+c1+"</"+k1+">\n"
+	  xml << "  <#{k1}>#{c1}</#{k1}>\n"
 	  next
 	end
 
@@ -117,22 +114,20 @@ a
 	      k1 == 'axis_value_text')
 	    xml << "  <"+k1+">\n"
 	    xml << c1.map {|c2|
-	      c2.nil? ? "    <null/>\n" : "    <value>"+c2+"</value>\n"
+	      c2.nil? ? "    <null/>\n" : "    <value>#{c2}</value>\n"
 	    }.join
-	    xml << "  </"+k1+">\n"
+	    xml << "  </#{k1}>\n"
 	    next
 	  end
 
 	  # test_case3: axis_category, etc.
-	  xml << "  <"+k1
-	  xml << c1.map {|k2, c2|
-	    ' '+k2+"='"+c2+"'"
-	  }.join
+	  xml << "  <#{k1}"
+	  xml << c1.map {|k2, c2| " #{k2}='#{c2}'" }.join
 	  xml << " />\n"
 	  next
 	end
 
-	xml << "  <"+k1+">\n"
+	xml << "  <#{k1}>\n"
 	c1.each_with_index {|c2, k2|
 
 	  c2keys = c2.keys
@@ -142,8 +137,8 @@ a
 	    xml << "    <row>\n"
 	    xml << c2.map {|c3|
 	      c3.nil? ? "      <null/>\n" :
-		c3.is_a?(Numeric) ? "      <number>"+c3.to_s+"</number>\n" :
-		"      <string>"+c3+"</string>\n"
+		c3.is_a?(Numeric) ? "      <number>#{c3}</number>\n" :
+		"      <string>#{c3}</string>\n"
 	    }.join
 	    xml << "    </row>\n"
 
@@ -151,13 +146,13 @@ a
 	    # test_case5: chart_value_text
 	    xml << "    <row>\n"
 	    xml << c2.map {|c3|
-	      c3.nil? ? "      <null/>\n" : "      <string>"+c3+"</string>\n"
+	      c3.nil? ? "      <null/>\n" : "      <string>#{c3}</string>\n"
 	    }.join
 	    xml << "    </row>\n"
 
 	  when 'draw'
 	    # test_case6: draw
-	    xml << "    <"+c2['type']
+	    xml << "    <#{c2['type']}"
 	    text = ''
 	    c2.each {|k3, c3|
 	      next if k3 == 'type'
@@ -165,10 +160,10 @@ a
 		text = c3
 		next
 	      end
-	      xml << ' '+k3+"='"+c3+"'"
+	      xml << " #{k3}='#{c3}'"
 	    }
 	    if ! text.empty?
-	      xml << ">"+text+"</text>\n"
+	      xml << ">#{text}</text>\n"
 	    else
 	      xml << " />\n"
 	    end
@@ -177,19 +172,17 @@ a
 	    # test_case7: 
 	    xml << "    <value"
 	    xml << c2.map {|k3, c3|
-	      ' '+k3+"='"+c3+"'"
+	      " #{k3}='#{c3}'"
 	    }.join
 	    xml << " />\n"
 	  end
 	}
-	xml << "  </"+k1+">\n"
-
+	xml << "  </#{k1}>\n"
       }
       xml << "</chart>\n"
 
       return xml
     end
-
   end
 end
 

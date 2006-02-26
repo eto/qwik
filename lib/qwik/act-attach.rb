@@ -43,7 +43,6 @@ module Qwik
 
       filename = content.filename
       basename = Action.get_basename(filename)
-#     basename = filename.sub(/\A.*[\/\\]([^\/\\]+)\z/) { $1 }
       basename.set_url_charset
       basename = Filename.decode(basename)
       res = basename

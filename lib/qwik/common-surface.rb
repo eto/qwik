@@ -1,5 +1,5 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/act-adminmenu'
+require 'qwik/act-basic'
 require 'qwik/wabisabi-index'
 
 module Qwik

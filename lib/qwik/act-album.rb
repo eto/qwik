@@ -110,15 +110,14 @@ body {
 
     def album_generate_config_txt
       config = {				# original setting
-	:ImageHeightPercent => 95,		# 80
-	:BackgroundColor => '0x000000',		# '0x000000'
-	:ImageBorderWidth => 0,			# 8
-	:ImageBorderColor => '0xcccccc',	# '0xFFFFFF'
-	:ArrowColor => '0x99ffff',		# '0xFFFFFF'
-	:ScreenBorderColor => '0x999999',	# '0x666666'
-	:ScrollbarColor => '0xccffff',		# '0xFFFFFF'
+	:ImageHeightPercent	=> 95,		# 80
+	:BackgroundColor	=> '0x000000',	# '0x000000'
+	:ImageBorderWidth	=> 0,		# 8
+	:ImageBorderColor	=> '0xcccccc',	# '0xFFFFFF'
+	:ArrowColor		=> '0x99ffff',	# '0xFFFFFF'
+	:ScreenBorderColor	=> '0x999999',	# '0x666666'
+	:ScrollbarColor		=> '0xccffff',	# '0xFFFFFF'
       }
-      #return config.map {|k, v| "#{k}=#{v}" }.sort.join('&')
       return config.to_query_string
     end
 

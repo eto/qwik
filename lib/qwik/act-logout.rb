@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -21,7 +12,7 @@ module Qwik
 
       session_clear
 
-      @res.clear_cookie('user') # remove cookies from browser
+      @res.clear_cookie('user')		# Remove cookies from browser.
       @res.clear_cookie('pass')
       @res.clear_cookie('sid')
 
@@ -41,7 +32,7 @@ module Qwik
     end
 
     def logout_form
-      [:div, {:class=>'logout'},
+      return [:div, {:class=>'logout'},
 	[:form, {:method=>'POST', :action=>'.logout'},
 	  [:input, {:type=>'hidden', :name=>'confirm', :value=>'yes'}],
 	  [:input, {:type=>'submit', :value=>_('Do Logout'), :class=>'focus'}]]]
@@ -59,7 +50,7 @@ if defined?($test) && $test
     include TestSession
 
     def test_all
-      # test it in act-login.rb
+      # The test for logout is already done in act-login.rb
     end
   end
 end

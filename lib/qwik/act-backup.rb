@@ -4,7 +4,7 @@ require 'qwik/wabisabi-diff'
 module Qwik
   class Action
     D_ext_backup = {
-      :dt => 'Backup pages function',
+      :dt => 'Backup page mode',
       :dd => 'You can see backup files.',
       :dc => "* How to use
 At the first, please go to edit page.
@@ -57,7 +57,7 @@ You can see the backup list of the pages.
 	  index = i
 	end
       }
-      return c_notfound("no data?") if index.nil?
+      return c_notfound('no data?') if index.nil?
 
       msg = ''
       if index == 0
@@ -100,7 +100,7 @@ You can see the backup list of the pages.
 	    Time.at(time).format_date]]
       }
       if 0 < ul.length
-	ul.last << ' '+_("<-")+' '+ _('newest')
+	ul.last << ' '+_('<-')+' '+ _('newest')
       end
 
       return c_plain(_('backup list')) {
@@ -124,7 +124,7 @@ if defined?($test) && $test
     def test_plg_backup_list
       ok_wi [:span, {:class=>'attribute'},
 	[:a, {:href=>'1.backup'}, 'Show backup']],
-	"{{backup_list}}"
+	'{{backup_list}}'
     end
 
     def test_act_backup2
@@ -193,11 +193,11 @@ if defined?($test) && $test
       page.put_with_time('t3', 2)
 
       list = @action.backup_list(@site, '1')
-      eq 't', list[0][0]
+      eq 't',  list[0][0]
       eq 't2', list[1][0]
       eq 't3', list[2][0]
-      eq '', list[3][0]
-      eq nil, list[4]
+      eq '',   list[3][0]
+      eq nil,  list[4]
 
       diff = @action.backup_diff(list, 1, 2)
       eq [[:del, 't2'], [:br], [:ins, 't3'], [:br]], diff

@@ -8,7 +8,8 @@ module Qwik
       :dc => '* Example
  {{counter}}
 {{counter}}
-' }
+'
+    }
 
     Dja_plugin_counter = {
       :dt => 'カウンター・プラグイン',
@@ -16,7 +17,8 @@ module Qwik
       :dc => '* 例
  {{counter}}
 {{counter}}
-' }
+'
+    }
 
     def plg_counter
       return [:div, {:class=>'counter'},

@@ -68,13 +68,13 @@ void main(){
     end
 
     def act_num
-      return c_nerror(_('Error')) if ! $have_gd
+      return c_nerror if ! $have_gd
       args = @req.path_args
-      return c_nerror(_('Error')) if args.nil? || args.empty?
+      return c_nerror if args.nil? || args.empty?
       filename = args.first
-      return c_nerror(_('Error')) unless /\A([0-9]+)\.png\z/ =~ filename
+      return c_nerror unless /\A([0-9]+)\.png\z/ =~ filename
       str = $1
-      return c_nerror(_('Error')) if 10 < str.length
+      return c_nerror if 10 < str.length
       files = @site.files('FrontPage')
       if ! files.exist?(filename)
 	png = Action.generate_png(str)

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -14,13 +5,13 @@ module Qwik
     def plg_interwiki(arg, *d)
       wiki, pagename = arg.split(':')
       return if pagename.nil?
-      text = wiki+':'+pagename
+      text = "#{wiki}:#{pagename}"
       text = yield if block_given?
       iw = @site.interwiki
       href = iw.href(wiki, pagename)
 
-      return [:span, {'class'=>'interwiki'}, text] if href.nil?
-      [:a, {'href'=>href, 'class'=>'interwiki'}, text]
+      return [:span, {:class=>'interwiki'}, text] if href.nil?
+      [:a, {:href=>href, :class=>'interwiki'}, text]
     end
   end
 
@@ -65,7 +56,7 @@ module Qwik
     def get_page
       k = 'InterWikiName'
       return @site[k] if @site.exist?(k)
-      k = '_'+k
+      k = "_#{k}"
       return @site[k] if @site.exist?(k)
       return @site.create(k)
     end
@@ -86,17 +77,17 @@ if defined?($test) && $test
 
       # test_interwiki
       page.store(',Test,http://example.com/?q=,sjis')
-      ok_wi([:p, [:a, {'href'=>'http://example.com/?q=t',
-		  'class'=>'interwiki'}, 'Test:t']], '[[Test:t]]')
-      ok_eq([:a, {'href'=>'http://example.com/?q=t',
-		'class'=>'interwiki'}, 'Test:t'],
+      ok_wi([:p, [:a, {:href=>'http://example.com/?q=t',
+		  :class=>'interwiki'}, 'Test:t']], '[[Test:t]]')
+      ok_eq([:a, {:href=>'http://example.com/?q=t',
+		:class=>'interwiki'}, 'Test:t'],
 	    @action.plg_interwiki('Test:t'))
-      ok_eq([:a, {'href'=>'http://example.com/?q=t',
-		'class'=>'interwiki'}, 'content\n'],
+      ok_eq([:a, {:href=>'http://example.com/?q=t',
+		:class=>'interwiki'}, 'content\n'],
 	    @action.plg_interwiki('Test:t') { 'content\n' })
-      ok_wi([:p, [:a, {'href'=>'http://example.com/?q=t',
-		  'class'=>'interwiki'}, 'text']], '[[text|Test:t]]')
-      ok_wi([:p, [:span, {'class'=>'interwiki'}, 'nosuchwiki:t']],
+      ok_wi([:p, [:a, {:href=>'http://example.com/?q=t',
+		  :class=>'interwiki'}, 'text']], '[[text|Test:t]]')
+      ok_wi([:p, [:span, {:class=>'interwiki'}, 'nosuchwiki:t']],
 	    '[[nosuchwiki:t]]')
 
       # test_interwiki_kanji
@@ -105,12 +96,12 @@ if defined?($test) && $test
 ,EUC,http://example.com/?q=,euc
 ,UTF8,http://example.com/?q=,utf8
 EOM
-      ok_wi([:p, [:a, {'href'=>'http://example.com/?q=%8E%9A',
-            'class'=>'interwiki'}, 'SJIS:Žš']], '[[SJIS:Žš]]')
-      ok_wi([:p, [:a, {'href'=>'http://example.com/?q=%BB%FA',
-            'class'=>'interwiki'}, 'EUC:Žš']], '[[EUC:Žš]]')
-      ok_wi([:p, [:a, {'href'=>'http://example.com/?q=%E5%AD%97',
-            'class'=>'interwiki'},  'UTF8:Žš']], '[[UTF8:Žš]]')
+      ok_wi([:p, [:a, {:href=>'http://example.com/?q=%8E%9A',
+            :class=>'interwiki'}, 'SJIS:Žš']], '[[SJIS:Žš]]')
+      ok_wi([:p, [:a, {:href=>'http://example.com/?q=%BB%FA',
+            :class=>'interwiki'}, 'EUC:Žš']], '[[EUC:Žš]]')
+      ok_wi([:p, [:a, {:href=>'http://example.com/?q=%E5%AD%97',
+            :class=>'interwiki'},  'UTF8:Žš']], '[[UTF8:Žš]]')
 
       # test_interwiki_realuse
       page.store(<<'EOM')
@@ -120,15 +111,15 @@ EOM
 ,hiki,http://www.namaraii.com/hiki/hiki.cgi?,euc
 ,yukiwiki,http://www.hyuki.com/yukiwiki/wiki.cgi?,euc
 EOM
-      ok_wi([:p, [:a, {'href'=>"http://www.google.com/search?num=50&lr=lang_ja&q=%E5%AD%97", 'class'=>'interwiki'}, "google:Žš"]], "[[google:Žš]]")
-      ok_wi([:p, [:a, {'href'=>"http://www.google.com/search?num=50&lr=lang_ja&q=%3C", 'class'=>'interwiki'}, "google:<"]], "[[google:<]]")
-      ok_wi([:p, [:a, {'href'=>"http://www.amazon.co.jp/exec/obidos/ASIN/4797318325/ref=nosim/q02-22", 'class'=>'interwiki'}, 'isbn:4797318325']], "[[isbn:4797318325]]")
-      ok_wi([:p, [:a, {'href'=>"http://www.amazon.co.jp/exec/obidos/external-search?tag=q02-22&keyword=%E5%AD%97&mode=blended", 'class'=>'interwiki'}, "amazon:Žš"]], "[[amazon:Žš]]")
-      ok_wi([:p, [:a, {'href'=>"http://www.namaraii.com/hiki/hiki.cgi?%BB%FA", 'class'=>'interwiki'}, "hiki:Žš"]], "[[hiki:Žš]]")
-      ok_wi([:p, [:a, {'href'=>"http://www.hyuki.com/yukiwiki/wiki.cgi?%BB%FA", 'class'=>'interwiki'}, "yukiwiki:Žš"]], "[[yukiwiki:Žš]]")
+      ok_wi([:p, [:a, {:href=>"http://www.google.com/search?num=50&lr=lang_ja&q=%E5%AD%97", :class=>'interwiki'}, "google:Žš"]], "[[google:Žš]]")
+      ok_wi([:p, [:a, {:href=>"http://www.google.com/search?num=50&lr=lang_ja&q=%3C", :class=>'interwiki'}, "google:<"]], "[[google:<]]")
+      ok_wi([:p, [:a, {:href=>"http://www.amazon.co.jp/exec/obidos/ASIN/4797318325/ref=nosim/q02-22", :class=>'interwiki'}, 'isbn:4797318325']], "[[isbn:4797318325]]")
+      ok_wi([:p, [:a, {:href=>"http://www.amazon.co.jp/exec/obidos/external-search?tag=q02-22&keyword=%E5%AD%97&mode=blended", :class=>'interwiki'}, "amazon:Žš"]], "[[amazon:Žš]]")
+      ok_wi([:p, [:a, {:href=>"http://www.namaraii.com/hiki/hiki.cgi?%BB%FA", :class=>'interwiki'}, "hiki:Žš"]], "[[hiki:Žš]]")
+      ok_wi([:p, [:a, {:href=>"http://www.hyuki.com/yukiwiki/wiki.cgi?%BB%FA", :class=>'interwiki'}, "yukiwiki:Žš"]], "[[yukiwiki:Žš]]")
 
       # test_interwiki_error
-      ok_wi([:p, [:span, {'class'=>'interwiki'}, 'a:b']], "[[a:b]]")
+      ok_wi([:p, [:span, {:class=>'interwiki'}, 'a:b']], "[[a:b]]")
       ok_wi([:p, [:span, {:class=>'new'}, "\"D_R\", \"/v/w\"",
 	   [:a, {:href=>".new?t=%22D_R%22%2C+%22%2Fv%2Fw%22"},
 	     [:img, {:src=>'.theme/i/new.png', :alt=>'create'}]]]],
@@ -143,12 +134,12 @@ EOM
     def test_res
       res = session
 
-      ok([[:span, {'class'=>'interwiki'}, 'Test:t']],
+      ok([[:span, {:class=>'interwiki'}, 'Test:t']],
 	 [[:plugin, {:method=>'interwiki', :param=>'Test:t'}]])
       page = @site.create('_InterWikiName')
       page.store(",Test,http://example.com/?q=,sjis")
-      ok([[:a, {'href'=>"http://example.com/?q=t",
-	       'class'=>'interwiki'}, 'Test:t']],
+      ok([[:a, {:href=>"http://example.com/?q=t",
+	       :class=>'interwiki'}, 'Test:t']],
 	 [[:plugin, {:method=>'interwiki', :param=>'Test:t'}]])
 
       # test_interwiki_error

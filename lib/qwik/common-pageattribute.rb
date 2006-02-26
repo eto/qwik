@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -55,7 +46,7 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestActAdminMenu < Test::Unit::TestCase
+  class TestCommonPageAttribute < Test::Unit::TestCase
     include TestSession
 
     def test_all

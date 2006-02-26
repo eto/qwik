@@ -13,7 +13,7 @@ module Qwik
       m = "plg_#{method}"
       begin
 	return self.send(m, *args, &b) if self.respond_to?(m)
-	return [:span, {:class=>'plg_error'}, "nosuch plugin | ",
+	return [:span, {:class=>'plg_error'}, 'nosuch plugin | ',
 	  [:strong, method]]
       rescue
         #raise if @config.test || @config.debug
@@ -23,7 +23,7 @@ module Qwik
 	if Action.from_local?(h)
 	  return PrettyBacktrace.to_html($!)	# common-backtrace
 	else
-	  return [:span, {:class=>'plg_error'}, "plugin error | ",
+	  return [:span, {:class=>'plg_error'}, 'plugin error | ',
 	    [:strong, method]]
 	end
       end
@@ -84,22 +84,16 @@ if defined?($test) && $test
 
       # test_from_local?
       c = Qwik::Action
-      eq true, c.from_local?("localhost")
-      eq true, c.from_local?("127.0.0.1")
-      eq true, c.from_local?("192.168.0.1")
-      eq true, c.from_local?("192.168.2.1")
-      eq false, c.from_local?("www.example.com")
+      eq true, c.from_local?('localhost')
+      eq true, c.from_local?('127.0.0.1')
+      eq true, c.from_local?('192.168.0.1')
+      eq true, c.from_local?('192.168.2.1')
+      eq false, c.from_local?('www.example.com')
 
       # test_call_plugin
       ok_plugin 'test', ['qwik_test', '']
-      ok_plugin [:span, {:class=>"plg_error"}, "nosuch plugin | ",
-	[:strong, "nosuch"]], ['nosuch', '']
-
-      # test_null
-      ok_wi [''], '{{qwik_null}}'
-
-      # test_test
-      ok_wi ['test'], '{{qwik_test}}'
+      ok_plugin [:span, {:class=>'plg_error'}, 'nosuch plugin | ',
+	[:strong, 'nosuch']], ['nosuch', '']
 
       t_without_testmode {
 	res = @action.c_call_plugin('_qwik_test_for_raise_exception', '')

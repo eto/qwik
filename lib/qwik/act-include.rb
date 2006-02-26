@@ -25,7 +25,6 @@ module Qwik
 
       return body
     end
-
   end
 end
 
@@ -99,24 +98,6 @@ if defined?($test) && $test
 		     [:div, {:class=>'section'}, []]]]]]]],
 	 "{{include(#{key})}}")
 
-      config.store(':emode_titlelink:true')
-      ok([:div,
-	   {:class=>'day'},
-	   '',
-	   [:div,
-	     {:class=>'body'},
-	     [:div,
-	       {:class=>'section'},
-	       [[:div,
-		   {:class=>'day'},
-		   [:h2,
-		     [:a, {:href=>"2.html#t2", :name=>'t2', :class=>'label'},
-		       "Å°"],
-		     't2'],
-		   [:div, {:class=>'body'},
-		     [:div, {:class=>'section'}, []]]]]]]],
-	 "{{include(#{key})}}")
-
       config.store('')
     end
 
@@ -139,14 +120,6 @@ if defined?($test) && $test
       res = session('/test/t1.html')
       ok_in([[:a, {:href=>"t2.html#6b9e49fa28900683969f489ac35161e6",
 		  :name=>'6b9e49fa28900683969f489ac35161e6',
-		  :class=>'label'}, "Å°"], "t2!"],
-	    "//div[@class='day']/h2")
-
-      config = @site['_SiteConfig']
-      config.store(':emode_titlelink:true')
-      res = session('/test/t1.html')
-      ok_in([[:a, {:href=>"t2.html#Xb_M6_lBLMaGGH88jpd-rQ",
-		  :name=>'Xb_M6_lBLMaGGH88jpd-rQ',
 		  :class=>'label'}, "Å°"], "t2!"],
 	    "//div[@class='day']/h2")
     end

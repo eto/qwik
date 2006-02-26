@@ -120,7 +120,7 @@ module Qwik
 
     def calc_parse_num(str)
       return [nil, 0, nil] if str.empty?
-      return [nil, nil, nil] if /\A[^0-9]+\z/ =~ str # no number
+      return [nil, nil, nil] if /\A[^0-9]+\z/ =~ str	# no number
 
       prefix = suffix = nil
 

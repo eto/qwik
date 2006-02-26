@@ -4,8 +4,8 @@ module Qwik
   class Action
     D_plugin_basic = {
       :dt => 'Basic plugins',
-      :dd => "Simple and Basic plugins.",
-      :dc => "* Description
+      :dd => 'Simple and Basic plugins.',
+      :dc => '* Description
 ** BR plugin
 You can break a line by using <br> element.
  This is {{br}} a test.
@@ -42,7 +42,7 @@ You can comment out the content.
 You can not see this line.
 You can not see this line also.
 }}
-"
+'
     }
 
     # ==============================
@@ -71,11 +71,22 @@ You can not see this line also.
       return nil	# ignore all
     end
 
-    # ==============================
-    def plg_sitemenu
-      return page_attribute('html', _('SiteMenu'), '_SiteMenu')
+    # ============================== adminmenu
+    def plg_menu(cmd, msg=nil)
+      return if ! @req.user
+      return if ! defined?(@req.base) || @req.base.nil?
+      return plg_act('new', cmd) if cmd == 'newpage'
+      return plg_ext(cmd) if cmd == 'edit' || cmd == 'wysiwyg'
+      return nil
     end
-    alias plg_show_sitemenu plg_sitemenu
+
+    def plg_act(act, msg=act)
+      return [:a, {:href=>".#{act}"}, _(msg)]
+    end
+
+    def plg_ext(ext, msg=ext)
+      return [:a, {:href=>"#{@req.base}.#{ext}"}, _(msg)]
+    end
   end
 end
 
@@ -89,17 +100,27 @@ if defined?($test) && $test
     include TestSession
 
     def test_all
+      # test_null
+      ok_wi [''], '{{qwik_null}}'
+
+      # test_test
+      ok_wi ['test'], '{{qwik_test}}'
+
       # test_br
-      ok_wi([:br], "{{br}}")
+      ok_wi([:br], '{{br}}')
 
       # test_window
-      ok_wi([:a, {:target=>'_blank', :href=>'url'}, 't'], "{{window(url,t)}}")
-      ok_wi([:a, {:target=>'_blank', :href=>'url'}, 'url'], "{{window(url)}}")
+      ok_wi([:a, {:target=>'_blank', :href=>'url'}, 't'], '{{window(url,t)}}')
+      ok_wi([:a, {:target=>'_blank', :href=>'url'}, 'url'], '{{window(url)}}')
 
-      # test_show_sitemenu
-      ok_wi([:span, {:class=>'attribute'},
-	      [:a, {:href=>'_SiteMenu.html'}, 'SiteMenu']],
-	    "{{show_sitemenu}}")
+      # test_admin_menu
+      ok_wi([:a, {:href=>'.new'}, 'newpage'], '{{menu(newpage)}}')
+      ok_wi([:a, {:href=>'1.edit'}, 'edit'], '{{menu(edit)}}')
+      ok_wi([], '{{menu(nosuchmenu)}}')
+      # test for not logined mode
+      #ok_wi('', '{{menu(newpage)}}', nil)
+      #ok_wi('', '{{menu(edit)}}', nil)
+      #ok_wi('', '{{menu(nosuchmenu)}}', nil)
     end
   end
 end

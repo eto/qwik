@@ -168,7 +168,7 @@ You can show the list of attached files.
       c_make_log('file delete')		# FILE DELETE
 
       return c_notice(_('The file is deleted.'), url) {
-	[:p, _('Go back'), ' : ', [:a, {:href=>url}, url]]
+	[:p, [:a, {:href=>url}, _('Go back')]]
       }
     end
 

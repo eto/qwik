@@ -170,6 +170,10 @@ You can show a notice by this plugin.
  '''WARNING''': This is just a sample!
  }}
 
+** Show license plugin
+{{license(cc)}}
+ {{license(cc)}}
+You can inidicate the license of this Wiki site.
 "
     }
 

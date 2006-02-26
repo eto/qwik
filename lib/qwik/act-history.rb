@@ -5,7 +5,7 @@ module Qwik
   class Action
     def plg_show_history
       return if @req.user.nil?
-      return if !defined?(@req.base) || @req.base.nil?
+      return if ! defined?(@req.base) || @req.base.nil?
       return page_attribute('history', _('Show history'))
     end
 
@@ -65,7 +65,7 @@ module Qwik
       ar << [:script,
 	{:type=>'text/javascript',:src=>'.theme/js/history.js'}, '']
 
-      title = _('Time machine')+' | '+pagename
+      title = _('Time machine')+" | #{pagename}"
 
       return c_plain(title) { ar }
     end

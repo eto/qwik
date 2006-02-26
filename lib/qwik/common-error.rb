@@ -28,7 +28,7 @@ if defined?($test) && $test
     def test_all
       res = session
 
-      @action.c_nerror('c_notice_error title'){'msg'}
+      @action.c_nerror('c_notice_error title') { 'msg' }
       ok_eq(500, res.status)
       ok_title('c_notice_error title')
 
@@ -36,7 +36,7 @@ if defined?($test) && $test
       ok_eq(500, res.status)
       ok_title('Error')
 
-      @action.c_notfound('Not found'){'msg'}
+      @action.c_notfound('Not found') { 'msg' }
       ok_eq(404, res.status)
       ok_title('Not found')
     end

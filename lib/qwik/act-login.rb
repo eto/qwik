@@ -42,25 +42,23 @@ TypeKey認証でログインすることができます。ログイン画面から「TypeKeyでロ
 TypeKeyでのアカウント名ではなく、メールアドレスによって認証するため、
 登録されているメールアドレスが、そのグループに登録されているメールアド
 レスと一致している必要があります。
-
 ** パスワードでログイン
 ユーザIDの欄に自分のメールアドレスを、またパスワード欄にはパスワードを
 入力してください。qwikWebにおけるパスワードは、システムが自動的に生成
 したパスワードが使われます。「パスワードを入手」というリンクをたどると、
 パスワードを入手できます。
-
 ** BASIC認証によるログイン
 BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 「BASIC認証」のリンクをたどってください。
-
-" }
+"
+    }
 
     # ============================== show status
     def plg_login_status
       if @req.user
 	return [:span, {:class=>'loginstatus'},
 	  'user', ' | ', plg_login_user,
-	  " (", [:a, {:href=>'.logout'}, ('Logout')], ")"]
+	  ' (', [:a, {:href=>'.logout'}, ('Logout')], ')']
       else
 	return login_create_login_link
       end
@@ -123,7 +121,7 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
     # called from action.rb
     def login_invalid_user
       c_nerror(_('Login Error')){[
-	  [:p, [:strong, _("Invalid ID(E-mail) or Password.")]],
+	  [:p, [:strong, _('Invalid ID(E-mail) or Password.')]],
 	  [:p, {:class=>'warning'},
 	    _("If you don't have password, "), _('access here'), [:br],
 	    [:a, {:href=>'.getpass'}, [:em, _('Get Password')]]],
@@ -177,12 +175,6 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
     end
 
     def login_go_frontpage
-      style = "
- margin: 8px;
- padding: 2px;
- background: #eee;
- border: 2px solid #66c;
-"
       style = ''
       return [:div, {:class=>'go_frontpage',:style=>''},
 	[:a, {:href=>'FrontPage.html', :style=>style}, 'FrontPage']]
@@ -196,7 +188,7 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
       end
       div = [:div, {:class=>'login_page'},
 	[:p, _('Login to '), [:em, url], [:br],
-	  _("Please input ID(E-mail) and password.")]]
+	  _('Please input ID(E-mail) and password.')]]
       div << login_msg
       div << login_page_form
       div << login_page_menu
@@ -217,7 +209,7 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
       return [:div, {:class=>'login'},
 	[:form, {:method=>'POST', :action=>'.login'},
 	  [:dl,
-	    [:dt, _('ID'), "(E-mail)", ': '],
+	    [:dt, _('ID'), '(E-mail)', ': '],
 	    [:dd, [:input, {:name=>'user', :istyle=>'3', :class=>'focus'}]],
 	    [:dt, _('Password'), ': '],
 	    [:dd, [:input, {:type=>'password', :name=>'pass'}]]],
@@ -248,7 +240,7 @@ if defined?($test) && $test
 
     def assert_cookie(hash, cookies)
       cookies.each {|cookie|
-	ok_eq(cookie.value, hash[cookie.name])
+	eq cookie.value, hash[cookie.name]
       }
     end
 
@@ -260,9 +252,9 @@ if defined?($test) && $test
 	req.cookies.clear
       }
       ok_title 'Login'
-      ok_xp([:meta, {:content=>"1; url=/test/.login",
+      ok_xp([:meta, {:content=>'1; url=/test/.login',
 		'http-equiv'=>'Refresh'}],
-	    "//meta[2]")
+	    '//meta[2]')
 
       # See login page.
       res = session('/test/.login') {|req|
@@ -277,29 +269,29 @@ if defined?($test) && $test
       # Get password by e-mail.  See act-getpass.
 
       # Invalid mail address
-      res = session("/test/.login?user=test@example") {|req|
+      res = session('/test/.login?user=test@example') {|req|
 	req.cookies.clear
       }
-      assert_text("Invalid ID(E-mail) or Password.", 'p')
+      assert_text('Invalid ID(E-mail) or Password.', 'p')
 
       # Invalid password
-      res = session("/test/.login?user=user@e.com&pass=wrongpassword") {|req|
+      res = session('/test/.login?user=user@e.com&pass=wrongpassword') {|req|
 	req.cookies.clear
       }
-      assert_text("Invalid ID(E-mail) or Password.", 'p')
+      assert_text('Invalid ID(E-mail) or Password.', 'p')
 
       # Login by GET method. Set cookies and redirect to FrontPage.
-      res = session("/test/.login?user=user@e.com&pass=95988593") {|req|
+      res = session('/test/.login?user=user@e.com&pass=95988593') {|req|
 	req.cookies.clear
       }
       ok_title 'Login succeed'
       #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
-      ok_eq('sid', @res.cookies[0].name)
-      ok_eq(32, @res.cookies[0].value.length)
+      eq 'sid', @res.cookies[0].name
+      eq 32, @res.cookies[0].value.length
       #pw('//head')
-      ok_xp([:meta, {:content=>"0; url=FrontPage.html",
+      ok_xp([:meta, {:content=>'0; url=FrontPage.html',
 		'http-equiv'=>'Refresh'}],
-	    "//meta[2]") # force redirect for security reason.
+	    '//meta[2]') # force redirect for security reason.
 
       # Set the cookie
       res = session('/test/') {|req|
@@ -308,26 +300,26 @@ if defined?($test) && $test
       ok_title 'FrontPage'
       assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'},
 		    @res.cookies)
-      #      ok_eq('sid', @res.cookies[0].name)
-      #      ok_eq(32, @res.cookies[0].value.length)
+      #eq 'sid', @res.cookies[0].name
+      #eq 32, @res.cookies[0].value.length
 
       # Use POST method to set user and pass by queries.
-      res = session("POST /test/.login?user=user@e.com&pass=95988593") {|req|
+      res = session('POST /test/.login?user=user@e.com&pass=95988593') {|req|
 	req.cookies.clear
       }
       ok_title 'Login succeed'
-      ok_eq(200, @res.status)
+      eq 200, @res.status
       #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
-      ok_eq('sid', @res.cookies[0].name)
-      ok_eq(32, @res.cookies[0].value.length)
-      ok_xp([:meta, {:content=>"0; url=FrontPage.html",
+      eq 'sid', @res.cookies[0].name
+      eq 32, @res.cookies[0].value.length
+      ok_xp([:meta, {:content=>'0; url=FrontPage.html',
 		'http-equiv'=>'Refresh'}],
-	    "//meta[2]") # force redirect for security reason.
+	    '//meta[2]') # force redirect for security reason.
 
       # test_login_status
       res = session('/test/')
       ok_in(['user', ' | ', [:em, 'user@e.com'],
-	      " (", [:a, {:href=>'.logout'}, 'Logout'], ")"],
+	      ' (', [:a, {:href=>'.logout'}, 'Logout'], ')'],
 	    "//span[@class='loginstatus']")
 
       # See TextFormat
@@ -343,17 +335,17 @@ if defined?($test) && $test
       ok_xp([:input, {:value=>'yes', :type=>'hidden', :name=>'confirm'}],
 	    '//input')
       ok_xp([:input, {:value=>'Do Logout',
-		:type=>'submit', :class=>'focus'}], "//input[2]")
+		:type=>'submit', :class=>'focus'}], '//input[2]')
 
       # Confirm Logout.
-      res = session("/test/.logout?confirm=yes")
+      res = session('/test/.logout?confirm=yes')
       ok_title 'Logout done.'
       assert_text('Logout done.', 'h1')
       ok_xp([:p, [:a, {:href=>'FrontPage.html'}, 'Go back']],
 	    "//div[@class='section']/p")
       assert_cookie({'user'=>'', 'pass'=>'', 'sid'=>''}, @res.cookies)
-      #ok_eq('sid', @res.cookies[0].name)
-      #ok_eq(32, @res.cookies[0].value.length)
+      #eq 'sid', @res.cookies[0].name
+      #eq 32, @res.cookies[0].value.length
     end
 
     def test_open_site
