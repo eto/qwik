@@ -6,6 +6,10 @@
 
 	* act-password.rb: Refactoring.
 
+	* act-basic.rb: Merge act-adminmenu.rb
+
+	* act-pagelist.rb: Renamed from act-pages.rb
+
 2006-02-26  Kouichirou Eto  <2006 eto.com>
 
 	* act-style.rb: Fix. Extract content in sytle_div.
