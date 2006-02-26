@@ -10,6 +10,12 @@
 
 	* act-pagelist.rb: Renamed from act-pages.rb
 
+	* act-style.rb: Merge act-monta.rb
+
+	* act-mdlb.rb: Merge act-mdlb-*.rb
+
+	* act-ring.rb: Merge act-ring-*.rb
+
 2006-02-26  Kouichirou Eto  <2006 eto.com>
 
 	* act-style.rb: Fix. Extract content in sytle_div.
