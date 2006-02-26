@@ -97,45 +97,6 @@ module Qwik
 :NYUGAKU:入学
 :YEAR:年
 '
-    NU_RING_CATALOG_CONTENT = '
-# common
-:GOBACK:ブラウザの「戻るボタン」で入力画面に戻り、もう一度入力を確認してください。
-
-# invite
-:INVITE_INPUT_GUEST_MAIL:招待したい人のメールアドレスを入力してください。
-:INVITE_MESSAGE_DUMMY_TEXT:SFC-Ringに招待します。
-:INVITE_DESC:この文面と共に、招待する人に送られます。この文面と共に招待状一覧に表示されます。
-:INVITE_DO_INVITE:招待する! 
-:INVITE_NOSEND:招待状は送られませんでした
-:INVITE_INPUT_MAIL:メールアドレスを入力してください
-:INVITE_MAIL_IS_SENT:招待状が送られました
-:INVITE_SUBJECT:SFC-Ringへのご招待
-
-# maker
-:MAKER_USER_NAME_DESC:SFC-Ringで表示される名前です。アルファベット、ひらがな、かたかな、漢字などが使えます。記号、空白は使えません。例: katokan、カトカン、かとかん、加藤寛、などなど。
-:NYUUGAKU_GAKUBU:入学学部
-:FACULTY_SS:総合政策
-:FACULTY_EI:環境情報
-:FACULTY_KI:看護医療
-:FACULTY_SM:政策・メディア
-:NYUUGAKU_NENDO:入学年度
-:MAKER_REGISTER:登録する! 
-:MAKER_ALREADY_REGISTERD:すでに登録されています。
-:MAKER_GOBACK_AND_CONFIRM:ブラウザの「戻るボタン」で入力画面に戻り、もう一度入力を確認してください。
-:MAKER_NOT_REGISTERD:登録されませんでした。
-:MAKER_REGISTERD:登録されました
-:MAKER_THE_PAGE:作ったページ
-:MAKER_SEE:を見る。
-
-# msg
-:MSG_INPUT_HERE:ここにメッセージを入力してください。
-:MSG_INPUT_MESSAGE:メッセージを入力してください
-:MSG_MESSAGE_IS_ADDED:メッセージを追加しました
-
-# new
-:NEW_CREATED:アカウントが作成されました。
-:NEW_FROM_SFCNEJP:sfc.ne.jpよりの登録です。
-'
 
     # ============================== invite
     # Show invite form
