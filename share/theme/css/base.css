@@ -451,6 +451,18 @@ div.notice p {
   padding: 0;
 }
 
+/* ========== act-plan */
+div.plan form {
+  width: 70%;
+}
+div.plan form dt {
+  text-align: left;
+  float: left;
+}
+div.plan form dd {
+  text-align: right;
+}
+
 /* ========== act-qrcode */
 div.qrcode {
   float: right;
