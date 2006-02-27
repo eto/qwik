@@ -40,13 +40,14 @@ Then, you'll see the plan on the sidemenu.
     def plg_plan
       div = [:div, {:class=>'plan'}, [:h2, _('Plan')]]
       pages = @site.get_pages_with_date
-      qp pages
+      #qp pages
+      return if pages.empty?
       if ! pages.empty?
 	ul = plan_make_html(pages)
 	#qp ul
 	div << ul
       end
-      div << [:a, {:href=>'.plan'}, _('Create a new plan')]
+      div << [:p, [:a, {:href=>'.plan'}, _('Create a new plan')]]
       return div
     end
 
@@ -135,12 +136,13 @@ if defined?($test) && $test
       ok_wi([:div, {:class=>'plan'},
 	      [:h2, 'Plan'],
 	      [:ul,
-		[:li, '01-01', ' ', [:a, {:href=>'2.html'}, [:strong, 't']]],
-		[:li, '01-15', ' ', [:a, {:href=>'3.html'}, [:em, 't']]],
-		[:li, '02-01', ' ',
+		[:li, '01-01 ', [:a, {:href=>'2.html'}, [:strong, 't']]],
+		[:li, '01-15 ', [:a, {:href=>'3.html'}, [:em, 't']]],
+		[:li, '02-01 ',
 		  [:a, {:href=>'4.html'}, [:span, {:class=>'future'}, 't']]],
-		[:li, '1971-01-01', ' ',
-		  [:a, {:href=>'5.html'}, [:span, {:class=>'future'}, 't']]]]],
+		[:li, '1971-01-01 ',
+		  [:a, {:href=>'5.html'}, [:span, {:class=>'future'}, 't']]]],
+	      [:p, [:a, {:href=>".plan"}, "Create a new plan"]]],
 	    '{{plan}}')
 
       # $KCODE = 'n'

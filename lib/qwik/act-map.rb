@@ -2,15 +2,40 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    D_plugin_map = {
+      :dt => 'Map plugin',
+      :dd => 'You can embed a map and create makers.',
+      :dc => "* Example
+{{{
+{{map(139.7005, 35.6595, 3)
+* [139.7005,35.6595] Shibuya
+- Hachiko Mae
+* [139.7030,35.6715] Harajuku
+- Takeshita St.
+}}
+}}}
+See [[PluginMap]] for example.
+* Thanks
+I use '[[Google Local|http://maps.google.com/]]' for the map.
+Thank you very much.
+"
+    }
+
     def plg_map(clat, clng, mag=0)
       # Prepare maplink div.
-      href = "/.map?s=#{@req.sitename}&k=#{@req.base}"
+
+      href = ".map?s=#{@req.sitename}&k=#{@req.base}"
+      fullhref = "#{href}&m=full"
+
+      href = c_relative_to_root(href)
+      fullhref = c_relative_to_root(fullhref)
+
       div = [:div, {:class=>'maplink'},
 	[:iframe, {:src=>href,
 	    :style=>'width:700px;height:400px;border:0;'}, ''],
 	[:br],
 	[:div, {:style=>'margin: 0 0 1em 0;'},
-	  [:a, {:href=>"#{href}&m=full", :style=>'font-size:x-small;'},
+	  [:a, {:href=>fullhref, :style=>'font-size:x-small;'},
 	    _('Show map in fullscreen.')]]]
       content = yield
       elements = c_res(content)
@@ -36,6 +61,7 @@ module Qwik
       page = @site[pagekey]
       c_nerror('No such page.') if page.nil?
       plugin = get_first_plugin(page, 'map')
+
       param = plugin[1][:param]
       args = Action.plugin_parse_args(param)
       clat = args.shift.to_f

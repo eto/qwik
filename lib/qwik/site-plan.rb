@@ -8,7 +8,7 @@ module Qwik
       pages = []
       self.each {|page|
 	tags = page.get_tags
-	qp tags
+	#qp tags
 	next if tags.nil?
 	tags.each {|tag|
 	  date = Action.date_parse(tag)

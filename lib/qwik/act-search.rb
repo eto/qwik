@@ -66,8 +66,8 @@ module Qwik
       return query if query && ! query.empty?
 
       query = @req.base
-      return query if query && ! query.empty?
-     #return query if query && ! query.empty? && query != "FrontPage"
+      return query if query && ! query.empty? && query != "FrontPage"
+      #return query if query && ! query.empty?
 
       return nil
     end

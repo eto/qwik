@@ -43,8 +43,8 @@ You can see the list below.
       self.description_list(@req.accept_language).each {|name|
 	hash = description_get(name, @req.accept_language)
 	list << [:li, [:a, {:href=>"#{name}.describe"},
-	    [:strong, hash[:dt]]], ' ', hash[:dd]]
-#	    [:em, name], ' ', [:strong, hash[:dt]]], ' ', hash[:dd]]
+#	    [:strong, hash[:dt]]], ' ', hash[:dd]]
+	    [:em, name], ' ', [:strong, hash[:dt]]], ' ', hash[:dd]]
       }
       return [:div, {:class=>'description-list'}, list]
     end
