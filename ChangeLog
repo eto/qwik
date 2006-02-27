@@ -1,3 +1,22 @@
+2006-02-28  Kouichirou Eto  <2006 eto.com>
+
+	* act-plan.rb: Do not show if there's no plan.
+
+	* act-map.rb: Add description.
+
+2006-02-27  Kouichirou Eto  <2006 eto.com>
+
+	* Add descriptions.
+	* Add Japanese descriptions.
+
+	* site-plan.rb: Merge site-footer.rb
+
+	* act-search.rb: Merge act-isearch.rb
+
+	* act-book.rb: Change book to book_search
+
+	* act-plan.rb: New plugin to make a new plan.
+
 2006-02-26  Kouichirou Eto  <2006 eto.com>
 
 	* site.rb: Delete @dir
