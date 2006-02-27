@@ -15,16 +15,41 @@ Add a link to a book by isbn.
  {{isbn_amazon(4797318325,書名)}}
 {{isbn_amazon(4797318325,書名)}}
 ** Book Serach plugin
- {{book(Wiki)}}
-{{book(Wiki)}}
- {{book(ブログ)}}
-{{book(ブログ)}}
+ {{book_search(Wiki)}}
+{{book_search(Wiki)}}
+ {{book_search(ブログ)}}
+{{book_search(ブログ)}}
 You can edit the book stores list on [[_BookSearch]].
 "
     }
 
+    Dja_plugin_book = {
+      :dt => '本とISBNプラグイン',
+      :dd => '本や本の検索へのリンクを作ります。',
+      :dc => "* 例
+** ISBNプラグイン
+ISBNでリンクします。
+ {{isbn(4797318325)}}
+{{isbn(4797318325)}}
+ {{isbn_amazon(4797318325)}}
+{{isbn_amazon(4797318325)}}
+ {{isbn_amazon(4797318325,書名)}}
+{{isbn_amazon(4797318325,書名)}}
+リンク先の一覧は、[[_IsbnLink]]で指定できます。
+** 本の検索プラグイン。
+本を検索します。
+ {{book_search(Wiki)}}
+{{book_search(Wiki)}}
+ {{book_search(ブログ)}}
+{{book_search(ブログ)}}
+検索リンク先の一覧は、[[_BookSearch]]で指定できます。
+"
+    }
+
+    BOOK_SEARCH = '_BookSearch'
+
     def plg_book(key)
-      page = @site['_BookSearch']
+      page = @site[BOOK_SEARCH]
       ar = []
       ar << "book:#{key} "
       page.wikidb.array.each {|name, args|
@@ -39,6 +64,7 @@ You can edit the book stores list on [[_BookSearch]].
       }
       return [:div, {:class=>'box'}, ar]
     end
+    alias plg_book_search plg_book
 
     def plg_isbn_amazon(isbn, t=nil)
       isbn = isbn.to_s
@@ -49,6 +75,8 @@ You can edit the book stores list on [[_BookSearch]].
       return [:a, {:href=>"http://www.amazon.co.jp/exec/obidos/ASIN/#{isbn}#{aid}/ref=nosim/"}, msg]
     end
 
+    ISBN_LINK = '_IsbnLink'
+
     def plg_isbn(isbn, t=nil)
       isbn = isbn.to_s
       isbn1 = isbn.gsub(/ISBN/i, '')
@@ -56,7 +84,7 @@ You can edit the book stores list on [[_BookSearch]].
       a = @site.siteconfig['aid']
       aid = "/#{a}" if a
 
-      link = @site['_IsbnLink']
+      link = @site[ISBN_LINK]
       db = link.wikidb
       ar = []
 
@@ -106,7 +134,7 @@ if defined?($test) && $test
 		  'sjis'], ' ',
 		[:a, {:href=>'http://example.com/euc/%CB%DC'},
 		  'euc'], ' ']],
-	    '{{book(本)}}')
+	    '{{book_search(本)}}')
 
       # test_isbn
       ok_wi([:a, {:href=>'http://www.amazon.co.jp/exec/obidos/ASIN/4797318325/q02-22/ref=nosim/'}, 'isbn:4797318325'], '{{isbn_amazon(4797318325)}}')

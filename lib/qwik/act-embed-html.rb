@@ -80,8 +80,8 @@ You can also embed plugins like this.
     }
 
     Dja_plugin_embed_html = {
-      :dt => 'html埋め込み機能 ',
-      :dd => 'htmlをそのままはりこむことができます。',
+      :dt => 'HTML埋め込み機能 ',
+      :dd => 'HTMLをそのまま埋込むことができます。',
       :dc => "* 例
  {{html
  This is <font color='red'>red</font>.

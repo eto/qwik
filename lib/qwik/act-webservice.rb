@@ -5,11 +5,10 @@ module Qwik
     D_plugin_webservice = {
       :dt => 'Web service plugins',
       :dd => 'You can use several external Web services.',
-      :dc => "
+      :dc => '
 * Hatena Point plugin
  {{hatena_point(eto)}}
 You can embed hatena point tag.
-# はてなの投げ銭機能に対応してます。
 * Trackfeed plugin
 You can use trackfeed by this plugin.
  {{trackfeed(yourid)}}
@@ -19,8 +18,8 @@ You can show subscribe bloglines button.
 {{sub_bloglines}}
 
 You can write a specific URL in the argument.
- {{sub_bloglines(\"http://www.ruby-lang.org/\")}}
-{{sub_bloglines(\"http://www.ruby-lang.org/\")}}
+ {{sub_bloglines("http://www.ruby-lang.org/")}}
+{{sub_bloglines("http://www.ruby-lang.org/")}}
 * E Words plugin
 You can show words description.
  {{e_words}}
@@ -39,7 +38,47 @@ You can show an translation link.
 Specify translate English to Japanese link.
  {{translate_je}}
 Specify translate Japanese to English link.
-"
+'
+    }
+
+    Dja_plugin_webservice = {
+      :dt => '各種Webサービス・プラグイン',
+      :dd => 'Web上のサービスを利用するプラグインです。',
+      :dc => '
+* はてなポイント・プラグイン
+ {{hatena_point(eto)}}
+はてなポイント(投げ銭)のタグを埋込めます。
+* Trackfeedプラグイン
+トラックフィードを埋込めます。
+ {{trackfeed(yourid)}}
+* Bloglines講読プラグイン
+Bloglinesで講読するリンクを表示します。
+ {{sub_bloglines}}
+{{sub_bloglines}}
+
+特定のURLを指定することもできます。
+ {{sub_bloglines("http://www.ruby-lang.org/")}}
+{{sub_bloglines("http://www.ruby-lang.org/")}}
+* E Wordsプラグイン
+用語定義を表示させることができます。
+ {{e_words}}
+{{e_words}}
+* Google AdSenseプラグイン
+Google AdSenseを埋込めます。
+ {{google_ad}}
+{{google_ad}}
+ {{google_ad_button}}
+{{google_ad_button}}
+二種類のサイズから選べます。
+それ以外のサイズは、現在は未対応となっています。
+* 翻訳プラグイン
+翻訳ページに飛ぶリンクを表示します。
+You can show an translation link.
+ {{translate_ej}}
+英語から日本語へ翻訳する。
+ {{translate_je}}
+日本語から英語へ翻訳する。
+'
     }
 
     # ========== hatena point
@@ -63,14 +102,14 @@ Specify translate Japanese to English link.
 
     # ========== trackfeed
     def plg_trackfeed(id)
-      raise unless /\A[0-9a-f]+\z/ =~ id
+      return unless /\A[0-9a-f]+\z/ =~ id
       script = [:script, {:src=>"http://trackfeed.com/usr/#{id}.js"}, '']
       return script
     end
 
     # ========== Bloglines
     def plg_sub_bloglines(url=nil, icon='modern4')
-      raise unless /\A[a-z0-9]+\z/ =~ icon
+      return unless /\A[a-z0-9]+\z/ =~ icon
       url = @site.site_url if url.nil?
       button = [:a, {:href=>"http://www.bloglines.com/sub/#{url}"},
 	[:img, {:src=>"http://www.bloglines.com/images/sub_#{icon}.gif",
@@ -157,7 +196,7 @@ EOT
       full_url = c_relative_to_absolute(page.url)
      #base = 'http://www.excite.co.jp/world/english/web/'
       base = 'http://www.excite.co.jp/world/english/web/proceeding/'
-      url = base+"?wb_lp=#{lp}&wb_url="+full_url
+      url = "#{base}?wb_lp=#{lp}&wb_url=#{full_url}"
 
       if message.nil?
 	message = 'translate'

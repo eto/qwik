@@ -12,7 +12,8 @@ module Qwik
 {{schedule}}
 You can see a 5x5 table here.
 You can not edit this table because this is a description page.
-" }
+"
+    }
 
     def plg_schedule
       content = nil

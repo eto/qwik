@@ -13,9 +13,11 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Action
     D_plugin_secdb = {
-      :dt => 'Show a table of each section data',
-      :dd => 'You can create a table from data embedded as CSV format in each section.',
+      :dt => 'Section data plugin',
+      :dd => 'Show a table of each section data',
       :dc => "
+You can create a table from data embedded as CSV format in each section.
+
 The first section is recognized as variable names (column names).
 * Examples
 You can embbed your data in a page.
@@ -42,7 +44,44 @@ Also you can specify another \"data embedded\" page.
  {{secdb(**, FrontPage)}}
 
 Enjoy!
-" }
+"
+    }
+
+    Djs_plugin_secdb = {
+      :dt => 'セクション・データ・プラグイン',
+      :dd => 'セクション・データの表を表示します。',
+      :dc => "
+各セクションに埋込まれているCSV形式のデータを抜き出し、表にします。
+
+最初のセクションを変数名(コラム名)としてとらえます。
+
+* 例
+データをページ内に埋込みます。
+
+** Date,Type A,Type B, Type C
+*** Country,Population
+** 2019-01-01,100,200,300
+
+*** Japan,12000
+*** USA,26000
+
+標準では「**」で指定されたセクションの表を作ります。
+ {{secdb}}
+,Date,Type A,Type B,Type C
+,2019-01-01,100,200,300
+
+それ以外に「***」など別のセクションを抜き出すこともできます。
+ {{secdb(***)}}
+,Country,Population
+,Japan,12000
+,USA,26000
+
+また、他のページのセクションデータを抜き出すこともできます。
+ {{secdb(**, FrontPage)}}
+
+お楽しみください。
+"
+    }
 
     def plg_secdb(mark = '**', pagename = nil)
       pagename = @req.base if pagename.nil?
@@ -80,7 +119,7 @@ Enjoy!
 
   class Page
     def get_secdb(mark = '**')
-      require 'csv' # CSV.parse_line()
+      require 'csv'	# CSV.parse_line()
 
       return nil if mark.nil? or mark.empty?
       mark = Regexp.escape(mark)
@@ -115,7 +154,7 @@ if defined?($test) && $test
 
     def test_get_secdb
       page = @site.create_new
-      page.store("* Title
+      page.store "* Title
 * T1: Data header,A,B,C
 ** T2: Data header,a,b,c
 * T1: Data line1,100,101,102
@@ -124,19 +163,23 @@ if defined?($test) && $test
 * T1: Data line2,200,201,202
 This is not a data line.
 **** CSV,\"4, 5\",3,2,1
-" )
+"
 
-      ok_eq([['T1: Data header', 'A', 'B', 'C'],
-              ['T1: Data line1', '100', '101', '102'],
-              ['T1: Data line2', '200', '201', '202'],],
-            page.get_secdb('*'))
+      eq [
+	['T1: Data header', 'A', 'B', 'C'],
+	['T1: Data line1', '100', '101', '102'],
+	['T1: Data line2', '200', '201', '202'],
+      ],
+	page.get_secdb('*')
 
-      ok_eq([['T2: Data header', 'a', 'b', 'c'],
-              ['T2: Data line1', '10', '11', '12'],
-              ['T2: Data line2', '20', '21', '22'],],
-            page.get_secdb('**'))
-      ok_eq(nil, page.get_secdb('***'))
-      ok_eq([['CSV', '4, 5', '3', '2', '1']], page.get_secdb('****'))
+      eq [
+	['T2: Data header', 'a', 'b', 'c'],
+	['T2: Data line1', '10', '11', '12'],
+	['T2: Data line2', '20', '21', '22'],
+      ],
+	page.get_secdb('**')
+      eq nil, page.get_secdb('***')
+      eq [['CSV', '4, 5', '3', '2', '1']], page.get_secdb('****')
     end
   end
 

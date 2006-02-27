@@ -1,26 +1,37 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-search'
+require 'qwik/site-index'
+require 'qwik/act-search'
 
 module Qwik
   class Action
     D_plugin_search = {
       :dt => 'Search plugin',
       :dd => 'You can show a search form.',
-      :dc => "* Example
+      :dc => '* Example
  {{search}}
 {{search}}
-"
+#* Incremental search
+# {{isearch}}
+#{{isearch}}
+#You can also make incremenatl search form.
+'
     }
 
     Dja_plugin_search = {
       :dt => '検索プラグイン',
       :dd => '検索窓を作れます。',
-      :dc => "* 例
+      :dc => '* 例
  {{search}}
 {{search}}
-"
+#* インクリメンタル・サーチ
+# {{isearch}}
+#{{isearch}}
+#同様に、インクリメンタル・サーチを行う検索窓です。
+'
     }
 
+    # ============================== search
     def plg_search_form(focus=false)
       return search_form(focus)
     end
@@ -37,7 +48,9 @@ module Qwik
 
     def act_search
       query = search_get_query
-      return search_form_page if query.nil?
+      if query.nil?
+	return search_form_page
+      end
 
       ar = @site.search(query)
       if ar.empty?
@@ -53,8 +66,8 @@ module Qwik
       return query if query && ! query.empty?
 
       query = @req.base
-      #qp @req.base
-      return query if query && ! query.empty? && query != "FrontPage"
+      return query if query && ! query.empty?
+     #return query if query && ! query.empty? && query != "FrontPage"
 
       return nil
     end
@@ -66,7 +79,7 @@ module Qwik
       return c_notice(title) { body }
     end
 
-    # called from act-isearch.rb
+    # called also from act-isearch.rb
     def search_notfound_page(query)
       return search_form_page(_('Search result'), _('No match.'), query)
     end
@@ -80,6 +93,50 @@ module Qwik
 	  [:a, {:href=>url}, page.get_title], ' : ',
 	  [:em, {:class=>'linenum'}, i.to_s], ' : ',
 	  [:span, {:class=>'content'}, line]]
+      }
+      div = [:div, {:class=>'day'},
+	[:div, {:class=>'section'},
+	  [:div, {:class=>'search_result'}, ul]]]
+      title = _('Search result')
+      return c_plain(title) { div }
+    end
+
+    # ============================== isearch
+    def plg_isearch(focus=false)
+      form = search_form(focus)
+      form[1][:action] = '.isearch'
+      return form
+    end
+
+    def act_isearch
+      query = @req.query['q']
+      if query.nil? || query.empty?
+	search_form_page
+	isearch_patch(@res.body)
+	return
+      end
+
+      ar = @site.isearch(query)
+      if ar.nil? || ar.empty?
+	search_notfound_page(query)
+	isearch_patch(@res.body)
+	return
+      end
+
+      return isearch_result(@site, ar)
+    end
+
+    def isearch_patch(body)	# Destructive for the body
+      form = body.get_path('//form')
+      form[1][:action] = '.isearch'
+    end
+
+    def isearch_result(site, ar)
+      ul = [:ul]
+      ar.each {|key|
+	page = site[key]
+	url = page.url
+	ul << [:li, [:a, {:href=>url}, key]]
       }
       div = [:div, {:class=>'day'},
 	[:div, {:class=>'section'},
@@ -155,6 +212,40 @@ if defined?($test) && $test
 		[:em, {:class=>'linenum'}, '0'], ' : ',
 		[:span, {:class=>'content'}, "漢字"]]],
 	    "//div[@class='search_result']")
+    end
+
+    # ============================== isearch
+    def test_plg_isearch
+      ok_wi([:form, {:action=>'.isearch'},
+	      [:input, {:name=>'q'}],
+	      [:input, {:value=>'Search', :type=>'submit'}]],
+	    "{{isearch}}")
+    end
+
+    def test_act_isearch
+      t_add_user
+
+      res = session '/test/.isearch'
+      ok_xp [:form, {:action=>'.isearch'},
+	      [:input, {:class=>'focus', :name=>'q'}],
+	      [:input, {:value=>'Search', :type=>'submit'}]],
+	    '//form'
+
+      res = session "/test/.isearch?q=nosuchkey"
+      assert_text 'Search result', 'h1'
+      ok_in ['No match.'], '//h2'
+
+      page = @site.create_new
+      page.store 'This is a keyword.'
+      res = session "/test/.isearch?q=keyword"
+#      ok_in [:ul, [:li, [:a, {:href=>'1.html'}, '1']]],
+#	    "//div[@class='search_result']"
+
+      page = @site.create_new	# 2.txt
+      page.store "漢字"
+      res = session "/test/.isearch?q=字"
+#      ok_in [:ul, [:li, [:a, {:href=>'2.html'}, '2']]],
+#	    "//div[@class='search_result']"
     end
   end
 end

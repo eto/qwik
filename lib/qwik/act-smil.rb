@@ -21,12 +21,13 @@ module Qwik
  |3:19:58|3:21:12|
  }}
 This is just an example to use smil plugin.
-" }
+"
+    }
 
     def plg_smil(title=nil)
       @smil_num = 0 if !defined?(@smil_num)
       @smil_num += 1
-      file = @req.base+'.'+@smil_num.to_s+'.smil'
+      file = "#{@req.base}.#{@smil_num}.smil"
       str = yield
       title = file if title.nil?
 
@@ -114,7 +115,7 @@ This is just an example to use smil plugin.
       par = []
       @time_table.each {|url, time_begin, time_end, title|
 	duration = time_end.to_f - time_begin.to_f
-	par << [:video, {:region=>'v', :begin=>time.to_s+'s',
+	par << [:video, {:region=>'v', :begin=>"#{time}s",
 	    :src=>url, :'clip-begin'=>time_begin.to_smil,
 	    :'clip-end'=>time_end.to_smil}]
 	time += duration

@@ -6,6 +6,17 @@ module Qwik
       :dt => 'Include plugin',
       :dd => 'You can include other page.',
       :dc => "* Example
+You can see the FrontPage is included here.
+{{include('FrontPage')}}
+ {{include('FrontPage')}}
+"
+    }
+
+    Dja_plugin_include = {
+      :dt => '取り込みプラグイン',
+      :dd => '他のページの内容をとりこみます。',
+      :dc => "* 例
+FrontPageの内容を埋め込んでみます。
 {{include('FrontPage')}}
  {{include('FrontPage')}}
 "

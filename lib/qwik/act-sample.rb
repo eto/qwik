@@ -1,6 +1,8 @@
+#
 # This is a sample plugin for qwikWeb.
 # If you'd like to check the details of qwikWeb plugin, please see URL below.
 # http://qwik.jp/HowToMakePlugin.html
+#
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
@@ -54,7 +56,6 @@ qwikWebのプラグインを自分で作ってみる際の参考となるプラグインを提供し
 
 詳しくは、こちらのURLをごらんください。
 http://qwik.jp/HowToMakePlugin.html
-
 * 例
 ** ハローワールド・プラグイン
 {{hello}}

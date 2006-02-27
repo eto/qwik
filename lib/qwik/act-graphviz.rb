@@ -82,7 +82,7 @@ If you'd like to use Japanese font, please use 'Sazanami font', etc.
 - You can not use imagemap for the graph.
 
 * Thanks
-The Graphviz plugin is created by Mr. Moriyoshi Koizumi.
+This Graphviz plugin is created by Mr. Moriyoshi Koizumi.
 Thank you very much.
 "
     }

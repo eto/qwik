@@ -11,12 +11,19 @@ module Qwik
   class Action
     Dja_plugin_keywords = {
       :dt => 'キーワード表示プラグイン',
-      :dd => 'キーワードリストが表示されます。',
+      :dd => 'ページ内のキーワードの一覧が表示されます。',
       :dc => "* 例
+FrontPageのキーワード一覧が表示されます。
  {{keywords}}
 {{keywords}}
+TextFormatページの一覧が表示されます。
+ {{keywords(TextFormat)}}
+{{keywords(TextFormat)}}
 "
     }
+
+    CLOUD_BASE_FONT_SIZE = 12
+    CLOUD_MAX_FONT_SIZE = 40
 
     def plg_keywords(pagename=@req.base)
       return "no mecab" if ! $have_mecab
@@ -33,7 +40,8 @@ module Qwik
 	hash[surface] += 1
       }
       w = hash.keys.sort.map {|surface|
-	num = Math.sqrt(hash[surface]) * 12
+	num = Math.sqrt(hash[surface]) * CLOUD_BASE_FONT_SIZE
+	num = CLOUD_MAX_FONT_SIZE if CLOUD_MAX_FONT_SIZE < num
 	fontsize = "%.2fpx" % num
 	href = "#{surface.escape}.search"
 	[:a, {:style=>"font-size:#{fontsize};",

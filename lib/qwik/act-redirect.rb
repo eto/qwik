@@ -18,7 +18,7 @@ nobody can see the referere to know where the link come from.
 
     Dja_ext_redirect = {
       :dt => 'リダイレクト・モード',
-      :dd => 'Wikiサイトの外部リンクを全てリダイレクトにします。',
+      :dd => '外部リンクを全てリダイレクトにします。',
       :dc => '* 使い方
 [[_SiteConfig]]のページにいき、
  :redirect:false

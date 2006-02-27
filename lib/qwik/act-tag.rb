@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
@@ -18,7 +9,7 @@ module Qwik
       return nil if tags.nil?
       div = [:div, {:class=>'tags'}]
       tags.each {|tag|
-	div << [:a, {:href=>tag+".tag"}, tag]
+	div << [:a, {:href=>"#{tag}.tag"}, tag]
       }
       return div
     end
@@ -48,7 +39,7 @@ module Qwik
 	body = surface_get_body(page)
 	div += body
       }
-      return c_surface('tag'+' : '+target_tag){
+      return c_surface("tag : #{target_tag}"){
 	div
       }
     end

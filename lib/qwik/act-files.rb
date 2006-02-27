@@ -4,19 +4,14 @@ module Qwik
   class Action
     D_ext_files = {
       :dt => 'Attach file function',
-      :dd => 'You can use attach files onto pages.',
-      :dc => "* Attach files to a page
-You can attach files to a page.
-At the first, go to the edit page.
-You see attach file form on the bottom of the edit page.
-You can attach several files at once by following 'attach many' link.
+      :dd => 'You can attach files to pages.',
+      :dc => "* How to
+Go to edit page, you see attach file form on the bottom.
+You can attach many files at once by following 'attach many' link.
 
-If you attached files, the system automatically added file plugin to
-the page.
+If you attached files, system automatically added link to the files.
  {{file(\"somefile.txt\")}}
-So that you can see the link to the attached file from the page.
-
-* Show files
+** Show attached files plugin
 {{show_files}}
  {{show_files}}
 You can show the list of attached files.
@@ -26,19 +21,16 @@ You can show the list of attached files.
     Dja_ext_files = {
       :dt => 'ファイル添付機能 ',
       :dd => 'ページにファイルを添付できます。',
-      :dc => '* ページへのファイル添付
-まず編集画面に行きます。
-ページの一番下に、ファイル添付のためのフォームがあります。
-「たくさん添付する」というリンクをたどると、たくさんのファイルを一度に
-添付するためのフォーム画面にとびます。
+      :dc => '* 使い方
+編集画面の一番下に、ファイル添付のためのフォームがあります。
+「\'\'\'たくさん添付する\'\'\'」というリンクをたどると、
+たくさんのファイルを一度に添付するための画面にとびます。
 
-添付をすると、ページの一番下に自動的にその添付ファイルへのリンクがつきます。
+添付をすると、に自動的にページの一番下に添付ファイルへのリンクがつきます。
  {{file("somefile.txt")}}
-そのようにして、そのページから添付ファイルへアクセスできるようになります。
-
-* ファイル一覧プラグイン
+** 添付ファイル一覧プラグイン
  {{show_files}}
-ファイル一覧を表\示できます。
+ファイル一覧を表示できます。
 '
     }
 

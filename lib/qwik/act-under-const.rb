@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 # Under construction.
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
@@ -14,18 +5,18 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Action
     # ==============================
-    def plg_calendar
+    def notyet_plg_calendar
       return 'calendar'
     end
 
     # ==============================
-    def plg_draw
+    def notyet_plg_draw
       return [:div, 
 	[:'v:line', {:from=>'0, 100', :to=>'200, 200'}, '']]
     end
 
     # ==============================
-    def plg_extlink
+    def notyet_plg_extlink
       w = []
       w << [:script, {:type=>'text/javascript',
 	  :src=>'.theme/ap/ArekorePopup.js'}, '']
@@ -38,16 +29,16 @@ AP.launch;
     # ==============================
     # 'Go Back to Work.' plugin
     # Inspired from http://www.marktaw.com/getbacktowork.htm
-    def plg_go_back_to_work
+    def notyet_plg_go_back_to_work
       return [:strong, 'hello, world!']
     end
 
-    def ext_go_back_to_work
+    def notyet_ext_go_back_to_work
       c_notice('hello, world!'){'hi, there.'}
     end
 
     # ==============================
-    def ext_print
+    def notyet_ext_print
       ext_html	# call this first.
       return c_nerror('not yet')
     end
@@ -64,13 +55,13 @@ if defined?($test) && $test
   class TestActTmp < Test::Unit::TestCase
     include TestSession
 
-    def test_plg_calendar
+    def notyet_test_plg_calendar
     end
 
-    def test_plg_draw
+    def notyet_test_plg_draw
     end
 
-    def test_extlink
+    def notyet_test_extlink
       ok_wi([], '{{extlink}}')
     end
 

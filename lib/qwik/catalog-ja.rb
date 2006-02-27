@@ -303,6 +303,8 @@ class Qwik::CatalogFactory
 
       # act-plan
       'Plan' => '予定',
+      'New plan' => '新しい予定',
+      'Create a new plan' => '新しい予定の登録',
 
       # act-schedule
       'Schedule' => 'スケジュール',

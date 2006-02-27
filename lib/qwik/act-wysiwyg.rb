@@ -23,7 +23,8 @@ You can show a link to wysiwyg mode by this plugin.
       :dt => '見たまま編集モード',
       :dd => 'ページを見たままの状態で編集できます。',
       :dc => "* 例
-たとえば、[[edit FrontPage|FrontPage.wysiwyg]]からFrontPageを見たままの状態で編集する画面にとびます。
+たとえば、[[FrontPageを見たまま編集|FrontPage.wysiwyg]]ページにいくと、
+FrontPageを見たままの状態で編集する画面にとびます。
 
 そのページから見たまま編集画面に飛ぶには、下記のプラグインを使います。
  {{wysiwyg}}

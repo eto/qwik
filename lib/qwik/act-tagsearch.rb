@@ -22,8 +22,7 @@ module Qwik
       div = [:div, {:class=>'tags'}]
       tags = tags_hash.keys.sort
       tags.each do |tag|
-        div <<
-          [:a, {:href=>".tags?q=#{URI.encode(tag)}"},
+        div << [:a, {:href=>".tags?q=#{URI.encode(tag)}"},
           "#{tag} (#{tags_hash[tag].length})"] << ' '
       end
       return div

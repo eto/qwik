@@ -60,7 +60,7 @@ module Qwik
       :dt => '書式一覧',
       :dd => 'qwikWebの書式一覧簡略版です。',
       :dc => '* 書式一覧
-詳細な説明は[[textformat.describeTextFormat]]をごらんください。
+詳細な説明は[[書式一覧詳細版|textformat.describe]]をごらんください。
 ** 見出し2
 *** 見出し3
 **** 見出し4

@@ -45,6 +45,49 @@ You can not see this line also.
 '
     }
 
+    Dja_plugin_basic = {
+      :dt => '基本プラグイン',
+      :dd => '基本的なプラグインの説明です。',
+      :dc => '* 説明
+** BRプラグイン
+改行します。
+ This is {{br}} a test.
+This is {{br}} a test.
+** 新規ウィンドウで表示
+新しいウィンドウを作って、そこで表示させます。
+ {{window(http://qwik.jp/)}}
+{{window(http://qwik.jp/)}}
+** 最終更新プラグイン
+最終更新日時を表示します。
+ {{last_modified}}
+{{last_modified}}
+** 特定グループ向け表示
+ゲストだけに表示する部分、グループだけに表示する部分を指定できます。
+{{only_guest
+あなたはゲストです。
+}}
+{{only_member
+あなたはメンバーです。
+}}
+ {{only_guest
+ あなたはゲストです。
+ }}
+ {{only_member
+ あなたはメンバーです。
+ }}
+** コメントアウト・プラグイン
+ある領域をコメントアウトします。
+ {{com
+ この行は見えない。
+ この行も見えない。
+ }}
+{{com
+この行は見えない。
+この行も見えない。
+}}
+'
+    }
+
     # ==============================
     def plg_qwik_null
       return ''

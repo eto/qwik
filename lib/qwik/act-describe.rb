@@ -5,7 +5,7 @@ require 'qwik/description-ja'
 
 module Qwik
   class Action
-    D_ext_describe = {
+    NotNecessary_D_ext_describe = {
       :dt => 'Description of functions',
       :dd => 'You can see the description of each functions of qwikWeb.',
       :dc => "* Example
@@ -16,7 +16,7 @@ You can see the list below.
 "
     }
 
-    Dja_ext_describe = {
+    NotNecessary_Dja_ext_describe = {
       :dt => '機能説明',
       :dd => 'qwikWebの機能説明を見ることができます。',
       :dc => '* 例
@@ -43,7 +43,8 @@ You can see the list below.
       self.description_list(@req.accept_language).each {|name|
 	hash = description_get(name, @req.accept_language)
 	list << [:li, [:a, {:href=>"#{name}.describe"},
-	    [:em, name], ' ', [:strong, hash[:dt]]], ' ', hash[:dd]]
+	    [:strong, hash[:dt]]], ' ', hash[:dd]]
+#	    [:em, name], ' ', [:strong, hash[:dt]]], ' ', hash[:dd]]
       }
       return [:div, {:class=>'description-list'}, list]
     end

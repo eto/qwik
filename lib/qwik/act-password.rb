@@ -15,6 +15,20 @@ Please be careful.
 "
     }
 
+    Dja_plugin_password = {
+      :dt => 'パスワード保護プラグイン',
+      :dd => 'ページをパスワードで保護することができます。',
+      :dc => "* 例
+ {{password(\"a password string\")}}
+このようなプラグインをページに埋込むと、
+そのページはパスワードで保護されます。
+
+'''注意:''' 現在はまだパスワードを解除する方法を提供してません。
+もしパスワードを忘れた場合は、ページを編集できなくなりますので、
+気をつけてください。
+"
+    }
+
     def plg_password(pass=nil)
       # password plugin is parsed in act-edit.rb
       return nil

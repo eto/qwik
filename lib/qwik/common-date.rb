@@ -46,35 +46,35 @@ if defined?($test) && $test
     def test_all
       # test_date_parse
       time = Qwik::Action.date_parse('1970-01-01')
-      ok_eq(-32400, time.to_i)
+      assert_equal -32400, time.to_i
 
       # test_date_abbr
       now = Time.local(1970, 1, 1)
       t2 = Time.local(1970, 1, 2)
       abbr = Qwik::Action.date_abbr(now, t2)
-      ok_eq('01-02', abbr)
+      assert_equal '01-02', abbr
 
       t2 = Time.local(1971, 1, 1)
       abbr = Qwik::Action.date_abbr(now, t2)
-      ok_eq('1971-01-01', abbr)
+      assert_equal '1971-01-01', abbr
 
       # test_date_emphasis
       now = Time.local(1970, 2, 1)
       past = Time.local(1970, 1, 30)
       span = Qwik::Action.date_emphasis(now, past, 't')
-      ok_eq([:span, {:class=>'past'}, 't'], span)
+      assert_equal [:span, {:class=>'past'}, 't'], span
 
       tomorrow = Time.local(1970, 2, 2)
       span = Qwik::Action.date_emphasis(now, tomorrow, 't')
-      ok_eq([:strong, 't'], span)
+      assert_equal [:strong, 't'], span
 
       nextweek = Time.local(1970, 2, 9)
       span = Qwik::Action.date_emphasis(now, nextweek, 't')
-      ok_eq([:em, 't'], span)
+      assert_equal [:em, 't'], span
 
       nextmonth = Time.local(1970, 3, 3)
       span = Qwik::Action.date_emphasis(now, nextmonth, 't')
-      ok_eq([:span, {:class=>'future'}, 't'], span)
+      assert_equal [:span, {:class=>'future'}, 't'], span
     end
   end
 end

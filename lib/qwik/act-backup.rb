@@ -4,12 +4,20 @@ require 'qwik/wabisabi-diff'
 module Qwik
   class Action
     D_ext_backup = {
-      :dt => 'Backup page mode',
-      :dd => 'You can see backup files.',
-      :dc => "* How to use
-At the first, please go to edit page.
-Then, follow 'Backup' link in right column.
-You can see the backup list of the pages.
+      :dt => 'Backup pages',
+      :dd => 'You can see backup of the page.',
+      :dc => "* How to
+Go edit page, follow 'Backup' link in the right side.
+You see the backup list of the page.
+"
+    }
+
+    Dja_ext_backup = {
+      :dt => 'ページ・バックアップ',
+      :dd => 'ページのバックアップを見ることができます。',
+      :dc => "* 使い方
+編集画面の右側に「バックアップ」というリンクがあります。
+そのリンクより、ページのバックアップリストを見ることができます。
 "
     }
 
