@@ -2,7 +2,7 @@
 - [[FrontPage]]
 - [[TitleList]]
 - [[RecentList]]
-- [[TextFormat|textformat.describe]]
+- [[TextFormat]]
 
 * Search
 {{search_form}}
