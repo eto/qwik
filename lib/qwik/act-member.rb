@@ -5,7 +5,7 @@ require 'qwik/site-member'
 
 module Qwik
   class Action
-    NotYet_D_ext_member = {
+    NotYet_D_ExtMember = {
       :dt => 'Member control function',
       :dd => 'Member control.',
       :dc => "* How to

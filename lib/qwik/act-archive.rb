@@ -12,7 +12,7 @@ require 'qwik/act-theme'
 
 module Qwik
   class Action
-    D_ext_archive = {
+    D_ExtArchive = {
       :dt => 'Site archive',
       :dd => 'You can obtain a site archive.',
       :dc => "* Example
@@ -26,7 +26,7 @@ static Web site.
 "
     }
 
-    Dja_ext_archive = {
+    D_ExtArchive_ja = {
       :dt => 'サイト・アーカイブ',
       :dd => 'サイト・アーカイブを取得できます。',
       :dc => '* 使い方

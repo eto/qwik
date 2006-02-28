@@ -5,7 +5,7 @@ require 'qwik/smil-time'
 
 module Qwik
   class Action
-    D_plugin_smil = {
+    D_PluginSmil = {
       :dt => 'Video editing plugin',
       :dd => 'You can control the timeline of the video.',
       :dc => "* Example

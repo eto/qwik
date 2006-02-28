@@ -7,7 +7,7 @@ require 'qwik/act-logout'
 
 module Qwik
   class Action
-    D_qwikweb_login = {
+    D_QwikWebLogin = {
       :dt => 'qwikWeb login',
       :dd => 'You can login by using three auth methods.',
       :dc => "* How to
@@ -28,7 +28,7 @@ please follow 'Login by Basic Auth' link.
 "
     }
 
-    Dja_qwikweb_login = {
+    D_QwikWebLogin_ja = {
       :dt => 'qwikWebのログイン',
       :dd => 'qwikWebでは三種類の認証方法を使えます。',
       :dc => "* 使い方

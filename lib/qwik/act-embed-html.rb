@@ -3,7 +3,7 @@ require 'qwik/html-to-wabisabi'
 
 module Qwik
   class Action
-    D_plugin_embed_html = {
+    D_PluginEmbedHtml = {
       :dt => 'Embed HTML plugin',
       :dd => 'You can embed bare HTML in the page.',
       :dc => "* Example
@@ -79,7 +79,7 @@ You can also embed plugins like this.
 "
     }
 
-    Dja_plugin_embed_html = {
+    D_PluginEmbedHtml_ja = {
       :dt => 'HTML–„‚ßž‚Ý‹@”\ ',
       :dd => 'HTML‚ð‚»‚Ì‚Ü‚Ü–„ž‚Þ‚±‚Æ‚ª‚Å‚«‚Ü‚·B',
       :dc => "* —á

@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_basic = {
+    D_PluginBasic = {
       :dt => 'Basic plugins',
       :dd => 'Simple and Basic plugins.',
       :dc => '* Description
@@ -45,7 +45,7 @@ You can not see this line also.
 '
     }
 
-    Dja_plugin_basic = {
+    D_PluginBasic_ja = {
       :dt => '基本プラグイン',
       :dd => '基本的なプラグインの説明です。',
       :dc => '* 説明
@@ -130,6 +130,44 @@ This is {{br}} a test.
     def plg_ext(ext, msg=ext)
       return [:a, {:href=>"#{@req.base}.#{ext}"}, _(msg)]
     end
+
+    # ============================== page attribute
+    def page_attribute(ext, msg, base=@req.base)
+      return [:span, {:class=>'attribute'},
+	  [:a, {:href=>base+'.'+ext}, msg]]
+    end
+
+    def plg_last_modified
+      return if ! defined?(@req.base) || @req.base.nil?
+      page = @site[@req.base]
+      return if page.nil?
+      date = page.mtime
+      return [:span, {:class=>'attribute'}, _('Last modified'), ': ',
+	[:em, date.ymd]]
+    end
+
+    def plg_generate_time
+      return '' if @req.user.nil?
+      diff = Time.now - @req.start_time
+      diffsec = sprintf('%.2f', diff)
+      return [:span, {:class=>'attribute'}, _('Generate time'), ': ',
+	[:em, diffsec, _('sec.')]]
+    end
+
+    def plg_only_guest
+      return nil if @req.user
+      s = yield
+      return if s.nil?
+      return c_res(s)
+    end
+
+    def plg_only_member
+      return nil if @req.user.nil?
+      s = yield
+      return if s.nil?
+      return c_res(s)
+    end
+
   end
 end
 
@@ -165,5 +203,22 @@ if defined?($test) && $test
       #ok_wi('', '{{menu(edit)}}', nil)
       #ok_wi('', '{{menu(nosuchmenu)}}', nil)
     end
+
+    def test_page_attribute
+      # test_last_modified
+      ok_wi(/Last modified: /, '{{last_modified}}')
+
+      # test_generate_time
+      ok_wi(/Generate time: /, '{{generate_time}}')
+
+      # test_only_member_or_guest
+      t_site_open
+      ok_wi([:p, 'm'], "{{only_member\nm\n}}")
+      assert_path([], "{{only_member\nm\n}}", nil, "//div[@class='section']")
+      ok_wi([], "{{only_guest\ng\n}}")
+      assert_path([:p, 'g'], "{{only_guest\ng\n}}",
+		  nil, "//div[@class='section']")
+    end
+
   end
 end

@@ -3,6 +3,26 @@ require 'qwik/act-backup'
 
 module Qwik
   class Action
+    D_ExtHistory = {
+      :dt => 'History mode',
+      :dd => 'You can see the history of the page interactively.',
+      :dc => "* How to
+Go edit page, follow 'Time machine' link in the right side.
+You see the interactive history of the page.
+"
+    }
+
+    D_ExtHistory_ja = {
+      :dt => 'ページの歴史モード',
+      :dd => 'ページの歴史をインタラクティブに見ることができます。',
+      :dc => "* 使い方
+編集画面の右側に「タイムマシーン」というリンクがあります。
+そのリンクより、ページの編集履歴をインタラクティブに見ることができます。
+"
+    }
+
+
+
     def plg_show_history
       return if @req.user.nil?
       return if ! defined?(@req.base) || @req.base.nil?

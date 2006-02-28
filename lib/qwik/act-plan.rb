@@ -3,7 +3,7 @@ require 'qwik/site-plan'
 
 module Qwik
   class Action
-    D_plugin_plan = {
+    D_PluginPlan = {
       :dt => 'Show plan plugin',
       :dd => 'You can show the plan of this group.',
       :dc => "* Example
@@ -21,7 +21,7 @@ Then, you'll see the plan on the sidemenu.
 "
     }
 
-    Dja_plugin_plan = {
+    D_PluginPlan_ja = {
       :dt => '予定表示プラグイン',
       :dd => '予定を表示します。',
       :dc => "* 例

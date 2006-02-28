@@ -12,7 +12,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_secdb = {
+    D_PluginSecdb = {
       :dt => 'Section data plugin',
       :dd => 'Show a table of each section data',
       :dc => "
@@ -47,7 +47,7 @@ Enjoy!
 "
     }
 
-    Djs_plugin_secdb = {
+    D_PluginSecdb_ja = {
       :dt => 'セクション・データ・プラグイン',
       :dd => 'セクション・データの表を表示します。',
       :dc => "

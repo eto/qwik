@@ -1,6 +1,6 @@
 module Qwik
   class Action
-    Dja_qwikweb = {
+    D_QwikWeb_ja = {
       :dt => 'qwikWebの使い方',
       :dd => 'qwikWebの説明です。',
       :dc => "
@@ -15,7 +15,7 @@ module Qwik
 '
     }
 
-    Dja_site_management = {
+    D_SiteManagement_ja = {
       :dt => 'サイト管理',
       :dd => 'サイトを管理するためのメニューです。',
       :dc => '
@@ -56,7 +56,7 @@ module Qwik
 '
     }
 
-    Dja_textformat_simple = {
+    D_TextFormatSimple_ja = {
       :dt => '書式一覧',
       :dd => 'qwikWebの書式一覧簡略版です。',
       :dc => '* 書式一覧
@@ -109,7 +109,7 @@ module Qwik
 '
     }
 
-    Dja_textformat = {
+    D_TextFormat_ja = {
       :dt => '書式一覧詳細版',
       :dd => 'qwikWebの書式一覧です。',
       :dc => '* 書式一覧

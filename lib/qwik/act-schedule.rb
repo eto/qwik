@@ -4,7 +4,7 @@ require 'qwik/wabisabi-table'
 
 module Qwik
   class Action
-    D_plugin_schedule = {
+    D_PluginSchedule = {
       :dt => 'Input your scuedule plugin',
       :dd => 'You can input your schedule.',
       :dc => "* Example

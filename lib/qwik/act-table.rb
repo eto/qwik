@@ -4,7 +4,7 @@ require 'qwik/wabisabi-table'
 
 module Qwik
   class Action
-    D_plugin_table = {
+    D_PluginTable = {
       :dt => 'Table edit plugin',
       :dd => 'You can edit a table in the page.',
       :dc => "* Example
@@ -18,7 +18,7 @@ You should try this plugin on your own page.
 "
     }
 
-    Dja_plugin_table = {
+    D_PluginTable_ja = {
       :dt => 'テーブル編集プラグイン',
       :dd => 'ページ中でテーブルを編集できます。',
       :dc => "* 例

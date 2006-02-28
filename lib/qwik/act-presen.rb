@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_ext_presen = {
+    D_ExtPresen = {
       :dt => 'Presentaion mode',
       :dd => 'You can show the page in presentation mode.',
       :dc => "* How to
@@ -23,7 +23,7 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
 "
     }
 
-    Dja_ext_presen = {
+    D_ExtPresen_ja = {
       :dt => 'プレゼン・モード',
       :dd => 'プレゼン・モードで表示します。',
       :dc => '* 使い方

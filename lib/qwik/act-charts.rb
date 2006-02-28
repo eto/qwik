@@ -18,7 +18,7 @@ end
 
 module Qwik
   class Action
-    NotUse_D_charts = {
+    NotUse_D_PluginCharts = {
       :dt => 'Charts plugin',
       :dd => 'You can make a chart using charts plugin.',
       :dc => '* Example
@@ -28,7 +28,6 @@ module Qwik
 {{chart
 a
 }}
-
 '
     }
 

@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_include = {
+    D_PluginInclude = {
       :dt => 'Include plugin',
       :dd => 'You can include other page.',
       :dc => "* Example
@@ -12,7 +12,7 @@ You can see the FrontPage is included here.
 "
     }
 
-    Dja_plugin_include = {
+    D_PluginInclude_ja = {
       :dt => '取り込みプラグイン',
       :dd => '他のページの内容をとりこみます。',
       :dc => "* 例

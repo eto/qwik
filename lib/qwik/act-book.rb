@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_book = {
+    D_PluginBook = {
       :dt => 'Book and ISBN plugins',
       :dd => 'Add a link to a book or to search by a phrase.',
       :dc => "* Example
@@ -23,7 +23,7 @@ You can edit the book stores list on [[_BookSearch]].
 "
     }
 
-    Dja_plugin_book = {
+    D_PluginBook_ja = {
       :dt => '本とISBNプラグイン',
       :dd => '本や本の検索へのリンクを作ります。',
       :dc => "* 例

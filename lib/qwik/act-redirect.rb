@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_ext_redirect = {
+    D_ExtRedirect = {
       :dt => 'Redirect mode',
       :dd => 'You can use redirect at all external link on your site.',
       :dc => '* How to
@@ -16,7 +16,7 @@ nobody can see the referere to know where the link come from.
 '
     }
 
-    Dja_ext_redirect = {
+    D_ExtRedirect_ja = {
       :dt => 'リダイレクト・モード',
       :dd => '外部リンクを全てリダイレクトにします。',
       :dc => '* 使い方

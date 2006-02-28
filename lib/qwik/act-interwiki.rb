@@ -2,6 +2,40 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    D_PluginInterWiki = {
+      :dt => 'InterWiki plugin',
+      :dd => 'Make a link for another Wiki.',
+      :dc => "* Example
+You can create a link to another Wiki easily.
+ [[qwikjp:InstallOnDebian]]
+[[qwikjp:InstallOnDebian]]
+You'll see the link to InstallOnDebian page on qwik.jp.
+
+ [[google:qwikWeb]]
+[[google:qwikWeb]]
+You can also create a link to search qwikWeb on Google.
+
+You can edit the links on the Page [[_InterWikiName]].
+"
+    }
+
+    D_PluginInterWiki_ja = {
+      :dt => 'InterWikiプラグイン',
+      :dd => 'Wiki間の相互接続をします。',
+      :dc => "* 例
+Wiki間の相互接続を行うための仕組みです。
+ [[qwikjp:InstallOnDebian]]
+[[qwikjp:InstallOnDebian]]
+とすると、qwik.jp上のInstallOnDebianというページにリンクします。
+
+ [[google:qwikWeb]]
+[[google:qwikWeb]]
+同様に、googleでqwikWebを検索するリンクを作れます。
+
+リンク先は[[_InterWikiName]]を編集して変えられます。
+"
+    }
+
     def plg_interwiki(arg, *d)
       wiki, pagename = arg.split(':')
       return if pagename.nil?

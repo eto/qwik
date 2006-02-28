@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_counter = {
+    D_PluginCounter = {
       :dt => 'Counter plugin',
       :dd => 'You can show a conter for the page.',
       :dc => '* Example
@@ -11,7 +11,7 @@ module Qwik
 '
     }
 
-    Dja_plugin_counter = {
+    D_PluginCounter_ja = {
       :dt => 'カウンター・プラグイン',
       :dd => 'アクセスカウンターを埋め込むことができます。',
       :dc => '* 例

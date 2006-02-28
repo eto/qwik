@@ -13,7 +13,7 @@ require 'qwik/act-text'
 
 module Qwik
   class Action
-    D_plugin_graphviz = {
+    D_PluginGraphviz = {
       :dt => 'Graphviz plugin',
       :dd => 'You can make a graph.',
       :dc => "* Examples

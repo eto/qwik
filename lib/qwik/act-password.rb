@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_password = {
+    D_PluginPassword = {
       :dt => 'Set password plugin',
       :dd => 'You can lock a page by a password.',
       :dc => "* Example
@@ -15,7 +15,7 @@ Please be careful.
 "
     }
 
-    Dja_plugin_password = {
+    D_PluginPassword_ja = {
       :dt => 'パスワード保護プラグイン',
       :dd => 'ページをパスワードで保護することができます。',
       :dc => "* 例

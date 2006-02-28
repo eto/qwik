@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_menu = {
+    D_PluginMenu = {
       :dt => 'Menu plugin',
       :dd => 'You can show a pull down menu.',
       :dc => "* Example
@@ -37,7 +37,7 @@ module Qwik
 "
     }
 
-    Dja_plugin_menu = {
+    D_PluginMenu_ja = {
       :dt => 'メニュー・プラグイン',
       :dd => 'プルダウン型メニューを作れます。',
       :dc => "* 例

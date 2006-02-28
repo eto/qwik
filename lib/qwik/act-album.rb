@@ -3,7 +3,7 @@ require 'qwik/act-theme'
 
 module Qwik
   class Action
-    D_plugin_album = {
+    D_PluginAlbum = {
       :dt => 'Album plugin',
       :dd => 'Show attached images in a window.',
       :dc => "* Example
@@ -15,7 +15,7 @@ Thank you very much.
 "
     }
 
-    Dja_plugin_album = {
+    D_PluginAlbum_ja = {
       :dt => 'アルバム・プラグイン',
       :dd => '添付された画像ファイルを一度に見ることができます。',
       :dc => '* 例

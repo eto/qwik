@@ -8,7 +8,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_sample = {
+    D_PluginSample = {
       :dt => 'Sample plugins',
       :dd => 'These are sample plugins.',
       :dc => "* Example
@@ -46,7 +46,7 @@ You can make block quote of the string.
 "
     }
 
-    Dja_plugin_sample = {
+    D_PluginSample_ja = {
       :dt => 'サンプル・プラグイン',
       :dd => 'プラグインのサンプルです。',
       :dc => '

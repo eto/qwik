@@ -12,17 +12,26 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_summary = {
-      :dt => 'Show summary of a target page',
+    D_PluginSummary = {
+      :dt => 'Show summary plugin',
       :dd => 'You can include summary of target page.',
-      :dc => "
-In this plugin, the summary of a page means
-the first section of the page.
-* Example
+      :dc => "* Example
 You can see summary of FrontPage here.
  {{summary(FrontPage)}}
 {{summary(FrontPage)}}
+In this plugin, the summary of a page means the first section of the page.
 "
+    }
+
+    D_PluginSummary_ja = {
+      :dt => 'サマリ表示プラグイン',
+      :dd => 'あるページのサマリを表示します。',
+      :dc => '* 例
+目標となるページのサマリを表示します。
+ {{summary(FrontPage)}}
+{{summary(FrontPage)}}
+サマリとは、ページタイトルの後の最初のセクションのことを意味します。
+'
     }
 
     def plg_summary(pagename, no_title = false)

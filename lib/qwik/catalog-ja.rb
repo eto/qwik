@@ -116,6 +116,9 @@ class Qwik::CatalogFactory
       'Message' => 'メッセージ',
       'Message is added.' => 'メッセージを追加しました',
 
+      # act-config
+      'Site config'	=> 'サイト設定',
+
       # act-chronology
       'Time walker' => '時間旅行',
       'Chronology' => ' 年表 ',

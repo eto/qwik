@@ -118,10 +118,10 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestCommonSimpleSend < Test::Unit::TestCase
+  class TestCommon < Test::Unit::TestCase
     include TestSession
 
-    def test_all
+    def test_simple_send
       t_add_user
 
       page = @site.create_new

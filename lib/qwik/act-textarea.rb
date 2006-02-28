@@ -2,11 +2,10 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_textarea = {
+    D_PluginTextarea = {
       :dt => 'Textarea plugin',
       :dd => 'You can show a simple textarea field.',
-      :dc => "
-* Textarea plugin
+      :dc => "* Example
 {{textarea
 This is an example for textarea.
 }}
@@ -14,9 +13,6 @@ This is an example for textarea.
  This is an example for textarea.
  }}
 You can show an editable text field.
-
-Since this is description page, you can not edit this page.
-Please use this plugin on your own page.
 "
     }
 

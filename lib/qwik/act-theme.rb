@@ -5,7 +5,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_site_theme = {
+    D_SiteTheme = {
       :dt => 'Site Theme',
       :dd => 'You can choose your favorite page design.',
       :dc => '* How to
@@ -41,7 +41,7 @@ there are several inhibited pattern. Please see [[plugin_style.describe]].
 '
     }
 
-    Dja_site_theme = {
+    D_SiteTheme_ja = {
       :dt => 'サイト・テーマ',
       :dd => 'サイト毎にページ・デザインを指定できます。',
       :dc => '* 使い方

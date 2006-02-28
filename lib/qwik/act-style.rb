@@ -3,7 +3,7 @@ require 'qwik/util-css'
 
 module Qwik
   class Action
-    D_plugin_style = {
+    D_PluginStyle = {
       :dt => 'Style plugin',
       :dd => 'You can specify styles of the page.',
       :dc => "* Examples

@@ -1,6 +1,6 @@
 module Qwik
   class Action
-    D_qwikweb = {
+    D_QwikWeb = {
       :dt => 'How to qwikWeb',
       :dd => 'How you can use qwikWeb',
 #You can see brief descriptions of qwikWeb functions.
@@ -14,7 +14,7 @@ You can see the list of qwikWeb functions below.
 "
     }
 
-    D_site_management = {
+    D_SiteManagement = {
       :dt => 'Site management',
       :dd => 'Site management menu.',
       :dc => '
@@ -55,7 +55,7 @@ Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] for detail.
 '
     }
 
-    D_textformat_simple = {
+    D_TextFormatSimple = {
       :dt => 'TextFormat',
       :dd => 'You can see brief description of text format.',
       :dc => "* Text Format
@@ -107,7 +107,7 @@ Please also access the [[full text format|textformat.describe]].
 "
     }
 
-    D_textformat = {
+    D_TextFormat = {
       :dt => 'TextFormat',
       :dd => 'You can see the text format of qwikWeb.',
       :dc => "* Text Format

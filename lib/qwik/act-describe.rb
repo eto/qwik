@@ -5,29 +5,29 @@ require 'qwik/description-ja'
 
 module Qwik
   class Action
-    NotNecessary_D_ext_describe = {
+    NotNecessary_D_ExtDescribe = {
       :dt => 'Description of functions',
       :dd => 'You can see the description of each functions of qwikWeb.',
       :dc => "* Example
- [[qwikweb.describe]]
-[[qwikweb.describe]]
+ [[QwikWeb.describe]]
+[[QwikWeb.describe]]
 
 You can see the list below.
 "
     }
 
-    NotNecessary_Dja_ext_describe = {
+    NotNecessary_D_ExtDescribe_ja = {
       :dt => '機能説明',
       :dd => 'qwikWebの機能説明を見ることができます。',
       :dc => '* 例
- [[qwikweb.describe]]
-[[qwikweb.describe]]
+ [[QwikWeb.describe]]
+[[QwikWeb.describe]]
 
 機能説明の一覧は、この下についてきます。
 '
     }
 
-    def plg_description_list_dl
+    def notuse_plg_description_list_dl
       list = [:dl]
       self.description_list(@req.accept_language).each {|name|
 	hash = description_get(name, @req.accept_language)
@@ -55,7 +55,12 @@ You can see the list below.
       list = []
       self.class.constants.each {|constname|
 	langs.each {|lang|
-	  if /\AD#{lang}_(.+)\z/ =~ constname
+	  #if /\AD#{lang}_(.+)\z/ =~ constname
+	  if /\AD_([A-Za-z]+)_#{lang}\z/ =~ constname
+	    if ! list.include?($1)
+	      list << $1
+	    end
+	  elsif /\AD_([A-Za-z]+)\z/ =~ constname
 	    if ! list.include?($1)
 	      list << $1
 	    end
@@ -66,7 +71,7 @@ You can see the list below.
     end
 
     def act_describe
-      @req.base = 'qwikweb'
+      @req.base = 'QwikWeb'
       return ext_describe
     end
 
@@ -81,7 +86,8 @@ You can see the list below.
       @req.base = 'FrontPage'		# Fake.
       w = c_res(content)
       w = TDiaryResolver.resolve(@config, @site, self, w)
-      title = "#{_('Function')} | #{hash[:dt]}"
+      #title = "#{_('Function')} | #{hash[:dt]}"
+      title = hash[:dt]
       return c_surface(title, true) { w }
     end
 
@@ -90,7 +96,8 @@ You can see the list below.
       langs << '' if ! langs.include?('')
       langs.each {|lang|
 	lang.gsub!(/-/, '_')
-	constname = "D#{lang}_#{name}"
+	constname = "D_#{name}"
+	constname = "D_#{name}_#{lang}" if ! lang.empty?
 	if self.class.const_defined?(constname)
 	  return self.class.const_get(constname)
 	end

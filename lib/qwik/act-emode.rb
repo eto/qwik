@@ -49,7 +49,6 @@ module Qwik
 	end
       }
     end
-
   end
 end
 

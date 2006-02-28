@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_comment = {
+    D_PluginComment = {
       :dt => 'Comment plugin',
       :dd => 'You can show comment field.',
       :dc => "
@@ -25,7 +25,7 @@ This plugin is obsolete.  Please use 'mcomment' plugin instead.
 "
     }
 
-    Dja_plugin_comment = {
+    D_PluginComment_ja = {
       :dt => 'コメント・プラグイン',
       :dd => 'コメント入力欄を表示します。',
       :dc => "

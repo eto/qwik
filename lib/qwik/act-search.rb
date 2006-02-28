@@ -5,7 +5,7 @@ require 'qwik/act-search'
 
 module Qwik
   class Action
-    D_plugin_search = {
+    D_PluginSearch = {
       :dt => 'Search plugin',
       :dd => 'You can show a search form.',
       :dc => '* Example
@@ -18,7 +18,7 @@ module Qwik
 '
     }
 
-    Dja_plugin_search = {
+    D_PluginSearch_ja = {
       :dt => '検索プラグイン',
       :dd => '検索窓を作れます。',
       :dc => '* 例

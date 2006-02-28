@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_webservice = {
+    D_PluginWebService = {
       :dt => 'Web service plugins',
       :dd => 'You can use several external Web services.',
       :dc => '
@@ -41,9 +41,9 @@ Specify translate Japanese to English link.
 '
     }
 
-    Dja_plugin_webservice = {
-      :dt => '各種Webサービス・プラグイン',
-      :dd => 'Web上のサービスを利用するプラグインです。',
+    D_PluginWebService_ja = {
+      :dt => 'Webサービス・プラグイン',
+      :dd => 'Web上の各種サービスを利用するプラグインです。',
       :dc => '
 * はてなポイント・プラグイン
  {{hatena_point(eto)}}

@@ -7,7 +7,7 @@ end
 
 module Qwik
   class Action
-    D_plugin_code = {
+    D_PluginCode = {
       :dt => 'Code input plugin',
       :dd => 'You can input code on the page.',
       :dc => "* Examples
@@ -29,7 +29,7 @@ void main(){
 "
     }
 
-    Dja_plugin_code = {
+    D_PluginCode_ja = {
       :dt => 'コード・プラグイン',
       :dd => 'ページ中にコードをうめこむときに使えます。',
       :dc => "* 例

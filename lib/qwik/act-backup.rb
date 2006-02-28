@@ -3,7 +3,7 @@ require 'qwik/wabisabi-diff'
 
 module Qwik
   class Action
-    D_ext_backup = {
+    D_ExtBackup = {
       :dt => 'Backup pages',
       :dd => 'You can see backup of the page.',
       :dc => "* How to
@@ -12,7 +12,7 @@ You see the backup list of the page.
 "
     }
 
-    Dja_ext_backup = {
+    D_ExtBackup_ja = {
       :dt => 'ページ・バックアップ',
       :dd => 'ページのバックアップを見ることができます。',
       :dc => "* 使い方

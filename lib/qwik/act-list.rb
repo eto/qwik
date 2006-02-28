@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    NotYet_D_plugin_list = {
+    NotYet_D_PluginListEdit = {
       :dt => 'List editing plugin',
       :dd => 'You can edit a list in the page.',
       :dc => "* Example

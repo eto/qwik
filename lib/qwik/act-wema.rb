@@ -6,7 +6,7 @@ module Qwik
   $wema_redirect = true
 
   class Action
-    D_plugin_wema = {
+    D_PluginWema = {
       :dt => 'Post-it plugin',
       :dd => 'You can put post-it notes on the page.',
       :dc => "* How to
@@ -23,7 +23,7 @@ by Mr. Kan Fushihara.  Thank you very much.
 "
     }
 
-    Dja_plugin_wema = {
+    D_PluginWema_ja = {
       :dt => '附箋機能 ',
       :dd => '附箋をはることができます。',
       :dc => '* 使用法

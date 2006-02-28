@@ -5,7 +5,7 @@ require 'qwik/act-text'
 
 module Qwik
   class Action
-    D_plugin_qrcode = {
+    D_PluginQRcode = {
       :dt => 'QR-Code plugin',
       :dd => 'You can input QR-Code to the page.',
       :dc => "* Example
@@ -26,6 +26,30 @@ This is a test, too.
  This is a test, too.
  }}
 You can also embed multiple lines.
+"
+    }
+
+    D_PluginQRcode_ja = {
+      :dt => 'QR-Codeプラグイン',
+      :dd => 'QR-Codeを埋込めます。',
+      :dc => "* 例
+{{qrcode}}
+ {{qrcode}}
+このサイトのURLが埋込まれているQRCodeを表示します。
+
+{{qrcode(\"http://qwik.jp/\")}}
+ {{qrcode(\"http://qwik.jp/\")}}
+ある特定のサイトへのQRCodeを埋込むこともできます。
+
+{{qrcode
+This is a test.
+This is a test, too.
+}}
+ {{qrcode
+ This is a test.
+ This is a test, too.
+ }}
+このように、文章を埋込むこともできます。
 "
     }
 

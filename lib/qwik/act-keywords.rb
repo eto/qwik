@@ -9,7 +9,22 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    Dja_plugin_keywords = {
+    D_PluginKeywords = {
+      :dt => 'Show keywords plugin',
+      :dd => 'You can see the list of keywords of the page.',
+      :dc => "* Example
+You see the keyword list of FrontPage.
+ {{keywords}}
+{{keywords}}
+You see the keyword list of TextFormat.
+ {{keywords(TextFormat)}}
+{{keywords(TextFormat)}}
+
+\'\'\'Warning:\'\'\' This plugin works only for Japanese document.
+"
+    }
+
+    D_PluginKeywords_ja = {
       :dt => 'キーワード表示プラグイン',
       :dd => 'ページ内のキーワードの一覧が表示されます。',
       :dc => "* 例

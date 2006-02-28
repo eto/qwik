@@ -10,16 +10,18 @@ module Qwik
 "
     }
 
-    def ext_config
+    def notyet_ext_config
       method = "config_#{@req.base}"
       return c_nerror if ! self.respond_to?(method)
       return self.send(method)
     end
 
+    SITE_CONFIG = '_SiteConfig'
+
     def config_site
-      @req.base = '_SiteConfig'		# Fake.
+      @req.base = SITE_CONFIG		# Fake.
       w = []
-      w << [:h1, "SiteConfig"]
+      w << [:h1, _('Site config')]
       w = c_res(content)
       w = TDiaryResolver.resolve(@config, @site, self, w)
       title = _('Function')+' | '+hash[:dt]
@@ -34,20 +36,10 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestActDescribe < Test::Unit::TestCase
+  class TestAction < Test::Unit::TestCase
     include TestSession
 
-    def test_all
-      t_add_user
-      res = session('/test/describe.describe')
-      ok_title('Function | Description of functions')
-      ok_in([:p, 'You can see the description of each functions of qwikWeb.'],
-	    '//div[@class="section"]')
-
-      # test_description_list
-      list = @action.description_list
-      eq(true, 0 < list.length)
-#     eq(true, list.include?('describe'))
+    def test_config
     end
   end
 end

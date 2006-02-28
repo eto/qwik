@@ -7,7 +7,7 @@ require 'qwik/act-md5'
 
 module Qwik
   class Action
-    D_ext_wysiwyg = {
+    D_ExtWysiwyg = {
       :dt => 'WYSIWYG editing mode',
       :dd => 'You can edit a page in wysiwyg mode.',
       :dc => "* Example
@@ -19,7 +19,7 @@ You can show a link to wysiwyg mode by this plugin.
 "
     }
 
-    Dja_ext_wysiwyg = {
+    D_ExtWysiwyg_ja = {
       :dt => '見たまま編集モード',
       :dd => 'ページを見たままの状態で編集できます。',
       :dc => "* 例

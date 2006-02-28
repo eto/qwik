@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
+#
 # You can send a mail by using SMTP for check the status.
+#
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'

@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_plugin_map = {
+    D_PluginMap = {
       :dt => 'Map plugin',
       :dd => 'You can embed a map and create makers.',
       :dc => "* Example

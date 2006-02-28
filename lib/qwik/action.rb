@@ -14,6 +14,7 @@ require 'qwik/util-iconv'
 require 'qwik/util-time'
 
 # Load common actions.
+require 'qwik/common-basic'
 require 'qwik/common-backtrace'
 require 'qwik/common-condition'
 require 'qwik/common-date'

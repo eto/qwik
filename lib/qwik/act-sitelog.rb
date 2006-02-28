@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_site_log = {
+    D_SiteLog = {
       :dt => 'Show SiteLog',
       :dd => 'You can see sitelog of this site.',
       :dc => "* How to
@@ -11,7 +11,7 @@ Follow this link. [[.sitelog]]
 "
     }
 
-    Dja_site_log = {
+    D_SiteLog_ja = {
       :dt => '編集履歴',
       :dd => 'いままでの編集履歴を見ることができます。',
       :dc => "* 使い方

@@ -3,7 +3,7 @@ require 'qwik/site-timeline'
 
 module Qwik
   class Action
-    D_ext_chronology = {
+    D_ExtChronology = {
       :dt => 'Chronology of site',
       :dd => "You can see when the pages are created and updated.",
       :dc => "* How to
@@ -11,7 +11,7 @@ Please go [[.chronology]] page to see the chronology of this site.
 "
     }
 
-    Dja_ext_chronology = {
+    D_ExtChronology_ja = {
       :dt => '年表機能 ',
       :dd => "サイトのページがいつ作成され、編集されてきたのかを一覧できます。",
       :dc => '* 使い方

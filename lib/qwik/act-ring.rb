@@ -6,7 +6,7 @@ $KCODE = 's'
 
 module Qwik
   class Action
-    NotUse_D_ext_ring = {
+    NotUse_D_ExtRing = {
       :dt => 'Ring mode',
       :dd => 'This is a special mode for Ring.',
       :dc => "* How to

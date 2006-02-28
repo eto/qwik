@@ -2,7 +2,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    D_ext_files = {
+    D_ExtFiles = {
       :dt => 'Attach file function',
       :dd => 'You can attach files to pages.',
       :dc => "* How to
@@ -18,7 +18,7 @@ You can show the list of attached files.
 "
     }
 
-    Dja_ext_files = {
+    D_ExtFiles = {
       :dt => 'ファイル添付機能 ',
       :dd => 'ページにファイルを添付できます。',
       :dc => '* 使い方
