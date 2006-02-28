@@ -1,5 +1,19 @@
 2006-02-28  Kouichirou Eto  <2006 eto.com>
 
+	* act-describe.rb: Change description naming scheme.
+	Rename all descriptions.
+
+	* common-basic.rb: Merge several common files.
+	common-data.rb, common-exception.rb, common-response.rb,
+	common-reqrite-plugin.rb are merged.
+	* act-basic.rb: Merge common-pageattribute.rb
+
+	* util-time.rb: Some date related methods are moved here.
+
+	* act-map.rb: Use root URL.  This is restriction of Google Local API.
+
+2006-02-28  Kouichirou Eto  <2006 eto.com>
+
 	* act-plan.rb: Do not show if there's no plan.
 
 	* act-map.rb: Add description.
