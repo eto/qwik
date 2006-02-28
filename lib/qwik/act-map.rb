@@ -27,8 +27,10 @@ Thank you very much.
       href = ".map?s=#{@req.sitename}&k=#{@req.base}"
       fullhref = "#{href}&m=full"
 
-      href = c_relative_to_root(href)
-      fullhref = c_relative_to_root(fullhref)
+      #href = c_relative_to_root(href)
+      #fullhref = c_relative_to_root(fullhref)
+      href = "/#{href}"
+      fullhref = "/#{fullhref}"
 
       div = [:div, {:class=>'maplink'},
 	[:iframe, {:src=>href,
@@ -251,16 +253,16 @@ if defined?($test) && $test
       page = @site.create_new
       str = TEST_MAP_CONTENT
       page.store(str)
-      res = session('/test/1.html')
+      res = session '/test/1.html'
 
       ok_title '1'
       w = res.body.get_path("//div[@class='maplink']")
-      ok_eq([:div, {:class=>'maplink'},
-	      [:iframe, {:src=>'/.map?s=test&k=1',
-		  :style=>'width:700px;height:400px;border:0;'}, '']],
-	    w[0..2])
+      eq [:div, {:class=>'maplink'},
+	[:iframe, {:src=>'/.map?s=test&k=1',
+	    :style=>'width:700px;height:400px;border:0;'}, '']],
+	w[0..2]
 
-      res = session('/.map?s=test&k=1')
+      res = session '/.map?s=test&k=1'
       ok_title 'map'
       w = res.body.get_path("//div[@class='maparea']")
     end

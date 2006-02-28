@@ -18,7 +18,7 @@ You can show the list of attached files.
 "
     }
 
-    D_ExtFiles = {
+    D_ExtFiles_ja = {
       :dt => 'ファイル添付機能 ',
       :dd => 'ページにファイルを添付できます。',
       :dc => '* 使い方

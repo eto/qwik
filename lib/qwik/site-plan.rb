@@ -1,5 +1,5 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/common-date'
+require 'qwik/util-time'
 
 module Qwik
   class Site
