@@ -1,12 +1,15 @@
 * Wiki間接続
 Wiki間接続のためのリンク一覧です。
 
-** 一般
+* 他のWikiサイト
+,qwikjp,http://qwik.jp/$1.html,sjis
+
+* 一般
 ,google,http://www.google.com/search?num=50&lr=lang_ja&q=,utf8
 ,isbn,http://www.amazon.co.jp/exec/obidos/ASIN/$1/ref=nosim/q02-22,raw
 ,amazon,http://www.amazon.co.jp/exec/obidos/external-search?tag=q02-22&keyword=$1&mode=blended,utf8
 
-** Ruby関係
+* Ruby関係
 ,ruby-list,http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/$1,raw
 ,ruby-dev,http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/$1,raw
 ,ruby-ext,http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-ext/$1,raw
