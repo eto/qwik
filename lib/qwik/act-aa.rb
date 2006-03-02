@@ -2,7 +2,12 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    def plg_aa(type=nil, message=nil, &b)
+    def plg_aa
+      content = yield
+      return [:pre, {:class=>'aa'}, content]
+    end
+
+    def plg_show_aa(type=nil, message=nil, &b)
       s = aa_get(type, message, &b)
       return [:pre, {:class=>'aa'}, s]
     end
@@ -54,15 +59,21 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestActAA < Test::Unit::TestCase
+  class TestAction < Test::Unit::TestCase
     include TestSession
 
-    def test_all
+    def test_aa
+      # test_aa
       ok_wi([:pre, {:class=>'aa'}, "a\n"], "{{aa\na\n}}")
-      ok_wi([:pre, {:class=>'aa'}, "(^_^) Hi!"], '{{aa(smile)}}')
-      ok_wi([:pre, {:class=>'aa'}, "(^_^) Bye!"], '{{aa(smile, Bye!)}}')
-      ok_wi(/monar/, '{{aa(モナー, monar)}}')
-      ok_wi(/kumar/, '{{aa(クマァ, kumar)}}')
+
+      # test_show_aa
+      ok_wi([:pre, {:class=>'aa'}, "(^_^) Hi!"], '{{show_aa(smile)}}')
+      ok_wi([:pre, {:class=>'aa'}, "(^_^) Bye!"], '{{show_aa(smile, Bye!)}}')
+      ok_wi(/monar/, '{{show_aa(モナー, monar)}}')
+      ok_wi(/kumar/, '{{show_aa(クマァ, kumar)}}')
+
+      #eq true, @dir.exist?
+      #eq false, (@dir+"test").exist?
     end
   end
 end

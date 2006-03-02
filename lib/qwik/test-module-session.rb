@@ -62,6 +62,7 @@ module TestSession
   def web_teardown
     @site.erase_all if defined?(@site) && @site
     @wwwdir.teardown if @wwwdir
+    #assert_equal false, (@dir+"test").exist?
     @dir.teardown if @dir
   end
 

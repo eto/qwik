@@ -30,6 +30,7 @@ module Qwik
 
     def get_site(sitename)
       sitepath = @data_path+sitename
+      #qp sitepath
 
       # FIXME: Should we check the directory everytime?
       if ! sitepath.directory?	# At the first, check the directory.
@@ -150,10 +151,18 @@ if defined?($test) && $test
       eq false, !!farm.exist?('test')
       eq nil, farm.get_site('test')
 
+      assert_equal false, (@dir+"test").exist?
+
       # test_make_site
+      assert_equal false, (@dir+"test").exist?
+
       farm.make_site('test')
+      assert_equal false, (@dir+"test").exist?
       eq true, !!farm.exist?('test')
+      #assert_equal false, (@dir+"test").exist?
+
       site = farm.get_site('test')
+      #assert_equal false, (@dir+"test").exist?
       eq 'test', site.sitename
 
       # test_raise
@@ -161,6 +170,8 @@ if defined?($test) && $test
 	# Creating a site with same name cause error.
 	farm.make_site('test')
       }
+
+      #assert_equal false, (@dir+"test").exist?
     end
 
     def test_all
@@ -174,6 +185,8 @@ if defined?($test) && $test
       farm.each {|s|
 	assert_instance_of(String, s)
       }
+
+      #assert_equal false, (@dir+"test").exist?
     end
 
     def test_sweep

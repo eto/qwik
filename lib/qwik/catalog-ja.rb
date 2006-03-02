@@ -398,6 +398,7 @@ class Qwik::CatalogFactory
       '何が起るのかを理解されている場合のみ、お使い下さい。',
 
       # act-wema
+      'How to Post-it' => '附箋の使い方',
       'New post-it is created.' => '付箋を新規に作成しました',
       'Edit done.' => '編集しました',
       'No action.' => '何もしませんでした',

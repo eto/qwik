@@ -6,7 +6,6 @@ require 'qwik/version'
 module Qwik
   class Config
     LIBDIR = File.dirname(__FILE__)
-   #DEBUG_BASEDIR = File.expand_path(Dir.pwd+'/../../')
     DEBUG_BASEDIR = File.expand_path(LIBDIR+'/../../')
 
     QuickMLInternal = {

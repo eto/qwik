@@ -88,7 +88,7 @@ if defined?($test) && $test
   def test_date
     # test_date_parse
     time = Time.date_parse('1970-01-01')
-    assert_equal -32400, time.to_i
+    assert_equal(-32400, time.to_i)
 
     # test_date_abbr
     now = Time.local(1970, 1, 1)

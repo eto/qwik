@@ -125,7 +125,7 @@ if defined?($test) && $test
     def test_check_directory
       return if $0 != __FILE__		# Only for unit test.
 
-      dir = 'test'.path
+      dir = 'testdir'.path
       dir.erase_all if dir.exist?
       dir.rmtree if dir.exist?
       dir.rmdir if dir.exist?
@@ -157,20 +157,23 @@ if defined?($test) && $test
     end
 
     def test_erase_all
-      dir = 'test'.path
+      dir = 'testdir'.path
       dir.check_directory		# mkdir
 
-      file = 'test/t.txt'.path		# Create a dummy file.
+      file = 'testdir/t.txt'.path		# Create a dummy file.
       file.write('t')
       assert_equal true, file.exist?
 
       dir.erase_all
       assert_equal false, file.exist?	# The file is deleted.
       assert_equal true, dir.exist?	# But the directory is remained here.
+
+      dir.rmdir
+      assert_equal false, dir.exist?
     end
 
     def test_check_pathname
-      dir = 'test'.path
+      dir = 'testdir'.path
       dir.rmtree if dir.exist?
       dir.rmdir  if dir.exist?
 
@@ -178,7 +181,7 @@ if defined?($test) && $test
       assert_equal true, dir.exist?
 
       file = dir+'t'
-      file.write('test')
+      file.write('test string')
       assert_equal true, file.exist?
       dir.rmtree
       assert_equal false, dir.exist?

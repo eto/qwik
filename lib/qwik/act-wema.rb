@@ -46,7 +46,10 @@ Windowを動かして、「set」を押すと位置をセットします。
       return if defined?(@wema_generated)
       wp = WemaPage.new(@site, @site[@req.base])
       wemas = wp.get_wemas
-      return if wemas.empty?
+      if wemas.empty?
+	# create wema link.
+	return [:a, {:href=>'PluginWema.describe'}, _('How to Post-it')]
+      end
       @wema_generated = true
       return WemaHtmlGenerator.generate(wemas, @req.base)
     end
