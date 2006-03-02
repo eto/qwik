@@ -1,3 +1,11 @@
+2006-03-02  Kouichirou Eto  <2006 eto.com>
+
+	* act-wema.rb: Make how to link.
+
+	* util-pathname.rb: Make sure to delete testdir.
+
+	* act-aa.rb: Split aa plugin with aa database.
+
 2006-02-28  Kouichirou Eto  <2006 eto.com>
 
 	* act-describe.rb: Change description naming scheme.
