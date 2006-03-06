@@ -37,16 +37,19 @@ Then, you'll see the plan on the sidemenu.
 "
     }
 
-    def plg_plan
-      div = [:div, {:class=>'plan'}, [:h2, _('Plan')]]
+    def plg_side_plan
+      div = [:div, [:h2, _('Plan')]]
       pages = @site.get_pages_with_date
-      #qp pages
+      div << plan_make_html(pages) if ! pages.empty?
+      div << [:p, [:a, {:href=>'.plan'}, _('Create a new plan')]]
+      return div
+    end
+
+    def plg_plan
+      div = [:div, [:h2, _('Plan')]]
+      pages = @site.get_pages_with_date
       return if pages.empty?
-      if ! pages.empty?
-	ul = plan_make_html(pages)
-	#qp ul
-	div << ul
-      end
+      div << plan_make_html(pages)
       div << [:p, [:a, {:href=>'.plan'}, _('Create a new plan')]]
       return div
     end
@@ -69,8 +72,8 @@ Then, you'll see the plan on the sidemenu.
 	title = page.get_title
 	date = Time.at(datei)
 	now = Time.at(nowi)
-	date_abbr = Action.date_abbr(now, date)
-	em_title = Action.date_emphasis(now, date, title)
+	date_abbr = Time.date_abbr(now, date)
+	em_title = Time.date_emphasis(now, date, title)
 	ul << [:li, "#{date_abbr} ", [:a, {:href=>"#{pagekey}.html"}, em_title]]
       }
       return ul
@@ -100,8 +103,14 @@ Then, you'll see the plan on the sidemenu.
       end
 
       # Create a new plan
-      page = @site.create_new	# CREATE
-      page.store("* [#{date}] #{title}\n")	# Specify date tag.
+      #page = @site.create_new	# CREATE
+
+      dateobj = ParseDate.parsedate(date)
+      
+      pagename = "plan_#{dateobj.ymd_s}"
+      page = @site[paganem]
+      page = @site.create(pagename) if page.nil?	# CREATE
+      page.store("* #{title}\n")	# Specify title.
 
       url = "#{page.key}.edit"
       return c_notice(_('New plan'), url, 201) {	# 201, Created
@@ -133,7 +142,7 @@ if defined?($test) && $test
       page = @site.create_new
       page.store('* [1971-01-01] t')
 
-      ok_wi([:div, {:class=>'plan'},
+      ok_wi([:div,
 	      [:h2, 'Plan'],
 	      [:ul,
 		[:li, '01-01 ', [:a, {:href=>'2.html'}, [:strong, 't']]],
@@ -147,6 +156,17 @@ if defined?($test) && $test
 
       # $KCODE = 'n'
       ok_eq("\227\\\222\350", '—\’è')
+    end
+
+    def ok_date(num, date)
+      assert_equal(num, Time.parse(date).to_i + Time::now.utc_offset)
+    end
+
+    def test_parsedate
+      ok_date 0, '1970-01-01'
+      ok_date 0, '19700101'
+      ok_date 0, '1970/01/01'
+      ok_date 0, '1970/1/1'
     end
   end
 end

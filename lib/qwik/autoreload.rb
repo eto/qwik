@@ -71,6 +71,7 @@ class AutoReload
     end
 
     check_path = [''] + $LOAD_PATH
+    #check_path = ['']
     check_path.each {|path|
       file = File.join(path, lib)
       file = lib if path.empty?	# Check if the lib is a filename.
@@ -80,7 +81,8 @@ class AutoReload
       end
     }
 
-    raise "The library '#{lib}' is not found."
+    #raise "The library '#{lib}' is not found."
+    # $stdout.puts(message("The library '#{lib}' is not found.")) if @verbose
   end
 
   def get_status(file)

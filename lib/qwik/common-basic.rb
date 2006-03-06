@@ -15,19 +15,6 @@ module Qwik
   class NoCorrespondingPlugin < QwikError; end	# plugin
 
   class Action
-    # ============================== date
-    def self.date_parse(*a)
-      return Time.date_parse(*a)
-    end
-
-    def self.date_abbr(*a)
-      return Time.date_abbr(*a)
-    end
-
-    def self.date_emphasis(*a)
-      return Time.date_emphasis(*a)
-    end
-
     # ============================== response
     def c_set_status(status=200)
       @res.status = status

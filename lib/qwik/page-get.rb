@@ -121,7 +121,7 @@ module Qwik
 
     # ============================== class method
     def self.valid_as_pagekey?(t)
-      return /^[A-Za-z_0-9]+$/ =~ t
+      return /\A[A-Za-z_0-9]+\z/ =~ t
     end
 
   end

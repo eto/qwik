@@ -32,12 +32,12 @@ as the static representation of the Wiki site.
       :dc => '* 使い方
 {{zip}}
 
-このリンクをクリックすると、サイトの内容をまるごと一つのアーカイブにま
-とめて、ローカルに保存できます。
+このリンクから、サイトの内容まるごと全部を一つのアーカイブにして
+ダウンロードできます。
 
-ファイルには、元となるテキストファイルだけではなく、静的なHTMLページも
-保持しており、解凍してWebサイトに置けば、そのまま普通のWebページとして
-公開できます。
+ファイルには、元となるテキストファイルと共に、静的なHTMLページも含まれ
+ており、解凍してWebサイトに置けば、そのまま普通のWebページとして公開で
+きます。
 '
     }
 
@@ -48,58 +48,51 @@ as the static representation of the Wiki site.
     def ext_zip
       c_require_member
       c_require_base_is_sitename
-      path = ZipGenerator.generate(@config, @site, self)
+      path = SiteArchive.generate(@config, @site, self)
       return c_simple_send(path, 'application/zip')
     end
   end
 
-  class ZipGenerator
+  class SiteArchive
     def self.generate(config, site, action)
       sitename = site.sitename
       site_cache_path = site.cache_path
       site_cache_path.check_directory
 
-      zip_file = "#{sitename}.zip"
-      zip_path = site_cache_path + zip_file
+      zip_filename = "#{sitename}.zip"
+      zip_file = site_cache_path + zip_filename
 
-      Zip::ZipOutputStream.open(zip_path.to_s) {|zos|
+      Zip::ZipOutputStream.open(zip_file.to_s) {|zos|
 	site.each_all {|page|
 	  add_page(config, site, action, zos, site_cache_path, page)
 	}
 	add_theme(config, site, action, zos)
       }
 
-      return zip_path
+      return zip_file
     end
 
     private
 
     def self.add_page(config, site, action, zos, site_cache_path, page)
       base = "#{site.sitename}/#{page.key}"
-      add_txt(zos, base, page)
 
-      # Generate html files.
+      # Add original txt file.
+      return add_entry(zos, "#{base}.txt", page.load)
+
+      # Generate a html file.
       html_path = site_cache_path+"#{page.key}.html"
       action.view_page_cache_generate(page.key) if ! html_path.exist?
-      #return unless html_path.exist? # what?
-      raise unless html_path.exist? # what?
-      file = base+'.html'
-      str = html_path.read
-      add_entry(zos, file, str)
+      raise "Unknown error for '#{page.key}'" if ! html_path.exist?	# What?
+      add_entry(zos, "#{base}.html", html_path.read)
 
-      # Generate presen files.
-      html_path = site_cache_path+"#{page.key}-presen.html"
-      wabisabi = action.c_page_res(page.key)
-      w = PresenGenerator.generate(site, page.key, wabisabi)
-      str = w.format_xml
-      file = "#{base}-presen.html"
-      return add_entry(zos, file, str)
-    end
-
-    def self.add_txt(zos, base, page)
-      file = "#{base}.txt"
-      str = page.load
-      return add_entry(zos, file, str)
+      # Generate a presen file only if the page contains presen plugin.
+      if /\{\{presen\}\}/ =~ page.load
+	html_path = site_cache_path+"#{page.key}-presen.html"
+	wabisabi = action.c_page_res(page.key)
+	w = PresenGenerator.generate(site, page.key, wabisabi)
+	add_entry(zos, "#{base}-presen.html", w.format_xml)
+      end
     end
 
     def self.add_entry(zos, filename, content)
@@ -127,24 +120,22 @@ as the static representation of the Wiki site.
 	ar << "#{t}/#{f}"
       }
 
-      ar << 's5/i18n/slides.css'
-      ar << 's5/i18n/s5-core.css'
-      ar << 's5/i18n/framing.css'
-      ar << 's5/i18n/pretty.css'
-      ar << 's5/i18n/bg-shade.png'
-      ar << 's5/i18n/bg-slide.jpg'
+      ar << 's5/qwikworld/slides.css'
+      ar << 's5/qwikworld/s5-core.css'
+      ar << 's5/qwikworld/framing.css'
+      ar << 's5/qwikworld/pretty.css'
+      ar << 's5/qwikworld/bg-shade.png'
+      ar << 's5/qwikworld/bg-slide.jpg'
 
+      ar << 's5/default/opera.css'
       ar << 's5/default/outline.css'
       ar << 's5/default/print.css'
-      ar << 's5/default/opera.css'
       ar << 's5/default/slides.js'
 
       theme_dir = config.theme_dir
       ar.each {|b|
-	file  = "#{site.sitename}/.theme/#{b}"
-	local = "#{theme_dir}/#{b}"
-	str = local.path.read
-	add_entry(zos, file, str)
+	add_entry(zos, "#{site.sitename}/.theme/#{b}",
+		  "#{theme_dir}/#{b}".path.read)
       }
     end
   end
@@ -161,9 +152,9 @@ if defined?($test) && $test
     include TestSession
 
     def test_plg_zip
-      ok_wi([:p, [:a, {:href=>'test.zip'}, 'test.zip']], '[[test.zip]]')
-      ok_wi([:span, {:class=>'attribute'},
-	      [:a, {:href=>'test.zip'}, 'site archive']], '{{zip}}')
+      ok_wi [:p, [:a, {:href=>'test.zip'}, 'test.zip']], '[[test.zip]]'
+      ok_wi [:span, {:class=>'attribute'},
+	      [:a, {:href=>'test.zip'}, 'site archive']], '{{zip}}'
     end
   end
 
@@ -179,13 +170,13 @@ if defined?($test) && $test
       t_add_user
 
       page = @site['_SiteConfig']
-      page.store(':theme:qwikborder')
+      page.store ':theme:qwikborder'
 
       page = @site.create_new
-      page.store('* あ')
+      page.store '* あ'
 
-      res = session('/test/test.zip')
-      ok_eq('application/zip', res['Content-Type'])
+      res = session '/test/test.zip'
+      ok_eq 'application/zip', res['Content-Type']
       str = res.body
       assert_match(/\APK/, str)
 
@@ -226,7 +217,7 @@ if defined?($test) && $test
     end
   end
 
-  class TestZipGenerator < Test::Unit::TestCase
+  class TestSiteArchive < Test::Unit::TestCase
     include TestSession
 
     def test_zip
@@ -235,7 +226,7 @@ if defined?($test) && $test
       page = @site.create_new
       page.store('* あ')
 
-      zip = Qwik::ZipGenerator.generate(@config, @site, @action)
+      zip = Qwik::SiteArchive.generate(@config, @site, @action)
       assert_match(/test.zip\Z/, zip.to_s)
     end
   end

@@ -32,6 +32,13 @@ module Qwik
     }
 
     # ============================== search
+    def plg_side_search_form
+      return [
+	[:h2, _('Search')],
+	plg_search_form
+      ]
+    end
+
     def plg_search_form(focus=false)
       return search_form(focus)
     end

@@ -9,12 +9,19 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/act-summary' # Page.get_summary()
-require 'qwik/common-plain' # c_plain()
-require 'qwik/act-tag' # self.tag_get_pages()
+require 'qwik/act-summary'	# Page.get_summary
+require 'qwik/common-plain'	# c_plain
+require 'qwik/act-tag'		# self.tag_get_pages
 
 module Qwik
   class Action
+    def describe_tags
+      '* Show tags assigned to that page
+* Example:
+  {{tags}}
+'
+    end
+
     def plg_all_tags
       tags_hash = Action.tag_get_pages(@site)
       return nil if tags_hash.nil? or tags_hash.empty?
@@ -150,13 +157,6 @@ module Qwik
       return [search_form, div, search_form]
     end
 
-    def describe_tags
-      '* Show tags assigned to that page
-* Example:
-  {{tags}}
-'
-    end
-
     def plg_tags
       key = @req.base
       page = @site[key]
@@ -286,7 +286,6 @@ if defined?($test) && $test
               [:a, {:href=>'.tags?q=TAG2'}, 'TAG2 (3)'], ' ',
               [:a, {:href=>'.tags?q=TAG3'}, 'TAG3 (1)'], ' '],
             '//div[@class="tags"]')
-              
     end
   end
 end

@@ -49,7 +49,7 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
       return nil if ! defined?(@req.base) || @req.base.nil?
       return page_attribute('presen', _('Presentation mode'))
     end
-    alias plg_show_presen plg_presen
+    alias plg_show_presen plg_presen	# FIXME: Make this obsolete.
 
     def plg_presen_theme(theme)
       return	# Do nothing.
@@ -234,9 +234,9 @@ if defined?($test) && $test
   class TestActPresen < Test::Unit::TestCase
     include TestSession
 
-    def test_plg_show_presen
+    def test_plg_presen
       ok_wi [:span, {:class=>'attribute'}, [:a, {:href=>'1.presen'},
-		'Presentation mode']], '{{show_presen}}'
+		'Presentation mode']], '{{presen}}'
     end
 
     def test_plg_presen_theme

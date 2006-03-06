@@ -7,15 +7,21 @@ module Qwik
     def get_pages_with_date
       pages = []
       self.each {|page|
+	if /\Aplan_(\d\d\d\d\d\d\d\d)\z/ =~ page.key
+	  date = Time.parse($i).to_i
+	  pages << [page.key, date.to_i]
+	  next
+	end
+
 	tags = page.get_tags
-	#qp tags
-	next if tags.nil?
-	tags.each {|tag|
-	  date = Action.date_parse(tag)
-	  if date
-	    pages << [page.key, date.to_i]
-	  end
-	}
+	if tags
+	  tags.each {|tag|
+	    date = Time.date_parse(tag)
+	    if date
+	      pages << [page.key, date.to_i]
+	    end
+	  }
+	end
       }
       return pages
     end
@@ -46,7 +52,7 @@ module Qwik
       str = "* Plan\n"
       pages.each {|pagekey, datei|
 	date = Time.at(datei)
-	date_abbr = Action.date_abbr(now, date)
+	date_abbr = Time.date_abbr(now, date)
 
 	page = self[pagekey]
 	title = page.get_title

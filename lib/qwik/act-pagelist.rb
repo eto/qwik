@@ -30,6 +30,13 @@ module Qwik
     end
     alias :plg_recent :plg_recent_list
 
+    def plg_side_recent(*a)
+      return [
+	[:h2, _('Recent change')],
+	plg_srecent(*a)
+      ]
+    end
+
     def plg_srecent(max = -1)
       max = max.to_i
       ar = []

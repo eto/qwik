@@ -80,8 +80,8 @@ module Qwik
       :etc_dir		=> '/etc/qwik',
       :config_file	=> '/etc/qwik/config.txt',
       :log_dir		=> '/var/log/qwik',
-      :web_pid_file	=> '/var/run/qwik/qwikweb.pid',
-      :ml_pid_file	=> '/var/run/qwik/quickml.pid',
+      :web_pid_file	=> '/var/run/qwikweb.pid',
+      :ml_pid_file	=> '/var/run/quickml.pid',
     }
 
     DebugConfig = {

@@ -11,21 +11,18 @@ module Qwik
 
     # ==================== generate from string
     def c_tokenize(str)
-      tokens = TextTokenizer.tokenize(str)
-      return tokens
+      return TextTokenizer.tokenize(str)
     end
 
     def c_parse(str)
       tokens = TextTokenizer.tokenize(str)
-      tree = TextParser.make_tree(tokens)
-      return tree
+      return TextParser.make_tree(tokens)
     end
 
     def c_res(str)
       tokens = TextTokenizer.tokenize(str)
       tree = TextParser.make_tree(tokens)
-      w = Resolver.resolve(@site, self, tree)
-      return w
+      return Resolver.resolve(@site, self, tree)
     end
 
     # ==================== generate for page
@@ -33,8 +30,7 @@ module Qwik
       page = @site[pagename]
       return nil if page.nil?
       tree = page.get_tree
-      w = Resolver.resolve(@site, self, tree)
-      return w
+      return Resolver.resolve(@site, self, tree)
     end
   end
 end

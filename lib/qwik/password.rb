@@ -19,7 +19,6 @@ module Qwik
 
     def initialize(config)
       @site_password_file = config.etc_dir.path+PASSWORD_FILE
-      #qp @site_password_file.to_s
       @site_password = DEFAULT_SITE_PASSWORD
       if @site_password_file.exist?
 	@site_password = @site_password_file.read.to_s.chomp
@@ -31,13 +30,15 @@ module Qwik
     def generate(user)
       generation = 0
       generation = @generation[user] if @generation[user]
-      return PasswordGenerator.generate_md5hex(@site_password, user, generation).hex.to_s[-8, 8]
+      return PasswordGenerator.generate_md5hex(@site_password,
+					       user, generation).hex.to_s[-8, 8]
     end
 
     def generate_hex(user)
       generation = 0
       generation = @generation[user] if @generation[user]
-      return PasswordGenerator.generate_md5hex(@site_password, user, generation).upcase[0, 8]
+      return PasswordGenerator.generate_md5hex(@site_password,
+					       user, generation).upcase[0, 8]
     end
 
     def match?(user, pass)
@@ -111,46 +112,66 @@ if defined?($test) && $test
       config = Qwik::Config.new
       config.update Qwik::Config::DebugConfig
       config.update Qwik::Config::TestConfig
-      gen_path = config.etc_dir.path+Qwik::PasswordGenerator::GENERATION_FILE
-      gen_path.write('')
+      generation_file = config.etc_dir.path +
+	Qwik::PasswordGenerator::GENERATION_FILE
+      generation_file.write('')
 
       gen = Qwik::PasswordGenerator.new(config)
 
       # test_generate
-      eq '95988593', gen.generate('user@e.com')
+      assert_equal '95988593', gen.generate('user@e.com')
 
       # test_generate_hex
-      eq '68246775', gen.generate_hex('user@e.com')
+      assert_equal '68246775', gen.generate_hex('user@e.com')
 
       # test_match?
-      eq true,  gen.match?('user@e.com', '95988593')
+      assert_equal true,  gen.match?('user@e.com', '95988593')
       # generation 0
-      eq false, gen.match?('user@e.com', '64006086')
-      eq true,  gen.match?('user@e.com', '68246775')
+      assert_equal false, gen.match?('user@e.com', '64006086')
+      assert_equal true,  gen.match?('user@e.com', '68246775')
 
       # test_generation_inc
       gen.generation_inc('user@e.com')
-      eq ",user@e.com,1\n", gen_path.read
-      eq false, gen.match?('user@e.com', '95988593')	# Changed.
-      eq '85127862', gen.generate('user@e.com')		# For generation 1
-      eq true,  gen.match?('user@e.com', '85127862')
+      assert_equal ",user@e.com,1\n", generation_file.read
+      assert_equal false, gen.match?('user@e.com', '95988593')	# Changed.
+      assert_equal '85127862', gen.generate('user@e.com')	# generation 1
+      assert_equal true,  gen.match?('user@e.com', '85127862')
 
       # test_generation_inc, again
       gen.generation_inc('user@e.com')
-      eq ",user@e.com,1\n,user@e.com,2\n", gen_path.read
-      eq '78735937', gen.generate('user@e.com')
+      assert_equal ",user@e.com,1\n,user@e.com,2\n", generation_file.read
+      assert_equal '78735937', gen.generate('user@e.com')
 
       # test_store
       gen.generation_store
-      eq ",user@e.com,2\n", gen_path.read
+      assert_equal ",user@e.com,2\n", generation_file.read
 
       # test_another_user
       gen.generation_inc('another@e.com')
-      eq ",user@e.com,2\n,another@e.com,1\n", gen_path.read
+      assert_equal ",user@e.com,2\n,another@e.com,1\n", generation_file.read
       gen.generation_store
-      eq ",another@e.com,1\n,user@e.com,2\n", gen_path.read
+      assert_equal ",another@e.com,1\n,user@e.com,2\n", generation_file.read
 
-      gen_path.unlink
+      # teardown
+      generation_file.unlink
+    end
+
+    def test_password_file
+      config = Qwik::Config.new
+      config.update Qwik::Config::DebugConfig
+      config.update Qwik::Config::TestConfig
+      password_file = config.etc_dir.path+Qwik::PasswordGenerator::PASSWORD_FILE
+      password_file.write('')
+
+      gen = Qwik::PasswordGenerator.new(config)
+      assert_equal '95988593', gen.generate('user@e.com')
+
+      password_file.write('t')
+      gen = Qwik::PasswordGenerator.new(config)
+      assert_equal '57318391', gen.generate('user@e.com')
+
+      # teardown
+      password_file.unlink
     end
   end
 end

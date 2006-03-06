@@ -304,6 +304,9 @@ class Qwik::CatalogFactory
       # act-mlsubmitform
       'Mlcommit' => '投稿する。',
 
+      # act-pagelist
+      'Recent change' => '最新の更新',
+
       # act-plan
       'Plan' => '予定',
       'New plan' => '新しい予定',

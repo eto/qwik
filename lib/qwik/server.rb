@@ -111,6 +111,7 @@ module Qwik
 	t.abort_on_exception = true
       }
 
+      #qp @qconfig.debug
       if @qconfig.debug
 	require 'qwik/autoreload'
 	AutoReload.start(1, true, 'Web')	# auto reload every sec.
