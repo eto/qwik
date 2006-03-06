@@ -10,7 +10,7 @@ module Qwik
 
       if mail.nil?
 	user = @req.user
-	if ! @site.is_open? && user && !@site.member.exist?(user)
+	if ! @site.is_open? && user && ! @site.member.exist?(user)
 	  raise RequireMember
 	end
 

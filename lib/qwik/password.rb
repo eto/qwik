@@ -19,6 +19,7 @@ module Qwik
 
     def initialize(config)
       @site_password_file = config.etc_dir.path+PASSWORD_FILE
+      #qp @site_password_file.to_s
       @site_password = DEFAULT_SITE_PASSWORD
       if @site_password_file.exist?
 	@site_password = @site_password_file.read.to_s.chomp
@@ -30,13 +31,13 @@ module Qwik
     def generate(user)
       generation = 0
       generation = @generation[user] if @generation[user]
-      return PasswordGenerator.generate_md5hex(user, generation).hex.to_s[-8, 8]
+      return PasswordGenerator.generate_md5hex(@site_password, user, generation).hex.to_s[-8, 8]
     end
 
     def generate_hex(user)
       generation = 0
       generation = @generation[user] if @generation[user]
-      return PasswordGenerator.generate_md5hex(user, generation).upcase[0, 8]
+      return PasswordGenerator.generate_md5hex(@site_password, user, generation).upcase[0, 8]
     end
 
     def match?(user, pass)
@@ -79,8 +80,8 @@ module Qwik
       return generation
     end
 
-    def self.generate_md5hex(user, generation=0)
-      return "#{user}:#{@site_password}:#{generation}".md5hex
+    def self.generate_md5hex(site_password, user, generation=0)
+      return "#{user}:#{site_password}:#{generation}".md5hex
     end
 
     def self.generation_add(file, user, gen)
