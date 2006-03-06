@@ -1,3 +1,8 @@
+2006-03-06  Kouichirou Eto  <2006 eto.com>
+
+	* password.rb: Bug fix.  You can use password.txt now.
+	Thanks to Mr. Yoshinori Kawasaki.
+
 2006-03-02  Kouichirou Eto  <2006 eto.com>
 
 	* act-wema.rb: Make how to link.
