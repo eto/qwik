@@ -105,7 +105,7 @@ Then, you'll see the plan on the sidemenu.
       # Create a new plan
       #page = @site.create_new	# CREATE
 
-      dateobj = ParseDate.parsedate(date)
+      dateobj = Time.parse(date)
       
       pagename = "plan_#{dateobj.ymd_s}"
       page = @site[paganem]
