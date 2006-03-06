@@ -1,5 +1,16 @@
 2006-03-06  Kouichirou Eto  <2006 eto.com>
 
+	* act-edit.rb: Bug fix.  Change SiteManagement link.
+
+	* password.rb: Add test case for password_file
+
+	* Add side page plugins.
+	act-pagelist.rb, 
+
+	* act-charset.rb: Refactoring.
+
+2006-03-06  Kouichirou Eto  <2006 eto.com>
+
 	* password.rb: Bug fix.  You can use password.txt now.
 	Thanks to Mr. Yoshinori Kawasaki.
 
