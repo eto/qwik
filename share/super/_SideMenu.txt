@@ -4,13 +4,12 @@
 - [[RecentList]]
 - [[TextFormat]]
 
-* Search
-{{search_form}}
+{{side_search_form}}
 
+#{{side_plan}}
 {{plan}}
 
-* Recent change
-{{srecent(10)}}
+{{side_recent(10)}}
 
 {{rss}}
 #{{atom}}
