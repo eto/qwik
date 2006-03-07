@@ -44,7 +44,8 @@ ul, ol {
   margin: 8px 0px;
   padding: 0;
   list-style-position: inside;
-  height: 10px; /* for IE bug. I don't know why. */
+  /* for IE bug. I don't know why. */
+  /* height: 10px; */
 }
 ul {
   list-style: square;
