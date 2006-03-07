@@ -1,3 +1,10 @@
+2006-03-07  Kouichirou Eto  <2006 eto.com>
+
+	* act-plan.rb: Add test case.
+	* test-module-session.rb (ok_attr): New method.
+
+	* qwikeditor.css: Bug fix for Firefox. Delete height line.
+
 2006-03-06  Kouichirou Eto  <2006 eto.com>
 
 	* act-edit.rb: Bug fix.  Change SiteManagement link.
