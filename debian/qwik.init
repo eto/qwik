@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #
 # skeleton	example file to build /etc/init.d/ scripts.
 #		This file should be used to construct scripts for /etc/init.d.
@@ -10,63 +10,83 @@
 # Version:	@(#)skeleton  1.9  26-Feb-2001  miquels@cistron.nl
 #
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-QWIK=/usr/sbin/qwikweb-server
-QUICKML=/usr/sbin/quickml-server
-QWIKNAME=qwik
-QUICKMLNAME=quickml
-NAME=qwikiWeb
-DESC="Wiki and ML daemon"
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
-test -x $QWIK || exit 0
-test -x $QUICKML || exit 0
+WEBDAEMON=/usr/sbin/qwikweb-server
+MLDAEMON=/usr/sbin/quickml-server
+
+WEBNAME=qwikweb
+MLNAME=quickml
+DESC=qwikiWeb
+
+test -f $WEBDAEMON || exit 0
+test -f $MLDAEMON || exit 0
+
+#edit /etc/default/qwik change this.
+
+# Add Your favorite options.
+OPTIONS="-c /etc/qwik/config.txt"
+
+# 0 = start on boot
+# 1 = don't start on boot
+START_QUICKML=0
+START_QWIKWEB=0
+
+# Start qwik process user name
+QWIKUSER=qwik
+
 
 # Include qwik defaults if available
 if [ -f /etc/default/qwik ] ; then
-	. /etc/default/qwik
+        . /etc/default/qwik
 fi
 
 set -e
 
 case "$1" in
   start)
-	echo -n "Starting $DESC: "
-	start-stop-daemon --start --quiet --pidfile /var/run/qwik/qwikweb.pid \
-		--chuid qwik --exec $QWIK 
-	start-stop-daemon --start --quiet --pidfile /var/run/qwik/$QUICKMLNAME.pid \
-		--chuid qwik --exec $QUICKML
-	echo "fun $NAME!"
-	;;
+    echo -n "Starting $DESC: "
+    if [ $START_QWIKWEB = "0" ] ; then
+       start-stop-daemon --start --quiet --chuid $QWIKUSER --exec $WEBDAEMON -- $OPTIONS
+       echo "Started $WEBNAME."
+	 fi
+	 if [ $START_QUICKML = "0" ] ; then
+       start-stop-daemon --start --quiet --chuid $QWIKUSER --exec $MLDAEMON -- $OPTIONS
+       echo "Started $MLNAME."
+	 fi
+	 echo "Started $DESC. "
+	 ;;
   stop)
-	echo -n "Stopping $DESC: "
-	start-stop-daemon --oknodo --stop --quiet --pidfile /var/run/qwik/qwikweb.pid
-	start-stop-daemon --oknodo --stop --quiet --pidfile /var/run/qwik/$QUICKMLNAME.pid
-	echo "buy $NAME!"
-	;;
-  restart)
-	#
-	#	If the "reload" option is implemented, move the "force-reload"
-	#	option to the "reload" entry above. If not, "force-reload" is
-	#	just the same as "restart".
-	#
-	echo -n "Restarting $DESC: "
-	start-stop-daemon --stop --quiet --pidfile \
-		/var/run/qwik/qwikweb.pid 
-	start-stop-daemon --stop --quiet --pidfile \
-		/var/run/qwik/$QUICKMLNAME.pid
-	sleep 1
-	start-stop-daemon --start --quiet --pidfile \
-		/var/run/qwik/qwikweb.pid --chuid qwik --exec $QWIK
-	start-stop-daemon --start --quiet --pidfile \
-		/var/run/qwik/$QUICKMLNAME.pid --chuid qwik --exec $QUICKML
-	echo "$NAME."
-	;;
+    echo -n "Stopping $DESC: "
+    start-stop-daemon --oknodo --stop --quiet --name qwikweb-server
+    echo "Stoped $WEBNAME."
+    start-stop-daemon --oknodo --stop --quiet --name quickml-server
+    echo "Stoped $MLNAME."
+    echo "Stoped $DESC." 
+    ;;
+  restart|force-reload)
+    echo -n "Stopping $DESC: "
+    start-stop-daemon --oknodo --stop --quiet --name qwikweb-server
+    echo "Stoped $WEBNAME."
+    start-stop-daemon --oknodo --stop --quiet --name quickml-server
+    echo "Stoped $MLNAME."
+    echo "Stoped $DESC." 
+    echo -n "Starting $DESC: "
+    if [ "$START_QWIKWEB" = "0" ] ; then
+       start-stop-daemon --start --chuid $QWIKUSER --exec $WEBDAEMON -- $OPTIONS
+       echo "Started $WEBNAME."
+    fi
+    if [ $START_QUICKML = "0" ] ; then
+       start-stop-daemon --start --chuid $QWIKUSER --exec $MLDAEMON -- $OPTIONS
+       echo "Starting $MLNAME."
+    fi
+    echo "Started $DESC. "
+    ;;
   *)
-	N=/etc/init.d/$NAME
-	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
-	echo "Usage: $N {start|stop|restart|force-reload}" >&2
-	exit 1
-	;;
+    N=/etc/init.d/qwik
+    echo "Usage: $N {start|stop|restart|force-reload}" >&2
+    exit 1
+    ;;
 esac
 
 exit 0

@@ -1,3 +1,28 @@
+qwik (0.8.1-2) unstable; urgency=low
+
+  * add depend adduser.
+  * fix Free Software Fondation address.
+
+ -- Yasuo Eto <yasuo@etou.org>  Mon,  6 Mar 2006 07:18:57 +0900
+
+qwik (0.8.1-1) unstable; urgency=low
+
+  * New Upstream Released.
+  * move pid directory /var/run/ from /var/run/qwik/
+  * delete some $LOAD_PATH.
+
+ -- Yasuo Eto <yasuo@etou.org>  Mon,  6 Mar 2006 07:08:50 +0900
+
+qwik (0.8.0-1) unstable; urgency=low
+
+  * New Upstream Relased.
+  * move template directory from /etc/qwik/template to
+	 /usr/share/qwik/template.
+  * remove suggest dependency libaspecter.
+  * add suggest dependency graphviz and ttf-sazanami-gothic.
+
+ -- Yasuo Eto <yasuo@etou.org>  Thu,  2 Feb 2006 22:29:40 +0900
+
 qwik (0.7.1-9) unstable; urgency=low
 
   * fix template.rb require path.

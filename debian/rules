@@ -7,7 +7,7 @@
 #export DH_VERBOSE=1
 
 UPSTREAM = qwik
-UPSTREAM_VERSION = 0.7.0
+UPSTREAM_VERSION = 0.8.1
 
 CFLAGS = -Wall -g
 
@@ -31,7 +31,7 @@ clean:
 	rm -rf build
 	rm -rf unpack-stamp patch-stamp patch-stampTMP patches-stamp
 	-rm -f usr/bin/Makefile ./usr/lib/ruby/1.8/qwik/Makefile ./usr/lib/ruby/1.8/qwik/Makefile
-	-rm lib/ext/xmlformatter.o
+	-rm ext/xmlformatter.o
 
 	dh_clean 
 
@@ -43,60 +43,82 @@ install: build
 
 	# Add here commands to install the package into debian/qwik.
 	
+	# remove .svn directory
+	find  $(CURDIR) -type d -name .svn | xargs rm -rf
+	
 	#/usr/sbin
-	cp -p bin/{quickml-ctl,quickml-server,quickml-message-validator,qwikweb-adduser,qwikweb-backup,qwikweb-catalog-validator,qwikweb-ctl,qwikweb-tempgen,qwikweb-incgen,qwikweb-makesite,qwikweb-server,qwikweb-showpassword,qwikweb-watchlog,watch-alog,watch-ml,watch-qlog,watch-web} $(CURDIR)/debian/qwik/usr/sbin/
+	cp -p bin/{quickml-server,qwik-service,qwikweb-server} $(CURDIR)/debian/qwik/usr/sbin/
 
 	#/usr/lib/ruby/1.8
 	install -d $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik
 
 	# qwik lib
 	cp -r lib/qwik/*  $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik/
-	cd lib/ext/ && ruby1.8 extconf.rb && make 
+	#adhoc delete compat dir
+	rm -rf $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik/compat
+	#install xmlformater.so
+	cd ext/ && ruby1.8 extconf.rb && make 
 	install -d $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/$(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)/qwik/
-	mv lib/ext/xmlformatter.so $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/$(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)/qwik/
-	cd lib/ext/ && make clean && rm Makefile 
+	mv ext/xmlformatter.so $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/$(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)/qwik/
+	cd ext/ && make clean && rm Makefile 
 	chmod -R 644  $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik/
 	
 	find $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik/ -type d -print |  xargs chmod 755
 
 	# /usr/share/
-	## qwik
-	install -d $(CURDIR)/debian/qwik/usr/share/qwik/{super,theme,qrcode,jsunit}
-	cp -r lib/super/*  $(CURDIR)/debian/qwik/usr/share/qwik/super/
-	cp -r lib/theme/*  $(CURDIR)/debian/qwik/usr/share/qwik/theme/
-	cp -r lib/qrcode/* $(CURDIR)/debian/qwik/usr/share/qwik/qrcode/
-	cp -r lib/jsunit/* $(CURDIR)/debian/qwik/usr/share/qwik/jsunit/
+	install -d $(CURDIR)/debian/qwik/usr/share/qwik/{super,theme,template}
+	cp -r share/super/*  $(CURDIR)/debian/qwik/usr/share/qwik/super/
+	cp -r share/theme/*  $(CURDIR)/debian/qwik/usr/share/qwik/theme/
+	cp -r share/template/* $(CURDIR)/debian/qwik/usr/share/qwik/template/
+
 	chmod -R 644 $(CURDIR)/debian/qwik/usr/share/qwik/
 	
 	find $(CURDIR)/debian/qwik/usr/share/qwik/ -type d -print |  xargs chmod 755  
 
 	# change path
-	perl -i -npe 's!require \"diff\"!require \"algorithm/diff\"!' `find $(CURDIR)/debian/qwik -name '*.rb' -print`
-	perl -i -npe 's!/usr/bin/env ruby!/usr/bin/ruby1.8!' `grep -rl \/usr\/bin\/env\ ruby $(CURDIR)/debian/qwik`
-	perl -i -npe 's!../log/!/var/log/qwik/!' `find $(CURDIR)/debian/qwik/usr/sbin -name 'watch-*' -print`
+	sed -i  -e "s/require\ 'diff'/require 'algorithm\/diff'/g" `grep -rl require\ \'diff\' $(CURDIR)/debian/qwik`
+	sed -i -e "s/\/usr\/bin\/ruby/\/usr\/bin\/ruby1.8/" `grep -rl  \/usr\/bin\/ruby $(CURDIR)/debian/qwik`
 
+	# delete LOAD_PATH
+	-grep -rl require\ \'qwik\/compat\/add_load_path\'  $(CURDIR)/debian/qwik/ | xargs sed -i  -e "/require 'qwik\/compat\/add_load_path'/d"
 
-	#makeing misc dir
+	-grep -rl \$$LOAD_PATH\ \<\<\ \'\.\.\'\ unless\ \$$LOAD_PATH\.include\?\ \'\.\.\' $(CURDIR)/debian/qwik\
+		|xargs sed  -i -e "/\$$LOAD_PATH << '\.\.' unless \$$LOAD_PATH\.include? '\.\.'/D" 
+	
+	-grep -rl \$$LOAD_PATH\ \<\<\ \'\.\.\/\.\.\/ext\'\ unless\ \$$LOAD_PATH\.include\?\(\'\.\.\/\.\.\/ext\'\) $(CURDIR)/debian/qwik\
+		| xargs sed -i -e "/\$$LOAD_PATH << '\.\.\/\.\.\/ext' unless \$$LOAD_PATH\.include?('\.\.\/\.\.\/ext')/D"
+	
+	-grep -rl \$$LOAD_PATH\ \<\<\ \'compat\'\ unless\ \$$LOAD_PATH\.include\?\ \'compat\' $(CURDIR)/debin/qwik\
+		| xargs sed -i -e "/\$$LOAD_PATH << 'compat' unless \$$LOAD_PATH\.include? 'compat'/D"
+	
+	-grep -rl \$$LOAD_PATH\ \<\<\ File\.expand_path\(File\.dirname\(__FILE__\)\+\'\/\.\.\/lib\'\) $(CURDIR)/debian/qwik\
+		| xargs sed -i -e "/\$$LOAD_PATH << File\.expand_path(File\.dirname(__FILE__)+'\/\.\.\/lib')/D"
+	
+	-grep -rl \$$LOAD_PATH\ \<\<\ File\.expand_path\(File\.dirname\(__FILE__\)\+\'\/\.\.\/ext\'\) $(CURDIR)/debian/qwik\
+		| xargs sed -i -e "/\$$LOAD_PATH << File\.expand_path(File\.dirname(__FILE__)+'\/\.\.\/ext')/D"
+	
+	#me/keing misc dir
 	#qwik
 	install -d $(CURDIR)/debian/qwik/var/log/qwik/
 	install -d $(CURDIR)/debian/qwik/var/cache/qwik/
 	install -d $(CURDIR)/debian/qwik/var/cache/qwik/grave/
 	install -d $(CURDIR)/debian/qwik/etc/qwik/
-	install -d $(CURDIR)/debian/qwik/etc/qwik/template/
 	install -d $(CURDIR)/debian/qwik/var/lib/qwik/data/www/
 	install -d $(CURDIR)/debian/qwik/var/lib/qwik/backup/
-	install -d $(CURDIR)/debian/qwik/var/run/qwik/
+	install -d $(CURDIR)/debian/qwik/var/run/
 	cp data/www/* $(CURDIR)/debian/qwik/var/lib/qwik/data/www/
 
 	## /etc/qwik/
 	# qwik config
-	cp etc/* $(CURDIR)/debian/qwik/etc/qwik/
-	cp -r lib/template/*  $(CURDIR)/debian/qwik/etc/qwik/template/
+	cp debian/config.txt $(CURDIR)/debian/qwik/etc/qwik/
 	touch $(CURDIR)/debian/qwik/etc/qwik/typekey-sitetoken.txt
 	touch $(CURDIR)/debian/qwik/etc/qwik/generation.txt
 	touch $(CURDIR)/debian/qwik/etc/qwik/password.txt
 	touch $(CURDIR)/debian/qwik/etc/qwik/google-maps-api-key.txt
 	
+	## /etc/default/
+	install -d $(CURDIR)/debian/qwik/etc/default/
+	cp debian/qwik.defaults $(CURDIR)/debian/qwik/etc/default/qwik
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -104,7 +126,7 @@ binary-indep: build install
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
-	dh_installexamples bin/crontab-backup
+	dh_installexamples
 #	dh_install
 #	dh_installdebconf	
 	dh_installlogrotate
@@ -115,8 +137,7 @@ binary-indep: build install
 	dh_installcron
 #	dh_installinfo
 	dh_installman
-	dh_link usr/sbin/qwikweb-ctl etc/init.d/qwikweb 
-	dh_link usr/sbin/quickml-ctl etc/init.d/quickml 
+#	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms
