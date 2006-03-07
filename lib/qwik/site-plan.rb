@@ -8,7 +8,8 @@ module Qwik
       pages = []
       self.each {|page|
 	if /\Aplan_(\d\d\d\d\d\d\d\d)\z/ =~ page.key
-	  date = Time.parse($i).to_i
+          datestr = $1
+	  date = Time.parse(datestr).to_i
 	  pages << [page.key, date.to_i]
 	  next
 	end

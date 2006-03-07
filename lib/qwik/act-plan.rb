@@ -108,7 +108,7 @@ Then, you'll see the plan on the sidemenu.
       dateobj = Time.parse(date)
       
       pagename = "plan_#{dateobj.ymd_s}"
-      page = @site[paganem]
+      page = @site[pagename]
       page = @site.create(pagename) if page.nil?	# CREATE
       page.store("* #{title}\n")	# Specify title.
 
