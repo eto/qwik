@@ -168,5 +168,24 @@ if defined?($test) && $test
       ok_date 0, '1970/01/01'
       ok_date 0, '1970/1/1'
     end
+
+    def test_plan
+      t_add_user
+
+      ok_wi [:div, [:h2, "Plan"], [:p, [:a, {:href=>".plan"},
+	    "Create a new plan"]]], '{{side_plan}}'
+
+      # Go create a new plan page.
+      res = session '/test/.plan'
+      ok_in ["New plan"], '//h1'
+      ok_attr({:action=>".plan", :method=>"POST"}, '//form')
+      ok_attr({:class=>"focus", :name=>"date"}, '//input')
+      ok_attr({:name=>"title"}, '//input[2]')
+
+      page = @site.create_new
+      page.store('t1')
+
+    end
+
   end
 end

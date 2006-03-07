@@ -191,9 +191,10 @@ module TestSession
     }
     div = res.body.get_path(path)
 
-    return ok_eq(e, div.inside.remove_comment.get_single) if e.is_a? Array
-
-    return ok_eq_or_match(e, div.inside.rb_format_xml(-1, -1).chomp)
+    if e.is_a? Array
+      return assert_equal(e, div.inside.remove_comment.get_single)
+    end
+    return assert_equal_or_match(e, div.inside.rb_format_xml(-1, -1).chomp)
   end
 
   def ok_wi(e, w, &b)
@@ -207,44 +208,56 @@ module TestSession
   end
 
   # ==================== assert module
-  def ok_eq_or_match(e, s)
+  def assert_equal_or_match(e, s)
     return assert_match(e, s) if e.is_a? Regexp
-    return ok_eq(e, s)
+    return assert_equal(e, s)
   end
 
   def ok_xp(e, path, res=@res)
     elem = res.body.get_path(path)
-    return ok_eq(e, nil) if elem.nil?
-    return ok_eq(e, elem.remove_comment)
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal(e, elem.remove_comment)
   end
 
   def ok_in(e, path, res=@res)
     elem = res.body.get_path(path)
-    return ok_eq(e, nil) if elem.nil?
-    return ok_eq(e, elem.inside.get_single)
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal(e, elem.inside.get_single)
   end
   
   def ok_title(e, res=@res)
     elem = res.body.get_path('//title')
-    return ok_eq(e, nil) if elem.nil?
-    return ok_eq(e, elem.inside.get_single[0])
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal(e, elem.inside.get_single[0])
   end
   
   def assert_text(e, tag, res=@res)
     elem = res.body.get_tag(tag)
-    return ok_eq(e, nil) if elem.nil?
-    return ok_eq_or_match(e, elem.text)
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal_or_match(e, elem.text)
   end
 
-  def assert_attr(e, tag, res=@res)
+  def ok_attr(e, s, res=@res)
+    elem = if /\A\/\// =~ s
+	     res.body.get_path(s)
+	   else
+	     res.body.get_tag(s)
+	   end
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal(e, elem.attr)
+  end
+  alias assert_attr ok_attr
+  alias assert_rattr ok_attr
+
+  def nu_assert_attr(e, tag, res=@res)
     elem = res.body.get_tag(tag)
-    return ok_eq(e, nil) if elem.nil?
-    return ok_eq(e, elem.attr)
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal(e, elem.attr)
   end
 
-  def assert_rattr(e, xpath, res=@res)
+  def nu_assert_rattr(e, xpath, res=@res)
     elem = res.body.get_path(xpath)
-    return ok_eq(e, nil) if elem.nil?
-    return ok_eq(e, elem.attr)
+    return assert_equal(e, nil) if elem.nil?
+    return assert_equal(e, elem.attr)
   end
 end
