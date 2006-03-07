@@ -6,8 +6,8 @@
 
 {{side_search_form}}
 
-#{{side_plan}}
-{{plan}}
+{{side_plan}}
+#{{plan}}
 
 {{side_recent(10)}}
 
