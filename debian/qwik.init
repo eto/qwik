@@ -18,6 +18,7 @@ MLDAEMON=/usr/sbin/quickml-server
 WEBNAME=qwikweb
 MLNAME=quickml
 DESC=qwikiWeb
+PIDDIR=/var/run/qwik/
 
 test -f $WEBDAEMON || exit 0
 test -f $MLDAEMON || exit 0
@@ -41,15 +42,20 @@ if [ -f /etc/default/qwik ] ; then
         . /etc/default/qwik
 fi
 
+
 set -e
 
 case "$1" in
   start)
     echo -n "Starting $DESC: "
+    if [ ! -d "$PIDDIR" ] ; then
+       mkdir $PIDDIR
+       chown qwik:qwik $PIDDIR
+    fi 
     if [ $START_QWIKWEB = "0" ] ; then
        start-stop-daemon --start --quiet --chuid $QWIKUSER --exec $WEBDAEMON -- $OPTIONS
        echo "Started $WEBNAME."
-	 fi
+    fi
 	 if [ $START_QUICKML = "0" ] ; then
        start-stop-daemon --start --quiet --chuid $QWIKUSER --exec $MLDAEMON -- $OPTIONS
        echo "Started $MLNAME."
@@ -72,6 +78,10 @@ case "$1" in
     echo "Stoped $MLNAME."
     echo "Stoped $DESC." 
     echo -n "Starting $DESC: "
+    if [ ! -d "$PIDDIR" ] ; then
+       mkdir $PIDDIR
+       chown qwik:qwik $PIDDIR
+    fi 
     if [ "$START_QWIKWEB" = "0" ] ; then
        start-stop-daemon --start --chuid $QWIKUSER --exec $WEBDAEMON -- $OPTIONS
        echo "Started $WEBNAME."

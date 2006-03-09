@@ -105,7 +105,7 @@ install: build
 	install -d $(CURDIR)/debian/qwik/etc/qwik/
 	install -d $(CURDIR)/debian/qwik/var/lib/qwik/data/www/
 	install -d $(CURDIR)/debian/qwik/var/lib/qwik/backup/
-	install -d $(CURDIR)/debian/qwik/var/run/
+	install -d $(CURDIR)/debian/qwik/var/run/qwik/
 	cp data/www/* $(CURDIR)/debian/qwik/var/lib/qwik/data/www/
 
 	## /etc/qwik/
