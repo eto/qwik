@@ -5,7 +5,8 @@ module Qwik
     D_christel = {
       :dt => 'Takigawa Christel plugin',
       :dd => 'You can embed Takigawa Christel image.',
-      :dc => "Follow [[PluginChristel.describe]]"
+      :dc => "
+Follow [[PluginChristel.describe]]"
     }
 
     D_PluginChristel = {

@@ -5,7 +5,8 @@ module Qwik
     D_takahashi = {
       :dt => 'Takahashi method plugin',
       :dd => 'You can do your presentaion in Takahashi method.',
-      :dc => "Follow [[PluginTakahashi.describe]]"
+      :dc => "
+Follow [[PluginTakahashi.describe]]"
     }
 
     D_PluginTakahashi = {
