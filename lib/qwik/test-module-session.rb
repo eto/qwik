@@ -238,26 +238,10 @@ module TestSession
   end
 
   def ok_attr(e, s, res=@res)
-    elem = if /\A\/\// =~ s
-	     res.body.get_path(s)
-	   else
-	     res.body.get_tag(s)
-	   end
+    elem = (/\A\/\// =~ s) ? res.body.get_path(s) : res.body.get_tag(s)
     return assert_equal(e, nil) if elem.nil?
     return assert_equal(e, elem.attr)
   end
   alias assert_attr ok_attr
   alias assert_rattr ok_attr
-
-  def nu_assert_attr(e, tag, res=@res)
-    elem = res.body.get_tag(tag)
-    return assert_equal(e, nil) if elem.nil?
-    return assert_equal(e, elem.attr)
-  end
-
-  def nu_assert_rattr(e, xpath, res=@res)
-    elem = res.body.get_path(xpath)
-    return assert_equal(e, nil) if elem.nil?
-    return assert_equal(e, elem.attr)
-  end
 end

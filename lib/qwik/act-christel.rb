@@ -2,6 +2,12 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    D_christel = {
+      :dt => 'Takigawa Christel plugin',
+      :dd => 'You can embed Takigawa Christel image.',
+      :dc => "Follow [[PluginChristel.describe]]"
+    }
+
     D_PluginChristel = {
       :dt => 'Takigawa Christel plugin',
       :dd => 'You can embed Takigawa Christel image.',

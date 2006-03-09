@@ -7,6 +7,12 @@ end
 
 module Qwik
   class Action
+    D_code = {
+      :dt => 'Code input plugin',
+      :dd => 'You can input code on the page.',
+      :dc => "Follow [[PluginCode.describe]]"
+    }
+
     D_PluginCode = {
       :dt => 'Code input plugin',
       :dd => 'You can input code on the page.',

@@ -78,16 +78,17 @@ as the static representation of the Wiki site.
       base = "#{site.sitename}/#{page.key}"
 
       # Add original txt file.
-      return add_entry(zos, "#{base}.txt", page.load)
+      add_entry(zos, "#{base}.txt", page.load)
 
       # Generate a html file.
       html_path = site_cache_path+"#{page.key}.html"
       action.view_page_cache_generate(page.key) if ! html_path.exist?
       raise "Unknown error for '#{page.key}'" if ! html_path.exist?	# What?
-      add_entry(zos, "#{base}.html", html_path.read)
+      filename = "#{base}.html"
+      add_entry(zos, filename, html_path.read)
 
-      # Generate a presen file only if the page contains presen plugin.
-      if /\{\{presen\}\}/ =~ page.load
+      # Generate a presen file if the page is related to presen.
+      if /\Apresen/i =~ page.key || /\{\{presen/ =~ page.load
 	html_path = site_cache_path+"#{page.key}-presen.html"
 	wabisabi = action.c_page_res(page.key)
 	w = PresenGenerator.generate(site, page.key, wabisabi)
@@ -104,7 +105,7 @@ as the static representation of the Wiki site.
     def self.add_theme(config, site, action, zos)
       ar = []
 
-      # FIXME: collect file list from the directory.
+      # FIXME: Collect this file list from the directory.
       ar << 'css/base.css'
       ar << 'css/wema.css'
       ar << 'js/base.js'
@@ -163,7 +164,7 @@ if defined?($test) && $test
 
     def ok_nx(zis, f)
       e = zis.get_next_entry
-      ok_eq_or_match(f, e.name)
+      assert_equal_or_match(f, e.name)
     end
 
     def test_act_zip
@@ -175,6 +176,15 @@ if defined?($test) && $test
       page = @site.create_new
       page.store '* ‚ '
 
+      page = @site.create_new
+      page.store '* A Presentation Page
+{{presen}}
+* Header 2
+'
+
+      page = @site.create('PresenTest')
+      page.store '* A presentation test page'
+
       res = session '/test/test.zip'
       ok_eq 'application/zip', res['Content-Type']
       str = res.body
@@ -182,35 +192,60 @@ if defined?($test) && $test
 
       'testtemp.zip'.path.open('wb') {|f| f.print str }
 
+      list = []
       Zip::ZipInputStream.open('testtemp.zip') {|zis|
-	ok_nx(zis, 'test/1.txt')
-	ok_eq('* ‚ ', zis.read)
-	ok_nx(zis, 'test/1.html')
-	ok_nx(zis, 'test/1-presen.html')
+	while e = zis.get_next_entry
+	  list << e.name
+	end
+      }
 
-	ok_nx(zis, /\Atest\/_Site/)
-	ok_nx(zis, /\Atest\/_Site/)
-	ok_nx(zis, /\Atest\/_Site/)
-	ok_nx(zis, /\Atest\/_Site/)
-	ok_nx(zis, /\Atest\/_Site/)
-	ok_nx(zis, /\Atest\/_Site/)
+      files = %w(
+test/1.txt
+test/1.html
+test/2.txt
+test/2.html
+test/2-presen.html
+test/PresenTest.txt
+test/PresenTest.html
+test/PresenTest-presen.html
+test/_SiteConfig.txt
+test/_SiteConfig.html
+test/_SiteMember.txt
+test/_SiteMember.html
+test/.theme/css/base.css
+test/.theme/css/wema.css
+test/.theme/js/base.js
+test/.theme/js/debugwindow.js
+test/.theme/js/niftypp.js
+test/.theme/js/wema.js
+test/.theme/i/external.png
+test/.theme/i/new.png
+test/.theme/qwikborder/qwikborder_h2.png
+test/.theme/qwikborder/qwikborder_li.png
+test/.theme/qwikborder/qwikborder_ball.png
+test/.theme/qwikborder/qwikborder.css
+test/.theme/s5/qwikworld/slides.css
+test/.theme/s5/qwikworld/s5-core.css
+test/.theme/s5/qwikworld/framing.css
+test/.theme/s5/qwikworld/pretty.css
+test/.theme/s5/qwikworld/bg-shade.png
+test/.theme/s5/qwikworld/bg-slide.jpg
+test/.theme/s5/default/opera.css
+test/.theme/s5/default/outline.css
+test/.theme/s5/default/print.css
+test/.theme/s5/default/slides.js
+)
 
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
-	ok_nx(zis, /\Atest\/.theme/)
+      not_included_files = %w(
+test/1-presen.html
+)
+
+      files.each {|file|
+	eq true, list.include?(file)
+      }
+
+      not_included_files.each {|file|
+	eq false, list.include?(file)
       }
 
       'testtemp.zip'.path.unlink
