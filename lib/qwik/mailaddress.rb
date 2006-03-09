@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 class MailAddress
@@ -47,41 +38,42 @@ end
 
 if defined?($test) && $test
   class TestMailAddress < Test::Unit::TestCase
-    alias ok_eq ok_eq
-
     def test_normalize
       c = MailAddress
-      ok_eq('foo@example.com', c.normalize('foo@example.com'))
-      ok_eq('foo@example.com', c.normalize('foo@ExampLE.CoM'))
-      ok_eq('foo@example.com', c.normalize("\"foo\"@ExampLE.CoM"))
+      assert_equal 'foo@example.com', c.normalize('foo@example.com')
+      assert_equal 'foo@example.com', c.normalize('foo@ExampLE.CoM')
+      assert_equal 'foo@example.com', c.normalize("\"foo\"@ExampLE.CoM")
+      # Do not normalize name part.
+      assert_equal 'Foo@example.com', c.normalize('Foo@example.com')
     end
 
     def test_valid?
       c = MailAddress
-      ok_eq(true,  c.valid?('user@example.com'))
-      ok_eq(true,  c.valid?("valid+@example.com"))
-      ok_eq(true,  c.valid?("+valid@example.com"))
-      ok_eq(true,  c.valid?('_@example.com'))
-      ok_eq(true,  c.valid?('us..er@example.com'))
+      assert_equal true,  c.valid?('user@example.com')
+      assert_equal true,  c.valid?("valid+@example.com")
+      assert_equal true,  c.valid?("+valid@example.com")
+      assert_equal true,  c.valid?('_@example.com')
+      assert_equal true,  c.valid?('us..er@example.com')
       # Make this address valid for local account.
-      ok_eq(true,  c.valid?('invalid@example'))
-      ok_eq(false, c.valid?(nil))
-      ok_eq(false, c.valid?(''))
-      ok_eq(false, c.valid?("invalid!@example.com"))
-      ok_eq(false, c.valid?('invalid'))
-      ok_eq(false, c.valid?('user@example..com'))
+      assert_equal true,  c.valid?('invalid@example')
+      assert_equal false, c.valid?(nil)
+      assert_equal false, c.valid?('')
+      assert_equal false, c.valid?("invalid!@example.com")
+      assert_equal false, c.valid?('invalid')
+      assert_equal false, c.valid?('user@example..com')
     end
 
     def test_obfuscate
       c = MailAddress
-      ok_eq('user@e...', c.obfuscate('user@example.com'))
+      assert_equal 'user@e...', c.obfuscate('user@example.com')
+      assert_equal '2006@e...', c.obfuscate('2006@example.com')
     end
 
     def test_obfuscate_str
       c = MailAddress
-      ok_eq('user@e...', c.obfuscate_str('user@example.com'))
-      ok_eq('a t@e... b s@f... c',
-	    c.obfuscate_str('a t@e.com b s@f.com c'))
+      assert_equal 'user@e...', c.obfuscate_str('user@example.com')
+      assert_equal 'a t@e... b s@f... c',
+	c.obfuscate_str('a t@e.com b s@f.com c')
     end
   end
 end
