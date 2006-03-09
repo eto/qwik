@@ -1,3 +1,10 @@
+2006-03-09  Kouichirou Eto  <2006 eto.com>
+
+	* act-archive.rb: Bug fix: remove return.  Add test case.
+
+	* Bug fix: Add link to obsolete description.
+	act-takahashi.rb, act-christel.rb, act-code.rb
+
 2006-03-07  Kouichirou Eto  <2006 eto.com>
 
 	* act-plan.rb: Add test case.
