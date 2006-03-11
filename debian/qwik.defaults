@@ -1,0 +1,13 @@
+# /etc/default/qwik
+
+# Add Your favorite options.
+OPTIONS="-c /etc/qwik/config.txt"
+
+# 0 = start on boot
+# 1 = don't start on boot
+START_QWIKWEB=0
+START_QUICKML=0
+
+# Start qwik process user name
+QWIKUSER=qwik
+

@@ -1,0 +1,10 @@
+# Automatically added by dh_installinit
+if [ -x "/etc/init.d/qwik" ]; then
+	update-rc.d qwik defaults >/dev/null
+	if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+		invoke-rc.d qwik start || exit 0
+	else
+		/etc/init.d/qwik start || exit 0
+	fi
+fi
+# End automatically added section
