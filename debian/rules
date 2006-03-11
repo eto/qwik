@@ -43,9 +43,6 @@ install: build
 
 	# Add here commands to install the package into debian/qwik.
 	
-	# remove .svn directory
-	find  $(CURDIR) -type d -name .svn | xargs rm -rf
-	
 	#/usr/sbin
 	cp -p bin/{quickml-server,qwik-service,qwikweb-server} $(CURDIR)/debian/qwik/usr/sbin/
 
