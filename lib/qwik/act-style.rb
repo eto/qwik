@@ -1,13 +1,14 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-css'
+require 'qwik/act-code'
 
 module Qwik
   class Action
     D_PluginStyle = {
       :dt => 'Style plugin',
       :dd => 'You can specify styles of the page.',
-      :dc => "* Examples
-** CSS
+      :dc => '* Examples
+** Embed CSS
  {{css
  body {
   background: #efe;
@@ -19,29 +20,25 @@ body {
 }
 }}
 
-You see green background of this page.
-You can specify any CSS by using this plugin.
+You can embed any CSS style except some inhibit pattern by this plugin.
+This code specifies the background color of this page.
 
-You can not use these inhibit patterns in this plugin.
-
-{{code
-#{CSS::INHIBIT_PATTERN.join('
-')}
-}}
+*** CSS Inhibit Patterns List
+{{css_inhibit_pattern}}
 
 ** Specify style to a div block
- {{style_div(\"font-size:200%;\")
+ {{style_div("font-size:200%;")
  This is a test.
  }}
-{{style_div(\"font-size:200%;\")
+{{style_div("font-size:200%;")
 This is a test.
 }}
 
 ** Specify class for a div block
-{{block_div(\"notice\")
+{{block_div("notice")
 This is a test.
 }}
- {{block_div(\"notice\")
+ {{block_div("notice")
  This is a test.
  }}
 You can specify any class here.
@@ -102,16 +99,19 @@ This is a dummy text.~
  }}
 
 ** Style span
- This is a {{style_span(\"font-size:200%;\", \"very big\")}} test string.
-This is a {{style_span(\"font-size:200%;\", \"very big\")}} test string.
+ This is a {{style_span("font-size:200%;", "very big")}} test string.
+This is a {{style_span("font-size:200%;", "very big")}} test string.
 
 ** Small
- This is a {{small(\"small\")}} string.
-This is a {{small(\"small\")}} string.
+ This is a {{small("small")}} string.
+This is a {{small("small")}} string.
 
 ** Insert an image
- {{img(\".theme/i/login_qwik_logo.gif\")}}
-{{img(\".theme/i/login_qwik_logo.gif\")}}
+ {{img(".theme/i/login_qwik_logo.gif")}}
+{{img(".theme/i/login_qwik_logo.gif")}}
+You can specify a link.
+ {{img(".theme/i/login_qwik_logo.gif", "qwikWeb", "http://qwik.jp/")}}
+{{img(".theme/i/login_qwik_logo.gif", "qwikWeb", "http://qwik.jp/")}}
 
 ** Make a link to a pge
  {{a(FrontPage)}}
@@ -147,48 +147,219 @@ This plugin specifies style sheet for ascii art.
 　　し―-J 
 }}
 
-The style sheet simply set 'MS P Gothic' font and the line height.
+The style sheet simply set "MS P Gothic" font and the line height.
 
 ** Code plugin
 You can show codes by this plugin.
  {{code
- puts \"hello, world!\"
- puts \"hello, qwik users!\"
+ puts "hello, world!"
+ puts "hello, qwik users!"
  }}
 {{code
-puts \"hello, world!\"
-puts \"hello, qwik users!\"
+puts "hello, world!"
+puts "hello, qwik users!"
 }}
 You can see line number in the left of each line.
 
 ** Notice plugin
 You can show a notice by this plugin.
 {{notice
-'''WARNING''': This is just a sample!
+\'\'\'WARNING\'\'\': This is just a sample!
 }}
  {{notice
- '''WARNING''': This is just a sample!
+ \'\'\'WARNING\'\'\': This is just a sample!
  }}
 
-** Show license plugin
-{{license(cc)}}
- {{license(cc)}}
-You can inidicate the license of this Wiki site.
-
 * Monta method plugin
-You can hide a part of text by using JavaScript.
- {{monta(\"This is an example.\")}}
-{{monta(\"This is an example.\")}}
-Click this black box and you see the text.
-"
+You can hide a part of text.  Click black box and you\'ll see the text.
+ {{monta("This is an example.")}}
+{{monta("This is an example.")}}
+'
+    }
+
+    D_PluginStyle_ja = {
+      :dt => 'スタイルプラグイン',
+      :dd => '文字や段落の表示スタイルを選べます。',
+      :dc => '* 例
+** CSS埋め込み
+ {{css
+ body {
+  background: #efe;
+ }
+ }}
+{{css
+body {
+ background: #efe;
+}
+}}
+
+禁止パターン以外の任意のCSSを埋込めます。
+ここではページの背景を緑色に設定してます。
+
+*** 禁止パターン一覧
+{{css_inhibit_pattern}}
+
+** 段落へのスタイル指定
+ {{style_div("font-size:200%;")
+ This is a test.
+ }}
+{{style_div("font-size:200%;")
+This is a test.
+}}
+
+** 段落へのクラス指定
+{{block_div("notice")
+This is a test.
+}}
+ {{block_div("notice")
+ This is a test.
+ }}
+任意のクラスを指定できます。
+
+** 中心寄せ
+ {{center
+ This is a test.~
+ This is a test too.
+ }}
+{{center
+This is a test.~
+This is a test too.
+}}
+
+** 右寄せ
+ {{right
+ This is a test.~
+ This is a test too.
+ }}
+{{right
+This is a test.~
+This is a test too.
+}}
+
+** 左寄せ
+ {{left
+ This is a test.~
+ This is a test too.
+ }}
+{{left
+This is a test.~
+This is a test too.
+}}
+
+左寄せはあまり使われないと思いますが、
+プラグインの対称性から残しています。
+
+** 左に回りこみ
+{{float_left
+This is a test.
+}}
+This is a dummy text.~
+This is a dummy text.~
+This is a dummy text.~
+ {{float_left
+ This is a test.
+ }}
+
+** 右に回りこみ
+{{float_right
+This is a test.
+}}
+This is a dummy text.~
+This is a dummy text.~
+This is a dummy text.~
+ {{float_right
+ This is a test.
+ }}
+
+** テキストの一部にスタイル指定
+ This is a {{style_span("font-size:200%;", "very big")}} test string.
+This is a {{style_span("font-size:200%;", "very big")}} test string.
+
+** テキストを小さく
+ This is a {{small("small")}} string.
+This is a {{small("small")}} string.
+
+** 画像埋込み
+ {{img(".theme/i/login_qwik_logo.gif")}}
+{{img(".theme/i/login_qwik_logo.gif")}}
+リンクをはることもできます。
+ {{img(".theme/i/login_qwik_logo.gif", "qwikWeb", "http://qwik.jp/")}}
+{{img(".theme/i/login_qwik_logo.gif", "qwikWeb", "http://qwik.jp/")}}
+
+** ページへのリンク
+ {{a(FrontPage)}}
+{{a(FrontPage)}}
+ {{a(FrontPage, go back)}}
+{{a(FrontPage, go back)}}
+
+** アスキー・アート・プラグイン
+アスキー・アートを書くときにご利用下さい。
+{{{
+{{aa
+　　 ∧＿∧　　／￣￣￣￣￣
+　　（　´∀｀）＜　monar
+　　（　　　　） 　＼＿＿＿＿＿
+　　｜ ｜　|
+　　（_＿）＿）
+}}
+}}}
+{{aa
+　　 ∧＿∧　　／￣￣￣￣￣
+　　（　´∀｀）＜　monar
+　　（　　　　） 　＼＿＿＿＿＿
+　　｜ ｜　|
+　　（_＿）＿）
+}}
+
+{{aa
+　　　〇＿〇 
+　　 （　・(ｪ)・） 　＜Kumar!
+　　/J　▽J 
+　　し―-J 
+}}
+
+単にフォントを「MS Pゴシック」に指定しているだけです。
+
+** コード・プラグイン
+コードを埋込むときに使います。
+ {{code
+ puts "hello, world!"
+ puts "hello, qwik users!"
+ }}
+{{code
+puts "hello, world!"
+puts "hello, qwik users!"
+}}
+行番号が埋込まれます。
+
+** 注意事項表示プラグイン
+注意事項を表示するのに使えます。
+{{notice
+\'\'\'WARNING\'\'\': This is just a sample!
+}}
+ {{notice
+ \'\'\'WARNING\'\'\': This is just a sample!
+ }}
+
+* モンタ・メソッド・プラグイン
+テキストの一部を隠します。クリックすると表示されます。
+ {{monta("This is an example.")}}
+{{monta("This is an example.")}}
+'
     }
 
     def plg_a(page, text=page)
       return [:a, {:href=>"#{page}.html"}, text]
     end
 
-    def plg_img(f, alt=f)
-      return [:img, {:src=>f, :alt=>alt}]
+    def plg_img(f, alt=f, link=nil)
+      img = [:img, {:src=>f, :alt=>alt}]
+      img = [:a, {:href=>link}, img] if link
+      return img
+    end
+
+    def plg_css_inhibit_pattern
+      return plg_code { CSS::INHIBIT_PATTERN.join("\n") }
     end
 
     def plg_style_div(style='', a='', &b)
@@ -201,7 +372,7 @@ Click this black box and you see the text.
       return [:div, {:style=>style}, *x]
     end
 
-    def plg_block_div(div_class='',a='', &b)
+    def plg_block_div(div_class='', a='', &b)
       return unless CSS.valid?(div_class)
       b = ''
       b = yield if block_given?
@@ -230,10 +401,6 @@ Click this black box and you see the text.
     def plg_right(a='', &b)
       return plg_style_div('text-align:right;', &b)
     end
-
-    def style_strip_p(str)
-      return str.delete("\n").sub(/^<p>/, '').sub(%r|</p>$|, '')
-   end
 
     def plg_style_span(style='', a='')
       return unless CSS.valid?(style)
@@ -294,65 +461,144 @@ if defined?($test) && $test
   class TestActStyle < Test::Unit::TestCase
     include TestSession
 
-    def test_style_span
-      ok_wi("<img alt=\"t\" src=\"t\"/>", '{{img(t)}}')
-      ok_wi("<img alt=\"m\" src=\"t\"/>", '{{img(t, m)}}')
-      ok_wi("<span style=\"font-size:smaller;\">a</span>", '{{small(a)}}')
-      ok_wi("<span style=\"font-size:smaller;\">a</span>",
-	    "{{small\na\n}}")
-      ok_wi("<span style=\"font-size:smaller;\">a</span>",
-	    "{{small(a)\n}}")
-      ok_wi("<span style=\"font-size:smaller;\">aa</span>",
-	    "{{small(a)\na\n}}")
-      ok_wi("<span style=\"font-size:smaller;\"></span>", "{{small\n}}")
-      ok_wi [:span, {:style=>"font-size:smaller;"},
-	[:img, {:alt=>"t", :src=>"t"}]], "{{small\n{{img(t)}}\n}}"
-    end
+    def test_all
+      # test_a
+      ok_wi [:a, {:href=>"b.html"}, "b"], '{{a(b)}}'
+      ok_wi [:a, {:href=>"b.html"}, "c"], '{{a(b, c)}}'
 
-    def test_style_div
+      # test_img
+      ok_wi([:img, {:alt=>"t", :src=>"t"}], '{{img(t)}}')
+      ok_wi([:img, {:alt=>"m", :src=>"t"}], '{{img(t, m)}}')
+      ok_wi([:a, {:href=>"http://e.com/"}, [:img, {:alt=>"m", :src=>"t"}]],
+	    "{{img(t, m, http://e.com/)}}")
+      ok_wi([:a, {:href=>"http://qwik.jp/"},
+	      [:img, {:alt=>"qwikWeb", :src=>".theme/i/login_qwik_logo.gif"}]],
+	    "{{img(\".theme/i/login_qwik_logo.gif\", \"qwikWeb\", \"http://qwik.jp/\")}}")
+
+      # test_inhibit_pattern
+      ok_wi(/javascript/, "{{css_inhibit_pattern}}")
+
+      # test_style_div
       ok_wi [:div, {:style=>"text-align:center;"}, [:p, "y"]],
-	    "{{style_div(text-align:center;)\ny\n}}"
-      ok_wi("<div style=\"text-align:center;\"><p>&lt;</p></div>",
-	    "{{style_div(text-align:center;)\n<\n}}")
-      ok_wi('', "{{style_div(@i)\ny\n}}")
+	    "{{style_div(text-align:center;)
+y
+}}"
+      ok_wi [:div, {:style=>"text-align:center;"}, [:p, "<"]],
+	    "{{style_div(text-align:center;)
+<
+}}"
+      ok_wi [], "{{style_div(@i)
+y
+}}"
 
-      ok_wi("<div style=\"text-align:center;\"></div>", '{{center(a)}}')
-      ok_wi("<div style=\"text-align:center;\"></div>", "{{center(a)\n}}")
-      ok_wi("<div style=\"text-align:center;\"><p>y</p></div>",
-	    "{{center\ny\n}}")
+      # test_float_left
+      ok_wi [:div, {:style=>"float:left;"}, [:p, "This is a test."]],
+	"{{float_left
+This is a test.
+}}"
+
+      # test_float_right
+      ok_wi [:div, {:style=>"float:right;"}, [:p, "This is a test."]],
+	"{{float_right
+This is a test.
+}}"
+
+      # test_left
+      ok_wi [:div, {:style=>"text-align:left;"}, [:p, "a"]],
+	"{{left
+a
+}}"
+
+      # test_center
+      ok_wi [:div, {:style=>"text-align:center;"}, [:p, "a"]],
+	"{{center
+a
+}}"
+      ok_wi [:div, {:style=>"text-align:center;"}, "test"],
+	    "{{center
+{{qwik_test}}
+}}"
       ok_wi [:div, {:style=>"text-align:center;"},
-	[:img, {:alt=>"t", :src=>"t"}]], "{{center\n{{img(t)}}\n}}"
-      ok_wi [:div, {:style=>"text-align:right;"},
-	[:img, {:alt=>"t", :src=>"t"}]], "{{right\n{{img(t)}}\n}}"
-      ok_wi('<br/>', '{{br}}')
+	[:img, {:alt=>"t", :src=>"t"}]],
+	"{{center
+{{img(t)}}
+}}"
+
+      # test_right
+      ok_wi [:div, {:style=>"text-align:right;"}, [:p, "a"]],
+	"{{right
+a
+}}"
+
+      # test_style_span
+      ok_wi [:p, "a", [:span, {:style=>"font-size:200%;"}, "b"], "c"],
+	'a{{style_span("font-size:200%;", "b")}}c'
+
+      # test_small
+      ok_wi [:span, {:style=>"font-size:smaller;"}, ""],
+	"{{small
+}}"
+      ok_wi [:span, {:style=>"font-size:smaller;"}, "a"],
+	'{{small(a)}}'
+      ok_wi [:span, {:style=>"font-size:smaller;"}, "a"],
+	"{{small
+a
+}}"
+      ok_wi [:span, {:style=>"font-size:smaller;"}, "a"],
+	"{{small(a)
+}}"
+      ok_wi [:span, {:style=>"font-size:smaller;"}, "aa"],
+	"{{small(a)
+a
+}}"
+      ok_wi [:span, {:style=>"font-size:smaller;"},
+	[:img, {:alt=>"t", :src=>"t"}]],
+	"{{small
+{{img(t)}}
+}}"
+
+      # test_css
+      ok_wi [:style, "a\n"],
+	    "{{css
+a
+}}"
+      ok_wi [:style, "a\n"],
+	    "{{style
+a
+}}"
+      ok_wi [:style, "h2 { color: red }\n"],
+	    "{{css
+h2 { color: red }
+}}"
+      ok_wi ["error"], "{{css
+@import
+}}"
+      ok_wi ["error"], "{{css
+\\important
+}}"
+      ok_wi ["error"], "{{css
+javascript
+}}"
 
       ok_wi [:div, {:class=>"notice"}, [:p, "y"]],
-	    "{{block_div(notice)\ny\n}}"
-    end
+	"{{block_div(notice)
+y
+}}"
 
-    def test_css_plugin
-      ok_wi("<style>h2 { color: red }\n)}}\n</style>",
-	    "{{css\nh2 { color: red }\n)}}")
-      ok_wi('error', "{{css\n@import\n}}")
-      ok_wi('error', "{{css\n\\important\n}}")
-      ok_wi('error', "{{css\njavascript\n}}")
-    end
+      # test_monta
+      ok_wi [], '{{monta}}'
+      ok_wi [:span, {:style=>'background-color:black;text:black;',
+	  :onmouseup=>"this.style.backgroundColor='transparent';this.style.text='inherited';return true;"},
+	't'],
+	'{{monta(t)}}'
 
-    def test_style_with_plugin
-      ok_wi("<div style=\"text-align:center;\"><p>t</p></div>",
-	    "{{center\nt\n}}")
-      ok_wi("<div style=\"text-align:center;\">test</div>",
-	    "{{center\n{{qwik_test}}\n}}")
-    end
-
-    def test_monta
-      ok_wi([], '{{monta}}')
-      ok_wi([:span, {:style=>'background-color:black;text:black;',
-		:onmouseup=>"this.style.backgroundColor='transparent';this.style.text='inherited';return true;"},
-	      't'], '{{monta(t)}}')
-      ok_wi([:div, {:style=>'background-color:black;text:black;',
-		:onmouseup=>"this.style.backgroundColor='transparent';this.style.text='inherited';return true;"},
-	      "t\n"], "{{monta\nt\n}}")
+      ok_wi [:div, {:style=>'background-color:black;text:black;',
+	  :onmouseup=>"this.style.backgroundColor='transparent';this.style.text='inherited';return true;"},
+	"t
+"],
+	"{{monta
+t
+}}"
     end
   end
 end
