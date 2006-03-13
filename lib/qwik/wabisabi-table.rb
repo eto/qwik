@@ -116,14 +116,14 @@ module Qwik
 
     def self.add_new_col_button(table)
       first_tr = table.children.first
-      first_tr << [:td, {:class=>"new_col_button"},
-	[:a, {:href=>"javascript:show_new_col();"}, ">>"]]
+      first_tr << [:td, {:class=>'new_col_button'},
+	[:a, {:href=>'javascript:show_new_col();'}, '>>']]
     end
 
     def self.add_new_row_button(table)
-      table << [:tr, {:class=>"new_row_button_row"},
+      table << [:tr, {:class=>'new_row_button_row'},
 	[:td, {:class=>'new_row_button'},
-	  [:a, {:href=>"javascript:show_new_row();"}, 'v']]]
+	  [:a, {:href=>'javascript:show_new_row();'}, 'v']]]
     end
   end
 end
@@ -141,8 +141,6 @@ if defined?($test) && $test
   end
 
   class TestWabisabiTable < Test::Unit::TestCase
-    alias ok_eq ok_eq
-
     def test_class_method
       table_1x1 = [:table, [:tr, [:td, '']]]
       table_2x2 = [:table,
@@ -155,9 +153,9 @@ if defined?($test) && $test
       c = Qwik::WabisabiTable
 
       # test_max_col
-      ok_eq(1, c.max_col(table_1x1))
-      ok_eq(2, c.max_col(table_2x2))
-      ok_eq(2, c.max_col(table_with_empty))
+      assert_equal 1, c.max_col(table_1x1)
+      assert_equal 2, c.max_col(table_2x2)
+      assert_equal 2, c.max_col(table_with_empty)
 
       # test_fill_empty_td
       c.fill_empty_td(table_with_empty)
@@ -166,24 +164,25 @@ if defined?($test) && $test
 
       # test_each_tr
       c.each_tr(table_1x1) {|tr, row|
-	ok_eq(:tr, tr[0])
-	assert_instance_of(Fixnum, row)
+	assert_equal :tr, tr[0]
+	assert_instance_of Fixnum, row
       }
 
       # test_each_td
       c.each_td(table_1x1) {|td, col, row|
-	ok_eq(:td, td[0])
-	assert_instance_of(Fixnum, col)
-	assert_instance_of(Fixnum, row)
+	assert_equal :td, td[0]
+	assert_instance_of Fixnum, col
+	assert_instance_of Fixnum, row
       }
       # test_add_new_col
       c.add_new_col(table_1x1)
-      ok_eq([:table, [:tr, [:td, ''], [:td, '']]], table_1x1)
+      assert_equal [:table, [:tr, [:td, ''], [:td, '']]], table_1x1
 
       # test_add_new_row
       c.add_new_row(table_1x1)
-      ok_eq([:table, [:tr, [:td, ''], [:td, '']], [:tr, [:td, ''], [:td, '']]],
-	    table_1x1)
+      assert_equal [:table, [:tr, [:td, ''], [:td, '']],
+	[:tr, [:td, ''], [:td, '']]],
+	    table_1x1
     end
 
     def test_for_schedule
@@ -192,7 +191,7 @@ if defined?($test) && $test
       c = Qwik::WabisabiTable
 
       c.prepare(table_1x1)
-      ok_eq([:table,
+      assert_equal [:table,
 	      [:tr,
 		[:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_0'}]],
 		[:th,
@@ -200,7 +199,7 @@ if defined?($test) && $test
 		  [:input, {:size=>'1', :value=>'', :name=>'t_1_0'}]],
 		[:td,
 		  {:class=>'new_col_button'},
-		  [:a, {:href=>"javascript:show_new_col();"}, ">>"]]],
+		  [:a, {:href=>'javascript:show_new_col();'}, '>>']]],
 	      [:tr,
 		{:class=>'new_row'},
 		[:th, [:input, {:size=>'1', :value=>'', :name=>'t_0_1'}]],
@@ -211,8 +210,8 @@ if defined?($test) && $test
 		{:class=>'new_row_button_row'},
 		[:td,
 		  {:class=>'new_row_button'},
-		  [:a, {:href=>"javascript:show_new_row();"}, 'v']]]],
-	    table_1x1)
+		  [:a, {:href=>'javascript:show_new_row();'}, 'v']]]],
+	    table_1x1
     end
   end
 end

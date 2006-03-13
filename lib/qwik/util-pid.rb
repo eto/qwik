@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-pathname'
 
@@ -34,7 +25,7 @@ module PidModule
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -46,18 +37,18 @@ if defined?($test) && $test
       f = 'test-pid.txt'
 
       # test_exist_pid_file?
-      ok_eq(false, exist_pid_file?(f))
+      assert_equal false, exist_pid_file?(f)
 
       # test_write_pid_file
       write_pid_file(f)
-      ok_eq(true, exist_pid_file?(f))
+      assert_equal true, exist_pid_file?(f)
 
       # test_read_pid_file
-      ok_eq(Process.pid, read_pid_file(f))
+      assert_equal Process.pid, read_pid_file(f)
       
       # test_remove_pid_file
       remove_pid_file(f)
-      ok_eq(false, exist_pid_file?(f))
+      assert_equal false, exist_pid_file?(f)
     end
   end
 end

@@ -1,4 +1,5 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+require 'qwik/wabisabi-table'
 
 module Qwik
   class Action
@@ -48,6 +49,57 @@ module Qwik
 "
     }
 
+    def plg_tab_calc
+      str = yield
+      table = Action.tab_to_table(str)
+      WabisabiTable.fill_empty_td(table)
+      Action.table_calc(table)
+      return table
+    end
+
+    def self.tab_to_table(str)
+      table = [:table]
+      str.each {|line|
+	ff = line.chomp.split(/\t/)
+	next if ff.empty?
+	tr = [:tr]
+	ff.each {|f|
+	  tr << [:td, f]
+	}
+	table << tr
+      }
+      return nil if table.length == 1
+      return table
+    end
+
+    def self.table_calc(table)
+      sum = Array.new(0)
+      #pp table
+      WabisabiTable.each_td(table) {|td, col, row|
+	t = td[1]
+	prefix, n, suffix = Action.parse_num(t)
+	if n
+	  #qp col, n
+	  sum[col] ||= 0
+	  sum[col] += n
+	end
+      }
+
+      max_col = WabisabiTable.max_col(table)
+      
+      tr = [:tr, {:class=>'sum'}]
+      max_col.times {|n|
+	s = sum[n]
+	ss = ''
+	ss = s.to_s if s
+	tr << [:td, ss]
+      }
+
+      table << tr
+
+      return table
+    end
+
     def plg_calc
       str = yield
 
@@ -64,7 +116,7 @@ module Qwik
 	when :table
 	  col = []
 	  token[1..-1].each_with_index {|t, i|
-	    prefix, n, suffix = calc_parse_num(t)
+	    prefix, n, suffix = Action.parse_num(t)
 	    col << t
 	    if n
 	      sum[i] ||= 0
@@ -118,7 +170,7 @@ module Qwik
     CALC_INT_RE   = /\A[0-9,]+\z/
     CALC_FLOAT_RE = /\A[0-9,.]+\z/
 
-    def calc_parse_num(str)
+    def self.parse_num(str)
       return [nil, 0, nil] if str.empty?
       return [nil, nil, nil] if /\A[^0-9]+\z/ =~ str	# no number
 
@@ -132,6 +184,10 @@ module Qwik
       if /[0-9]([^0-9]+)\z/ =~ str
 	suffix = $1
 	str = str.sub($1, '')
+      end
+
+      if /[^-.,0-9]/ =~ str 
+	return [nil, nil, nil]
       end
 
       i = str.to_i
@@ -151,22 +207,52 @@ if defined?($test) && $test
   class TestActCalc < Test::Unit::TestCase
     include TestSession
 
-    def ok(e, str)
-      ok_wi(e, str)
+    def test_class_method
+      c = Qwik::Action
+
+      # test_tab_to_table
+      eq nil, c.tab_to_table("")
+      eq [:table, [:tr, [:td, "a"]]], c.tab_to_table("a")
+      eq [:table, [:tr, [:td, "a"], [:td, "b"]]], c.tab_to_table("a\tb")
+      eq [:table, [:tr, [:td, "a"], [:td, "b"]], [:tr, [:td, "c"]]],
+	c.tab_to_table("a\tb\nc")
+      eq [:table, [:tr, [:td, "a"], [:td, "b"]], [:tr, [:td, "c"], [:td, "d"]]],
+	c.tab_to_table("a\tb\nc\td")
+
+      # test_parse_num
+      ok_eq([nil, 0,   nil], c.parse_num(''))
+      ok_eq([nil, nil, nil], c.parse_num('a'))
+      ok_eq([nil, 1,   nil], c.parse_num('1'))
+      ok_eq([nil, 1.5, nil], c.parse_num('1.5'))
+      ok_eq([nil, 1,  'MB'], c.parse_num('1MB'))
+      ok_eq([nil, 1.5,'MB'], c.parse_num('1.5MB'))
+      ok_eq(['$', 1,   nil], c.parse_num('$1'))
+      ok_eq(['$', 1.5, nil], c.parse_num('$1.5'))
+      eq [nil, nil, nil], c.parse_num('1/2')
+    end
+
+    def test_tab_calc
+      res = session
+
+      ok_wi [:table, [:tr, [:td, '1']], [:tr, [:td, '2']],
+	      [:tr, {:class=>'sum'}, [:td, '3']]],
+	    '{{tab_calc
+1
+2
+}}'
+
+      ok_wi [:table,
+	[:tr, [:td, "6/7"], [:td, "100"], [:td, "Item A"]],
+	[:tr, [:td, "6/8"], [:td, "200"], [:td, "Item B"]],
+	[:tr, {:class=>"sum"}, [:td, ""], [:td, "300"], [:td, ""]]],
+	    '{{tab_calc
+6/7	100	Item A
+6/8	200	Item B
+}}'
     end
 
     def test_all
       res = session
-
-      # test calc_parse_num
-      ok_eq([nil, 0,   nil], @action.calc_parse_num(''))
-      ok_eq([nil, nil, nil], @action.calc_parse_num('a'))
-      ok_eq([nil, 1,   nil], @action.calc_parse_num('1'))
-      ok_eq([nil, 1.5, nil], @action.calc_parse_num('1.5'))
-      ok_eq([nil, 1,  'MB'], @action.calc_parse_num('1MB'))
-      ok_eq([nil, 1.5,'MB'], @action.calc_parse_num('1.5MB'))
-      ok_eq(['$', 1,   nil], @action.calc_parse_num('$1'))
-      ok_eq(['$', 1.5, nil], @action.calc_parse_num('$1.5'))
 
       # test plg_calc
       ok_wi([:table, [:tr, [:td, '0']], [:tr, {:class=>'sum'}, [:td, '0']]],

@@ -75,7 +75,7 @@ style
 
 	if STYLE.include?(k)		# k is style
 	  style = v.to_s
-	  unless Qwik::CSS.valid?(style)
+	  unless CSS.valid?(style)
 	    return 'Invalid CSS'	# Invalid CSS
 	  end
 	end

@@ -16,7 +16,7 @@ module SafeGetsModule
   def safe_gets (max_length = 1024)
     s = ''
     while ! self.eof?
-      c = self.read(1)
+      c = self.read(1)		# FIXME: This code may be slow.
       s << c
 
       if max_length < s.length
@@ -38,7 +38,7 @@ class IO
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   require 'stringio'
   $test = true
 end
@@ -52,14 +52,14 @@ if defined?($test) && $test
     def test_safe_gets
       # under max
       line = 'a' * 1024
-      ok_eq(line, StringIO.new(line).gets)
-      ok_eq(line, StringIO.new(line).safe_gets)
+      assert_equal line, StringIO.new(line).gets
+      assert_equal line, StringIO.new(line).safe_gets
 
       # over max
       line = 'a' * 1025
-      ok_eq(line, StringIO.new(line).gets)
+      assert_equal line, StringIO.new(line).gets
       assert_raise(TooLongLine) {
-	ok_eq(line, StringIO.new(line).safe_gets)
+	assert_equal line, StringIO.new(line).safe_gets
       }
     end
   end

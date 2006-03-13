@@ -16,8 +16,7 @@ module Qwik
 		    mail[:content], @test)
     end
 
-    private
-
+    # FIXME: This method is too ad hoc.
     def self.send(host, port, from, to, subject, body, test)
       efrom    = QuickML::Mail.encode_field(from.to_s)
       eto      = QuickML::Mail.encode_field(to.to_s)
@@ -45,7 +44,7 @@ Content-Type: text/plain; charset=\"ISO-2022-JP\"
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
@@ -59,13 +58,14 @@ if defined?($test) && $test
 	:subject => 'subject',
 	:content => 'content',
       }
-      eq("From: from@example.com
+      assert_equal "From: from@example.com
 To: to@example.com
 Subject: subject
 Content-Type: text/plain; charset=\"ISO-2022-JP\"
 
 content
-", sm.send(mail))
+",
+	sm.send(mail)
 
       mail = {
 	:from    => 'from@example.com',
@@ -73,14 +73,14 @@ content
 	:subject => '‘è–¼',
 	:content => '–{•¶',
       }
-      eq("From: from@example.com
+      assert_equal "From: from@example.com
 To: to@example.com
 Subject: =?ISO-2022-JP?B?GyRCQmpMPhsoQg==?=
 Content-Type: text/plain; charset=\"ISO-2022-JP\"
 
 \e$BK\\J8\e(B
-", sm.send(mail))
-
+",
+	sm.send(mail)
     end
   end
 end

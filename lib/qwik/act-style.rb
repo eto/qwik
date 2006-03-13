@@ -25,7 +25,7 @@ You can specify any CSS by using this plugin.
 You can not use these inhibit patterns in this plugin.
 
 {{code
-#{Qwik::CSS::INHIBIT_PATTERN.join('
+#{CSS::INHIBIT_PATTERN.join('
 ')}
 }}
 

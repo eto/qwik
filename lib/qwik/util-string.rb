@@ -12,7 +12,7 @@ class String
 
   # Used from parser.rb
   def chompp
-    return self.sub(/[\n\r]+\z/, "")
+    return self.sub(/[\n\r]+\z/, '')
   end
 
   def normalize_eol
@@ -38,6 +38,47 @@ class String
   def base64
     return Base64.encode64(self).chomp
   end
+
+  # ============================== escape
+  # Copied from cgi.rb
+  def escape
+    return self.gsub(/([^ a-zA-Z0-9_.-]+)/n) {
+      '%' + $1.unpack('H2' * $1.size).join('%').upcase
+    }.tr(' ', "+")
+  end
+
+  def unescape
+    return self.tr("+", ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/n) {
+      [$1.delete('%')].pack('H*')
+    }
+  end
+
+  def unescapeHTML
+    return self.gsub(/&(.*?);/n) {
+      match = $1.dup
+      case match
+      when /\Aamp\z/ni	then "&"
+      when /\Aquot\z/ni	then "'"
+      when /\Agt\z/ni	then ">"
+      when /\Alt\z/ni	then "<"
+      else
+	"&#{match};"
+      end
+    }
+  end
+
+  # Copied from gonzui-0.1
+  # Use this method instead of WEBrick::HTMLUtils.escape for performance reason.
+  EscapeTable = {
+    "&" => "&amp;",
+    '"' => "&quot;",
+    '<' => "&lt;",
+    '>' => "&gt;",
+  }
+  def escapeHTML
+    string = self
+    return string.gsub(/[&"<>]/n) {|x| EscapeTable[x] }
+  end
 end
 
 if $0 == __FILE__
@@ -46,24 +87,24 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestUtilString < Test::Unit::TestCase
+  class TestString < Test::Unit::TestCase
     def test_string
       # test_xchomp
       assert_equal '', ''.xchomp
-      assert_equal "", "\n".xchomp
-      assert_equal "", "\r".xchomp
-      assert_equal "", "\r\n".xchomp
+      assert_equal '', "\n".xchomp
+      assert_equal '', "\r".xchomp
+      assert_equal '', "\r\n".xchomp
       assert_equal "\n", "\n\r".xchomp
       assert_equal 't', 't'.xchomp
       assert_equal 't', "t\r".xchomp
       assert_equal 't', "t\n".xchomp
 
       # test_chompp
-      assert_equal "", "\n\r".chompp
-      assert_equal "", "\n\r\n\r".chompp
+      assert_equal '', "\n\r".chompp
+      assert_equal '', "\n\r\n\r".chompp
 
       # test_normalize_eol
-      assert_equal "\n", "".normalize_eol
+      assert_equal "\n", ''.normalize_eol
       assert_equal "\n", "\n".normalize_eol
       assert_equal "t\n", 't'.normalize_eol
       assert_equal "t\n", "t\n".normalize_eol
@@ -87,7 +128,36 @@ if defined?($test) && $test
       assert_instance_of String, 't'.md5hex
       assert_equal 32, 't'.md5hex.length
       assert_equal 'e358efa489f58062f10dd7316b65649e', 't'.md5hex
-      assert_equal "dA==", 't'.base64
+      assert_equal 'dA==', 't'.base64
+    end
+
+    def test_escape
+      # test_escape
+      assert_equal('A', 'A'.escape)
+      assert_equal("+", ' '.escape)
+      assert_equal('%2B', "+".escape)
+      assert_equal('%21', "!".escape)
+      assert_equal("ABC%82%A0%82%A2%82%A4+%2B%23", "ABC‚ ‚¢‚¤ +#".escape)
+
+      # test_unescape
+      assert_equal('A', '%41'.unescape)
+      assert_equal(' ', "+".unescape)
+      assert_equal("!", '%21'.unescape)
+      assert_equal("ABC‚ ‚¢‚¤ +#", "ABC%82%A0%82%A2%82%A4+%2B%23".unescape)
+
+      # test_escapeHTML
+      assert_equal("&lt;", "<".escapeHTML)
+      assert_equal("&gt;", ">".escapeHTML)
+      assert_equal("&amp;", "&".escapeHTML)
+      assert_equal("&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;",
+		   '<a href="http://e.com/">e.com</a>'.escapeHTML)
+
+      # test_unescapeHTML
+      assert_equal("<", "&lt;".unescapeHTML)
+      assert_equal(">", "&gt;".unescapeHTML)
+      assert_equal("&", "&amp;".unescapeHTML)
+      assert_equal("<a href='http://e.com/'>e.com</a>",
+		   "&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;".unescapeHTML)
     end
   end
 end

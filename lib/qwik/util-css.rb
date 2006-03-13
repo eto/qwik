@@ -1,32 +1,42 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
-module Qwik
-  class CSS
-    INHIBIT_PATTERN = %w(@i \\ javascript vbscript cookie eval expression behavior behaviour binding include-source)
+class CSS
+  INHIBIT_PATTERN = %w(
+@i
+\\
+javascript
+vbscript
+cookie
+eval
+expression
+behavior
+behaviour
+binding
+include-source
+)
 
-    def self.valid?(str)
-      INHIBIT_PATTERN.each {|c|
-	return false if str.include?(c)
-      }
-      return true
-    end
+  def self.valid?(str)
+    INHIBIT_PATTERN.each {|c|
+      return false if str.include?(c)
+    }
+    return true
   end
 end
 
 if $0 == __FILE__
-  require 'qwik/testunit'
+  require 'test/unit'
   $test = true
 end
 
 if defined?($test) && $test
   class TestCSS < Test::Unit::TestCase
     def ok(e, s)
-      ok_eq(e, Qwik::CSS.valid?(s))
+      assert_equal e, CSS.valid?(s)
     end
 
     def test_all
       ok(true,  'h2 { color: red }')
-      ok(false, "@import\n}}")
+      ok(false, "@import")
       ok(false, "\\important")
       ok(true,  '')
       ok(true,  'text-align:center;')
