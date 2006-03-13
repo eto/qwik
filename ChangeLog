@@ -1,3 +1,22 @@
+2006-03-13  Kouichirou Eto  <2006 eto.com>
+
+	* act-calc.rb: New plugin plg_tab_calc
+
+	* util-csv-tokenizer.rb: Put out from Qwik module.
+	* util-css.rb: Ditto.
+
+	* util-charset.rb: Merge util-kconv.rb, util-iconv.rb
+
+	* util-string.rb: Merge util-escape.rb
+
+	* util-basic.rb: Merge util-integer.rb, util-icase.rb
+
+2006-03-09  Kouichirou Eto  <2006 eto.com>
+
+	* act-wema.rb: Change footer message.
+
+	* mailaddress.rb: Add test for only number name.
+
 2006-03-09  Kouichirou Eto  <2006 eto.com>
 
 	* act-archive.rb: Bug fix: remove return.  Add test case.
