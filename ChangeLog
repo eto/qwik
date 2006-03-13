@@ -2,6 +2,9 @@
 
 	* act-calc.rb: New plugin plg_tab_calc
 
+	* act-style.rb: You can make a link by using img plugin.
+	Thanks to Mr. Takashi Maekawa.
+
 	* util-csv-tokenizer.rb: Put out from Qwik module.
 	* util-css.rb: Ditto.
 
