@@ -1,3 +1,27 @@
+2006-03-16  Kouichirou Eto  <2006 eto.com>
+
+	* act-edit.rb: Bug fix. Change textformat link.
+
+	* qwik-service.rb: Bug fix. Add mailaddresss.
+	* password.rb: Bug fix. Return generation num.
+
+	* act-lang.rb: New plugin lang_select.
+	You can see another language pages related to the page.
+
+	* act-plan.rb: New plugin new_plan
+
+	* act-code.rb: Bug fix. Add no-repeat
+
+	* act-html.rb: Refactoring. Change to private_page
+
+	* act-summary.rb: Refactoring.
+
+	* act-calc.rb: Add description for tab_calc
+
+	* site-plan.rb: Do not show the page with tag date.
+
+	* super/_SiteTheme.rb: Bug fix. Change link to PluginStyle.
+
 2006-03-13  Kouichirou Eto  <2006 eto.com>
 
 	* act-calc.rb: New plugin plg_tab_calc
