@@ -4,16 +4,19 @@ require 'qwik/util-time'
 module Qwik
   class Site
     # ============================== plan
+    PLAN_RE = /\Aplan_(\d\d\d\d\d\d\d\d)\z/
+
     def get_pages_with_date
       pages = []
       self.each {|page|
-	if /\Aplan_(\d\d\d\d\d\d\d\d)\z/ =~ page.key
+	if PLAN_RE =~ page.key
           datestr = $1
 	  date = Time.parse(datestr).to_i
 	  pages << [page.key, date.to_i]
 	  next
 	end
 
+=begin
 	tags = page.get_tags
 	if tags
 	  tags.each {|tag|
@@ -23,6 +26,7 @@ module Qwik
 	    end
 	  }
 	end
+=end
       }
       return pages
     end

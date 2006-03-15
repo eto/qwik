@@ -67,7 +67,7 @@ void main(){
 	linenum = index + 1
 	klass = 'line '
 	klass += if linenum % 2 == 0 then 'even' else 'odd' end
-	style = "background-image: url(.num/#{linenum}.png);"
+	style = "background:url(.num/#{linenum}.png) no-repeat;"
 	pre << [:span, {:class=>klass, :style=>style}, line]
 	pre << "\n"
       }
@@ -120,10 +120,8 @@ if defined?($test) && $test
     def test_code
       res = session
       ok_wi [:div, {:class=>"code"},
-	[:pre, [:span,
-	    {:style=>"background-image: url(.num/1.png);", :class=>"line odd"},
-	    "t"],
-	  "\n"]],
+	[:pre, [:span, {:style=>"background:url(.num/1.png) no-repeat;",
+	      :class=>"line odd"}, "t"], "\n"]],
 	"{{code\nt\n}}"
     end
 

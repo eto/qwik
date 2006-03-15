@@ -3,8 +3,10 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Action
     def ext_html
+      #select_appropriate_lang_page
+
       c_require_page_exist
-      c_require_member if Action.c_private_page?(@req.base)
+      c_require_member if Action.private_page?(@req.base)
 
       if ! c_login?
 	#c_monitor('view')	# do not check.
@@ -16,7 +18,18 @@ module Qwik
       surface_view(@req.base)	# common-surface.rb
     end
 
-    def self.c_private_page?(pagename)
+    def nu_select_appropriate_lang_page
+      @req.accept_language.each {|lang|
+	pagename_with_lang = "#{@req.base}_#{lang}"
+	if @site.exist?(pagename_with_lang)
+	  @req.base = pagename_with_lang
+	  return true
+	end
+      }
+      return false
+    end
+
+    def self.private_page?(pagename)
       return pagename[0] == ?_
     end
 
@@ -77,9 +90,9 @@ if defined?($test) && $test
   class TestActHtml < Test::Unit::TestCase
     include TestSession
 
-    def test_c_private_page?
-      ok_eq(false, Qwik::Action.c_private_page?('t'))
-      ok_eq(true,  Qwik::Action.c_private_page?('_t'))
+    def test_private_page?
+      ok_eq false, Qwik::Action.private_page?('t')
+      ok_eq true,  Qwik::Action.private_page?('_t')
     end
 
     def test_protect_underbar
@@ -135,6 +148,18 @@ if defined?($test) && $test
 	ok_eq("text/html; charset=Shift_JIS",
 	      res.headers['Content-Type'])
       }
+    end
+
+    def nu_test_pagename_with_lang
+      t_add_user
+
+      page = @site.create 't'
+      res = session '/test/t.html'
+      ok_title 't'
+
+      page = @site.create 't_en'
+      res = session '/test/t.html'
+      ok_title 't_en'
     end
   end
 end

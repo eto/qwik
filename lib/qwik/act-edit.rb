@@ -112,7 +112,7 @@ module Qwik
 	  [:li, [:tt, "''"], _('Emphasis'), [:tt, "''"]],
 	  [:li, [:tt, "'''"], _('Strong'), [:tt, "'''"]],
 	  [:li, [:tt, '[['], 'FrontPage', [:tt, ']]'], ' ', _('Link')]],
-	[:p, [:a, {:href=>'textformat.describe'}, _('more help')]]]
+	[:p, [:a, {:href=>'TextFormat.describe'}, _('more help')]]]
     end
 
     def editor_page_functions(pagename)
@@ -132,6 +132,7 @@ module Qwik
 	[:ul,
 	  [:li, [:a, {:href=>'SiteManagement.describe'}, _('SiteMenu')]],
 	  [:li, [:a, {:href=>'_SiteConfig.html'}, _('SiteConfig')]],
+	  [:li, [:a, {:href=>'.plan'}, _('Create a new plan')]],
 	  [:li, [:a, {:href=>'.chronology'}, _('Chronology')]],
 	  [:li, [:a, {:href=>'_GroupMembers.html'}, _('Group members')]],
 	  [:li, [:a, {:href=>"#{@site.sitename}.zip"}, _('SiteArchive')]],

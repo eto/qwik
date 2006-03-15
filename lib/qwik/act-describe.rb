@@ -43,7 +43,6 @@ You can see the list below.
       self.description_list(@req.accept_language).each {|name|
 	hash = description_get(name, @req.accept_language)
 	list << [:li, [:a, {:href=>"#{name}.describe"},
-#	    [:strong, hash[:dt]]], ' ', hash[:dd]]
 	    [:em, name], ' ', [:strong, hash[:dt]]], ' ', hash[:dd]]
       }
       return [:div, {:class=>'description-list'}, list]
@@ -55,7 +54,6 @@ You can see the list below.
       list = []
       self.class.constants.each {|constname|
 	langs.each {|lang|
-	  #if /\AD#{lang}_(.+)\z/ =~ constname
 	  if /\AD_([A-Za-z]+)_#{lang}\z/ =~ constname
 	    if ! list.include?($1)
 	      list << $1
@@ -70,8 +68,10 @@ You can see the list below.
       return list.sort
     end
 
+    DEFAULT_DESCRIPTION = 'QwikWeb'
+
     def act_describe
-      @req.base = 'QwikWeb'
+      @req.base = DEFAULT_DESCRIPTION
       return ext_describe
     end
 

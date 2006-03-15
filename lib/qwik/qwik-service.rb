@@ -4,6 +4,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/version'
 require 'qwik/util-pathname'
+require 'qwik/mailaddress'
 
 module Qwik
   class QwikService

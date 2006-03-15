@@ -4,9 +4,9 @@ require 'qwik/wabisabi-table'
 module Qwik
   class Action
     D_PluginCalc = {
-      :dt => 'Calicurator plugin',
-      :dd => 'You can sum numbers by simple table.',
-      :dc => "* Example
+      :dt => 'Spreadsheet plugin',
+      :dd => 'You can caliculate sum by a simple table.',
+      :dc => '* Example
  {{calc
  ,$100	,CPU
  ,$100	,Memory
@@ -23,13 +23,23 @@ module Qwik
 ,$250	,HDD
 ,$400	,Mother Board
 }}
-"
+* Tab Caliculator Plugin
+You can use a table splited by tabs.
+ {{tab_calc
+ 6000	Book
+ 3000	Mouse
+ }}
+{{tab_calc
+6000	Book
+3000	Mouse
+}}
+'
     }
 
     D_PluginCalc_ja = {
-      :dt => '計算プラグイン',
+      :dt => '表計算プラグイン',
       :dd => '簡単な表計算を行うことができます。',
-      :dc => "* 例
+      :dc => '* 例
  {{calc
  ,$100	,CPU
  ,$100	,Memory
@@ -46,7 +56,17 @@ module Qwik
 ,$250	,HDD
 ,$400	,Mother Board
 }}
-"
+* タブ区切り表計算プラグイン
+タブ区切りによる表も計算できます。
+ {{tab_calc
+ 6000	書籍
+ 3000	マウス
+ }}
+{{tab_calc
+6000	書籍
+3000	マウス
+}}
+'
     }
 
     def plg_tab_calc

@@ -41,7 +41,7 @@ Then, you'll see the plan on the sidemenu.
       div = [:div, [:h2, _('Plan')]]
       pages = @site.get_pages_with_date
       div << plan_make_html(pages) if ! pages.empty?
-      div << [:p, [:a, {:href=>'.plan'}, _('Create a new plan')]]
+      div << [:p, plg_new_plan]
       return div
     end
 
@@ -50,8 +50,12 @@ Then, you'll see the plan on the sidemenu.
       pages = @site.get_pages_with_date
       return if pages.empty?
       div << plan_make_html(pages)
-      div << [:p, [:a, {:href=>'.plan'}, _('Create a new plan')]]
+      div << [:p, plg_new_plan]
       return div
+    end
+
+    def plg_new_plan
+      return [:a, {:href=>'.plan'}, _('Create a new plan')]
     end
 
     def plan_make_html(pages)

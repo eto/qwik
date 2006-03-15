@@ -15,12 +15,12 @@ module Qwik
     D_PluginSummary = {
       :dt => 'Show summary plugin',
       :dd => 'You can include summary of target page.',
-      :dc => "* Example
+      :dc => '* Example
 You can see summary of FrontPage here.
  {{summary(FrontPage)}}
 {{summary(FrontPage)}}
 In this plugin, the summary of a page means the first section of the page.
-"
+'
     }
 
     D_PluginSummary_ja = {
@@ -30,11 +30,13 @@ In this plugin, the summary of a page means the first section of the page.
 目標となるページのサマリを表示します。
  {{summary(FrontPage)}}
 {{summary(FrontPage)}}
-サマリとは、ページタイトルの後の最初のセクションのことを意味します。
+サマリとは、ページタイトルすぐ後の最初のセクションのことを意味します。
 '
     }
 
     def plg_summary(pagename, no_title = false)
+      # Check if this is summary mode.
+      # Do not call this plugin recursively.
       return nil if defined?(@summary_running) && @summary_running
 
       @summary_running = true
@@ -45,18 +47,15 @@ In this plugin, the summary of a page means the first section of the page.
       page = @site[pagename]
       summary = page.get_summary
 
-      title = [:div, [:h2, [:a, {:href=>"#{page.key}.html"}, page.get_title]]]
+      title = [:h2, [:a, {:href=>"#{page.key}.html"}, page.get_title]]
 
-      if summary.nil? or summary.empty?        
-        unless no_title
-          summary = title
-        else
-          summary = nil
-        end
+      if summary.nil? || summary.empty?        
+	summary = nil
+	summary = [:div, title] if ! no_title
       else
         w = c_res(summary)
         summary = TDiaryResolver.resolve(@config, @site, self, w)
-        summary = title << summary unless no_title
+        summary = [:div, title, summary] if ! no_title
       end
 
       @req.base = org_base
@@ -64,25 +63,20 @@ In this plugin, the summary of a page means the first section of the page.
       @summary_running = false
       return summary
     end
-  end ### class Action
+  end
 
   class Page
     def get_summary
       body = self.get_body
-      
       str = ''
-      body.split("\n").each do |line|
-        if (/^\*/ =~ line)
-          break
-        else
-          str += (line + "\n")
-        end
-      end
-      
+      body.each {|line|
+        break if /\A\*/ =~ line
+	str += line
+      }
       return str
-    end ### get_summary
-  end ### class Page
-end ### module Qwik
+    end
+  end
+end
 
 if $0 == __FILE__
   require 'qwik/test-common'
@@ -95,13 +89,12 @@ if defined?($test) && $test
 
     def test_get_summary
       page = @site.create_new
-      page.store("* [This is a tag.] t1
+      page.store '* [This is a tag.] t1
 summary1
 summary2
 * section1
-body of section1")
-      
-      ok_eq("summary1\nsummary2\n", page.get_summary)
+body of section1'
+      eq "summary1\nsummary2\n", page.get_summary
     end
   end
 
@@ -110,28 +103,28 @@ body of section1")
 
     def test_summary
        page = @site.create_new
-       page.store("* t1
-* t1")
+       page.store('* t1
+* t1')
 
       page2 = @site.create_new
-      page2.store("* t2
+      page2.store('* t2
 Here is a summary.
 Summary continued.
 * Section 1 of t2
 contents in Sec. 1.
 * Section 2 of t2
-contents in Sec. 2.")
+contents in Sec. 2.')
 
       page3 = @site.create_new
-      page3.store("* t3
+      page3.store('* t3
 # an empty summary
 * Section 1 of t3
-contents in Sec. 1.")
+contents in Sec. 1.')
 
       page4 = @site.create_new
-      page4.store("* t4
+      page4.store('* t4
 This is a summary of t4.
-* Section")
+* Section')
 
       summary_w = [:div, {:class=>'day'},
         '',
@@ -148,7 +141,7 @@ This is a summary of t4.
 		  '',
 		  [:div, {:class=>'body'}, [:div, {:class=>'section'}, []]]]]],
             "{{summary(#{page.key})}}")
-      
+
       ok_wi([:div, [:h2, [:a, {:href=>page2.url}, page2.get_title]],
             [summary_w]],
             "{{summary(#{page2.key})}}")
@@ -158,7 +151,7 @@ This is a summary of t4.
 
       ok_wi([:div, [:h2, [:a, {:href=>page3.url}, page3.get_title]]],
             "{{summary(#{page3.key})}}")
-      
+
       ok_wi([], "{{summary(#{page3.key}, 't')}}")
 
       # test for many summaries

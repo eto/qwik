@@ -13,6 +13,33 @@ module Qwik
       s = yield
       return c_res(s)
     end
+
+    def plg_lang_select
+      pagebase = @req.base
+      if /\A([0-9A-Za-z]+)_([a-z][a-z])\z/ =~ @req.base
+	pagebase = $1
+	lang = $2
+      end
+
+      list = []
+      @req.accept_language.each {|lang|
+	pagename_with_lang = "#{pagebase}_#{lang}"
+	if @site.exist?(pagename_with_lang)
+	  #list << pagename_with_lang
+	  list << lang
+	end
+      }
+
+      return nil if list.empty?
+
+      list.unshift ''
+      return list.map {|lang|
+	page = "#{pagebase}"
+	page = "#{pagebase}_#{lang}" if ! lang.empty?
+	lang = "default" if lang.empty?
+	[:a, {:href=>"#{page}.html"}, lang]
+      }
+    end
   end
 end
 
@@ -37,6 +64,14 @@ if defined?($test) && $test
       ok_wi("", "{{lang(en)\ne\n}}") {|req|
 	req.accept_language = ['ja']
       }
+    end
+
+    def test_lang_select
+      ok_wi [], '{{lang_select}}'
+
+      page = @site.create('1_en')
+      ok_wi [[:a, {:href=>'1.html'}, 'default'],
+	[:a, {:href=>'1_en.html'}, 'en']], '{{lang_select}}'
     end
   end
 end

@@ -60,6 +60,7 @@ module Qwik
       gen += 1		# Increment the generation of the user.
       PasswordGenerator.generation_add(@generation_file, user, gen)
       @generation = PasswordGenerator.generation_get(@generation_file)
+      return gen
     end
 
     def generation_store
