@@ -56,5 +56,5 @@
 :qrcode_dir:	/usr/share/qwik/qrcode
 :etc_dir:	/etc/qwik
 :log_dir:	/var/log/qwik
-:web_pid_file:	/var/run/qwikweb.pid
-:ml_pid_file:	/var/run/quickml.pid
+:web_pid_file:	/var/run/qwik/qwikweb.pid
+:ml_pid_file:	/var/run/qwik/quickml.pid
