@@ -1,10 +1,3 @@
 {{last_modified}}
 
-{{only_member
 {{generate_time}}
-}}
-
-#{{wema}}
-{{wema_compat}}
-
-# ページアトリビュート
