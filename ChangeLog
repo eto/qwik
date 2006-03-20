@@ -1,3 +1,31 @@
+2006-03-20  Kouichirou Eto  <2006 eto.com>
+
+	* site-plan.rb: Change plan notation.
+	* act-plan.rb: Ditto.
+	* test-ms-plan.rb: Ditto.
+	
+	* act-html.rb: Add wysiwyg only mode.
+
+	* act-edit.rb: Add a link to post-it description.
+	* act-edit.rb: Add a link to GroupConfig.
+
+	* super/_PageAttribute.txt: Delete wema description.
+
+	* common-basic.rb (c_set_location): New method.
+	* common-notice.rb: Ditto.
+
+	* group.rb: Refactoring.
+
+	* ml-sweeper.rb: Do not close.
+	* group.rb: Ditto.
+
+	* ml-sweeper.rb: Refactoring.
+
+	* ml-processor.rb: Refactoring.
+
+	* ml-session.rb: Refactoring.
+	* ml-session.rb: Add test case.
+
 2006-03-16  Kouichirou Eto  <2006 eto.com>
 
 	* act-edit.rb: Bug fix. Change textformat link.
