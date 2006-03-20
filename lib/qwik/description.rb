@@ -59,7 +59,7 @@ Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] for detail.
       :dt => 'TextFormat',
       :dd => 'You can see brief description of text format.',
       :dc => "* Text Format
-Please also access the [[full text format|textformat.describe]].
+Please also access the [[full text format|TextFormat.describe]].
 ** Header 2
 *** Header 3
 **** Header 4
@@ -111,7 +111,7 @@ Please also access the [[full text format|textformat.describe]].
       :dt => 'TextFormat',
       :dd => 'You can see the text format of qwikWeb.',
       :dc => "* Text Format
-Please also access the [[simplified text format|textformat_simple.describe]].
+Please also access the [[simplified text format|TextFormatSimple.describe]].
 * Header
 - You can describe header by placing '*' on the beginning of the lin.
 - You can use '*' from one to five.  The stars are translate fromo h2 to h6.

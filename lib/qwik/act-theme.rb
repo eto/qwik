@@ -24,7 +24,7 @@ Go to [[_SiteTheme]] page, attach your css file with the filename
 "\'\'\'theme.css\'\'\'".
 
 \'\'\'Caution:\'\'\' There are several inhibited elements in CSS.
-Please see [[plugin_style.describe]].
+Please see [[PluginStyle.describe]].
 
 {{warning_for_css}}
 
@@ -37,7 +37,7 @@ line to something like
 to specify the css file. The page design will be changed.
 
 \'\'\'Caution:\'\'\' Even if you are using an external CSS file,
-there are several inhibited pattern. Please see [[plugin_style.describe]].
+there are several inhibited pattern. Please see [[PluginStyle.describe]].
 '
     }
 
@@ -60,7 +60,7 @@ there are several inhibited pattern. Please see [[plugin_style.describe]].
 添付してください。
 
 \'\'\'注意:\'\'\' CSS中には使えない要素があります。
-詳しくは[[plugin_style.describe]]をご覧ください。
+詳しくは[[PluginStyle.describe]]をご覧ください。
 
 {{warning_for_css}}
 
@@ -73,7 +73,7 @@ there are several inhibited pattern. Please see [[plugin_style.describe]].
 
 \'\'\'注意:\'\'\' 外部CSSファイルを使う場合にも、そのCSSファイル中に
 使用禁止要素が含まれている場合には使えません。
-詳しくは[[plugin_style.describe]]をご覧ください。
+詳しくは[[PluginStyle.describe]]をご覧ください。
 
 '
     }

@@ -60,7 +60,7 @@ module Qwik
       :dt => '書式一覧',
       :dd => 'qwikWebの書式一覧簡略版です。',
       :dc => '* 書式一覧
-詳細な説明は[[書式一覧詳細版|textformat.describe]]をごらんください。
+詳細な説明は[[書式一覧詳細版|TextFormat.describe]]をごらんください。
 ** 見出し2
 *** 見出し3
 **** 見出し4
@@ -113,7 +113,7 @@ module Qwik
       :dt => '書式一覧詳細版',
       :dd => 'qwikWebの書式一覧です。',
       :dc => '* 書式一覧
-簡略化した説明は[[textformat_simple.describe]]をご覧下さい。
+簡略化した説明は[[TextFormatSimple.describe]]をご覧下さい。
 * 見出し
 - 「*」を行の先頭に書くと見出しになります。
 - 「*」は1つから5つまで記述することができます。
