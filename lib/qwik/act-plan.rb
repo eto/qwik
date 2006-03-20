@@ -11,13 +11,11 @@ module Qwik
 {{plan}}
 You can see plans of this group.
 If there are no plan for this group, you see nothing.
-* How to input your plan.
-You can specify your new plan from the tag to the title line of each page.
-For example,
- * [2005-08-10] 2nd meeting
-input this line to the first line of the page.
-(Fix the date to recent days.)
-Then, you'll see the plan on the sidemenu.
+* How to create new plan.
+Follow '''Create a new plan''' link and create a new plan page.
+You'll see plans on sidemenu.
+'''Notice''' We changed the format of the date of pages.
+You can not use tag notation to specify date now.
 "
     }
 
@@ -29,11 +27,15 @@ Then, you'll see the plan on the sidemenu.
 {{plan}}
 もし予定が登録されている場合は、このプラグインで表示されます。
 * 予定の登録方法
-下記のように、ページの一行目にタグ記法で記述します。
- * [2005-08-10] ミーティング第二回目
+一番下の「新しい予定を登録する」というリンクをたどって、
+新しい予定ページを作ってください。
 サイドメニューに予定が表示されるようになります。
 過去の予定は表示されません。また一年以上先の予定も表示されません。
 一ヶ月先程度の予定を登録してみてください。
+
+'''注意''' 以前はタグ記法による日付指定を採用していましたが、
+新しいバージョンから上記の新規予定ページ方式に切り替えました。
+御了承下さい。
 "
     }
 
@@ -134,32 +136,36 @@ if defined?($test) && $test
   class TestActPlan < Test::Unit::TestCase
     include TestSession
 
+    def create_plan_pages(site)
+      page = site.create 'plan_19700101'
+      page.store("* t")
+      page = site.create 'plan_19700115'
+      page.store("* t")
+      page = site.create 'plan_19700201'
+      page.store("* t")
+      page = site.create 'plan_19710101'
+      page.store("* t")
+    end
+
     def test_plg_plan
       ok_wi([], '{{plan}}')
 
-      page = @site.create_new
-      page.store('* [1970-01-01] t')
-      page = @site.create_new
-      page.store('* [1970-01-15] t')
-      page = @site.create_new
-      page.store('* [1970-02-01] t')
-      page = @site.create_new
-      page.store('* [1971-01-01] t')
+      create_plan_pages(@site)
 
-      ok_wi([:div,
-	      [:h2, 'Plan'],
-	      [:ul,
-		[:li, '01-01 ', [:a, {:href=>'2.html'}, [:strong, 't']]],
-		[:li, '01-15 ', [:a, {:href=>'3.html'}, [:em, 't']]],
-		[:li, '02-01 ',
-		  [:a, {:href=>'4.html'}, [:span, {:class=>'future'}, 't']]],
-		[:li, '1971-01-01 ',
-		  [:a, {:href=>'5.html'}, [:span, {:class=>'future'}, 't']]]],
-	      [:p, [:a, {:href=>".plan"}, "Create a new plan"]]],
-	    '{{plan}}')
+      ok_wi [:div,
+	[:h2, "Plan"],
+	[:ul,
+	  [:li, "01-01 ", [:a, {:href=>"plan_19700101.html"}, [:strong, "t"]]],
+	  [:li, "01-15 ", [:a, {:href=>"plan_19700115.html"}, [:em, "t"]]],
+	  [:li, "02-01 ", [:a, {:href=>"plan_19700201.html"},
+	      [:span, {:class=>"future"}, "t"]]],
+	  [:li, "1971-01-01 ", [:a, {:href=>"plan_19710101.html"},
+	      [:span, {:class=>"future"}, "t"]]]],
+	[:p, [:a, {:href=>".plan"}, "Create a new plan"]]],
+	'{{plan}}'
 
       # $KCODE = 'n'
-      ok_eq("\227\\\222\350", '予定')
+      eq "\227\\\222\350", '予定'
     end
 
     def ok_date(num, date)

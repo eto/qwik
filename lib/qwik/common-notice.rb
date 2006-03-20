@@ -17,8 +17,7 @@ module Qwik
     def c_nredirect(title, url, &b)
       msg = ''
       msg = yield if block_given?
-      @res['Location'] = c_relative_to_absolute(url)
-    # @res['Location'] = c_relative_to_root(url)
+      c_set_location(c_relative_to_absolute(url))
       generate_notice_page(302, title, url, msg)
     end
 
@@ -29,7 +28,7 @@ module Qwik
       @res.body = Action.notice_generate(template, title, msg, url, false, sec)
       c_set_html
       c_set_no_cache
-      nil
+      return nil
     end
 
     def self.notice_generate(template, title, msg, url=nil,
@@ -85,7 +84,7 @@ if defined?($test) && $test
       ok_xp([:meta, {:content=>'0; url=u', 'http-equiv'=>'Refresh'}],
 	    'meta[2]', res)
 
-      @action.c_notice('c_notice title'){'msg'}
+      @action.c_notice('c_notice title') { 'msg' }
       eq 200, res.status
       ok_title 'c_notice title'
 
@@ -98,10 +97,9 @@ if defined?($test) && $test
     def test_c_nredirect
       res = session
       @action.c_nredirect('t', 't.html')
-     #eq 'http://127.0.0.1:9190/t.html', res['Location']
-      #assert_match(/\Ahttp:/, res['Location'])
+      eq 'http://example.com/test/t.html', res['Location']
       @action.c_nredirect('t', 'http://e.com/')
-      #eq 'http://e.com/', res['Location']
+      eq 'http://e.com/', res['Location']
     end
 
     def test_notice_generate

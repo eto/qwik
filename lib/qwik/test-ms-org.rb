@@ -122,5 +122,4 @@ EOT
     session.start
     return socket.result
   end
-
 end

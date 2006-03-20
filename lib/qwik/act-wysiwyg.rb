@@ -43,14 +43,12 @@ FrontPage‚ğŒ©‚½‚Ü‚Ü‚Ìó‘Ô‚Å•ÒW‚·‚é‰æ–Ê‚É‚Æ‚Ñ‚Ü‚·B
       return if defined?(@watch_defined)
       @watch_defined = true
 
+#//alert('hi');
       script = "
-//alert('hi');
 g_watcher_env.add('#{pagename}', '#{ext}');
 g_watcher_env.start();
-
 g_weditor.init('#{pagename}', '#{ext}');
 g_weditor.check();
-
 "
       md5 = @site[pagename].get.md5hex
 
@@ -61,8 +59,8 @@ g_weditor.check();
       end
 
       div << [:input, {:type=>'hidden', :name=>'watch_md5', :value=>md5}]
-      div << [:script, {:type=>'text/javascript',
-	  :src=>'.theme/js/watch.js'}, '']
+      div << [:script,
+	{:type=>'text/javascript', :src=>'.theme/js/watch.js'}, '']
       div << [:script, {:type=>'text/javascript'}, script]
       return div
     end
@@ -100,7 +98,7 @@ g_weditor.check();
       md5hex = str.md5hex
       ar = Action.wysiwyg_generate(pagename, w, md5hex, $test)
 
-      title = pagename+' : '+_('Edit in this page')
+      title = "#{pagename} : "+_('Edit in this page')
       c_surface(title, false) { ar }
 
       wysiwyg_patch_sidemenu

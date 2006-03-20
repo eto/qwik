@@ -28,8 +28,9 @@ module QuickML
 
     def page_url
       key = @groupsite.key
-      base = key ? key+'.html' : ''
-      #return "http://#{@config.ml_domain}/#{@name}/#{base}"
+      base = ''
+      base = "#{key}.html" if key
+     #return "http://#{@config.ml_domain}/#{@name}/#{base}"
       return "#{@config.public_url}#{@name}/#{base}"
     end
 

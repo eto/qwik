@@ -40,10 +40,7 @@ module QuickML
 	return
       end
 
-      #p 'start process_recipient' if $ml_debug
-
       @mail.recipients.each {|recipient|
-        #p 'process_recipient '+recipient if $ml_debug
 	process_recipient(recipient)
       }
     end
@@ -78,14 +75,12 @@ module QuickML
       end
 
       begin
-        #p "before mutex #{mladdress}" if $ml_debug
-
 	ServerMemory.ml_mutex(@config, mladdress).synchronize {
-          #p "start in mutex #{mladdress}" if $ml_debug
 	  ml = Group.new(@config, mladdress, @mail.from, @message_charset)
 	  @message_charset ||= ml.charset
 
-          if unsubscribe_requested?
+	  #qp @mail.body
+          if Processor.unsubscribe_requested?(@mail.body)
             unsubscribe(ml)
             return
           end
@@ -94,7 +89,6 @@ module QuickML
 	}
 
       rescue InvalidMLName
-	#p 'InvalidMLName'
 	report_invalid_mladdress(mladdress)
       end
     end
@@ -119,15 +113,17 @@ module QuickML
       end
     end
 
-    def unsubscribe_requested?
-      return @mail.empty_body? || 
-        (@mail.body.length < 500 &&
-         (/\A\s*(unsubscribe|bye|#\s*bye|quit|‘Þ‰ï|’E‘Þ)\s*$/s).match(@mail.body.tosjis))
+    UNSUBSCRIBE_THRESHOLD = 500
+    UNSUBSCRIBE_RE = /\A\s*(unsubscribe|bye|#\s*bye|quit|‘Þ‰ï|’E‘Þ)\s*$/s
+    def self.unsubscribe_requested?(body)
+      return true if body.empty?
+      return true if Mail.empty_body?(body)
+      return false if UNSUBSCRIBE_THRESHOLD <= body.length
+      return true if UNSUBSCRIBE_RE.match(body.tosjis)
+      return false
     end
 
     def submit (ml)
-      #p 'submit ', ml.name if $ml_debug
-
       if Group.exclude?(@mail.from, @config.ml_domain)
 	@logger.log "Invalid From Address: #{@mail.from}"
 	return
@@ -403,6 +399,25 @@ end
 if defined?($test) && $test
   class TestMLProcessor < Test::Unit::TestCase
     include TestModuleML
+
+    def test_class_method
+      c = QuickML::Processor
+      eq true, c.unsubscribe_requested?('')
+      eq false, c.unsubscribe_requested?('unsubscribe'+' '*489)
+      eq false, c.unsubscribe_requested?(' '*499)
+      eq false, c.unsubscribe_requested?(' '*500)
+      eq true, c.unsubscribe_requested?(' ')
+      eq true, c.unsubscribe_requested?("\n")
+      eq true, c.unsubscribe_requested?('unsubscribe')
+      eq true, c.unsubscribe_requested?(' unsubscribe')
+      eq true, c.unsubscribe_requested?('bye')
+      eq true, c.unsubscribe_requested?('#bye')
+      eq true, c.unsubscribe_requested?('# bye')
+      eq true, c.unsubscribe_requested?('‘Þ‰ï')
+      eq true, c.unsubscribe_requested?('unsubscribe'+' '*488)
+      eq false, c.unsubscribe_requested?('unsubscribe desu.')
+      eq false, c.unsubscribe_requested?('I want to unsubscribe.')
+    end
 
     def ok_file(e, file)
       str = "test/#{file}".path.read

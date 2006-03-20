@@ -30,6 +30,10 @@ module Qwik
       @res['Cache-Control'] = control
     end
 
+    def c_set_location(location)
+      @res['Location'] = location
+    end
+
     def c_set_body(body)
       @res.body = body
     end

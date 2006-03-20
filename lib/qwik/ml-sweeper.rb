@@ -46,8 +46,9 @@ module QuickML
       @logger.vlog 'Sweeper runs'
       Dir.new(@config.sites_dir).each {|filename|
 	filename = File.join(@config.sites_dir, filename)
-	if ml_file?(filename)
-	  address = mladdress(mlname(filename))
+	if Sweeper.ml_file?(filename)
+	  mlname = File.basename(filename)
+	  address = Sweeper.mladdress(mlname, @config.ml_domain)
 	  ServerMemory.ml_mutex(@config, address).synchronize {
             ml = Group.new(@config, address)
 	    ml.group_config_check_exist
@@ -59,36 +60,25 @@ module QuickML
       @status = :safe
     end
 
-    def ml_file? (filename)
-      # original
-      #File.file?(filename) && Group.valid_name?(mlname(filename))
-
-      # by eto
+    def self.ml_file? (filename)
       return false if File.file?(filename)
       return false if /\./ =~ File.basename(filename) # avoid the name with dot
       return true
     end
 
-    def mladdress (name)
-      address = name 
-      address += (name.include?('@')) ? '.' : '@'
-      address += @config.ml_domain
-      return address
-    end
-
-    def mlname (filename)
-      return File.basename(filename)
+    def self.mladdress (name, ml_domain)
+      return "#{name}@#{ml_domain}"
     end
 
     def sweep_ml (ml)
       if ml.inactive?
 	@logger.log "[#{ml.name}]: Inactive"
-	ml.close
+	#ml.close
+	ml.close_dummy
       elsif ml.need_alert?
 	ml.report_ml_close_soon
       end
     end
-
   end
 end
 
@@ -103,11 +93,9 @@ if defined?($test) && $test
     include TestModuleML
 
     def test_all
-      t_make_public(QuickML::Sweeper, :ml_file?)
-
-      sweeper = QuickML::Sweeper.new(@ml_config)
-      ok_eq(true, sweeper.ml_file?('/qwik/data/test'))
+      c = QuickML::Sweeper
+      eq true, c.ml_file?('/qwik/data/test')
+      eq "test@example.net", c.mladdress('test', 'example.net')
     end
-
   end
 end

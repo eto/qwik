@@ -16,6 +16,16 @@ module Qwik
       #c_make_log('view')	# do not check.
       #c_monitor('view')
       surface_view(@req.base)	# common-surface.rb
+
+      #if WYSIWYG_USERS.include?(@req.user)
+      users = @config[:wysiwyg_users]
+      if users && users.split(/,\s/).include?(@req.user)
+	head = @res.body.get_path('//head')
+	#pp @res.body
+	#qp meta
+	head << [:meta, {'http-equiv'=>'Refresh',
+	    :content=>"0; url=#{@req.base}.wysiwyg"}]
+      end
     end
 
     def nu_select_appropriate_lang_page
@@ -160,6 +170,22 @@ if defined?($test) && $test
       page = @site.create 't_en'
       res = session '/test/t.html'
       ok_title 't_en'
+    end
+
+    def test_ext_html
+      t_add_user
+      t_site_open
+
+      page = @site.create_new
+
+      res = session('/test/1.html')
+      ok_xp nil, "//meta"
+
+      @config[:wysiwyg_users] = "a@e.com, #{DEFAULT_USER}, b@e.com"
+
+      res = session('/test/1.html')
+      ok_xp [:meta, {:content=>"0; url=1.wysiwyg", "http-equiv"=>"Refresh"}],
+	"//meta"
     end
   end
 end

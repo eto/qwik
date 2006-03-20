@@ -115,6 +115,7 @@ end
 if defined?($test) && $test
   class TestMLQuickMLServer < Test::Unit::TestCase
     def test_all
+      # Just create it.
       qml_server = QuickML::QuickMLServer.new
     end
   end

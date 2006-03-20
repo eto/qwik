@@ -37,8 +37,8 @@ module QuickML
     def initialize (config, address, creator = nil, message_charset = nil)
       @config = config
       @address = address
-      @name = Group.get_name(@address)
-      @return_address = Group.generate_return_address(@address, @name,
+      @name, domain = Group.get_name(@address)
+      @return_address = Group.generate_return_address(@address,
 						      @config.use_qmail_verp)
 
       # init_db
@@ -66,6 +66,10 @@ module QuickML
     attr_reader :count
     attr_reader :charset
 
+    def close_dummy
+      @logger.log("[#{@name}]: ML will be closed")
+    end
+
     def close
       @db.delete(:Members)
       @db.delete(:Count)
@@ -83,7 +87,7 @@ module QuickML
       raise InvalidMLName if /@.*@/ =~ address
       name, host = address.split('@')
       raise InvalidMLName if ! valid_name?(name)
-      return name
+      return name, host
     end
 
     def self.valid_name? (name)
@@ -91,16 +95,14 @@ module QuickML
       return /\A[0-9a-zA-Z-]+\z/ =~ name
     end
 
-    def self.generate_return_address(address, name, use_qmail_verp)
-      raise if address.nil? || name.nil?
-      domain = address.split('@').last
-      raise if domain.nil?
+    def self.generate_return_address(address, use_qmail_verp = false)
+      name, domain = Group.get_name(address)
 
       # e.g. <foo=return=@quickml.com-@[]>
-      return name + "=return=" + '@' + domain + "-@[]" if use_qmail_verp
+      return "#{name}=return=@#{domain}-@[]" if use_qmail_verp
 
       # e.g. <foo=return@quickml.com>
-      return name + "=return" + '@' + domain
+      return "#{name}=return@#{domain}"
     end
   end
 end
@@ -122,7 +124,7 @@ if defined?($test) && $test
       c = QuickML::Group
 
       # test_get_name
-      ok_eq('test', c.get_name('test@example.com'))
+      ok_eq(["test", "example.com"], c.get_name('test@example.com'))
 
       # test_vaild_name
       ok_eq(true,  !!c.valid_name?('t'))
@@ -136,9 +138,9 @@ if defined?($test) && $test
 
       # test_generate_return_address
       ok_eq("test=return@example.com",
-	    c.generate_return_address('test@example.com', 'test', false))
+	    c.generate_return_address('test@example.com'))
       ok_eq("test=return=@example.com-@[]",
-	    c.generate_return_address('test@example.com', 'test', true))
+	    c.generate_return_address('test@example.com', true))
     end
 
     def test_all

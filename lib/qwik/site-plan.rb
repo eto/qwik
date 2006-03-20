@@ -100,59 +100,36 @@ if defined?($test) && $test
   class TestSitePlan < Test::Unit::TestCase
     include TestSession
 
-    def test_all
-      page = @site.create_new
-      page.store("* [1970-01-01] t")
-      page = @site.create_new
-      page.store("* [1970-01-15] t")
-      page = @site.create_new
-      page.store("* [1970-02-01] t")
-      page = @site.create_new
-      page.store("* [1971-01-01] t")
-
-      pages = @site.get_pages_with_date
-      ok_eq([['1', -32400], ['2', 1177200], ['3', 2646000], ['4', 31503600]],
-	    pages)
+    def create_plan_pages(site)
+      page = site.create 'plan_19700101'
+      page.store("* t")
+      page = site.create 'plan_19700115'
+      page.store("* t")
+      page = site.create 'plan_19700201'
+      page.store("* t")
+      page = site.create 'plan_19710101'
+      page.store("* t")
     end
-  end
 
-  class TestSiteFooter < Test::Unit::TestCase
-    include TestSession
+    def test_site_plan
+      create_plan_pages(@site)
+      pages = @site.get_pages_with_date
+      eq [["plan_19700101", -32400],
+	["plan_19700115", 1177200],
+	["plan_19700201", 2646000],
+	["plan_19710101", 31503600]],
+	pages
+    end
 
-    def test_all
+    def test_site_footer
       res = session
 
-      now = Time.at(0)
-      footer = @site.get_footer(now)
-      ok_eq('', footer)
+      eq '', @site.get_footer(Time.at(0))
 
-      page = @site.create_new
-      page.store("* [1970-01-01] t")
-      page = @site.create_new
-      page.store("* [1970-01-15] t")
-      page = @site.create_new
-      page.store("* [1970-02-01] t")
-      page = @site.create_new
-      page.store("* [1971-01-01] t")
+      create_plan_pages(@site)
+      eq "* Plan\n- [01-01] t\nhttp://example.com/test/plan_19700101.html\n- [01-15] t\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
 
-      now = Time.at(0)
-      footer = @site.get_footer(now)
-      ok_eq("* Plan
-- [01-01] t
-http://example.com/test/1.html
-- [01-15] t
-http://example.com/test/2.html
-", footer)
-
-      now = Time.at(60*60*24*10)	# 10 days later.
-      footer = @site.get_footer(now)
-      #puts footer
-      ok_eq("* Plan
-- [01-15] t
-http://example.com/test/2.html
-- [02-01] t
-http://example.com/test/3.html
-", footer)
+      eq "* Plan\n- [01-15] t\nhttp://example.com/test/plan_19700115.html\n- [02-01] t\nhttp://example.com/test/plan_19700201.html\n", @site.get_footer(Time.at(60*60*24*10))	# 10 days later.
     end
   end
 end

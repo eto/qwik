@@ -97,6 +97,7 @@ end
 if defined?($test) && $test
   class TestMLServer < Test::Unit::TestCase
     def test_all
+      #return
       config = Qwik::Config.new
       config[:ml_port] = 9195
       server = QuickML::Server.new(config)

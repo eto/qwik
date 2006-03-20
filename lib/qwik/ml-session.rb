@@ -35,17 +35,20 @@ module QuickML
   class Session
     include GetText
 
+    COMMAND_TABLE = [:helo, :ehlo, :noop, :quit, :rset, :rcpt, :mail, :data]
+
     def initialize (config, socket)
       @socket = socket
       @config = config
-      @command_table = [:helo, :ehlo, :noop, :quit, :rset, :rcpt, :mail, :data]
+      @logger = @config.logger
+      @catalog = @config.catalog
+
       @hello_host = 'hello.host.invalid'
       @protocol = nil
       @peer_hostname = @socket.hostname
       @peer_address = @socket.address
       @remote_host = (@peer_hostname or @peer_address)
-      @logger = @config.logger
-      @catalog = @config.catalog
+
       @data_finished = false
       @my_hostname = 'localhost'
       @my_hostname = Socket.gethostname if @config.ml_port == 25
@@ -53,13 +56,20 @@ module QuickML
     end
 
     def start
-      start_time = Time.now
-      _start
-      elapsed = Time.now - start_time
+      elapsed = calc_time {
+	_start
+      }
       @logger.vlog "Session finished: #{elapsed} sec."
     end
 
     private
+
+    def calc_time
+      start_time = Time.now
+      yield
+      elapsed = Time.now - start_time
+      return elapsed
+    end
 
     def _start
       begin
@@ -117,7 +127,7 @@ module QuickML
 	command, arg = line.split(/\s+/, 2)
 	return if command.nil? || command.empty?
 	command = command.downcase.intern  # 'HELO' => :helo
-	if @command_table.include?(command)
+	if COMMAND_TABLE.include?(command)
 	  @logger.vlog "Command: #{line}"
 	  send(command, mail, arg)
 	else
@@ -224,7 +234,7 @@ module QuickML
 
     def end_of_data? (line)
     # line.xchomp == '.'
-      line == ".\r\n"
+      return line == ".\r\n"
     end
 
     def received_field
@@ -289,6 +299,45 @@ module QuickML
       return if @socket.closed?
       @socket.close
       @logger.vlog "Closed: #{@remote_host}"
+    end
+  end
+end
+
+if $0 == __FILE__
+  require 'qwik/test-module-ml'
+  require 'qwik/config'
+  $test = true
+end
+
+if defined?($test) && $test
+  class TestMLSession < Test::Unit::TestCase
+    def test_all
+      return
+      config = Qwik::Config.new
+      hash = {
+	:logger		=> QuickML::MockLogger.new,
+	:sites_dir	=> '.',
+      }
+      config.update(hash)
+      QuickML::ServerMemory.init_mutex(config)
+      QuickML::ServerMemory.init_catalog(config)
+      old_test_memory = $test_memory
+      $test_memory = Qwik::ServerMemory.new(config)	# FIXME: Ugly.
+      socket = QuickML::MockSocket.new "HELO localhost
+MAIL FROM: user@example.net
+RCPT TO: test@example.com
+DATA
+To: test@example.com
+From: user@example.net
+Subject: create
+
+create new ML.
+.
+QUIT
+"
+      session = QuickML::Session.new(config, socket)
+      session.start
+      $test_memory = old_test_memory
     end
   end
 end

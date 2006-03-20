@@ -15,28 +15,20 @@ class TestMSPlan < Test::Unit::TestCase
     eq '[test]: New ML by bob@example.net', logs[0]
 
     # Bob send a mail with a date tag.
-    res = sm('[1970-01-15] t') { 't' }
-    ok_log '[test]: QwikPost: t
+    #res = sm('[1970-01-15] t') { 't' }
+    res = sm('plan_19700115') { 't' }
+    ok_log '[test]: QwikPost: plan_19700115
 [test:2]: Send:'
-    page = @site['t']
-    eq "* [1970-01-15] t\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
+    page = @site['plan_19700115']
+    eq "* plan_19700115\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
 
     # test_footer
-    now = Time.at(0)
-    footer = @site.get_footer(now)
-    eq "* Plan\n- [01-15] t\nhttp://example.com/test/t.html\n", footer
+    eq "* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
 
     # Bob send a mail.
     res = sm('tt') { 't' }
     ok_log ['[test]: QwikPost: tt', '[test:3]: Send:']
-    eq '-- 
-archive-> http://example.com/test/tt.html 
-ML-> test@q.example.com
-
-* Plan
-- [01-15] t
-http://example.com/test/t.html',
-      $ml_sm.buffer[-9..-3].join("\n")
+    eq "-- \narchive-> http://example.com/test/tt.html \nML-> test@q.example.com\n\n* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html", $ml_sm.buffer[-9..-3].join("\n")
   end
 
   def test_plan2
@@ -44,21 +36,19 @@ http://example.com/test/t.html',
     eq '[test]: New ML by bob@example.net', @ml_config.logger.get_log[0]
 
     # Bob send a mail with a date tag.
-    res = sm('[1970-01-15] t') { 't' }
-    ok_log("[test]: QwikPost: t\n[test:2]: Send:")
-    page = @site['t']
-    eq "* [1970-01-15] t\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
+    res = sm('plan_19700115') { 't' }
+    ok_log("[test]: QwikPost: plan_19700115\n[test:2]: Send:")
+    page = @site['plan_19700115']
+    eq "* plan_19700115\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
 
     # Bob send the same mail again.msame a same mail with a date tag.
-    res = sm('[1970-01-15] t') { 't' }
-    ok_log("[test]: QwikPost: t\n[test:3]: Send:")
-    page = @site['t']
-    eq "* [1970-01-15] t\n{{mail(bob@example.net,0)\nt\n}}\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
+    res = sm('plan_19700115') { 't' }
+    ok_log "[test]: QwikPost: plan_19700115\n[test:3]: Send:"
+    page = @site['plan_19700115']
+    eq "* plan_19700115\n{{mail(bob@example.net,0)\nt\n}}\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
 
     # test_footer
-    now = Time.at(0)
-    footer = @site.get_footer(now)
-    eq "* Plan\n- [01-15] t\nhttp://example.com/test/t.html\n", footer
+    eq "* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
   end
 
   def test_plan_japanese
@@ -67,30 +57,28 @@ http://example.com/test/t.html',
     eq '[test]: New ML by bob@example.net', logs[0]
 
     # Bob send a mail with a date tag.
-    res = sm('[1970-01-15] ‚ ') { '‚¢' }
-    ok_log("[test]: QwikPost: 1\n[test:2]: Send:")
-    page = @site['1']
-    eq "* [1970-01-15] ‚ \n{{mail(bob@example.net,0)\n‚¢\n}}\n", page.load
+    res = sm('plan_19700115') { '‚¢' }
+    ok_log "[test]: QwikPost: plan_19700115\n[test:2]: Send:"
+    page = @site['plan_19700115']
+    eq "* plan_19700115\n{{mail(bob@example.net,0)\n‚¢\n}}\n", page.load
 
     # test_footer
-    now = Time.at(0)
-    footer = @site.get_footer(now)
-    eq "* Plan\n- [01-15] ‚ \nhttp://example.com/test/1.html\n", footer
+    eq "* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
 
     # Bob send a mail.
     res = sm('‚¤‚¤') { '‚¦‚¦' }
-    ok_log(['[test]: QwikPost: 2', '[test:3]: Send:'])
+    ok_log "[test]: QwikPost: 1\n[test:3]: Send:"
     str = $ml_sm.buffer[-12..-3].join("\n")
     eq '
 ‚¦‚¦
 
 -- 
-archive-> http://example.com/test/2.html 
+archive-> http://example.com/test/1.html 
 ML-> test@q.example.com
 
 * Plan
-- [01-15] ‚ 
-http://example.com/test/1.html'.set_sourcecode_charset.to_mail_charset,
+- [01-15] plan_19700115
+http://example.com/test/plan_19700115.html'.set_sourcecode_charset.to_mail_charset,
       str
   end
 end

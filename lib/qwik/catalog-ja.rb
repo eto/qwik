@@ -98,6 +98,7 @@ class Qwik::CatalogFactory
       'TimeLine' => '年表 ',
       'Group members' => 'グループメンバー',
       'SiteArchive' => 'サイトアーカイブ',
+      'ML Config' => 'メーリングリスト設定',
 
       'Functions' => '機能の説明',
       'Page List' => 'ページ一覧',

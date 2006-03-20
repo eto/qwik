@@ -122,7 +122,8 @@ module Qwik
 	  [:li, [:a, {:href=>"#{pagename}.backup"},  _('Backup')]],
 	  [:li, [:a, {:href=>"#{pagename}.history"}, _('Time machine')]],
 	  [:li, [:a, {:href=>"#{pagename}.presen"},  _('Presentation mode')]],
-	  [:li, [:a, {:href=>"#{pagename}.wysiwyg"}, _('Edit in this page')]]
+	  [:li, [:a, {:href=>"#{pagename}.wysiwyg"}, _('Edit in this page')]],
+	  [:li, [:a, {:href=>"PluginWema.describe"}, _('How to Post-it')]],
 	]]
     end
 
@@ -136,6 +137,7 @@ module Qwik
 	  [:li, [:a, {:href=>'.chronology'}, _('Chronology')]],
 	  [:li, [:a, {:href=>'_GroupMembers.html'}, _('Group members')]],
 	  [:li, [:a, {:href=>"#{@site.sitename}.zip"}, _('SiteArchive')]],
+	  [:li, [:a, {:href=>"_GroupConfig.html"}, _('ML Config')]],
 	]]
     end
 

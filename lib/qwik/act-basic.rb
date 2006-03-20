@@ -147,7 +147,7 @@ This is {{br}} a test.
     end
 
     def plg_generate_time
-      return '' if @req.user.nil?
+      return nil if @req.user.nil?
       diff = Time.now - @req.start_time
       diffsec = sprintf('%.2f', diff)
       return [:span, {:class=>'attribute'}, _('Generate time'), ': ',
