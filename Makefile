@@ -13,7 +13,7 @@ mlrun:
 	$(RUBY) -Ilib bin/qwikweb-server -c etc/config.txt
 
 watch:
-	$(RUBY) -Ilib bin/qwikweb-watchlog -c etc/config.txt
+	$(RUBY) -Ilib bin/qwik-service --watchlog -c etc/config-debug.txt
 
 test:
 	cd lib/qwik; make; cd ../..

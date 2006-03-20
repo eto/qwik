@@ -6,6 +6,8 @@
 	
 	* act-html.rb: Add wysiwyg only mode.
 
+	* qwik-service.rb: Bug fix. You can use watchlog now.
+
 	* act-edit.rb: Add a link to post-it description.
 	* act-edit.rb: Add a link to GroupConfig.
 
