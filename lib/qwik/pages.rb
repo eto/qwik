@@ -12,25 +12,28 @@ module Qwik
     FIRST_PAGE_ID = '1'
 
     def initialize(config, dir)
-      @config = nil	# Not use.
+      @config = nil	# FIXME: This is not used.
 
-      dir = dir.path if dir.is_a? String
+      dir = dir.path
       spath = config.super_dir.path
 
       if config.db == 'fsdb'
 	@db = FileSystemDB.new(dir, spath)
-      elsif config.db == 'bdb'
+      elsif config.db == 'bdb'	# Notice: This setting is experimental.
 	require 'qwik/db-berkeley'
 	@db = BerkeleyDB.new(dir, spath)
       else
-	raise 'Unknown data base type.'
+	raise 'Unknown database type.'
       end
 
       @backupdb = BackupDB.new(dir)
       @db.register_observer(@backupdb)
 
-#      @index = DBIndexer.new(dir)
-#      @db.register_observer(@index)
+      # Regist Senna indexer	# Notice: This setting is experimental.
+      if config[:use_senna] == 'true'
+	@index = DBIndexer.new(dir)
+	@db.register_observer(@index)
+      end
 
       @pages = {}
     end
@@ -80,11 +83,10 @@ module Qwik
     end
 
     def each(all=false, with_super=false)
-      # @db.each {|key|
       @db.each(with_super) {|key|
 	next if ! all && /\A_/ =~ key
 	page = self[key]
-	next if page.nil? # what?
+	next if page.nil?	# What?
 	yield(page)
       }
     end
@@ -93,42 +95,19 @@ module Qwik
       each(true, &b)
     end
 
-    def nu_keys
-      return map {|page| page.key }
-    end
-
     def keys
-      keys = []
-      self.each {|page|
-	keys << page.key
-      }
-      return keys
-    end
-
-    def nu_title_list
-      return self.sort_by {|page|
-	page.get_title.downcase
-      }
-    end
-
-    def nu_date_list
-      return self.sort_by {|page|
-	page.mtime
-      }
+      ks = []
+      self.each {|page| ks << page.key }
+      return ks
     end
 
     def title_list
-#      get_titles.sort_by {|title|
-#	title.downcase
-#      }
-#      return get_pages.sort_by {|page|
       return to_a.sort_by {|page|
 	page.get_title.downcase
       }
     end
 
     def date_list
-#      return get_pages.sort_by {|page|
       return to_a.sort_by {|page|
 	page.mtime
       }
@@ -158,7 +137,7 @@ module Qwik
       return @db.last_article_time
     end
 
-    # FIXME: Should make this obsolete.
+    # FIXME: Make this obsolete.
     # page title support
     def pagetitle
       @pagetitle = PageTitle.new(@config, self) unless defined? @pagetitle
@@ -181,25 +160,6 @@ module Qwik
 
       return nil
     end
-
-    private
-
-    def get_titles
-      titles = []
-      self.each {|page|
-	titles << page.get_title
-      }
-      return titles
-    end
-
-#    def get_pages
-#      pages = []
-#      self.each {|page|
-#	pages << page
-#      }
-#      return pages
-#    end
-
   end
 end
 
@@ -211,16 +171,16 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-=begin
   module Qwik
     class Site
       # Only for test.
-      def get_pages
-	return @pages
+      if ! defined?(get_pages)
+	def get_pages
+	  return @pages
+	end
       end
     end
   end
-=end
 
   class TestPages < Test::Unit::TestCase
     include TestSession
@@ -346,10 +306,7 @@ if defined?($test) && $test
       pages.create('2').put_with_time('t4', Time.at(3))
 
       dlist = pages.date_list
-      ok_eq('t1', dlist[0].key)
-      ok_eq('t2', dlist[1].key)
-      ok_eq('1',  dlist[2].key)
-      ok_eq('2',  dlist[3].key)
+      eq ["t1", "t2", "1", "2"], dlist.map {|page| page.key }
       dlist.each {|page|
 	assert_instance_of(Time, page.mtime)
       }

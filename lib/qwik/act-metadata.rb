@@ -255,7 +255,7 @@ Since this site is in private mode, the feed includes minimum data.'
 
     def page_init
       @pagedata = {}
-      @site.date_list.each {|page|
+      @site.date_list.reverse[0..10].each {|page|
 	key = page.key
 	next if @pagedata[key]
 
