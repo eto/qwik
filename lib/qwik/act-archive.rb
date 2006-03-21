@@ -64,9 +64,9 @@ as the static representation of the Wiki site.
 
       Zip::ZipOutputStream.open(zip_file.to_s) {|zos|
 	site.each_all {|page|
-	  add_page(config, site, action, zos, site_cache_path, page)
+	  add_page(site, action, zos, site_cache_path, page)
 	}
-	add_theme(config, site, action, zos)
+	add_theme(site, action, zos, config.theme_dir)
       }
 
       return zip_file
@@ -74,7 +74,7 @@ as the static representation of the Wiki site.
 
     private
 
-    def self.add_page(config, site, action, zos, site_cache_path, page)
+    def self.add_page(site, action, zos, site_cache_path, page)
       base = "#{site.sitename}/#{page.key}"
 
       # Add original txt file.
@@ -82,7 +82,10 @@ as the static representation of the Wiki site.
 
       # Generate a html file.
       html_path = site_cache_path+"#{page.key}.html"
-      action.view_page_cache_generate(page.key) if ! html_path.exist?
+      # Call act-html.
+      #action.view_page_cache_generate(page.key) if ! html_path.exist?
+      # Force create static HTML file.
+      action.view_page_cache_generate(page.key)
       raise "Unknown error for '#{page.key}'" if ! html_path.exist?	# What?
       filename = "#{base}.html"
       add_entry(zos, filename, html_path.read)
@@ -102,7 +105,7 @@ as the static representation of the Wiki site.
       zos.write(content)
     end
 
-    def self.add_theme(config, site, action, zos)
+    def self.add_theme(site, action, zos, theme_dir)
       ar = []
 
       # FIXME: Collect this file list from the directory.
@@ -133,7 +136,6 @@ as the static representation of the Wiki site.
       ar << 's5/default/print.css'
       ar << 's5/default/slides.js'
 
-      theme_dir = config.theme_dir
       ar.each {|b|
 	add_entry(zos, "#{site.sitename}/.theme/#{b}",
 		  "#{theme_dir}/#{b}".path.read)

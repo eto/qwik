@@ -24,11 +24,8 @@ module Qwik
       args_conf, cmd = QwikService.parse_args('qwik-service', args)
       @config.update(args_conf)		# config file is specified by args
       file_conf = Config.load_config_file(@config[:config_file])
-      #pp file_conf
-
       @config.update(file_conf)
       @config.update(args_conf)		# Set args again to override.
-      #pp args_conf
 
       cmd, cmd_args = cmd
 
@@ -169,9 +166,7 @@ To show help,
 
     def watchlog
       require 'qwik/qwikweb-watchlog'
-      #WatchLog.main(ARGV)
       watch = WatchLog.new(@config)
-      #pp @config
       watch.run
     end
 

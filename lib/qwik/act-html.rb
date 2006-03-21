@@ -3,65 +3,43 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Action
     def ext_html
-      #select_appropriate_lang_page
-
       c_require_page_exist
       c_require_member if Action.private_page?(@req.base)
 
       if ! c_login?
-	#c_monitor('view')	# do not check.
-	return view_page_cache_check
+	c_set_html
+
+	if @config.test		# Only for test.
+	  @res.body = view_page_cache_generate(@req.base)
+	  return
+	end
+
+	pagename = @req.base
+	dirpath = @site.cache_path
+	file = Action.html_page_cache_path(dirpath, pagename)
+
+	if view_page_cache_need_generate?(file)
+	  view_page_cache_generate(pagename)
+	end
+
+	c_simple_send(file.to_s, 'text/html; charset=Shift_JIS')
+	return
       end
 
       #c_make_log('view')	# do not check.
       #c_monitor('view')
       surface_view(@req.base)	# common-surface.rb
 
-      #if WYSIWYG_USERS.include?(@req.user)
       users = @config[:wysiwyg_users]
       if users && users.split(/,\s/).include?(@req.user)
 	head = @res.body.get_path('//head')
-	#pp @res.body
-	#qp meta
 	head << [:meta, {'http-equiv'=>'Refresh',
 	    :content=>"0; url=#{@req.base}.wysiwyg"}]
       end
     end
 
-    def nu_select_appropriate_lang_page
-      @req.accept_language.each {|lang|
-	pagename_with_lang = "#{@req.base}_#{lang}"
-	if @site.exist?(pagename_with_lang)
-	  @req.base = pagename_with_lang
-	  return true
-	end
-      }
-      return false
-    end
-
     def self.private_page?(pagename)
       return pagename[0] == ?_
-    end
-
-    def view_page_cache_check
-      c_set_html
-      #c_set_no_cache	# You can cache the page.
-
-      if @config.test	# Only for test.
-	w = view_page_cache_generate(@req.base)
-	@res.body = w
-	return w
-      end
-
-      pagename = @req.base
-      dirpath = @site.cache_path
-      file = Action.html_page_cache_path(dirpath, pagename)
-
-      if view_page_cache_need_generate?(file)
-	view_page_cache_generate(pagename)
-      end
-
-      c_simple_send(file.to_s, "text/html; charset=Shift_JIS")
     end
 
     def view_page_cache_need_generate?(file)
@@ -81,8 +59,7 @@ module Qwik
     end
 
     def self.html_page_cache_store(dirpath, pagename, str)
-      # Write it to the file.
-      Action.html_page_cache_path(dirpath, pagename).write(str)
+      Action.html_page_cache_path(dirpath, pagename).write(str)	# Write to file.
     end
 
     def self.html_page_cache_path(dirpath, pagename)
@@ -101,23 +78,23 @@ if defined?($test) && $test
     include TestSession
 
     def test_private_page?
-      ok_eq false, Qwik::Action.private_page?('t')
-      ok_eq true,  Qwik::Action.private_page?('_t')
+      eq false, Qwik::Action.private_page?('t')
+      eq true,  Qwik::Action.private_page?('_t')
     end
 
     def test_protect_underbar
       t_add_user
 
-      page = @site.create('_t')
-      page.store('*t')
+      page = @site.create '_t'
+      page.store '*t'
 
-      res = session('/test/_t.html') # with login
-      ok_title('t')
+      res = session '/test/_t.html'	# with login
+      ok_title 't'
 
       res = session('/test/_t.html') {|req|
 	req.cookies.clear
       }
-      ok_title('Login')
+      ok_title 'Login'
     end
 
     def test_ext_html
@@ -125,67 +102,67 @@ if defined?($test) && $test
       t_site_open
 
       page = @site['1']
-      ok_eq(nil, page)
+      eq nil, page
       
-      res = session('/test/1.html')
-      #ok_eq(404, @res.status)
-      ok_title('Page not found.')
+      res = session '/test/1.html'
+      eq 404, @res.status
+      ok_title 'Page not found.'
 
       page = @site.create_new
-      page.store('t')
+      page.store 't'
 
-      res = session('/test/1.html')
-      ok_in(['t'], "//div[@class='section']/p")
+      res = session '/test/1.html'
+      ok_in ['t'], "//div[@class='section']/p"
 
       # test_cache
       res = session('/test/') {|req|
 	req.cookies.clear
       }
       # You can see the page.
-      ok_title('FrontPage')
+      ok_title 'FrontPage'
       # But you are not logged in.
-      ok_in(['Login'], "//div[@class='adminmenu']//a")
-      ok_eq("text/html; charset=Shift_JIS", @res.headers['Content-Type'])
+      ok_in ['Login'], "//div[@class='adminmenu']//a"
+      eq 'text/html; charset=Shift_JIS', @res.headers['Content-Type']
 
       t_without_testmode {
-	res = session('/test/') {|req|	# do it again
+	res = session('/test/') {|req|		# Do it again
 	  req.cookies.clear
 	}
 	assert_instance_of(File, res.body)	# The body is a cached content.
 	str = res.body.read
 	res.body.close		# Important.
 	assert_match(/FrontPage/, str)
-	ok_eq("text/html; charset=Shift_JIS",
-	      res.headers['Content-Type'])
+	eq 'text/html; charset=Shift_JIS', res.headers['Content-Type']
       }
     end
 
-    def nu_test_pagename_with_lang
-      t_add_user
-
-      page = @site.create 't'
-      res = session '/test/t.html'
-      ok_title 't'
-
-      page = @site.create 't_en'
-      res = session '/test/t.html'
-      ok_title 't_en'
-    end
-
-    def test_ext_html
+    def test_wysiwyg_users
       t_add_user
       t_site_open
 
       page = @site.create_new
 
-      res = session('/test/1.html')
-      ok_xp nil, "//meta"
+      res = session '/test/1.html'
+      ok_xp nil, '//meta'
 
       @config[:wysiwyg_users] = "a@e.com, #{DEFAULT_USER}, b@e.com"
 
       res = session('/test/1.html')
-      ok_xp [:meta, {:content=>"0; url=1.wysiwyg", "http-equiv"=>"Refresh"}],
-	"//meta"
+      ok_xp [:meta, {:content=>'0; url=1.wysiwyg', 'http-equiv'=>'Refresh'}],
+	'//meta'
+    end
+
+    def test_guest_in_public_mode
+      t_site_open
+
+      page = @site.create_new
+
+      res = session('/test/1.html') {|req| req.cookies.clear }
+      ok_title '1'
+
+      res = session('/test/1.html') {|req| req.cookies.clear }
+      ok_title '1'
+
     end
   end
 end
