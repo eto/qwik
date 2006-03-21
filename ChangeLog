@@ -1,5 +1,16 @@
 2006-03-20  Kouichirou Eto  <2006 eto.com>
 
+	* act-archive.rb: Force create static HTML page.
+	* act-html.rb: Refactoring.
+
+2006-03-20  Kouichirou Eto  <2006 eto.com>
+
+	* description.rb: Update description link.
+	* description-ja.rb: Ditto.
+	* act-theme.rb: Ditto.
+
+2006-03-20  Kouichirou Eto  <2006 eto.com>
+
 	* site-plan.rb: Change plan notation.
 	* act-plan.rb: Ditto.
 	* test-ms-plan.rb: Ditto.
