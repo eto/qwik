@@ -1,3 +1,5 @@
+@charset "Shift_JIS";
+
 /*
 
  Copyright (C) 2003-2006 Kouichirou Eto
@@ -727,7 +729,11 @@ table.qrcode {
 
 @media print {
   body, p, dl, ul, ol, table, td, tr, blockquote {
-    font-family: "×–¾’©‘Ì","‚l‚r ‚o–¾’©",serif ! important;
+    font-family:
+		"ƒqƒ‰ƒMƒm–¾’©‘Ì2"
+		"×–¾’©‘Ì"
+		"‚l‚r ‚o–¾’©"
+		serif ! important;
     background: transparent ! important;
   }
   h1, h2, h3, h4, em, strong, th {
