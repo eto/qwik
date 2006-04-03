@@ -13,7 +13,11 @@
 body {
   background-color: #fff;
   color: #000;
-  font-family: Helvetica,Arial,Verdana,"‚l‚r ‚oƒSƒVƒbƒN",sans-serif;
+  font-family:
+/*		"ƒqƒ‰ƒMƒm–¾’©‘Ì2"
+		"‚l‚r ‚o–¾’©"
+*/
+		Helvetica,Arial,Verdana,"‚l‚r ‚oƒSƒVƒbƒN",sans-serif;
   line-height: 1.33;
 }
 
