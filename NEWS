@@ -1,3 +1,17 @@
+Overview of Changes in qwikWeb 0.8.2 - 2006-04-15
+
+* The RSS is time order now.  The RSS includes only 10 pages.
+
+* You can use SiteTheme function now.
+
+* Change group plan style.
+
+* Show wema plugin only if you put the plugin to the page.
+
+* Change description naming scheme.
+
+* Many bug fixes.
+
 Overview of Changes in qwikWeb 0.8.1 - 2006-02-22
 
 * The parameters of 'config.txt' become fewer.
