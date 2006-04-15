@@ -103,6 +103,12 @@ This is {{br}} a test.
     end
 
     # ==============================
+    def plg_pre
+      content = yield
+      return [:pre, content]
+    end
+
+    # ==============================
     def plg_window(url, text=nil)
       text = url if text.nil?
       return [:a, {:href=>url, :target=>'_blank'}, text]
@@ -189,6 +195,11 @@ if defined?($test) && $test
 
       # test_br
       ok_wi([:br], '{{br}}')
+
+      # test_pre
+      ok_wi [:pre, "t\n"], '{{pre
+t
+}}'
 
       # test_window
       ok_wi([:a, {:target=>'_blank', :href=>'url'}, 't'], '{{window(url,t)}}')
