@@ -33,7 +33,7 @@ module Qwik
 	return self.send(cmd) if cmd_args.nil?
 	return self.send(cmd, cmd_args)
       end
-      puts "Error: unknown cmd [#{cmd}]"
+      warn "Error: unknown cmd [#{cmd}]"
     end
 
     def self.parse_args(myprog, args)
@@ -46,58 +46,58 @@ module Qwik
 	opts.on('-c', '--config file', 'Specify config file.') {|a|
 	  config[:config_file] = a
 	}
-	opts.on('-d', '--[no-]debug', 'Run in debug mode') {|a|
+	opts.on('-d', '--[no-]debug', 'Run in debug mode.') {|a|
 	  config[:debug] = a
 	}
-	opts.on('--start', 'Start qwikWeb and QuickML services') {|a|
+	opts.on('--start', 'Start qwikWeb and QuickML services.') {|a|
 	  cmd = [:start]
 	}
-	opts.on('--stop', 'Stop qwikWeb and QuickML services') {|a|
+	opts.on('--stop', 'Stop qwikWeb and QuickML services.') {|a|
 	  cmd = [:stop]
 	}
-	opts.on('--restart', 'Restart qwikWeb and QuickML services') {|a|
+	opts.on('--restart', 'Restart qwikWeb and QuickML services.') {|a|
 	  cmd = [:restart]
 	}
-	opts.on('--web-start', 'Start qwikWeb services') {|a|
+	opts.on('--web-start', 'Start qwikWeb services.') {|a|
 	  cmd = [:web_start]
 	}
-	opts.on('--web-stop', 'Stop qwikWeb services') {|a|
+	opts.on('--web-stop', 'Stop qwikWeb services.') {|a|
 	  cmd = [:web_stop]
 	}
-	opts.on('--web-restart', 'Restart qwikWeb services') {|a|
+	opts.on('--web-restart', 'Restart qwikWeb services.') {|a|
 	  cmd = [:web_restart]
 	}
-	opts.on('--ml-start', 'Start QuickML services') {|a|
+	opts.on('--ml-start', 'Start QuickML services.') {|a|
 	  cmd = [:ml_start]
 	}
-	opts.on('--ml-stop', 'Stop QuickML services') {|a|
+	opts.on('--ml-stop', 'Stop QuickML services.') {|a|
 	  cmd = [:ml_stop]
 	}
-	opts.on('--ml-restart', 'Restart QuickML services') {|a|
+	opts.on('--ml-restart', 'Restart QuickML services.') {|a|
 	  cmd = [:ml_restart]
 	}
-	opts.on('--watchlog', 'Watch log continuously') {|a|
+	opts.on('--watchlog', 'Watch log continuously.') {|a|
 	  cmd = [:watchlog]
 	}
-	opts.on('--makesite sitename,yourmailaddress', 'Make a new site') {|a|
+	opts.on('--makesite sitename,mailaddr', 'Make a new site.') {|a|
 	  cmd = [:makesite, a]
 	}
-	opts.on('--adduser sitename,mailaddress', 'Add a user') {|a|
+	opts.on('--adduser sitename,mailaddr', 'Add a user.') {|a|
 	  cmd = [:adduser, a]
 	}
-	opts.on('--showpassword mailaddress', 'Show password') {|a|
+	opts.on('--showpassword mailaddress', 'Show password.') {|a|
 	  cmd = [:showpassword, a]
 	}
-	opts.on('--incgen mailaddress', 'Increment a generation') {|a|
+	opts.on('--incgen mailaddress', 'Increment a generation.') {|a|
 	  cmd = [:incgen, a]
 	}
 	opts.separator ''
 	opts.separator 'Common options:'
-	opts.on_tail('-h', '--help', 'Show this message') {
+	opts.on_tail('-h', '--help', 'Show this message.') {
 	  puts opts
 	  exit
 	}
-	opts.on_tail('-v', '--version', 'Show version') {
+	opts.on_tail('-v', '--version', 'Show version.') {
 	  puts VERSION
 	  exit
 	}
@@ -110,8 +110,7 @@ To show help,
  % qwik-service --help
 
 '
-      exit
-	
+	exit
       end
       return config, cmd
     end
@@ -138,8 +137,8 @@ To show help,
     end
 
     def web_stop
-      pid = @config[:web_pid_file] || QWIKWEB_PID
-      stop_cmd('Stopping qwikWeb services: ', pid)
+      pidfile = @config[:web_pid_file] || QWIKWEB_PID
+      stop_cmd('Stopping qwikWeb services: ', pidfile)
     end
 
     def web_restart
@@ -154,8 +153,8 @@ To show help,
     end
 
     def ml_stop
-      pid = @config[:ml_pid_file] || QUICKML_PID
-      stop_cmd('Stopping QuickML services: ', pid)
+      pidfile = @config[:ml_pid_file] || QUICKML_PID
+      stop_cmd('Stopping QuickML services: ', pidfile)
     end
 
     def ml_restart
@@ -166,20 +165,24 @@ To show help,
 
     def watchlog
       require 'qwik/qwikweb-watchlog'
-      watch = WatchLog.new(@config)
-      watch.run
+      WatchLog.new(@config).run
     end
 
     def makesite(args)
       require 'qwik/farm'
       require 'qwik/mailaddress'
 
-      sitename, mail = args.split(/,/)
-      return makesite_usage if sitename.nil? || sitename.empty?
-      return makesite_usage if mail.nil? || mail.empty?
+      def usage
+	warn 'Usage: qwik-service --makesite sitename,yourmailaddress'
+	exit
+      end
+
+      sitename, mail = args.split(/,/, 2)
+      return usage if sitename.nil? || sitename.empty?
+      return usage if mail.nil? || mail.empty?
       if ! MailAddress.valid?(mail)
-	puts "Error: invalid mail form [#{mail}]"
-	return makesite_usage 
+	warn "Error: invalid mail form [#{mail}]"
+	return usage 
       end
 
       memory = ServerMemory.new(@config)
@@ -189,31 +192,32 @@ To show help,
       begin
 	site = farm.make_site(sitename)
       rescue => e
-	puts "Error: The site [#{sitename}] is already exist."
+	warn "Error: The site [#{sitename}] is already exist."
 	exit 1
       end
 
       site = farm.get_site(sitename)
       site.member.add(mail)
 
-      puts "Creating a new site [#{sitename}] and adding an initial user [#{mail}] is completed."
-    end
-
-    def makesite_usage
-      puts 'Usage: qwik-service --makesite sitename,yourmailaddress'
-      exit
+      puts "Creating a new site [#{sitename}] and
+adding an initial user [#{mail}] is completed."
     end
 
     def adduser(args)
       require 'qwik/farm'
       require 'qwik/mailaddress'
 
-      sitename, mail = args.split(/,/)
-      return adduser_usage if sitename.nil? || sitename.empty?
-      return adduser_usage if mail.nil? || mail.empty?
+      def usage
+	warn 'Usage: qwik-service --adduser sitename,mailaddress'
+	exit
+      end
+
+      sitename, mail = args.split(/,/, 2)
+      return usage if sitename.nil? || sitename.empty?
+      return usage if mail.nil? || mail.empty?
       if ! MailAddress.valid?(mail)
-	puts "Error: invalid mail form [#{mail}]"
-	return adduser_usage 
+	warn "Error: invalid mail form [#{mail}]"
+	return usage 
       end
 
       memory = ServerMemory.new(@config)
@@ -221,12 +225,12 @@ To show help,
 
       site = farm.get_site(sitename)
       if site.nil?
-	puts "Error: The site [#{sitename}] does not exist."
+	warn "Error: The site [#{sitename}] does not exist."
 	exit 1
       end
 
       if site.member.exist?(mail)
-	puts "Error: A user [#{mail}] is already exist."
+	warn "Error: A user [#{mail}] is already exist."
 	exit 1
       end
 
@@ -234,19 +238,19 @@ To show help,
       puts "Adding a new uesr [#{mail}] to site [#{sitename}] is completed."
     end
 
-    def adduser_usage
-      puts 'Usage: qwik-service --adduser sitename,mailaddress'
-      exit
-    end
-
     def showpassword(mail)
       require 'qwik/password'
       require 'qwik/mailaddress'
 
-      return showpassword_usage if mail.nil? || mail.empty?
+      def usage
+	warn 'Usage: qwik-service --showpassword mailaddress'
+	exit
+      end
+
+      return usage if mail.nil? || mail.empty?
       if ! MailAddress.valid?(mail)
-	puts "Error: invalid mail form [#{mail}]"
-	return showpassword_usage 
+	warn "Error: invalid mail form [#{mail}]"
+	return usage 
       end
 
       gen = PasswordGenerator.new(@config)
@@ -254,18 +258,18 @@ To show help,
       puts "pass: #{gen.generate(mail)}"
     end
 
-    def showpassword_usage
-      puts 'Usage: qwik-service --showpassword mailaddress'
-      exit
-    end
-
     def incgen(mail)
       require 'qwik/password'
 
-      return incgen_usage if mail.nil? || mail.empty?
+      def usage
+	warn 'Usage: qwik-service --showpassword mailaddress'
+	exit
+      end
+
+      return usage if mail.nil? || mail.empty?
       if ! MailAddress.valid?(mail)
-	puts "Error: invalid mail form [#{mail}]"
-	return incgen_usage 
+	warn "Error: invalid mail form [#{mail}]"
+	return usage 
       end
 
       gen = PasswordGenerator.new(@config)
@@ -273,11 +277,6 @@ To show help,
       puts "mail: #{mail}"
       puts "generation: #{g}"
       puts "increment generation done."
-    end
-
-    def incgen_usage
-      puts 'Usage: qwik-service --showpassword mailaddress'
-      exit
     end
 
     private
@@ -309,6 +308,6 @@ end
 
 if $0 == __FILE__
   args = ARGV
-  #args << '-d'	# force debug mode
+ #args << '-d'		# force debug mode
   Qwik::QwikService.main(args)
 end

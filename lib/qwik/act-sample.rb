@@ -87,6 +87,14 @@ This is a text to quote.
       return [:strong, "hello, #{target}!"]
     end
 
+    def plg_bhello
+      content = yield
+      content = content.map {|line|
+	"hello, #{line.chomp}!\n"
+      }.join
+      return [:pre, content]
+    end
+
     def act_hello
       c_notice('hello, world!') {
 	'hi, there.'
@@ -123,6 +131,10 @@ if defined?($test) && $test
     def test_plg_hello
       ok_wi([:strong, 'hello, world!'], '{{hello}}')
       ok_wi([:strong, 'hello, qwik!'], '{{hello(qwik)}}')
+      ok_wi [:pre, "hello, s!\nhello, t!\n"], '{{bhello
+s
+t
+}}'
     end
 
     def test_act_hello
