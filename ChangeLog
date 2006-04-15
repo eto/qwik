@@ -1,3 +1,14 @@
+2006-04-15  Kouichirou Eto  <2006 eto.com>
+
+	* act-basic.rb (plg_pre): New method.
+
+2006-03-20  Kouichirou Eto  <2006 eto.com>
+
+	* act-metadata.rb: Reverse order, newest is first.
+	* act-metadata.rb: Take only 10 pages.
+
+	* pages.rb: Enable Senna indexer by config setting.
+
 2006-03-20  Kouichirou Eto  <2006 eto.com>
 
 	* act-archive.rb: Force create static HTML page.
