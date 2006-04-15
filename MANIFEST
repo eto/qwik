@@ -66,7 +66,6 @@ debian/qwik.prerm.debhelper
 debian/qwik.substvars
 debian/rules
 etc/
-ext/Makefile
 ext/extconf.rb
 ext/test-xmlformatter.rb
 ext/xmlformatter.c
