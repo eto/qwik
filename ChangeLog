@@ -1,6 +1,7 @@
 2006-04-15  Kouichirou Eto  <2006 eto.com>
 
-	* act-basic.rb (plg_pre): New method.
+	* act-basic.rb (plg_pre): New plugin.
+	* act-sample.rb (plg_bhello): New plugin.
 
 2006-03-20  Kouichirou Eto  <2006 eto.com>
 
