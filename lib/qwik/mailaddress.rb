@@ -7,7 +7,7 @@ class MailAddress
     login_part = $1
     domain_part = $2
     return false if domain_part.include?('..')
-    #return false if mail.include?('..')
+   #return false if mail.include?('..')
     return true
   end
 
@@ -50,15 +50,15 @@ if defined?($test) && $test
     def test_valid?
       c = MailAddress
       assert_equal true,  c.valid?('user@example.com')
-      assert_equal true,  c.valid?("valid+@example.com")
-      assert_equal true,  c.valid?("+valid@example.com")
+      assert_equal true,  c.valid?('valid+@example.com')
+      assert_equal true,  c.valid?('+valid@example.com')
       assert_equal true,  c.valid?('_@example.com')
       assert_equal true,  c.valid?('us..er@example.com')
-      # Make this address valid for local account.
-      assert_equal true,  c.valid?('invalid@example')
+      # Make this address valid.  System uses this address for local account.
+      assert_equal true,  c.valid?('user@localdomain')
       assert_equal false, c.valid?(nil)
       assert_equal false, c.valid?('')
-      assert_equal false, c.valid?("invalid!@example.com")
+      assert_equal false, c.valid?('invalid!@example.com')
       assert_equal false, c.valid?('invalid')
       assert_equal false, c.valid?('user@example..com')
     end
