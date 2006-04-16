@@ -1,3 +1,9 @@
+qwik (0.8.2-1) unstable; urgency=low
+
+  * New Upstream Released. 
+
+ -- Yasuo Eto <yasuo@etou.org>  Tue, 11 Apr 2006 13:19:52 +0900
+
 qwik (0.8.1-2) unstable; urgency=low
 
   * add depend adduser.
