@@ -1,7 +1,15 @@
-/* Copyright (C) 2003-2005 Kouichirou Eto, Takashi Maekawa, All rights reserved.
-   based on a design by Takashi Maekawa.
-   This is free software with ABSOLUTELY NO WARRANTY.
-   You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+/*
+
+ Copyright (C) 2003-2006 Kouichirou Eto, Takashi Maekawa
+     All rights reserved.
+     This is free software with ABSOLUTELY NO WARRANTY.
+
+ You can redistribute it and/or modify it under the terms of 
+ the GNU General Public License version 2.
+
+ This page is designed by Takashi Maekawa.
+
+*/
 
 /* ========== general */
 * {
@@ -31,15 +39,9 @@ h2, h3, h4, h5, h6 {
   color: #c00;
   text-align: center;
   font-size: small;
-/*
-  font-size: 95%;
-*/
 }
 h2 {
   color: #c00;
-/*
-  font-size: medium;
-*/
 }
 h4 {
 }
@@ -148,9 +150,6 @@ a:active, a:hover { color: #fff; background-color: #099;
 
 /* ==================== section */
 .section {
-/*
-  border: 1px solid #f00;
-*/
 }
 .section input {
   font-size: small;
@@ -170,10 +169,6 @@ a:active, a:hover { color: #fff; background-color: #099;
 .login {
   margin: 0;
   padding: 16px 0 16px 32px;
-/*
-  background: #ccc;
-  border: 1px solid #ccc;
-*/
 }
 .login input {
   font-size: small;
@@ -242,6 +237,10 @@ a:active, a:hover { color: #fff; background-color: #099;
 .form dd {
   margin: 0;
   padding: 0;
+}
+
+form ul {
+  text-align: left;
 }
 
 /* end */
