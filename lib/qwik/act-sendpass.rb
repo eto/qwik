@@ -5,6 +5,8 @@ require 'qwik/mailaddress'
 module Qwik
   class Action
     def act_sendpass
+      c_require_member
+
       return sendpass_show_form if ! @req.is_post?
 
       status = {}

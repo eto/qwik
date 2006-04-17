@@ -317,6 +317,7 @@ class Qwik::CatalogFactory
       'New plan' => '新しい予定',
       'Create a new plan' => '新しい予定の登録',
       'Please input like this' => 'このように入力してください',
+      'Already Exist.' => 'すでにありました',
 
       # act-schedule
       'Schedule' => 'スケジュール',

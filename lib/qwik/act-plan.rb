@@ -118,12 +118,16 @@ You can not use tag notation to specify date now.
       
       pagename = "plan_#{dateobj.ymd_s}"
       page = @site[pagename]
-      page = @site.create(pagename) if page.nil?	# CREATE
-      page.store("* #{title}\n")	# Specify title.
+      msg = _('Already Exist.')
+      if page.nil?
+	msg = _('Created.')
+	page = @site.create(pagename)	# CREATE
+	page.store("* #{title}\n")	# Specify title.
+      end
 
       url = "#{page.key}.edit"
       return c_notice(_('New plan'), url, 201) {	# 201, Created
-	[[:h2, _('Created.')],
+	[[:h2, msg],
 	  [:p, [:a, {:href=>url}, _('Edit new page')]]]
       }
     end
@@ -192,8 +196,8 @@ if defined?($test) && $test
       res = session '/test/.plan'
       ok_in ["New plan"], '//h1'
       ok_attr({:action=>".plan", :method=>"POST"}, '//form')
-      ok_attr({:class=>"focus", :name=>"date"}, '//input')
-      ok_attr({:name=>"title"}, '//input[2]')
+      ok_attr({:value=>"20060417", :class=>"focus", :name=>"date"}, '//input')
+      ok_attr({:value=>"Plan", :name=>"title"}, '//input[2]')
 
       page = @site.create_new
       page.store('t1')

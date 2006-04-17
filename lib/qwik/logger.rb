@@ -87,8 +87,8 @@ if defined?($test) && $test
       config = Qwik::Config.new
       req = Qwik::Request.new(config)
       res = Qwik::Response.new(config)
-      assert_equal "1970-01-01T09:00:00  - \"\" 200 -\n",
-	c.format_log_line(req, res)
+      assert_equal "1970-01-01T09:00:00  - \"\" 200 - 0.00\n",
+	c.format_log_line(req, res, 0)
 
       path = 'test.txt'.path
       path.unlink if path.exist?
@@ -98,8 +98,8 @@ if defined?($test) && $test
       assert_equal true, path.exist?
 
       # test_log
-      logger.log(req, res, req, res)
-      assert_equal "1970-01-01T09:00:00  - \"\" 200 -\n", path.read
+      logger.log(req, res, req, res, 0)
+      assert_equal "1970-01-01T09:00:00  - \"\" 200 - 0.00\n", path.read
 
       # test_close
       logger.close
