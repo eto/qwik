@@ -1,3 +1,24 @@
+2006-04-17  Kouichirou Eto  <2006 eto.com>
+
+	* version.rb: Version up to 0.8.3p.  'p' means pre.
+
+	* act-sendpass.rb: You can send password for the members.
+	* act-edit.rb: Ditto.
+
+	* act-login.rb: Refine Login page.
+	You see getpass form in the same Login page.
+	* act-getpass.rb: Ditto.
+
+	* act-plan.rb: The default Date and Title is set.
+
+	* util-filename.rb: Ad hoc bug fix for tilda(~).
+
+	* server.rb: You can see time information for the action.
+	* logger.rb: Ditto.
+
+	* description.rb: Add _LoginMaessage link.
+	* description-ja.rb: Ditto.
+
 2006-04-15  Kouichirou Eto  <2006 eto.com>
 
 	* act-basic.rb (plg_pre): New plugin.
