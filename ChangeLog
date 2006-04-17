@@ -3,7 +3,10 @@
 	* version.rb: Version up to 0.8.3p.  'p' means pre.
 
 	* act-sendpass.rb: You can send password for the members.
+	* act-sendpass.rb: Only members can access it.
 	* act-edit.rb: Ditto.
+
+	* act-plan.rb: Reuse if the plan page is already exist.
 
 	* act-login.rb: Refine Login page.
 	You see getpass form in the same Login page.
@@ -18,6 +21,9 @@
 
 	* description.rb: Add _LoginMaessage link.
 	* description-ja.rb: Ditto.
+
+	* qwikeditor.css: Bug fix for IE.
+	Thanks to Mr. Takashi Maekawa.
 
 2006-04-15  Kouichirou Eto  <2006 eto.com>
 
