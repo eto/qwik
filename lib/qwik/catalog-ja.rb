@@ -182,6 +182,8 @@ class Qwik::CatalogFactory
       'Send Password' => 'パスワード送信',
       'You will get the password by e-mail.' => 'パスワードをメールで送ります',
       'Please input your mail address.' => 'メールアドレスを入力してください',
+#      'You can send password for members.' =>
+#      'メンバーにパスワードを送ることができます。',
       'Mail address' => 'メールアドレス',
       'Go back to Login' => 'ログイン画面にもどる',
 
@@ -254,7 +256,7 @@ class Qwik::CatalogFactory
       'Do login by Basic Auth.' => 'Basic認証でログインします。',
       'Login by cookie' => 'cookieによるログイン',
       'You are already login by cookie.' => '現在cookieでログインしています。',
-
+      'You can login by TypeKey.' => 'TypeKeyでもログインできます。',
       'Login Error' => 'ログインエラー',
       'Invalid ID(E-mail) or Password.' =>
       'ユーザID(E-mail)もしくはパスワードが違います',
@@ -291,6 +293,8 @@ class Qwik::CatalogFactory
       '携帯電話の方は、こちらをご利用下さい',
       'You can also use TypeKey' => 'TypeKeyも使えます',
       'Login by TypeKey' => 'TypeKeyでログイン',
+      'Please send mail address for authentication.' =>
+      '認証のため、メールアドレスを送信してください',
 
       # act-member
       'Add a member' => 'メンバー追加',
@@ -312,6 +316,7 @@ class Qwik::CatalogFactory
       'Plan' => '予定',
       'New plan' => '新しい予定',
       'Create a new plan' => '新しい予定の登録',
+      'Please input like this' => 'このように入力してください',
 
       # act-schedule
       'Schedule' => 'スケジュール',
@@ -372,6 +377,16 @@ class Qwik::CatalogFactory
       'Search result' => '検索結果',
       'No match.' => '見つかりませんでした。',
 
+      # act-sendpass
+      'Success' => '成功しました',
+#      'Failed' => '失敗しました',
+      'Wrong format' => '形式が違います',
+      'Not a member' => 'メンバーではありません',
+      'You can send password for the members.' =>
+      'メンバーにパスワードを送信することができます。',
+      'Please select members to send password.' =>
+      'パスワードを送るメンバーを選択してください。',
+
       # act-table-edit
       'You can only use a table.' => 'tableしか使えません。',
       'You can only use text.' => 'textしか使えません。',
@@ -389,6 +404,8 @@ class Qwik::CatalogFactory
 
       # act-typekey
       'Can not use.' => '使えません。',
+      'There is no site token for TypeKey.' =>
+      'TypeKey用のサイトトークンがありません。',
       'Verify failed.' => '認証できませんでした。',
       'Time out.' => '時間切れです。',
 

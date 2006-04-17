@@ -148,6 +148,8 @@ module Qwik
 
   class Servlet < WEBrick::HTTPServlet::AbstractServlet
     def do_GET(request, response)
+      start_time = Time.now
+
       config = @server[:QwikConfig]
       memory = @server[:QwikMemory]
 
@@ -163,8 +165,14 @@ module Qwik
 
       res.setback(response)
 
+      diff = Time.now - start_time
+      #qp diff
+
       qlog = memory[:qwik_access_log]
-      qlog.log(request, response, req, res) if qlog	# Take a log.
+      logline = Logger.format_log_line(req, response, diff)
+      if qlog && ! Logger::IGNORE_ACTION.include?(req.plugin)
+	qlog.take_log(logline)	# Take a log.
+      end
 
       if res.basicauth
 	proc = res.basicauth

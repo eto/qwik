@@ -91,13 +91,16 @@ You can not use tag notation to specify date now.
       title = @req.query['title']
       if date.nil? || date.empty? || title.nil? || title.empty?
 	date_attr = {:name=>'date', :class => 'focus'}
+	date_attr[:value] = Time.now.ymd_s
 	date_attr[:value] = date if date && ! date.empty?
 	title_attr = {:name=>'title'}
+	title_attr[:value] = 'Plan'
 	title_attr[:value] = title if title && ! title.empty?
 	form = [:form, {:action=>'.plan', :method=>'POST'},
 	  [:dl,
 	    [:dt, _('Date')],
 	    [:dd, [:input, date_attr]],
+#	    [:dd, _('Please input like this')+':'+Time.now.ymd_s],
 	    [:dt, _('Title')],
 	    [:dd, [:input, title_attr]]],
 	  [:input, {:type=>'submit', :value=>_('Create a new plan')}]]

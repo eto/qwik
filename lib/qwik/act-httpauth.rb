@@ -78,26 +78,26 @@ if defined?($test) && $test
       t_add_user
 
       # See the FrontPage.
-      res = session('/test/')
-      ok_title('FrontPage')
+      res = session '/test/'
+      ok_title 'FrontPage'
 
       # See the FrontPage before Login.
       res = session('/test/') {|req|
 	req.cookies.clear
       }
-      ok_title('Login')
-      ok_xp([:meta, {:content=>"1; url=/test/.login", 'http-equiv'=>'Refresh'}],
-	    "//meta[2]")
+      ok_title 'Login'
+      ok_xp [:meta, {:content=>"1; url=/test/.login", 'http-equiv'=>'Refresh'}],
+	    "//meta[2]"
 
       # See the Login page.
       res = session('/test/.login') {|req|
 	req.cookies.clear
       }
-      ok_title('Login')
-      ok_xp([:a, {:href=>'.getpass'}, [:em, 'Get Password']],
-	    "//div[@class='section']/a")
-      ok_xp([:a, {:href=>'.basicauth'}, 'Login by Basic Auth'],
-	    "//div[@class='section']/a[2]")
+      ok_title 'Login'
+#      ok_xp [:a, {:href=>'.getpass'}, [:em, 'Get Password']],
+#	    "//div[@class='section']/a"
+#      ok_xp [:a, {:href=>'.basicauth'}, 'Login by Basic Auth'],
+#	    "//div[@class='section']/a[2]"
 
       # See the Basic Auth Login page.
       res = session('/test/.basicauth') {|req|

@@ -257,6 +257,8 @@ if defined?($test) && $test
       assert_equal "\343\201\202", 'Ç†'.sjistou8
       assert_equal 'UTF-8', 'Ç†'.sjistou8.charset
 
+      assert_equal "\342\200\276", '~'.sjistou8
+
       # test_u8tosjis
       assert_equal "\202\240", "\343\201\202".u8tosjis
       assert_equal 'Shift_JIS', "\343\201\202".u8tosjis.charset
@@ -314,6 +316,14 @@ if defined?($test) && $test
       assert_equal "\202\240", s.to_sjis
       assert_equal "\244\242", s.to_euc
       assert_equal "\e$B$\"\e(B", s.to_jis
+    end
+
+    def test_bug
+      # $KCODE = 'u'
+      assert_equal "~", "~".to_utf8
+      assert_equal "\342\200\276", "~".set_sjis.to_utf8	# annoying...
+      #assert_equal "\343\200\234", "Å`".to_utf8
+      #assert_equal "\343\200\234", "Å`".set_sjis.to_utf8
     end
   end
 end

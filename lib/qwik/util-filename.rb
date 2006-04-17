@@ -8,6 +8,9 @@ module Qwik
   class Filename
     def self.encode(str)
       str = str.to_filename_charset
+      str = str.gsub(/\342\200\276/n) {
+	'~'
+      }
       str = str.gsub(/([^ 0-9A-Za-z_.\/-]+)/n) {
 	'=' + $1.unpack('H2' * $1.size).join('=').upcase
       }
@@ -61,8 +64,13 @@ if defined?($test) && $test
       # test_encode
       ok_eq('t', c.encode('t'))
       ok_eq(' ', c.encode(' '))
+      ok_eq('=E3=81=82', c.encode("‚ "))
       ok_eq('=E3=81=82', c.encode("\202\240"))
       ok_eq('=E3=81=82.txt', c.encode("\202\240.txt"))
+
+      # test_bug
+      ok_eq('=7E', c.encode('~'))
+      ok_eq('=7E', c.encode('~'.set_sjis))
 
       # test_decode
       ok_eq('t', c.decode('t'))

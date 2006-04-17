@@ -39,6 +39,7 @@ You can also edit several configurations.
 - [[_InterWikiName]] Inter wiki link.
 - [[_IsbnLink]] Used for isbn plugin.
 - [[_BookSearch]] Used for book search plugin.
+- [[_LoginMessage]] If you created this page, you\'ll see message in Login page.
 
 These pages are inherited from the parent pages.
 If you edited the pages, the content is copied from the parent pages.

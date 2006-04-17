@@ -14,7 +14,7 @@ module Qwik
       end
 
       sitetoken = typekey_get_sitetoken
-      return c_nerror(_('Can not use.')) if sitetoken.nil?
+      return typekey_error_no_sitetoken if sitetoken.nil?
 
       tk = TypeKey.new(sitetoken, '1.1')
       key = typekey_get_publickey(tk)
@@ -45,9 +45,15 @@ module Qwik
       }
     end
 
+    def typekey_error_no_sitetoken
+      return c_nerror(_('Can not use.')) {
+	[:p, _('There is no site token for TypeKey.')]
+      }
+    end
+
     def typekey_redirect_to_typekey
       sitetoken = typekey_get_sitetoken
-      return c_nerror(_('Can not use.')) if sitetoken.nil?
+      return typekey_error_no_sitetoken if sitetoken.nil?
 
       tk = TypeKey.new(sitetoken, '1.1')
 

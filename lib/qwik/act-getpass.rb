@@ -58,16 +58,21 @@ module Qwik
       c_notice(_('Get Password')) {
 	[[:h2, _('You will get the password by e-mail.')],
 	  [:p, _('Please input your mail address.')],
-	  [:form, {:action=>'.getpass',
-	      :style=>'text-align: center; margin: 32px 0 48px;'},
-	    [:div, {:style=>'margin: 16px 0 8px'},
-	      [:em, _('Mail address'), ': '], 
-	      [:input,
-		{:name=>'mail', :size=>'40', :istyle=>'3', :class=>'focus'}]],
-	    [:div, {:class=>'rightbutton'},
-	      [:input, {:type=>'submit', :value=>_('Send')}]]],
+	  getpass_form,
 	  [:p, [:a, {:href=>'.login'}, _('Go back to Login')]]]
       }
+    end
+
+    def getpass_form(form_style='text-align: center; margin: 32px 0 48px;',
+		     div_style='margin: 16px 0 8px', klass='focus')
+      return [:form, {:action=>'.getpass',
+	  :style=>form_style},
+	[:div, {:style=>div_style},
+	  [:em, _('Mail address'), ': '], 
+	  [:input,
+	    {:name=>'mail', :size=>'40', :istyle=>'3', :class=>klass}]],
+	[:div, {:class=>'rightbutton'},
+	  [:input, {:type=>'submit', :value=>_('Send')}]]]
     end
 
     def getpass_not_member(user, ml)

@@ -139,9 +139,9 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
       user = @req.query['user']		# login from query
       pass = @req.query['pass']
 
-      if !user
+      if ! user
 	return c_notice(_('Login')) {
-	  login_show_login_page(@site.site_url) # show login page
+	  login_show_login_page(@site.site_url)	# show login page
 	}
       end
 
@@ -181,18 +181,49 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
     end
 
     def login_show_login_page(url)
-      login_msg = ''
-      page = @site['_LoginMessage']
-      if page
+      login_msg = nil
+      if page = @site['_LoginMessage']
 	login_msg = [:div, {:class=>'warning'}, c_res(page.load)]
       end
-      div = [:div, {:class=>'login_page'},
-	[:p, _('Login to '), [:em, url], [:br],
-	  _('Please input ID(E-mail) and password.')]]
-      div << login_msg
+      login_target_div = [:div,
+	[:h2, _('Login to '), [:em, url]],
+	[:p, _('Please input ID(E-mail) and password.')]]
+
+      div = [:div, {:class=>'login_page'}]
+      div << login_target_div
+      div << login_msg if login_msg
+
       div << login_page_form
-      div << login_page_menu
-      return div
+
+      div << [:hr]
+      div << [:div,
+	[:h2, _("If you don't have password")],
+	[:p, _('Please input your mail address.')],
+	getpass_form('', '', ''),
+#	[:p, [:a, {:href=>'.sendpass'},
+#	    _('You can send password for members.')]],
+      ]
+
+      div << [:hr]
+      div << [:div,
+	[:h2, [:a, {:href=>'.typekey'}, _('Login by TypeKey')]],
+	[:p, _('Please send mail address for authentication.')]]
+
+      div << [:hr]
+      div << [:div,
+	[:h2, [:a, {:href=>'.basicauth'}, _('Login by Basic Auth')]],
+	[:p, _('For mobile phone user')]]
+
+#      div << [:hr]
+#      div << login_page_menu
+
+      style = [:style, '
+.container {
+  margin-top: 20px;
+}
+']
+
+      return [style, div]
     end
 
     def login_show_login_suceed_page
@@ -219,12 +250,13 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 
     def login_page_menu
       return [:ul,
-	[:li, _("If you don't have password"), ' : ',
-	  [:a, {:href=>'.getpass'}, [:em, _('Get Password')]]],
+#	[:li, _("If you don't have password"), ' : ',
+#	  [:a, {:href=>'.getpass'}, [:em, _('Get Password')]]],
 	[:li, _('For mobile phone user'), ' : ',
 	  [:a, {:href=>'.basicauth'}, _('Login by Basic Auth')]],
-	[:li,
-	  [:a, {:href=>'.typekey'}, _('Login by TypeKey')]]]
+#	[:li,
+#	  [:a, {:href=>'.typekey'}, _('Login by TypeKey')]]
+]
     end
   end
 end
@@ -263,7 +295,7 @@ if defined?($test) && $test
       ok_title 'Login'
       ok_xp([:input, {:istyle=>'3', :name=>'user', :class=>'focus'}],
 	    '//input')
-      ok_xp([:a, {:href=>'.getpass'}, [:em, 'Get Password']], '//a')
+#      ok_xp([:a, {:href=>'.getpass'}, [:em, 'Get Password']], '//a')
       assert_cookie({'user'=>'', 'pass'=>''}, @res.cookies)
 
       # Get password by e-mail.  See act-getpass.

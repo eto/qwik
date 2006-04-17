@@ -222,6 +222,16 @@ if defined?($test) && $test
 	      [:a, {:href=>'1.download/test.nosuchext'}, 'download']],
 	    '{{file(test.nosuchext)}}')
     end
+
+    def test_bug
+      eq '=7E', Qwik::Filename.encode('~')
+
+      ok_wi [:div, {:class=>'ref'},
+	[:a, {:href=>'1.files/=7E.txt'},
+	  [:img, {:src=>'.theme/i/broken.gif', :alt=>'~.txt', :class=>'icon'}],
+	  [:br],
+	  '~.txt']], '{{file(~.txt)}}'
+    end
   end
 
   class TestActIcon < Test::Unit::TestCase

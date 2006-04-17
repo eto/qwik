@@ -22,9 +22,16 @@ module Qwik
     end
 
     IGNORE_ACTION = %w(theme num)
-    def log(wreq, wres, req, res)
+    def log(wreq, wres, req, res, diff)
       return if IGNORE_ACTION.include?(req.plugin)
-      format = Logger.format_log_line(req, wres)
+      format = Logger.format_log_line(req, wres, diff)
+      @log << format
+      $stdout << format if @verbose
+    end
+
+    def take_log(format)
+      #return if IGNORE_ACTION.include?(req.plugin)
+      #format = Logger.format_log_line(req, wres, diff)
       @log << format
       $stdout << format if @verbose
     end
@@ -37,9 +44,7 @@ module Qwik
       @log.sync = true
     end
 
-    private
-
-    def self.format_log_line(req, wres)
+    def self.format_log_line(req, wres, diff)
       time     = req.start_time.rfc_date
       fromhost = req.fromhost
       user     = req.user || '-'
@@ -47,9 +52,12 @@ module Qwik
       status   = wres.status
       len      = '-'
       len      = wres.body.length if wres.body.is_a? String
-      str = "#{time} #{fromhost} #{user} \"#{request_line}\" #{status} #{len}\n"
+      diff = "%0.2f" % diff
+      str = "#{time} #{fromhost} #{user} \"#{request_line}\" #{status} #{len} #{diff}\n"
       return str
     end
+
+    private
 
     def nu_resolve(ip)
       begin
