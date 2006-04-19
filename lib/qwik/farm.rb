@@ -14,9 +14,10 @@ module Qwik
       @logger = @memory[:logger]
       @data_path = @config.sites_dir.path
       @grave_path = @config.grave_dir.path
+      @top_sitename = @config.default_sitename
       @sites = {}
       if $update_group_files
-	$update_group_files = false
+	$update_group_files = false	# Set before to do it.
 	update_group_files
       end
     end
@@ -29,12 +30,12 @@ module Qwik
     end
 
     def get_site(sitename)
-      sitepath = @data_path+sitename
+      sitepath = @data_path + sitename
       #qp sitepath
 
       # FIXME: Should we check the directory everytime?
       if ! sitepath.directory?	# At the first, check the directory.
-	@sites.delete(sitename) if @sites[sitename]	# Delete from the hash.
+	@sites.delete(sitename) if @sites[sitename]	# Delete from hash.
 	return nil	# No such site.
       end
 
@@ -42,16 +43,14 @@ module Qwik
       # Create a new site object and return it.
       return @sites[sitename] ||= Site.new(@config, @memory, sitename)
     end
+    alias exist? get_site
 
     def get_top_site
-      return get_site(@config.default_sitename)
-    end
-
-    def exist?(sitename)
-      return self.get_site(sitename)
+      return get_site(@top_sitename)
     end
 
     def each
+      p "each"
       check_all_sites
       @sites.keys.sort.each {|sitename|
 	yield(sitename)
@@ -66,7 +65,7 @@ module Qwik
     end
 
     def make_site(sitename)
-      sitepath = @data_path+sitename
+      sitepath = @data_path + sitename
       raise 'site already exist' if sitepath.exist?	# Check the path first.
       sitepath.mkdir
       return nil
@@ -106,7 +105,7 @@ module Qwik
       inactive_sites = []
       self.each {|sitename|
 	# Do not bury default site.
-	next if sitename == @config.default_sitename
+	next if sitename == @top_sitename
 	site = get_site(sitename)
 	inactive_sites << sitename if site && site.inactive?
       }
@@ -119,7 +118,7 @@ module Qwik
       dirtime = sitepath.mtime.to_i
       @grave_path.check_directory
       while true
-	gravesitepath = @grave_path+(dirtime.to_s+'_'+sitename)
+	gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
 	if ! gravesitepath.exist?
 	  sitepath.rename(gravesitepath)
 	  break

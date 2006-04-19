@@ -22,7 +22,7 @@ You can not use tag notation to specify date now.
     D_PluginPlan_ja = {
       :dt => '予定表示プラグイン',
       :dd => '予定を表示します。',
-      :dc => "* 例
+      :dc => '* 例
  {{plan}}
 {{plan}}
 もし予定が登録されている場合は、このプラグインで表示されます。
@@ -33,10 +33,10 @@ You can not use tag notation to specify date now.
 過去の予定は表示されません。また一年以上先の予定も表示されません。
 一ヶ月先程度の予定を登録してみてください。
 
-'''注意''' 以前はタグ記法による日付指定を採用していましたが、
+\'\'\'注意\'\'\' 以前はタグ記法による日付指定を採用していましたが、
 新しいバージョンから上記の新規予定ページ方式に切り替えました。
 御了承下さい。
-"
+'
     }
 
     def plg_side_plan
@@ -91,7 +91,7 @@ You can not use tag notation to specify date now.
       title = @req.query['title']
       if date.nil? || date.empty? || title.nil? || title.empty?
 	date_attr = {:name=>'date', :class => 'focus'}
-	date_attr[:value] = Time.now.ymd_s
+	date_attr[:value] = @req.start_time.ymd_s
 	date_attr[:value] = date if date && ! date.empty?
 	title_attr = {:name=>'title'}
 	title_attr[:value] = 'Plan'
@@ -100,7 +100,6 @@ You can not use tag notation to specify date now.
 	  [:dl,
 	    [:dt, _('Date')],
 	    [:dd, [:input, date_attr]],
-#	    [:dd, _('Please input like this')+':'+Time.now.ymd_s],
 	    [:dt, _('Title')],
 	    [:dd, [:input, title_attr]]],
 	  [:input, {:type=>'submit', :value=>_('Create a new plan')}]]
@@ -196,13 +195,11 @@ if defined?($test) && $test
       res = session '/test/.plan'
       ok_in ["New plan"], '//h1'
       ok_attr({:action=>".plan", :method=>"POST"}, '//form')
-      ok_attr({:value=>"20060417", :class=>"focus", :name=>"date"}, '//input')
+      ok_attr({:value=>"19700101", :class=>"focus", :name=>"date"}, '//input')
       ok_attr({:value=>"Plan", :name=>"title"}, '//input[2]')
 
       page = @site.create_new
       page.store('t1')
-
     end
-
   end
 end

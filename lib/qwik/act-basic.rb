@@ -1,4 +1,5 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+require 'qwik/act-describe'
 
 module Qwik
   class Action
@@ -42,6 +43,14 @@ You can comment out the content.
 You can not see this line.
 You can not see this line also.
 }}
+** My group
+You can see your group list.
+ {{my_group}}
+{{my_group}}
+** Plugin list plugin
+プラグインの一覧を表示します。
+ {{plugin_list}}
+{{plugin_list}}
 '
     }
 
@@ -85,6 +94,14 @@ This is {{br}} a test.
 この行は見えない。
 この行も見えない。
 }}
+** 自分のグループ
+自分が所属しているグループの一覧を表示します。
+ {{my_group}}
+{{my_group}}
+** プラグインリスト・プラグイン
+プラグインの一覧を表示します。
+ {{plugin_list}}
+{{plugin_list}}
 '
     }
 
@@ -160,6 +177,7 @@ This is {{br}} a test.
 	[:em, diffsec, _('sec.')]]
     end
 
+    # ============================== member control
     def plg_only_guest
       return nil if @req.user
       s = yield
@@ -174,6 +192,67 @@ This is {{br}} a test.
       return c_res(s)
     end
 
+    # ============================== group
+    def plg_my_group
+      return nil if @req.user.nil?
+      farm = @memory.farm
+      group_list = farm.get_my_group(@req.user)
+      ul = [:ul]
+      group_list.each {|name|
+	ul << [:li, [:a, {:href=>"/#{name}/"}, name]]
+      }
+      return ul
+    end
+
+    # ============================== meta function
+    def plg_plugin_list
+      desc = descriptions_hash
+      plg_desc = plugin_descriptions(desc)
+
+      ul = [:ul]
+      plugin_list.each {|plugin_name|
+	if plg_desc[plugin_name]
+	  desc_link = plg_desc[plugin_name].first
+	  ul << [:li, [:a, {:href=>"#{desc_link}.describe"}, plugin_name]]
+	else
+	  ul << [:li, plugin_name]
+	end
+      }
+      return ul
+    end
+
+    IGNORE_PLUGINS = [/\Aring_/, /\Amodulobe_/]
+    def plugin_list
+      return self.methods.grep(/\Aplg_/).map {|name|
+	name.sub(/\Aplg_/) {''}
+      }.reject {|name|
+	IGNORE_PLUGINS.any? {|re| re =~ name }
+      }.sort
+    end
+
+    def descriptions_hash
+      desc = {}
+      description_list.each {|name|
+	desc[name] = self.class.const_get("D_#{name}")[:dc]
+      }
+      return desc
+    end
+
+    def plugin_descriptions(desc)
+      plg_desc = {}
+      desc.each {|k, v|
+	v.each {|line|
+	  if /\{\{([a-z_]+)/ =~ line
+	    name = $1
+	    plg_desc[name] = [] if ! plg_desc[name]
+	    if ! plg_desc[name].include? k
+	      plg_desc[name] << k
+	    end
+	  end
+	}
+      }
+      return plg_desc
+    end
   end
 end
 
@@ -213,6 +292,11 @@ t
       #ok_wi('', '{{menu(newpage)}}', nil)
       #ok_wi('', '{{menu(edit)}}', nil)
       #ok_wi('', '{{menu(nosuchmenu)}}', nil)
+
+      # test_meta_plugin
+      #ok_wi ['test'], '{{plugin_list}}'
+      w = @action.plg_plugin_list
+      eq :ul, w[0]
     end
 
     def test_page_attribute
@@ -230,6 +314,5 @@ t
       assert_path([:p, 'g'], "{{only_guest\ng\n}}",
 		  nil, "//div[@class='section']")
     end
-
   end
 end
