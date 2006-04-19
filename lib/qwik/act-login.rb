@@ -4,6 +4,7 @@ require 'qwik/password'
 require 'qwik/act-httpauth'
 require 'qwik/act-typekey'
 require 'qwik/act-logout'
+require 'qwik/act-getpass'
 
 module Qwik
   class Action
