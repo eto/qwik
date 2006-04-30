@@ -16,9 +16,24 @@ You can show an editable text field.
 "
     }
 
+    D_PluginTextarea_ja = {
+      :dt => 'テキストエリアプラグイン',
+      :dd => '編集可能なテキストエリアを表示します。',
+      :dc => "* 例
+ {{textarea
+ これはテキストエリアのサンプルです。
+ }}
+{{textarea
+これはテキストエリアのサンプルです。
+}}
+編集可能なテキストエリアです。
+"
+    }
+
     TEXTAREA_MIN_COLS = 50
     TEXTAREA_MIN_ROWS = 4
-
+    TEXTAREA_MAX_COLS = 100
+    TEXTAREA_MAX_ROWS = 50
     def plg_textarea
       # @textarea_num is global for an action.
       @textarea_num = 0 if ! defined?(@textarea_num)
@@ -28,14 +43,16 @@ You can show an editable text field.
       content = ''
       content = yield if block_given?
 
-      cols = rows = 0
-      content.each_line {|line|
+      cols = rows = 1
+      content.each {|line|
 	len = line.chomp.length
 	cols = len if cols < len
 	rows += 1
       }
       cols = TEXTAREA_MIN_COLS if cols < TEXTAREA_MIN_COLS
       rows = TEXTAREA_MIN_ROWS if rows < TEXTAREA_MIN_ROWS
+      cols = TEXTAREA_MAX_COLS if TEXTAREA_MAX_COLS < cols
+      rows = TEXTAREA_MAX_ROWS if TEXTAREA_MAX_ROWS < rows
 
       return [:div, {:class=>'textarea'},
 	[:form, {:method=>'POST', :action=>action},
