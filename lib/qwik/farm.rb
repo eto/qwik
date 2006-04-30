@@ -31,7 +31,6 @@ module Qwik
 
     def get_site(sitename)
       sitepath = @data_path + sitename
-      #qp sitepath
 
       # FIXME: Should we check the directory everytime?
       if ! sitepath.directory?	# At the first, check the directory.
@@ -50,7 +49,7 @@ module Qwik
     end
 
     def each
-      p "each"
+      #p "each"
       check_all_sites
       @sites.keys.sort.each {|sitename|
 	yield(sitename)

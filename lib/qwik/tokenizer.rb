@@ -242,6 +242,7 @@ if defined?($test) && $test
 
       # test_super_pre
       ok([[:pre, "p\n"], [:text, 't']], "{{{\np\n}}}\nt\n")
+      ok([[:pre, "#p\n"], [:text, 't']], "{{{\n#p\n}}}\nt\n")
 
       # test_in_bracket # bad hack
       ok([[:dl, 'dt', 'dd']], ':dt:dd')
