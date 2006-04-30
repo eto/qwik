@@ -1,3 +1,19 @@
+2006-04-30  Kouichirou Eto  <2006 eto.com>
+
+	* act-povray.rb: New plugin to render 3D CG.
+
+	* act-textarea.rb: Refactoring.
+
+2006-04-20  Kouichirou Eto  <2006 eto.com>
+
+	* act-basic.rb: New plugin. plugin_list
+
+	* act-basic.rb: New plugin. my_group
+
+	* act-plan.rb: Use start_time instead of Time.now
+
+	* farm.rb: Refactoring.
+
 2006-04-17  Kouichirou Eto  <2006 eto.com>
 
 	* version.rb: Version up to 0.8.3p.  'p' means pre.
