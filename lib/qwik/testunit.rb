@@ -32,8 +32,10 @@ module Test
     end
 
     module Assertions
+      alias ok assert
       alias ok_eq assert_equal
       alias eq assert_equal
+      alias is assert_equal
     end
   end
 end

@@ -122,7 +122,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }}")
       ok_wi([:div, {:class=>"textarea"},
 	      [:form, {:action=>"1.1.textarea", :method=>"POST"},
-		[:textarea, {:rows=>6, :name=>"t", :cols=>50},
+		[:textarea, {:rows=>7, :name=>"t", :cols=>50},
 		  "a\nb\nc\nd\ne\nf\n"],
 		[:br],
 		[:input, {:value=>"Update", :type=>"submit"}]]],

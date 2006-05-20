@@ -126,6 +126,7 @@ if defined?($test) && $test
 
       # test_calc_history
       tl.calc_history
+      #pp tl
 
       # test_times
       times = tl.times

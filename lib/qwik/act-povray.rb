@@ -1,5 +1,7 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
+require 'open3'
+
 module Qwik
   class Action
     D_PluginPovray = {
@@ -7,12 +9,20 @@ module Qwik
       :dd => 'You can embed ray tracing rendered 3D CG.',
       :dc => "* Example
  {{povray
- union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
+ sphere { <0, 0, 9>, 3
+ finish { ambient 0.2 diffuse 0.8 phong 1 }
+ pigment { red 1 }
+ }
+ light_source { <-9, 9, 0> rgb 1 }
  }}
 {{povray
-union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
+sphere { <0, 0, 9>, 3
+finish { ambient 0.2 diffuse 0.8 phong 1 }
+pigment { red 1 }
+}
+light_source { <-9, 9, 0> rgb 1 }
 }}
-This sample is excerpt from [[POVRay Short Code Contest, Round 3|http://astronomy.swin.edu.au/~pbourke/raytracing/scc3/final/]].
+- I recommend [[POVRay Short Code Contest, Round 3|http://astronomy.swin.edu.au/~pbourke/raytracing/scc3/final/]] for samples of POV-Ray source code.
 "
     }
 
@@ -21,26 +31,39 @@ This sample is excerpt from [[POVRay Short Code Contest, Round 3|http://astronom
       :dd => 'レイトレーシングによる3D CGを埋め込めます。',
       :dc => '* 例
  {{povray
- union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
+ sphere { <0, 0, 9>, 3
+ finish { ambient 0.2 diffuse 0.8 phong 1 }
+ pigment { red 1 }
+ }
+ light_source { <-9, 9, 0> rgb 1 }
  }}
 {{povray
-union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
+sphere { <0, 0, 9>, 3
+finish { ambient 0.2 diffuse 0.8 phong 1 }
+pigment { red 1 }
+}
+light_source { <-9, 9, 0> rgb 1 }
 }}
-このサンプルは、[[POVRay Short Code Contest, Round 3|http://astronomy.swin.edu.au/~pbourke/raytracing/scc3/final/]]からの引用です。
+- [[POVRay Short Code Contest, Round 3|http://astronomy.swin.edu.au/~pbourke/raytracing/scc3/final/]]などのサンプルを見てみると面白いかもしれません。
 '
     }
 
-    POVRAY_CMD = '/usr/bin/povray'
-    MV_CMD = '/bin/mv'
     MIN_COLS = 50
     MIN_ROWS = 7
     MAX_COLS = 100
     MAX_ROWS = 50
     def plg_povray
+      if ! povray_exist?
+	return [:div, {:class=>'povray'},
+	  [:p, 'No povray command.']
+	]
+      end
+
       # Generate a povray file.
       content = ''
       content = yield if block_given?
-      pngfilename = povray_generate(content)
+
+      pngfilename, stapath = povray_generate(content)
 
       # @povray_num is global for an action.
       @povray_num = 0 if ! defined?(@povray_num)
@@ -48,7 +71,7 @@ union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
       action = "#{@req.base}.#{@povray_num}.povray"
 
       cols = 0
-      rows = 1
+      rows = 1	# Add an empty line.
       content.each_line {|line|
 	len = line.chomp.length
 	cols = len if cols < len
@@ -59,32 +82,72 @@ union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
       cols = MAX_COLS if MAX_COLS < cols
       rows = MAX_ROWS if MAX_ROWS < rows
 
-      return [:div, {:class=>'povray'},
+      status = [:div, {:class=>'status'}]
+      begin
+	sta = stapath.read
+	st, et = sta.to_a
+	status << [:p, 'Start : ', Time.at(st.to_i).ymdax] if st
+	status << [:p, 'End : ', Time.at(et.to_i).ymdax] if et
+	status << [:p, 'Past : ', Time.at(et.to_i).ymdax] if et
+      rescue
+	status << [:p, 'The rendering is started.']
+      end
+
+      div = [:div, {:class=>'povray'},
 	[:img, {:src=>"#{@req.base}.files/#{pngfilename}"}],
 	[:br],
 	[:form, {:method=>'POST', :action=>action},
 	  [:textarea, {:name=>'t', :cols=>cols, :rows=>rows}, content],
 	  [:br],
-	  [:input, {:type=>'submit', :value=>_('Update')}]]]
+	  [:input, {:type=>'submit', :value=>_('Update')}]],
+	[:br],
+	status]
+
+      return div
+    end
+
+    POVRAY_CMD = '/usr/bin/povray'
+#   POVRAY_CMD = '/usr/local/bin/povray'
+    MV_CMD = '/bin/mv'
+    def povray_exist?
+      return POVRAY_CMD.path.exist?
     end
 
     def povray_generate(content)
       files = @site.files(@req.base)
       base = content.md5hex
-      filename = "#{base}.pov"
+      povfilename = "#{base}.pov"
       pngfilename = "#{base}.png"
-      return pngfilename if files.exist?(filename)
 
-      files.overwrite(filename, content)
+      povpath = files.path(povfilename)
+      pngpath = files.path(pngfilename)
+      pngtmppath = "/tmp/#{pngfilename}"
+
+      msgpath = files.path("#{base}.povmsg").path
+      stapath = files.path("#{base}.povsta").path
+
+      return pngfilename, stapath if stapath.exist?	# Already started.
+
+      files.overwrite(povfilename, content)
+
       # Render it background.
       t = Thread.new {
-	path = files.path(filename)
-	pngpath = files.path(pngfilename)
-	pngtmppath = "/tmp/#{pngfilename}"
-	system "#{POVRAY_CMD} #{path} -O#{pngtmppath}"
+	cmd = "#{POVRAY_CMD} #{povpath} -O#{pngtmppath}"
+	#system cmd
+	stapath.open('wb') {|sta|
+	  sta.puts Time.now.to_i.to_s
+	  msgpath.open('wb') {|msg|
+	    Open3.popen3(cmd) {|stdin, stdout, stderr|
+	      while line = stderr.gets
+		msg.print line
+	      end
+	    }
+	  }
+	  sta.puts Time.now.to_i.to_s
+	}
 	system "#{MV_CMD} #{pngtmppath} #{pngpath}"
       }
-      return pngfilename
+      return pngfilename, stapath
     end
 
     def ext_povray
@@ -133,26 +196,30 @@ if defined?($test) && $test
       t_add_user
 
       page = @site.create_new
-      page.store('{{povray
-union{sphere{z*9-1,2}plane{y,-3}finish{reflection{,1}}}background{1+z/9}
-}}')
+      page.store '{{povray
+sphere { <0, 0, 9>, 3
+finish { ambient 0.2 diffuse 0.8 phong 1 }
+pigment { red 1 }
+}
+light_source { <-9, 9, 0> rgb 1 }
+}}'
 
-      res = session('/test/1.html')
-      ok_xp [:div, {:class=>"takahashi"},
- [:iframe, {:src=>"1.files/takahashi.html",
-   :style=>"width:700px;height:400px;border:0;"},
-  ""],
- [:br],
- [:div, {:style=>"margin: 0 0 1em 0;"},
-  [:a, {:href=>"1.files/takahashi.html", :style=>"font-size:x-small;"},
-   "Show in fullscreen."]]],
-	    "//div[@class='povray']"
+      res = session
+
+      return if ! @action.povray_exist?
+
+      res = session '/test/1.html'
+      ok_xp [:div, {:class=>"povray"},
+ [:img, {:src=>"1.files/4c5c412765d503e22d83bd5fdd4a1c80.png"}], [:br],
+ [:form, {:method=>"POST", :action=>"1.1.povray"},
+  [:textarea, {:name=>"t", :cols=>50, :rows=>7},
+   "sphere { <0, 0, 9>, 3\nfinish { ambient 0.2 diffuse 0.8 phong 1 }\npigment { red 1 }\n}\nlight_source { <-9, 9, 0> rgb 1 }\n"], [:br],
+  [:input, {:type=>"submit", :value=>"Update"}]], [:br],
+ [:div, {:class=>"status"}]],
+	"//div[@class='povray']"
 
       files = @site.files('1')
-      ok_eq(true, files.exist?('T_method_module.swf'))
-      ok_eq(true, files.exist?('textData.txt'))
-      ok_eq("a", files.get('textData.txt'))
-      ok_eq(true, files.exist?('takahashi.html'))
+      ok files.exist?('4c5c412765d503e22d83bd5fdd4a1c80.pov')
     end
   end
 end

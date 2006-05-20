@@ -71,6 +71,7 @@ if defined?($test) && $test
       page = @site.create_new
       page.put_with_time('* t1', 0)	# Store this page first.
       page.put_with_time('* t2', 1)	# Store this page second.
+      #p @site.to_a
 
       # test_act_day
       res = session '/test/.day'
