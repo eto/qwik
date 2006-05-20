@@ -1,3 +1,7 @@
+2006-05-21  Kouichirou Eto  <2006 eto.com>
+
+	* act-povray.rb: Add open3 support.
+
 2006-04-30  Kouichirou Eto  <2006 eto.com>
 
 	* act-povray.rb: New plugin to render 3D CG.
