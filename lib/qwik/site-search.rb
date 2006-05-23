@@ -1,17 +1,8 @@
-#
-# Copyright (C) 2003-2006 Kouichirou Eto
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the GNU General Public License version 2.
-#
-
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Site
-    def search(query)
+    def search(query, obfuscate = true)
       querys = search_parse_query(query)
 
       ar = []
@@ -28,6 +19,7 @@ module Qwik
 	  }
 
 	  if matched
+	    line = MailAddress.obfuscate_str(line) if obfuscate
 	    ar << [page.key, line, i]
 	  end
 	}
@@ -62,6 +54,14 @@ if defined?($test) && $test
       res = @site.search('test')
       ok_eq([['1', 'This is a test.', 0],
 	      ['2', 'This is a test, too.', 0]], res)
+
+      # test_obfuscate
+      page.store('user@example.com')
+      res = @site.search('@')
+      is [["2", "user@e...", 0]], res
+
+      res = @site.search('@', false)
+      is [["2", "user@example.com", 0]], res
     end
   end
 end
