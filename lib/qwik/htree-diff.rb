@@ -12,7 +12,7 @@
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'diff'
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/util-escape'
+require 'qwik/util-string'
 require 'qwik/htree-generator'
 
 module Qwik

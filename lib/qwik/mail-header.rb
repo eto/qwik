@@ -12,7 +12,7 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/mail'
 require 'qwik/mailaddress'
 require 'qwik/mail-multipart'
-require 'qwik/util-kconv'
+require 'qwik/util-charset'
 
 module QuickML
   class Mail

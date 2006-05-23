@@ -2,8 +2,6 @@ require 'kconv'
 require 'iconv'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/util-kconv'
-require 'qwik/util-iconv'
 
 class String
   # ============================== kconv

@@ -5,7 +5,7 @@ require 'qwik/farm'
 require 'qwik/site-plan'
 require 'qwik/page-title'
 require 'qwik/util-string'
-require 'qwik/util-kconv'
+require 'qwik/util-charset'
 require 'qwik/util-filename'
 
 module QuickML

@@ -9,7 +9,7 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/util-escape'
+require 'qwik/util-string'
 
 class Integer
   # 12345.commify => '12,345'

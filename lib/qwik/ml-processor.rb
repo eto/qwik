@@ -13,7 +13,7 @@ require 'qwik/ml-gettext'
 require 'qwik/ml-exception'
 require 'qwik/group'
 require 'qwik/mail'
-require 'qwik/util-kconv'
+require 'qwik/util-charset'
 
 module QuickML
   class Processor

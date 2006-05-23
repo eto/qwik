@@ -81,7 +81,7 @@ end
 if $0 == __FILE__
   require 'qwik/testunit'
   require 'qwik/ml-catalog-factory'
-  require 'qwik/util-kconv'
+  require 'qwik/util-charset'
   $test = true
 end
 

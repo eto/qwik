@@ -10,7 +10,6 @@ require 'qwik/wabisabi'
 require 'qwik/util-basic'
 require 'qwik/util-charset'
 require 'qwik/util-filename'
-require 'qwik/util-iconv'
 require 'qwik/util-time'
 
 # Load common actions.

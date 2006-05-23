@@ -8,7 +8,7 @@
 #
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
-require 'qwik/util-escape'
+require 'qwik/util-string'
 
 $LOAD_PATH << '../../ext' unless $LOAD_PATH.include?('../../ext')
 begin

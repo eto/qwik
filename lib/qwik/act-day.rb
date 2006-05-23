@@ -6,7 +6,7 @@ require 'qwik/act-chronology'
 
 module Qwik
   class Action
-    # find newest day.
+    # find the newest day.
     def act_day
       timeline = @site.timeline
       timeline.calc_history

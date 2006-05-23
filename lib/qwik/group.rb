@@ -16,7 +16,7 @@ require 'qwik/ml-exception'
 require 'qwik/ml-generator'
 require 'qwik/mailaddress'
 
-require 'qwik/util-icase'
+require 'qwik/util-basic'
 require 'qwik/util-safe'
 
 require 'qwik/group-config'

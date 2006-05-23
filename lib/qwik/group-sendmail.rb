@@ -11,7 +11,7 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/group'
 require 'qwik/ml-sendmail'
-require 'qwik/util-integer'
+require 'qwik/util-basic'
 
 module QuickML
   class Group

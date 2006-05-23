@@ -13,7 +13,7 @@ require 'qwik/ml-gettext'
 require 'qwik/mail'
 require 'qwik/ml-processor'
 require 'qwik/ml-exception'
-require 'qwik/util-integer'
+require 'qwik/util-basic'
 require 'qwik/util-safe'
 
 require 'kconv'

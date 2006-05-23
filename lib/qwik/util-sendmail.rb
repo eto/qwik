@@ -2,7 +2,7 @@ require 'net/smtp'
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/mail'
-require 'qwik/util-kconv'
+require 'qwik/util-charset'
 
 module Qwik
   class Sendmail

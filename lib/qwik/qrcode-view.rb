@@ -100,7 +100,7 @@ end
 
 if $0 == __FILE__
   require 'test/unit'
-  require 'qwik/util-kconv'
+  require 'qwik/util-charset'
   require 'qwik/config'
   require 'qwik/wabisabi-format-xml'
   $test = true

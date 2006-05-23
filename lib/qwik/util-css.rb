@@ -30,19 +30,23 @@ end
 
 if defined?($test) && $test
   class TestCSS < Test::Unit::TestCase
-    def ok(e, s)
-      assert_equal e, CSS.valid?(s)
+    def valid(s)
+      assert_equal true, CSS.valid?(s)
+    end
+
+    def invalid(s)
+      assert_equal false, CSS.valid?(s)
     end
 
     def test_all
-      ok(true,  'h2 { color: red }')
-      ok(false, "@import")
-      ok(false, "\\important")
-      ok(true,  '')
-      ok(true,  'text-align:center;')
-      ok(true,  'ok@style')
-      ok(true,  'ok.style')
-      ok(false, '@i')
+      valid   'h2 { color: red }'
+      invalid "@import"
+      invalid "\\important"
+      valid   ''
+      valid   'text-align:center;'
+      valid   'ok@style'
+      valid   'ok.style'
+      invalid '@i'
     end
   end
 end

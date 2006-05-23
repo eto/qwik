@@ -1,7 +1,7 @@
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/mdlb-sample'
 require 'qwik/htree-to-wabisabi'
-require 'qwik/util-iconv'
+require 'qwik/util-charset'
 
 # $KCODE = 's'
 
