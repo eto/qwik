@@ -117,8 +117,8 @@ install: build
 	install -d $(CURDIR)/debian/qwik/etc/default/
 	cp debian/qwik.defaults $(CURDIR)/debian/qwik/etc/default/qwik
 
-# Build architecture-independent files here.
-binary-indep: build install
+# Build architecture-dependent files here.
+binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
@@ -144,6 +144,8 @@ binary-indep: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+
+binary-indep:
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
