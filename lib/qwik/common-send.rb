@@ -28,8 +28,7 @@ module Qwik
       end
 
       if mtype.nil?
-	ext = local_path.ext
-	mtype = res.mimetypes[ext]	# Get content type.
+	mtype = res.get_mimetypes(local_path.ext)	# Get content type.
       end
       res['Content-Type']   = mtype
       res['Content-Length'] = st.size
@@ -57,9 +56,7 @@ module Qwik
 	raise WEBrick::HTTPStatus::NotModified
       end
 
-      ext = local_path.ext
-      mtype = res.mimetypes[ext]	# Get content type.
-      res['Content-Type']   = mtype
+      res.set_content_type(local_path.ext)
       res['Content-Length'] = st.size
       res['Last-Modified']  = st.mtime.httpdate
 

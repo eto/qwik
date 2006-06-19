@@ -178,7 +178,7 @@ there are several inhibited pattern. Please see [[PluginStyle.describe]].
       str = files.get(filename)
       return nil if str.nil?
       ext = filename.path.ext
-      type = @res.mimetypes[ext]
+      type = @res.get_mimetypes ext
       if type == 'text/css'
 	str = INVALID_CSS_INDICATOR if ! CSS.valid?(str)
 	return str, type

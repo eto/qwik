@@ -11,7 +11,7 @@ module Qwik
     MIME_TYPES = {
       'smil'	=> 'application/smil',
       'swf'	=> 'application/x-shockwave-flash',
-      'ico'	=> 'image/bitmap', # ?
+      'ico'	=> 'image/bitmap',		# FIXME: Is this OK?
       'png'	=> 'image/png',
       '3gp'	=> 'video/3gpp',
       'tgz'	=> 'application/octet-stream',
@@ -23,7 +23,6 @@ module Qwik
       @config = config
       clear
     end
-    attr_accessor :mimetypes
     attr_accessor :body, :status
     attr_reader :headers # for test
     attr_reader :cookies # for test
@@ -47,6 +46,15 @@ module Qwik
     def make_mimetypes(mimetypes)
       @mimetypes = mimetypes
       @mimetypes.update(MIME_TYPES)
+    end
+
+    def get_mimetypes(ext)
+      @mimetypes[ext.downcase]
+    end
+
+    def set_content_type(ext)
+      mtype = get_mimetypes(ext)	# Get content type.
+      @headers['Content-Type'] = mtype
     end
 
     def [](k)
@@ -197,16 +205,17 @@ if defined?($test) && $test
       res.make_mimetypes(default_mimetypes)
 
       # Check mimetypes.
-      ok_eq(true, 50 < res.mimetypes.length)
-      ok_eq('text/html', res.mimetypes['html'])
-      ok_eq('text/plain', res.mimetypes['txt'])
-      ok_eq('text/css', res.mimetypes['css'])
-      ok_eq('image/gif', res.mimetypes['gif'])
-      ok_eq('image/png', res.mimetypes['png'])
-      ok_eq('image/jpeg', res.mimetypes['jpg'])
-      ok_eq('application/smil', res.mimetypes['smil'])
-      ok_eq('application/zip', res.mimetypes['zip'])
-      ok_eq('application/x-modulobe', res.mimetypes['mdlb'])
+      ok_eq('text/html', res.get_mimetypes('html'))
+      ok_eq('text/plain', res.get_mimetypes('txt'))
+      ok_eq('text/css', res.get_mimetypes('css'))
+      ok_eq('image/gif', res.get_mimetypes('gif'))
+      ok_eq('image/png', res.get_mimetypes('png'))
+      ok_eq('image/jpeg', res.get_mimetypes('jpg'))
+      ok_eq('image/jpeg', res.get_mimetypes('JPG'))	# Check upcase
+      ok_eq('image/jpeg', res.get_mimetypes('JPEG'))	# Check upcase
+      ok_eq('application/smil', res.get_mimetypes('smil'))
+      ok_eq('application/zip', res.get_mimetypes('zip'))
+      ok_eq('application/x-modulobe', res.get_mimetypes('mdlb'))
     end
   end
 end

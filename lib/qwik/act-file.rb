@@ -96,7 +96,7 @@ module Qwik
     }
 
     def icon_find(ext)
-      mimetype = @res.mimetypes[ext]
+      mimetype = @res.get_mimetypes ext
       return icon_find_internal(mimetype, ext)
     end
 
