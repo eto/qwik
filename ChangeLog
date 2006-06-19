@@ -1,3 +1,10 @@
+2006-06-20  Kouichirou Eto  <2006 eto.com>
+
+	* response.rb (get_mimetypes): New method.
+	* response.rb (set_content_type): New method.
+	It can handle UPCASE extention.
+	Releated files are changed.
+
 2006-05-24  Kouichirou Eto  <2006 eto.com>
 
 	* site-search.rb: Add obfuscate mailaddress.
