@@ -31,8 +31,7 @@ module Qwik
     alias ext_attach act_attach
 
     def attach_send_file(filename)
-      ext = Filename.extname(filename)
-      type = @res.mimetypes[ext]
+      @res.set_content_type(Filename.extname(filename))
       file = @site.attach.path(filename)
       return c_simple_send(file.to_s, type)
     end
