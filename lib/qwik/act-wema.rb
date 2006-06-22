@@ -93,9 +93,11 @@ Windowを動かして、「set」を押すと位置をセットします。
 	  msg = _('Edit done.')
 	end
 
-	wema.set(connected, left, top, fg, bg, text)
-	c_make_log('wemaedit') # WEMAEDIT
-	#c_monitor('wemaedit') # WEMAEDIT
+	if wema
+	  wema.set(connected, left, top, fg, bg, text)
+	  c_make_log('wemaedit') # WEMAEDIT
+	  #c_monitor('wemaedit') # WEMAEDIT
+	end
 	return wema_jump(msg, redirect)
 
       when 'delete'
