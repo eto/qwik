@@ -108,7 +108,7 @@ module QuickML
 	f.put(page_content)
 	begin
 	  f.utime(pmt, pmt)
-	rescue e
+	rescue
 	  p 'error to set time'
 	end
 	return page_content
