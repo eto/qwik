@@ -1,3 +1,7 @@
+2006-06-23  Kouichirou Eto  <2006 eto.com>
+
+	* group-db.rb (get): Bug fix. Delete e on rescue.
+
 2006-06-22  Kouichirou Eto  <2006 eto.com>
 
 	* act-wema.rb (ext_wema): Debug for non-exist wema.
