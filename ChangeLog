@@ -1,3 +1,8 @@
+2006-07-05  Kouichirou Eto  <2006 eto.com>
+
+	* wabisabi-diff.rb: Set timout for diff.
+	http://jvn.jp/jp/JVN%2398836916/index.html
+
 2006-07-04  Kouichirou Eto  <2006 eto.com>
 
 	* wabisabi-diff.rb: Do not use module Qwik.
