@@ -21,16 +21,17 @@ class DiffGenerator
     Diff.diff(a1, a2) 
   end
 
-  MAX_TIME = 60		# 1 minute
+  MAX_TIME = 10		# 10 sec
 
-  def self.generate(s1, s2)
+  # ref. http://moonrock.jp/%7Edon/wikimodoki/security.html
+  def self.generate(s1, s2, maxtime=MAX_TIME)
     result = nil
     begin
-      Timeout.timeout(MAX_TIME) {
+      Timeout.timeout(maxtime) {
 	result = generate_internal(s1, s2)
       }
     rescue Timeout::Error
-      return []
+      return ['timeout']
     end
     result
   end
@@ -117,6 +118,11 @@ c
       is ['a', [:br], [:del, 'z'], [:br],
 	[:ins, 'b'], [:br], 'c', [:br]],
 	DiffGenerator.generate(newstr, curstr)
+
+      # test_vulnerability
+      curstr = "a\n \n" * 10000
+      newstr = "b\n \n" * 10000
+      is ["timeout"], DiffGenerator.generate(newstr, curstr, 1)
     end
   end
 end
