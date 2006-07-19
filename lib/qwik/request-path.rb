@@ -262,8 +262,8 @@ if defined?($test) && $test
       ok_eq('zip', req.ext)
 
       ok_eq(['e.com', 'FrontPage', 'html'],
-	    req.parse_path('/e.com/.attach/qrcode-e.com.png'))
-      ok_eq(['attach', ['qrcode-e.com.png']],
+	    req.parse_path('/e.com/.attach/t.png'))
+      ok_eq(['attach', ['t.png']],
 	    [req.plugin, req.path_args])
 
       ok_eq(['www', 'www', 'zip'], req.parse_path('/www.zip'))
