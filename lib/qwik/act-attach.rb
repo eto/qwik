@@ -37,7 +37,7 @@ module Qwik
     def attach_send_file(filename)
       @res.set_content_type(Filename.extname(filename))
       file = @site.attach.path(filename)
-      return c_simple_send(file.to_s, type)
+      return c_simple_send(file.to_s)
     end
 
     def attach_put_file(filename, content)
