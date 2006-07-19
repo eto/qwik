@@ -1,6 +1,10 @@
+# Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
+# This is free software with ABSOLUTELY NO WARRANTY.
+# You can redistribute it and/or modify it under the terms of the GNU GPL 2.
+
 #
 # A patch to test/unit/ui/console/testrunner.rb
-# You can see the elapsed time in each test case.
+# You can see the elapsed time of each test case.
 #
 
 require 'test/unit'

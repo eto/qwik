@@ -1,3 +1,7 @@
+# Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
+# This is free software with ABSOLUTELY NO WARRANTY.
+# You can redistribute it and/or modify it under the terms of the GNU GPL 2.
+
 #
 # This is a sample plugin for qwikWeb.
 # If you'd like to check the details of qwikWeb plugin, please see URL below.
