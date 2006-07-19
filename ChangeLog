@@ -6,6 +6,10 @@
 
 	* Add Copyright Notice to all .rb files.
 
+	* act-charts.rb: Removed.
+
+	* util-tail.rb: Removed.
+
 2006-07-05  Kouichirou Eto  <2006 eto.com>
 
 	* wabisabi-diff.rb: Set timout for diff.
