@@ -39,7 +39,7 @@ module Qwik
       end
     end
 
-    def tail_f(file)
+    def nu_tail_f(file)
       Thread.new {
 	tail = Tail.new(file, 0, Tail::TAIL_END)
 	tail.gets { |line|
@@ -48,7 +48,7 @@ module Qwik
       }
     end
 
-    def nutail_f(file)
+    def tail_f(file)
       Thread.new {
 	open(file) {|f|
 	  f.seek(IO::SEEK_END, 0)
