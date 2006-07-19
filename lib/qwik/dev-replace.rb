@@ -1,5 +1,85 @@
 require 'pp'
 
+$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+require 'qwik/util-pathname'
+
+OLD_BANNER = <<"EOS"
+#
+# Copyright (C) 2003-2006 Kouichirou Eto
+#     All rights reserved.
+#     This is free software with ABSOLUTELY NO WARRANTY.
+#
+# You can redistribute it and/or modify it under the terms of 
+# the GNU General Public License version 2.
+#
+EOS
+
+NEW_BANNER = <<"EOS"
+# Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
+# This is free software with ABSOLUTELY NO WARRANTY.
+# You can redistribute it and/or modify it under the terms of the GNU GPL 2.
+EOS
+
+def replace_line(line)
+  return line.gsub(OLD_BANNER) {
+    NEW_BANNER
+  }
+end
+
+def dummy_replace_line(line)	# dummy
+  return line
+end
+
+def replace_content_by_line(content, dryrun)
+  replace = false
+  newcontent = ''
+  content.each {|line|
+    newline = replace_line(line)
+    if newline != line
+      yield
+      puts "-#{line}"
+      puts "+#{newline}"
+      replace = true
+    end
+    newline = line if dryrun		# for debug
+    newcontent << newline
+  }
+  return newcontent, dryrun
+end
+
+def main
+  #dryrun = false
+  dryrun = true
+
+  #Dir.glob('test-sub-*.rb') {|fname|
+
+  last_fname = ''
+
+  Dir.glob('*.rb') {|fname|
+    next if fname == 'dev-replace.rb'
+    content = open(fname, 'rb') {|f| f.read }
+
+    newcontent, dryrun = replace_content_by_line(content, dryrun) {
+      if last_fname != fname
+	puts "¡#{fname}"
+	last_fname = fname
+      end
+    }
+
+    if replace
+      open("#{fname}.bak", 'wb') {|f|
+	f.print content			# make backup
+      }
+      open(fname, 'wb') {|f|
+	f.print newcontent		# make new content
+      }
+    end
+  }
+end
+main
+
+=begin
+
 def nureplace_line(line)
   return line.gsub(%r|2003-2005|) {
     "2003-2006"
@@ -12,61 +92,11 @@ def nu2replace_line(line)
   }
 end
 
-def replace_line(line)
+def nu3replace_line(line)
   return line.gsub(%r|c_relative_to_full|) {
     "c_relative_to_absolute"
   }
 end
-
-
-def dummy_replace_line(line)	# dummy
-  return line
-end
-
-def main
-  dryrun = false
-  dryrun = true
-
-  #Dir.glob('test-sub-*.rb') {|fname|
-
-  last_fname = ''
-
-  Dir.glob('*.rb') {|fname|
-    next if fname == 'dev-replace.rb'
-    content = open(fname, 'rb') {|f| f.read }
-
-    newcontent = ''
-    replace = false
-    content.each {|line|
-      newline = replace_line(line)
-      if newline != line
-	if last_fname != fname
-	  puts "¡"+fname
-	  last_fname = fname
-	end
-	puts '-'+line
-	puts '+'+newline
-	replace = true
-      end
-
-      newline = line if dryrun	# for debug
-
-      newcontent << newline
-    }
-
-    if replace
-      open(fname+'.bak', 'wb') {|f|
-	f.print content # make backup
-      }
-      open(fname, 'wb') {|f|
-	f.print newcontent # make new content
-      }
-    end
-  }
-end
-main
-
-=begin
 
 def replace_line(line)
   return line.gsub(%r|\$LOAD_PATH \<\< '\.\.' unless \$LOAD_PATH\.include\?\('\.\.'\)|) {
