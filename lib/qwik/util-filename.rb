@@ -2,7 +2,7 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-# Thanks to Mr. Shuhei Yamamoto for his first implementation.
+# Thanks to Mr. Shuhei Yamamoto
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-string'
