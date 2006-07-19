@@ -1,42 +1,60 @@
 * qwikWeb
+
 qwikWeb is a communication system integrating mailing lists and WikiWikiWeb.
 
 * Requirements
+
 - ruby 1.8.4 or higher
 
 * Run for development mode.
+
 You can run qwikWeb server from installed directory.
+
  % ruby bin/qwikweb-server -d -c etc/config.txt
+
 Then, see the folowing page.
+
 - http://localhost:9190/
+
 To edit the page, use following guest acount.
+
 :mail:	guest@qwik
 :pass:	80245996
 
 * Install
+
  % sudo ruby setup.rb
  % rehash
  % qwik-service --web-start
+
 Then, go Wiki site.
+
 - http://localhost:9190/
 
 Please edit configuration before make it public.
+
 - /etc/qwik/config.txt
 
 * Make site password
+
 Before make public your qwikWeb site,
 please specify the site password in this file.
+
 - etc/password.txt
 
 * Document
+
 Please see qwikWeb web site for information.
+
 - http://qwik.jp/
 
 * License
+
 This software is distributed under the The GNU General Public License
 version 2.  See COPYING.
 
 * Special Thanks To
+
 - Thanks to Mr. TAKEUCHI Hitoshi, creator of Hiki.
 -- http://www.namaraii.com/hiki/
 - Thanks to Mr. Satoru Takabayashi, creator of QuickML.
@@ -58,4 +76,5 @@ version 2.  See COPYING.
 -- http://lab.ajibit.com
 
 * Author
+
 - Kouichirou Eto <2006 at eto.com>
