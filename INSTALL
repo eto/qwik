@@ -1,0 +1,40 @@
+* Requirements
+
+- ruby 1.8.4 or higher
+
+* Install
+
+ % sudo ruby setup.rb
+ % rehash
+ % qwik-service --web-start
+
+Then, go to local Wiki site.
+
+- http://localhost:9190/
+
+Please edit the site configuration before making it public.
+
+- /etc/qwik/config.txt
+
+* Running under development mode.
+
+You can run qwikWeb server from installed directory.
+
+ % ruby bin/qwikweb-server -d -c etc/config.txt
+
+Then, see the folowing page.
+
+- http://localhost:9190/
+
+To edit a page, use following guest acount.
+
+:mail:	guest@qwik
+:pass:	80245996
+
+* Making your site password
+
+Before making your qwikWeb site public,
+please specify the site password described in this file.
+
+- etc/password.txt
+
