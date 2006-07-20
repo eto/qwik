@@ -14,19 +14,9 @@ module Qwik
       return rss_button('atom.xml', 'ATOM')
     end
 
-    def plg_metadata_auto_discovery
-      return metadata_auto_discovery('rss', 'rss.xml', 'RSS 0.91')
-    end
-
     def rss_button(href, msg)
       return [:a, {:class=>'rss-button', :href=>href},
 	[:span, msg]]
-    end
-
-    # takot working for RSS/Atom auto discovery
-    # def metadata_auto_discovery(type, href, version)
-    def metadata_auto_discovery(type, href, msg)
-      return [:link, {:rel=>'alternate', :type=>'application/'+type+'+xml', :href=>href, :title=>msg }]
     end
 
     def pre_ext_rss
@@ -372,11 +362,6 @@ if defined?($test) && $test
       ok_wi([:p, [:a, {:href=>'atom.xml'}, 'a']], '[[a|atom.xml]]')
       ok_wi([:a, {:class=>'rss-button', :href=>'atom.xml'}, [:span, 'ATOM']],
 	    '{{atom}}')
-    end
-
-    def test_plg_metadata_auto_discovery
-      ok_wi([:link, {:rel=>'alternate', type=>'application/rss+xml',
-      		   title=>'RSS 0.91'}])
     end
 
     def test_all

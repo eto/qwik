@@ -139,12 +139,17 @@ module Qwik
       template.make_index
 
       w = template.index_tag(:head)
+
       w.insert(1, [:title, data[:title]])
+
       media = 'screen,tv,print'
       w.insert(w.length, [:link, {:href=>'.theme/css/base.css', :media=>media,
 		   :rel=>'stylesheet', :type=>'text/css'}])
       w.insert(w.length, [:link, {:href=>data[:theme_path], :media=>media,
 		   :rel=>'stylesheet', :type=>'text/css'}])
+      w.insert(w.length, [:link, {:href=>'rss.xml', :title=>'RSS 0.91',
+		   :rel=>'alternate', :type=>"application/rss+xml"}])
+
       js = Action.generate_js
       w.insert(w.length, *js)
 
