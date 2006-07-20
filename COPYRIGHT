@@ -37,7 +37,10 @@ The code is in GNU GPL2.  The license is shown below.
 ** GraphViz Plugin
 
 - lib/qwik/act-graphviz.rb
-I use GraphViz Plugin created by Mr. Moriyoshi Koizumi.
+- http://voltex.jp/~moriyoshi/tdiary/?date=20051222#p09
+I use GraphViz Plugin created by Mr. Moriyoshi Koizumi.  GraphVis
+plugin is originally written for tDiary and is released under the
+terms of GNU GPL2.
 
 ** Report Plugin, Section DB Plugin, Summary Plugin, TagSearch Plugin
 
