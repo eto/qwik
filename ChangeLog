@@ -1,3 +1,7 @@
+2006-07-20  Kouichirou Eto  <2006 eto.com>
+
+	* common-surface.rb: Add RSS Auto Discovery.
+
 2006-07-19  Kouichirou Eto  <2006 eto.com>
 
 	* dev-replace.rb: Update.
