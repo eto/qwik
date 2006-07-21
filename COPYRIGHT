@@ -6,23 +6,26 @@ I include some files under the terms of the licenses of each files.
 
 ** QuickML
 
-quickml server: an easy-to-use mailing list system
-http://0xcc.net/quickml/index.html.en
+The QuickML Server is an easy-to-use mailing list system.
+I use the codes of QuickML program as the basis of the mailing list
+server of the qwikWeb system.  The codes are in GNU GPL2.
+The license is shown below.
+
+- http://0xcc.net/quickml/index.html.en
 > quickml server is a free software with ABSOLUTELY NO WARRANTY under
 > the terms of the GNU General Public License version 2.
-
-I use the codes of QuickML program as the basis of the mailing list
-server of qwikWeb.  The codes are in GNU GPL2.
 
 http://sourceforge.net/projects/quickml/
 > License : GNU General Public License (GPL)
 
 ** typekey.rb
 
-- http://d.hatena.ne.jp/jouno/20050203/1107432213
-- http://jouno.s11.xrea.com/x/script/typekey/TypeKey.rb
+The TypeKey library is an library to use TypeKey Authentication system.
 I use "typekey.rb" for authentication using TypeKey service.
 The code is in GNU GPL2.  The license is shown below.
+
+- http://d.hatena.ne.jp/jouno/20050203/1107432213
+- http://jouno.s11.xrea.com/x/script/typekey/TypeKey.rb
 
 #
 # Copyright (C) 2005 jouno <jouno2002@yahoo.co.jp>
@@ -34,27 +37,12 @@ The code is in GNU GPL2.  The license is shown below.
 # modified by Kouichirou Eto
 #
 
-** GraphViz Plugin
-
-- lib/qwik/act-graphviz.rb
-- http://voltex.jp/~moriyoshi/tdiary/?date=20051222#p09
-I use GraphViz Plugin created by Mr. Moriyoshi Koizumi.  GraphVis
-plugin is originally written for tDiary and is released under the
-terms of GNU GPL2.
-
-** Report Plugin, Section DB Plugin, Summary Plugin, TagSearch Plugin
-
-- lib/qwik/act-report.rb
-- lib/qwik/act-secdb.rb
-- lib/qwik/act-summary.rb
-- lib/qwik/act-tagsearch.rb
-I use these plugins created by Mr. Masashi Miyamura.
-
 ** setup.rb
 
+The "setup.rb" is a setup library.  I use the library for setup
+script.  The code is in GNU LGPL.  The license is shown below.
+
 - setup.rb
-I use "setup.rb" for setup script.
-The code is in GNU LGPL.  The license is shown below.
 
 #
 # setup.rb
@@ -68,25 +56,29 @@ The code is in GNU LGPL.  The license is shown below.
 
 ** S5
 
-S5: A Simple Standards-Based Slide Show System
-http://meyerweb.com/eric/tools/s5/
+S5 is A Simple Standards-Based Slide Show System.
+I use the codes for presentation plugin.
+The codes are in Public Domain.  The license is shown below.
 
 - share/theme/s5/default/slides.js
-I use the codes for presentation plugin.
-The codes are in Public Domain.
-The license is shown below.
 
 // S5 v1.1 slides.js -- released into the Public Domain
 //
 // Please see http://www.meyerweb.com/eric/tools/s5/credits.html for information
 // about all the wonderful and talented contributors to this code!
 
+Please see more details.
+
+S5: A Simple Standards-Based Slide Show System
+http://meyerweb.com/eric/tools/s5/
+
 ** qwikviridian.css
 
 - share/theme/qwikviridian/*
-I use the css file and image files as a qwikWeb theme.
-The codes are in GNU GPL2.
-The license is shown below.
+
+These files are created by Takashi Maekawa.
+He is one of authors of qwikWeb system.  See AUTHORS>
+The codes are in GNU GPL2.  The license is shown below.
 
 /* Copyright (C) 2003-2005 Takashi Maekawa, All rights reserved.
    This is free software with ABSOLUTELY NO WARRANTY.
@@ -94,9 +86,11 @@ The license is shown below.
 
 ** Scriptaculous
 
-- share/theme/js/scriptaculous.js
+Scriptaculous is a JavaScript library.
 I use the codes for visual effect on pages.
 The license is shown below.
+
+- share/theme/js/scriptaculous.js
 
 // Copyright (c) 2005 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 // 
@@ -121,9 +115,10 @@ The license is shown below.
 
 ** Prototype JavaScript framework
 
-- share/theme/js/prototype.js
-I use the codes for JavaScript framework on pages.
+I use Prototype JavaScript framework.
 The license is shown below.
+
+- share/theme/js/prototype.js
 
 /*  Prototype JavaScript framework, version 1.4.0_rc3
  *  (c) 2005 Sam Stephenson <sam@conio.net>
@@ -138,9 +133,9 @@ The license is shown below.
 
 ** Apache Public Domain Icons
 
-- http://cvs.apache.org/viewvc/httpd/httpd/tags/1.3/APACHE_1_3_36/icons/
 I use Apache Public Domain Icons for file icons.
 
+See under share/theme/i
 - a.gif
 - binary.gif
 - broken.gif
@@ -154,6 +149,8 @@ I use Apache Public Domain Icons for file icons.
 - pdf.gif
 - tar.gif
 - text.gif
+
+http://cvs.apache.org/viewvc/httpd/httpd/tags/1.3/APACHE_1_3_36/icons/
 
 The license is shown below.
 
@@ -175,56 +172,22 @@ Public Domain Icons
      alternative icons in the "small" directory that are 16x16 in size,
      provided by Mike Brown (mike@hyperreal.org).
 
-** famfamfam.com Icons
-
-- http://www.famfamfam.com/lab/icons/silk/ Silk Icons
-I use famfamfam.com Silk Icons for text editing icons.
-
-- text_align_justify.png
-- text_bold.png
-- text_heading_2.png
-- text_heading_3.png
-- text_heading_4.png
-- text_italic.png
-- text_list_bullets.png
-- text_list_numbers.png
-
-- http://www.famfamfam.com/lab/icons/mini/ Mini Icons
-I use famfamfam.com Mini Icons for page design.
-
-- action_refresh_blue.gif
-- action_save.gif
-- arrow_down.gif
-- icon_download.gif
-- icon_link.gif
-- image.gif
-
-The license is shown below.
-
-- http://www.famfamfam.com/lab/icons/silk/
-> LICENSE
-> I also love to hear of my work being used, feel encouraged to send an
-> email with a link or screenshot of the icons in their new home to
-> mjames at gmail dot com. This work is licensed under a Creative
-> Commons Attribution 2.5 License. This means you may use it for any
-> purpose, and make any changes you like. All I ask is that you include
-> a link back to this page in your credits (although a giant link on
-> every page of your website really isn't needed, contact me to discuss
-> specifics).
-
 ** Ms. rica's icons
 
-- http://jm.vis.ne.jp/sbox/
-- http://jm.vis.ne.jp/sbox/index.cgi?WikiLab%2F2004%2F08
-Ms. rica created these icons.
+Ms. rica created these icons for qwikWeb system.
 
 - external.png
 - external_hover.png
 - new.png
 
+Please see more details.
+
+- http://jm.vis.ne.jp/sbox/
+- http://jm.vis.ne.jp/sbox/index.cgi?WikiLab%2F2004%2F08
+
 ** Our files
 
-We, Takashi Maekawa and Kouichirou Eto, created these image files.
+Our team, Takashi Maekawa and Kouichirou Eto, created these image files.
 
 - login_bg.gif
 - login_inputform_bg.gif
