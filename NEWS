@@ -1,3 +1,28 @@
+Overview of Changes in qwikWeb 0.8.3 - 2006-07-22
+
+* I changed the package style of qwikWeb.
+* Please install each required libraries yourself.
+
+* I delete all unnecessary file that is not our file.
+* I make the package as clean as possible.
+
+* I added my copyright notice for all files.
+
+* I add timeout for diff display.
+* See http://jvn.jp/jp/JVN%2398836916/index.html
+
+* Refine Login page.  You see Login form and Get Password form in a page.
+
+* New plugin: Send password to each members.
+
+* Add PovRay Plugin.
+
+* Add RSS Auto Discovery.
+
+* You can use upcase extention.
+
+* The mail addresses are obfuscated in search mode.
+
 Overview of Changes in qwikWeb 0.8.2 - 2006-04-15
 
 * The RSS is time order now.  The RSS includes only 10 pages.

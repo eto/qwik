@@ -1,3 +1,13 @@
+2006-07-22  Kouichirou Eto  <2006 eto.com>
+
+	* qwikWeb 0.8.3 is released.
+	See NEWS for the Changes.
+
+2006-07-21  Kouichirou Eto  <2006 eto.com>
+
+	* act-album.rb: Deleted.
+	* act-takahashi.rb: Ditto.
+
 2006-07-20  Kouichirou Eto  <2006 eto.com>
 
 	* common-surface.rb: Add RSS Auto Discovery.
@@ -90,6 +100,11 @@
 
 	* qwikeditor.css: Bug fix for IE.
 	Thanks to Mr. Takashi Maekawa.
+
+2006-04-15  Kouichirou Eto  <2006 eto.com>
+
+	* qwikWeb 0.8.2 is released.
+	See NEWS for the Changes.
 
 2006-04-15  Kouichirou Eto  <2006 eto.com>
 
