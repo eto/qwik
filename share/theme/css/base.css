@@ -281,8 +281,10 @@ table.exception {
   color: #999;
 }
 .delete a {
+/*
   background: url("../i/delete.gif") no-repeat 0% 50%;
   padding-left: 15px;
+*/
 }
 .delete a:link	{ color: #999; }
 .delete a:visited	{ color: #999; }
