@@ -170,6 +170,7 @@ lib/qwik/db-indexer.rb
 lib/qwik/description-ja.rb
 lib/qwik/description.rb
 lib/qwik/farm.rb
+lib/qwik/generation.txt
 lib/qwik/gettext.rb
 lib/qwik/group-cond.rb
 lib/qwik/group-config.rb
@@ -236,6 +237,7 @@ lib/qwik/periodic.rb
 lib/qwik/qp.rb
 lib/qwik/qrcode-view.rb
 lib/qwik/qrcode.rb
+lib/qwik/quickml.log
 lib/qwik/qwik-service.rb
 lib/qwik/qwik.rb
 lib/qwik/qwikweb-adduser.rb
@@ -255,6 +257,8 @@ lib/qwik/response.rb
 lib/qwik/server-memory.rb
 lib/qwik/server-webrick.rb
 lib/qwik/server.rb
+lib/qwik/sid/ab784f2b544ed5f9035238e240ea014c
+lib/qwik/sid/b89690500f48db00ca2dbefaaf44815e
 lib/qwik/site-config.rb
 lib/qwik/site-db.rb
 lib/qwik/site-event.rb
@@ -532,5 +536,4 @@ share/theme/s5/shell/framing.css
 share/theme/s5/shell/pretty.css
 share/theme/s5/shell/s5-core.css
 share/theme/s5/shell/slides.css
-svn-commit.tmp
 test/test_all.rb
