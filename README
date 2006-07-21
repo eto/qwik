@@ -8,6 +8,10 @@ Please see qwikWeb web site for more information.
 
 - http://qwik.jp/
 
+* Install
+
+See INSTALL.
+
 * License
 
 This software is distributed under the The GNU General Public License
@@ -17,12 +21,10 @@ version 2.  See COPYING.
 
 - Thanks to Mr. TAKEUCHI Hitoshi, creator of Hiki.
 -- http://www.namaraii.com/hiki/
-- Thanks to Mr. Kan Fushihara for wema plugin.
+- Thanks to Mr. Kan Fushihara, creator of wema.
 -- http://wema.sourceforge.jp/
-- Thanks to Mr. Takachin for page design.
--- http://www.generative.info/
 
 * Author
 
-- Kouichirou Eto <2006 at eto.com>
+See AUTHORS.
 
