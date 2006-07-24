@@ -1,3 +1,11 @@
+2006-07-24  Kouichirou Eto  <2006 eto.com>
+
+	* Reformat Copyright notice.
+
+	* webdavhandler.rb: Deleted.
+
+	* test-typekey.rb: Splited from typekey.rb
+
 2006-07-22  Kouichirou Eto  <2006 eto.com>
 
 	* qwikWeb 0.8.3 is released.
