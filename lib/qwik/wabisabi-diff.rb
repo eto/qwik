@@ -2,8 +2,6 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-# modified from hiki/command.rb
-
 require 'timeout'
 
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
