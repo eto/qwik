@@ -1,6 +1,10 @@
 * Copyright notice
 
-I include some files under the terms of the licenses of each files.
+I included some files under the terms of the licenses of each files.
+
+* Included Plugins
+
+See PLUGINS.
 
 * Included Ruby library
 
@@ -115,7 +119,7 @@ The codes are in Public Domain.  The license is shown below.
 - share/theme/qwikviridian/*
 
 These files are created by Takashi Maekawa.  He is one of the authors
-of qwikWeb system.  See AUTHORS.  The codes are in GNU GPL2.
+of the qwikWeb system.  See AUTHORS.  The codes are in GNU GPL2.
 The license is shown below.
 
 /* Copyright (C) 2003-2005 Takashi Maekawa, All rights reserved.
