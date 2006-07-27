@@ -14,6 +14,8 @@ The QuickML Server is an easy-to-use mailing list system.  I use the
 QuickML codes as the basis of the mailing list server of the qwikWeb
 system.  The codes are in GNU GPL 2.  The license is shown below.
 
+Author: Satoru Takabayashi <satoru [at] namazu [dot] org>
+
 - http://0xcc.net/quickml/index.html.en
 > quickml server is a free software with ABSOLUTELY NO WARRANTY under
 > the terms of the GNU General Public License version 2.
@@ -23,6 +25,8 @@ system.  The codes are in GNU GPL 2.  The license is shown below.
 The TypeKey library is a library to use TypeKey Authentication system.
 I use "typekey.rb" for authentication.  This code is in GNU GPL 2.
 The license is shown below.
+
+Author: jouno <jouno 2002 at yahoo dot co jp>
 
 - http://d.hatena.ne.jp/jouno/20050203/1107432213
 - http://jouno.s11.xrea.com/x/script/typekey/TypeKey.rb
@@ -41,6 +45,8 @@ The license is shown below.
 The "setup.rb" is a setup library.  This code is in GNU LGPL.
 The license is shown below.
 
+Author: Minero Aoki <aamine at loveruby.net>
+
 - setup.rb
 
 #
@@ -52,6 +58,31 @@ The license is shown below.
 # You can distribute/modify this program under the terms of
 # the GNU LGPL, Lesser General Public License version 2.1.
 #
+
+* Included Ruby extention library
+
+** XMLFormatter
+
+I use XMLFormatter as a Ruby extention.  This code is a part of 
+"gonzui: a source code search engine".
+
+- http://gonzui.sourceforge.net/
+
+The code is in GNU GPL 2.  The license is shown below.
+
+Author: Keisuke Nishida <knishida at open-cobol.org>
+
+/* 
+ * XMLFormatter - a simple class for generating XML texts
+ *
+ * Copyright (C) 2004-2005 Keisuke Nishida <knishida@open-cobol.org>
+ * Copyright (C) 2005 Kouichirou Eto <2005 at eto.com>
+ *     All rights reserved.
+ *     This is free software with ABSOLUTELY NO WARRANTY.
+ * 
+ * You can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License version 2.
+ */
 
 * Included JavaScript files
 
