@@ -1,3 +1,7 @@
+# Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
+# This is free software with ABSOLUTELY NO WARRANTY.
+# You can redistribute it and/or modify it under the terms of the GNU GPL 2.
+
 system 'mkdir -p /var/lib/qwik/data/www'
 open('/var/lib/qwik/data/www/_SiteConfig.txt', 'wb') {|f|
   f.puts ':open:true'
