@@ -2,7 +2,7 @@
 //
 // debugwindow.js - Show debug information using small debug window.
 //
-// Copyright (C) 2005 Kouichirou Eto <2005 at eto.com>, 
+// Copyright (C) 2005 Kouichirou Eto, 
 //     All rights reserved.
 //     This is free software with ABSOLUTELY NO WARRANTY.
 //
