@@ -1,35 +1,84 @@
 * Copyright notice
 
-I included some files under the terms of the licenses of each files.
+* The qwikWeb system
+
+The qwikWeb system is distributed under the terms of GNU GPL2.
 
 * Included Plugins
 
+I included some plugin files under the terms of the licenses.
 See PLUGINS.
 
 * Included Ruby library
 
+I included some Ruby libraries under the terms of the licenses.
+
 ** QuickML
 
+Description:
 The QuickML Server is an easy-to-use mailing list system.  I use the
 QuickML codes as the basis of the mailing list server of the qwikWeb
-system.  The codes are in GNU GPL 2.  The license is shown below.
+system.
+
+Files:
+- lib/qwik/group-cond.rb
+- lib/qwik/group-config.rb
+- lib/qwik/group-confirm.rb
+- lib/qwik/group-mail.rb
+- lib/qwik/group-member.rb
+- lib/qwik/group-sendmail.rb
+- lib/qwik/group-sweep.rb
+- lib/qwik/group.rb
+- lib/qwik/mail-body.rb
+- lib/qwik/mail-header.rb
+- lib/qwik/mail-multipart.rb
+- lib/qwik/mail-parse.rb
+- lib/qwik/mail.rb
+- lib/qwik/ml-exception.rb
+- lib/qwik/ml-generator.rb
+- lib/qwik/ml-gettext.rb
+- lib/qwik/ml-logger.rb
+- lib/qwik/ml-msg-validator.rb
+- lib/qwik/ml-processor.rb
+- lib/qwik/ml-quickml-server.rb
+- lib/qwik/ml-sendmail.rb
+- lib/qwik/ml-server.rb
+- lib/qwik/ml-session.rb
+- lib/qwik/ml-sweeper.rb
+- lib/qwik/test-ml-info.rb
+- lib/qwik/test-ms-org.rb
+- lib/qwik/util-basic.rb
+- lib/qwik/util-safe.rb
 
 Author: Satoru Takabayashi <satoru [at] namazu [dot] org>
 
+License: GPL2
+
+Origin:
 - http://0xcc.net/quickml/index.html.en
+
+Copyright:
 > quickml server is a free software with ABSOLUTELY NO WARRANTY under
 > the terms of the GNU General Public License version 2.
 
 ** typekey.rb
 
+Description:
 The TypeKey library is a library to use TypeKey Authentication system.
-I use "typekey.rb" for authentication.  This code is in GNU GPL 2.
-The license is shown below.
+I use "typekey.rb" for authentication.
+
+Files:
+- lib/qwik/typekey.rb
 
 Author: jouno <jouno 2002 at yahoo dot co jp>
 
+License: GPL2
+
+Origin:
 - http://d.hatena.ne.jp/jouno/20050203/1107432213
 - http://jouno.s11.xrea.com/x/script/typekey/TypeKey.rb
+
+Copyrights:
 #
 # Copyright (C) 2005 jouno <jouno2002@yahoo.co.jp>
 # License under GPL-2
@@ -42,13 +91,20 @@ Author: jouno <jouno 2002 at yahoo dot co jp>
 
 ** setup.rb
 
-The "setup.rb" is a setup library.  This code is in GNU LGPL.
-The license is shown below.
+Description:
+The "setup.rb" is a library to setup.
+
+Files:
+- setup.rb
 
 Author: Minero Aoki <aamine at loveruby.net>
 
-- setup.rb
+License: LGPL 2.1
 
+Origin:
+- http://i.loveruby.net/ja/projects/setup/
+
+Copyright:
 #
 # setup.rb
 #
@@ -63,15 +119,22 @@ Author: Minero Aoki <aamine at loveruby.net>
 
 ** XMLFormatter
 
+Description:
 I use XMLFormatter as a Ruby extention.  This code is a part of 
 "gonzui: a source code search engine".
 
-- http://gonzui.sourceforge.net/
-
-The code is in GNU GPL 2.  The license is shown below.
+Files:
+- ext/extconf.rb
+- ext/xmlformatter.rb
+- lib/qwik/wabisabi-format-xml.rb
 
 Author: Keisuke Nishida <knishida at open-cobol.org>
 
+License: GPL 2
+
+Origin: http://gonzui.sourceforge.net/
+
+Copyright:
 /* 
  * XMLFormatter - a simple class for generating XML texts
  *
@@ -88,11 +151,17 @@ Author: Keisuke Nishida <knishida at open-cobol.org>
 
 ** Prototype JavaScript framework
 
-Prototype JavaScript framework is a JavaScript library.  The license
-is shown below.
+Description:
+Prototype JavaScript framework is a JavaScript library.
 
+Files:
 - share/theme/js/prototype.js
 
+Author: Sam Stephenson <sam at conio.net>
+
+License: MIT-style license.
+
+Copyright: 
 /*  Prototype JavaScript framework, version 1.4.0_rc3
  *  (c) 2005 Sam Stephenson <sam@conio.net>
  *
@@ -106,10 +175,19 @@ is shown below.
 
 ** Scriptaculous
 
-Scriptaculous is a JavaScript library.  The license is shown below.
+Description:
+Scriptaculous is a JavaScript library.
 
+Files:
 - share/theme/js/scriptaculous.js
 
+Author: Thomas Fuchs
+
+License: BSD-style license
+
+Origin: http://script.aculo.us/
+
+Copyright:
 // Copyright (c) 2005 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -133,11 +211,19 @@ Scriptaculous is a JavaScript library.  The license is shown below.
 
 ** S5
 
+Description:
 S5 is A Simple Standards-Based Slide Show System.
-The codes are in Public Domain.  The license is shown below.
 
+Files:
 - share/theme/s5/default/slides.js
 
+Author: Eric A. and Kathryn S. Meyer.
+
+License: public domain
+
+Origin: http://www.meyerweb.com/eric/tools/s5/
+
+Copyright:
 // S5 v1.1 slides.js -- released into the Public Domain
 //
 // Please see http://www.meyerweb.com/eric/tools/s5/credits.html for information
@@ -147,12 +233,20 @@ The codes are in Public Domain.  The license is shown below.
 
 ** qwikviridian.css
 
+Description:
+These files are created by Takashi Maekawa.  He is one of the authors
+of the qwikWeb system.  See AUTHORS.
+
+Files:
 - share/theme/qwikviridian/*
 
-These files are created by Takashi Maekawa.  He is one of the authors
-of the qwikWeb system.  See AUTHORS.  The codes are in GNU GPL2.
-The license is shown below.
+Author: Takashi Maekawa
 
+License: GPL2
+
+Origin: qwikWeb itself
+
+Copyright:
 /* Copyright (C) 2003-2005 Takashi Maekawa, All rights reserved.
    This is free software with ABSOLUTELY NO WARRANTY.
    You can redistribute it and/or modify it under the terms of the GNU GPL2. */
@@ -161,41 +255,76 @@ The license is shown below.
 
 ** Our image files
 
+Description:
 We, qwikWeb authors, created these image files.
 
-> login_bg.gif login_inputform_bg.gif login_inputform_bg_footer.gif
-> login_inputform_bg_header.gif login_li.gif favicon.ico favicon.png
-> login_qwik_logo.gif
+Files:
+- share/theme/i/login_bg.gif
+- share/theme/i/login_inputform_bg.gif
+- share/theme/i/login_inputform_bg_footer.gif
+- share/theme/i/login_inputform_bg_header.gif
+- share/theme/i/login_li.gif
+- share/theme/i/favicon.ico
+- share/theme/i/favicon.png
+- share/theme/i/login_qwik_logo.gif
+
+Authors: qwikWeb authors
+
+License: GPL2
+
+Origin: qwikWeb itself
+
+Copyright: (c) 2003-2006 Kouichirou Eto, Takashi Maekawa
 
 ** Apache Public Domain Icons
 
-I use Apache Public Domain Icons.  The license is shown below.
+Description:
+I use Apache Public Domain Icons.
 
+Files:
+- share/theme/i/a.gif
+- share/theme/i/binary.gif
+- share/theme/i/broken.gif
+- share/theme/i/compressed.gif
+- share/theme/i/generic.gif
+- share/theme/i/image2.gif
+- share/theme/i/movie.gif
+- share/theme/i/ps.gif
+- share/theme/i/sound2.gif
+- share/theme/i/sphere2.gif
+- share/theme/i/pdf.gif
+- share/theme/i/tar.gif
+- share/theme/i/text.gif
+
+Author: Kevin Hughes (kevinh@kevcom.com)
+
+License: public domain
+
+Origin:
 - http://cvs.apache.org/viewvc/httpd/httpd/tags/1.3/APACHE_1_3_36/icons/README?view=markup
 
-Public Domain Icons
+Copyright:
 
-     These icons were originally made for Mosaic for X and have been
-     included in the NCSA httpd and Apache server distributions in the
-     past. They are in the public domain and may be freely included in any
-     application. The originals were done by Kevin Hughes 
-     (kevinh@kevcom.com).
-
-I use these icon files under share/theme/i/*.
-
-> a.gif binary.gif broken.gif compressed.gif generic.gif image2.gif
-> movie.gif ps.gif sound2.gif sphere2.gif pdf.gif tar.gif text.gif
+> Public Domain Icons
+>      These icons were originally made for Mosaic for X and have been
+>      included in the NCSA httpd and Apache server distributions in the
+>      past. They are in the public domain and may be freely included in any
+>      application. The originals were done by Kevin Hughes 
+>      (kevinh@kevcom.com).
 
 ** Ms. rica's icons
 
-Ms. rica created these icons for qwikWeb system.
+Description:
+Ms. rica created these icons for qwikWeb system.  Thanks!
 
-- external.png
-- external_hover.png
-- new.png
+Files:
+- share/theme/i/external.png
+- share/theme/i/external_hover.png
+- share/theme/i/new.png
 
-Please see more details.
+Origin:
+- http://jm.vis.ne.jp/sbox/index.cgi?WikiLab%2fDownload#ICON
 
-- http://jm.vis.ne.jp/sbox/
-- http://jm.vis.ne.jp/sbox/index.cgi?WikiLab%2F2004%2F08
+License: public domain
 
+Copyright: Ms. rica
