@@ -6,6 +6,7 @@ INSTALL
 MANIFEST
 Makefile
 NEWS
+PLUGINS
 README
 bin/quickml-ctl
 bin/quickml-server
@@ -36,7 +37,6 @@ ext/test-xmlformatter.rb
 ext/xmlformatter.c
 lib/qwik/Makefile
 lib/qwik/act-aa.rb
-lib/qwik/act-album.rb
 lib/qwik/act-archive.rb
 lib/qwik/act-attach.rb
 lib/qwik/act-backup.rb
@@ -44,7 +44,6 @@ lib/qwik/act-basic.rb
 lib/qwik/act-book.rb
 lib/qwik/act-calc.rb
 lib/qwik/act-charset.rb
-lib/qwik/act-charts.rb
 lib/qwik/act-christel.rb
 lib/qwik/act-chronology.rb
 lib/qwik/act-code.rb
@@ -60,7 +59,6 @@ lib/qwik/act-event.rb
 lib/qwik/act-file.rb
 lib/qwik/act-files.rb
 lib/qwik/act-getpass.rb
-lib/qwik/act-graphviz.rb
 lib/qwik/act-history.rb
 lib/qwik/act-html.rb
 lib/qwik/act-httpauth.rb
@@ -88,25 +86,19 @@ lib/qwik/act-password.rb
 lib/qwik/act-plan.rb
 lib/qwik/act-povray.rb
 lib/qwik/act-presen.rb
-lib/qwik/act-qrcode.rb
 lib/qwik/act-redirect.rb
-lib/qwik/act-report.rb
 lib/qwik/act-ring.rb
 lib/qwik/act-sample.rb
 lib/qwik/act-save.rb
 lib/qwik/act-schedule.rb
 lib/qwik/act-search.rb
-lib/qwik/act-secdb.rb
 lib/qwik/act-sendpass.rb
 lib/qwik/act-sitelog.rb
 lib/qwik/act-smil.rb
 lib/qwik/act-style.rb
-lib/qwik/act-summary.rb
 lib/qwik/act-table.rb
 lib/qwik/act-tableform.rb
 lib/qwik/act-tag.rb
-lib/qwik/act-tagsearch.rb
-lib/qwik/act-takahashi.rb
 lib/qwik/act-text.rb
 lib/qwik/act-textarea.rb
 lib/qwik/act-theme.rb
@@ -160,6 +152,7 @@ lib/qwik/common-send.rb
 lib/qwik/common-session.rb
 lib/qwik/common-surface.rb
 lib/qwik/common-url.rb
+lib/qwik/compat/Makefile
 lib/qwik/compat/add_load_path.rb
 lib/qwik/config.rb
 lib/qwik/db-b-backup.rb
@@ -234,8 +227,6 @@ lib/qwik/parser.rb
 lib/qwik/password.rb
 lib/qwik/periodic.rb
 lib/qwik/qp.rb
-lib/qwik/qrcode-view.rb
-lib/qwik/qrcode.rb
 lib/qwik/qwik-service.rb
 lib/qwik/qwik.rb
 lib/qwik/qwikweb-adduser.rb
@@ -307,6 +298,7 @@ lib/qwik/test-submit-uuencode.rb
 lib/qwik/test-suite-all.rb
 lib/qwik/test-suite-basic.rb
 lib/qwik/test-suite-ml.rb
+lib/qwik/test-typekey.rb
 lib/qwik/testunit.rb
 lib/qwik/tokenizer-inline.rb
 lib/qwik/tokenizer.rb
@@ -321,7 +313,6 @@ lib/qwik/util-pid.rb
 lib/qwik/util-safe.rb
 lib/qwik/util-sendmail.rb
 lib/qwik/util-string.rb
-lib/qwik/util-tail.rb
 lib/qwik/util-time.rb
 lib/qwik/util-webrick.rb
 lib/qwik/version.rb
@@ -337,7 +328,6 @@ lib/qwik/wabisabi-to-wiki.rb
 lib/qwik/wabisabi-traverse.rb
 lib/qwik/wabisabi-validator.rb
 lib/qwik/wabisabi.rb
-lib/qwik/webdavhandler.rb
 log/
 post-install.rb
 pre-config.rb
