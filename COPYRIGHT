@@ -2,7 +2,20 @@
 
 * The qwikWeb system
 
-The qwikWeb system is distributed under the terms of GNU GPL2.
+Description:
+The qwikWeb system is a group collaboration system that integrated
+mailing list and WikiWikiWeb.
+
+Author: See AUTHORS.
+
+License: The GNU GPL2
+
+URL: http://qwik.jp/qwikweb/
+
+Copyright:
+# Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
+# This is free software with ABSOLUTELY NO WARRANTY.
+# You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
 * Included Plugins
 
