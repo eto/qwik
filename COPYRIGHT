@@ -2,13 +2,13 @@
 
 * The qwikWeb system
 
-Description:
-The qwikWeb system is a group collaboration system that integrated
-mailing list and WikiWikiWeb.
+Description: The qwikWeb system is a group collaboration system
+integrating mailing list and WikiWikiWeb.
 
 Author: See AUTHORS.
 
-License: The GNU GPL2
+License: The qwikWeb system is a free software under the terms of the
+GNU General Public License version 2.
 
 URL: http://qwik.jp/qwikweb/
 
@@ -17,10 +17,9 @@ Copyright:
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-* Included Plugins
-
-I included some plugin files under the terms of the licenses.
-See PLUGINS.
+Included Files:
+The qwikWeb system includes some external files in the package.
+For details, see below.
 
 * Included Ruby library
 
@@ -80,7 +79,7 @@ Description:
 The TypeKey library is a library to use TypeKey Authentication system.
 I use "typekey.rb" for authentication.
 
-Files:
+File:
 - lib/qwik/typekey.rb
 
 Author: jouno <jouno 2002 at yahoo dot co jp>
@@ -107,7 +106,7 @@ Copyrights:
 Description:
 The "setup.rb" is a library to setup.
 
-Files:
+File:
 - setup.rb
 
 Author: Minero Aoki <aamine at loveruby.net>
@@ -133,8 +132,9 @@ Copyright:
 ** XMLFormatter
 
 Description:
-I use XMLFormatter as a Ruby extention.  This code is a part of 
-"gonzui: a source code search engine".
+I use XMLFormatter as a Ruby extention.  This code is a part of
+"gonzui: a source code search engine".  I added some functions to this
+extension.
 
 Files:
 - ext/extconf.rb
@@ -167,7 +167,7 @@ Copyright:
 Description:
 Prototype JavaScript framework is a JavaScript library.
 
-Files:
+File:
 - share/theme/js/prototype.js
 
 Author: Sam Stephenson <sam at conio.net>
@@ -192,7 +192,13 @@ Description:
 Scriptaculous is a JavaScript library.
 
 Files:
+- share/theme/js/builder.js
+- share/theme/js/control.js
+- share/theme/js/dragdrop.js
+- share/theme/js/effects.js
 - share/theme/js/scriptaculous.js
+- share/theme/js/slider.js
+- share/theme/js/unittest.js
 
 Author: Thomas Fuchs
 
@@ -228,11 +234,11 @@ Description:
 S5 is A Simple Standards-Based Slide Show System.
 
 Files:
-- share/theme/s5/default/slides.js
+- share/theme/s5/*
 
 Author: Eric A. and Kathryn S. Meyer.
 
-License: public domain
+License: Public Domain
 
 Origin: http://www.meyerweb.com/eric/tools/s5/
 
@@ -309,7 +315,7 @@ Files:
 - share/theme/i/tar.gif
 - share/theme/i/text.gif
 
-Author: Kevin Hughes (kevinh@kevcom.com)
+Author: Kevin Hughes (kevinh at kevcom.com)
 
 License: public domain
 
@@ -338,6 +344,7 @@ Files:
 Origin:
 - http://jm.vis.ne.jp/sbox/index.cgi?WikiLab%2fDownload#ICON
 
-License: public domain
+License: Public Domain
 
-Copyright: Ms. rica
+Author: Ms. rica
+
