@@ -25,10 +25,9 @@ For details, see below.
 
 ** QuickML
 
-Description:
-The QuickML Server is an easy-to-use mailing list system.  I use the
-QuickML codes as the basis of the mailing list server of the qwikWeb
-system.
+Description: The QuickML Server is an easy-to-use mailing list system.
+I use the QuickML codes as the basis of the mailing list server of the
+qwikWeb system.
 
 Files:
 - lib/qwik/group-cond.rb
@@ -63,7 +62,7 @@ Files:
 
 Author: Satoru Takabayashi <satoru [at] namazu [dot] org>
 
-License: GPL2
+License: the GNU General Public License version 2
 
 Origin:
 - http://0xcc.net/quickml/index.html.en
@@ -72,66 +71,11 @@ Copyright:
 > quickml server is a free software with ABSOLUTELY NO WARRANTY under
 > the terms of the GNU General Public License version 2.
 
-** typekey.rb
-
-Description:
-The TypeKey library is a library to use TypeKey Authentication system.
-I use "typekey.rb" for authentication.
-
-File:
-- lib/qwik/typekey.rb
-
-Author: jouno <jouno 2002 at yahoo dot co jp>
-
-License: GPL2
-
-Origin:
-- http://d.hatena.ne.jp/jouno/20050203/1107432213
-- http://jouno.s11.xrea.com/x/script/typekey/TypeKey.rb
-
-Copyrights:
-#
-# Copyright (C) 2005 jouno <jouno2002@yahoo.co.jp>
-# License under GPL-2
-#
-# original is Adam Bregenzer(<adam@bregenzer.net>)'s python version
-# http://adam.bregenzer.net/python/typekey/TypeKey.py
-#
-# modified by Kouichirou Eto
-#
-
-** setup.rb
-
-Description:
-The "setup.rb" is a library to setup.
-
-File:
-- setup.rb
-
-Author: Minero Aoki <aamine at loveruby.net>
-
-License: LGPL 2.1
-
-Origin:
-- http://i.loveruby.net/ja/projects/setup/
-
-Copyright:
-#
-# setup.rb
-#
-# Copyright (c) 2000-2005 Minero Aoki
-#
-# This program is free software.
-# You can distribute/modify this program under the terms of
-# the GNU LGPL, Lesser General Public License version 2.1.
-#
-
 ** XMLFormatter
 
-Description:
-I use XMLFormatter as a Ruby extention.  This code is a part of
-"gonzui: a source code search engine".  I added some functions to this
-extension.
+Description: I use XMLFormatter as a Ruby extention.  This code is a
+part of "gonzui: a source code search engine".  I added some functions
+to this extension.
 
 Files:
 - ext/extconf.rb
@@ -157,14 +101,65 @@ Copyright:
  * the GNU General Public License version 2.
  */
 
-----
+* Included Ruby libraries
 
-* Included but not modified JavaScript files
+** typekey.rb
+
+Description: The TypeKey library is a library to use TypeKey
+Authentication system.  I use "typekey.rb" for authentication.
+
+File:
+- lib/qwik/typekey.rb
+
+Author: jouno <jouno 2002 at yahoo dot co jp>
+
+License: GPL-2
+
+Origin:
+- http://d.hatena.ne.jp/jouno/20050203/1107432213
+- http://jouno.s11.xrea.com/x/script/typekey/TypeKey.rb
+
+Copyrights:
+#
+# Copyright (C) 2005 jouno <jouno2002@yahoo.co.jp>
+# License under GPL-2
+#
+# original is Adam Bregenzer(<adam@bregenzer.net>)'s python version
+# http://adam.bregenzer.net/python/typekey/TypeKey.py
+#
+# modified by Kouichirou Eto
+#
+
+** setup.rb
+
+Description: The "setup.rb" is a library to setup.
+
+File:
+- setup.rb
+
+Author: Minero Aoki <aamine at loveruby.net>
+
+License: the GNU LGPL, Lesser General Public License version 2.1
+
+Origin:
+- http://i.loveruby.net/ja/projects/setup/
+
+Copyright:
+#
+# setup.rb
+#
+# Copyright (c) 2000-2005 Minero Aoki
+#
+# This program is free software.
+# You can distribute/modify this program under the terms of
+# the GNU LGPL, Lesser General Public License version 2.1.
+#
+
+* Included JavaScript files
 
 ** Prototype JavaScript framework
 
-Description:
-Prototype JavaScript framework is a JavaScript library.
+Description: Prototype JavaScript framework is a JavaScript library.
 
 File:
 - share/theme/js/prototype.js
@@ -187,8 +182,7 @@ Copyright:
 
 ** Scriptaculous
 
-Description:
-Scriptaculous is a JavaScript library.
+Description: Scriptaculous is a JavaScript library.
 
 Files:
 - share/theme/js/builder.js
@@ -229,8 +223,7 @@ Copyright:
 
 ** S5
 
-Description:
-S5 is A Simple Standards-Based Slide Show System.
+Description: S5 is A Simple Standards-Based Slide Show System.
 
 Files:
 - share/theme/s5/*/slides.js
@@ -251,9 +244,8 @@ Copyright:
 
 ** qwikviridian.css
 
-Description:
-These files are created by Takashi Maekawa.  He is one of the authors
-of the qwikWeb system.  See AUTHORS.
+Description: These files are created by Takashi Maekawa.  He is one of
+the authors of the qwikWeb system.  See AUTHORS.
 
 Files:
 - share/theme/qwikviridian/*
@@ -273,8 +265,7 @@ Copyright:
 
 ** Our image files
 
-Description:
-We, qwikWeb authors, created these image files.
+Description: We, qwikWeb authors, created these image files.
 
 Files:
 - share/theme/i/login_bg.gif
@@ -296,8 +287,7 @@ Copyright: (c) 2003,2004,2005,2006 Kouichirou Eto, Takashi Maekawa
 
 ** Apache Public Domain Icons
 
-Description:
-I use Apache Public Domain Icons.
+Description: I use Apache Public Domain Icons.
 
 Files:
 - share/theme/i/a.gif
@@ -322,7 +312,6 @@ Origin:
 - http://cvs.apache.org/viewvc/httpd/httpd/tags/1.3/APACHE_1_3_36/icons/README?view=markup
 
 Copyright:
-
 > Public Domain Icons
 >      These icons were originally made for Mosaic for X and have been
 >      included in the NCSA httpd and Apache server distributions in the
@@ -332,8 +321,7 @@ Copyright:
 
 ** Ms. rica's icons
 
-Description:
-Ms. rica created these icons for qwikWeb system.  Thanks!
+Description: Ms. rica created these icons for qwikWeb system.  Thanks!
 
 Files:
 - share/theme/i/external.png
