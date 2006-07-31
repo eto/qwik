@@ -6,7 +6,6 @@ INSTALL
 MANIFEST
 Makefile
 NEWS
-PLUGINS
 README
 bin/quickml-ctl
 bin/quickml-server
