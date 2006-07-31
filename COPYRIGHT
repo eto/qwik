@@ -13,7 +13,7 @@ GNU General Public License version 2.
 URL: http://qwik.jp/qwikweb/
 
 Copyright:
-# Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
+# Copyright (C) 2003,2004,2005,2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
@@ -21,9 +21,7 @@ Included Files:
 The qwikWeb system includes some external files in the package.
 For details, see below.
 
-* Included Ruby library
-
-I included some Ruby libraries under the terms of the licenses.
+* Included and modified files
 
 ** QuickML
 
@@ -36,6 +34,7 @@ Files:
 - lib/qwik/group-cond.rb
 - lib/qwik/group-config.rb
 - lib/qwik/group-confirm.rb
+
 - lib/qwik/group-mail.rb
 - lib/qwik/group-member.rb
 - lib/qwik/group-sendmail.rb
@@ -127,8 +126,6 @@ Copyright:
 # the GNU LGPL, Lesser General Public License version 2.1.
 #
 
-* Included Ruby extention library
-
 ** XMLFormatter
 
 Description:
@@ -151,7 +148,7 @@ Copyright:
 /* 
  * XMLFormatter - a simple class for generating XML texts
  *
- * Copyright (C) 2004-2005 Keisuke Nishida <knishida@open-cobol.org>
+ * Copyright (C) 2004,2005 Keisuke Nishida <knishida@open-cobol.org>
  * Copyright (C) 2005 Kouichirou Eto <2005 at eto.com>
  *     All rights reserved.
  *     This is free software with ABSOLUTELY NO WARRANTY.
@@ -160,7 +157,9 @@ Copyright:
  * the GNU General Public License version 2.
  */
 
-* Included JavaScript files
+----
+
+* Included but not modified JavaScript files
 
 ** Prototype JavaScript framework
 
@@ -234,7 +233,7 @@ Description:
 S5 is A Simple Standards-Based Slide Show System.
 
 Files:
-- share/theme/s5/*
+- share/theme/s5/*/slides.js
 
 Author: Eric A. and Kathryn S. Meyer.
 
@@ -266,7 +265,7 @@ License: GPL2
 Origin: qwikWeb itself
 
 Copyright:
-/* Copyright (C) 2003-2005 Takashi Maekawa, All rights reserved.
+/* Copyright (C) 2003,2004,2005 Takashi Maekawa, All rights reserved.
    This is free software with ABSOLUTELY NO WARRANTY.
    You can redistribute it and/or modify it under the terms of the GNU GPL2. */
 
@@ -293,7 +292,7 @@ License: GPL2
 
 Origin: qwikWeb itself
 
-Copyright: (c) 2003-2006 Kouichirou Eto, Takashi Maekawa
+Copyright: (c) 2003,2004,2005,2006 Kouichirou Eto, Takashi Maekawa
 
 ** Apache Public Domain Icons
 
