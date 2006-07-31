@@ -7,8 +7,7 @@ integrating mailing list and WikiWikiWeb.
 
 Author: See AUTHORS.
 
-License: The qwikWeb system is a free software under the terms of the
-GNU General Public License version 2.
+License: the GNU General Public License version 2
 
 URL: http://qwik.jp/qwikweb/
 
@@ -33,7 +32,6 @@ Files:
 - lib/qwik/group-cond.rb
 - lib/qwik/group-config.rb
 - lib/qwik/group-confirm.rb
-
 - lib/qwik/group-mail.rb
 - lib/qwik/group-member.rb
 - lib/qwik/group-sendmail.rb
@@ -84,7 +82,7 @@ Files:
 
 Author: Keisuke Nishida <knishida at open-cobol.org>
 
-License: GPL 2
+License: the GNU General Public License version 2
 
 Origin: http://gonzui.sourceforge.net/
 
@@ -166,7 +164,7 @@ File:
 
 Author: Sam Stephenson <sam at conio.net>
 
-License: MIT-style license.
+License: MIT-style license
 
 Copyright: 
 /*  Prototype JavaScript framework, version 1.4.0_rc3
@@ -252,7 +250,7 @@ Files:
 
 Author: Takashi Maekawa
 
-License: GPL2
+License: the GNU GPL2
 
 Origin: qwikWeb itself
 
@@ -279,7 +277,7 @@ Files:
 
 Authors: qwikWeb authors
 
-License: GPL2
+License: the GNU GPL2
 
 Origin: qwikWeb itself
 
