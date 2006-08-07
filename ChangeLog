@@ -1,3 +1,8 @@
+2006-08-07  Kouichirou Eto  <2006@eto.com>
+
+       * lib/qwik/version.rb (VERSION): 0.8.4.1.
+       (RELEASE_DATE): 20060807.
+
 2006-08-07  Kouichirou Eto  <2006 eto.com>
 
 	* Update debian/*.
