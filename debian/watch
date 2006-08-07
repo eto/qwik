@@ -1,0 +1,3 @@
+# Site         Directory               Pattern                 Version Script
+version=2
+http://rubyforge.org/frs/download.php/9824/qwik-(.*)\.tar.gz   debian  uupdate
