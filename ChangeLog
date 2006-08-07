@@ -1,3 +1,7 @@
+2006-08-07  Kouichirou Eto  <2006 eto.com>
+
+	* Update debian/*.
+
 2006-07-31  Kouichirou Eto  <2006 eto.com>
 
 	* Add more details for Copyright notice.
@@ -77,6 +81,12 @@
 	* response.rb (set_content_type): New method.
 	It can handle UPCASE extention.
 	Releated files are changed.
+
+2006-05-27  NIIBE Yutaka  <gniibe@fsij.org>
+
+       * lib/qwik/version.rb (VERSION): 0.8.2.2.
+       (RELEASE_DATE): 20060527.
+       * MANIFEST: Added debian/watch.
 
 2006-05-24  Kouichirou Eto  <2006 eto.com>
 
