@@ -12,8 +12,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ruby1.8 (>=1.8.2-3), libhtree-ruby1
 Conflicts: quickml
 Suggests: libdb4.2-ruby1.8, graphviz, ttf-sazanami-gothic, libgd-ruby1.8, imagemagick, libopenssl-ruby1.8 
 Description: a group communication system with Wiki and ML
-qwikWeb is a group communication system which integrates Wiki and
-mailing list.
-.
-Homepage: http://qwik.jp/qwikweb/
+ qwikWeb is a group communication system which integrates Wiki and
+ mailing list.
+ .
+ Homepage: http://qwik.jp/qwikweb/
 Tag: interface::web, made-of::lang:ruby, role::sw:server, web::wiki, mail::list
