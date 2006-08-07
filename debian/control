@@ -4,12 +4,15 @@ Priority: optional
 Maintainer: Yasuo Eto <yasuo@etou.org>
 Uploaders: NIIBE Yutaka <gniibe@fsij.org>, Kouichirou Eto <2006@eto.com>
 Build-Depends: debhelper (>= 4.0.0), ruby1.8, ruby1.8-dev
-Standards-Version: 3.6.0
+Standards-Version: 3.7.2
 
 Package: qwik
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ruby1.8 (>=1.8.2-3), libhtree-ruby1.8, libalgorithm-diff-ruby1.8, libzip-ruby1.8,  adduser
+Conflicts: quickml
 Suggests: libdb4.2-ruby1.8, graphviz, ttf-sazanami-gothic, libgd-ruby1.8, imagemagick, libopenssl-ruby1.8 
-Description: group communication system uses Wiki and ML
- qwikWeb is a group communication system uses Wiki and mailing list.
- Please see http://qwik.jp/ for information.
+Description: a group communication system with Wiki and ML
+qwikWeb is a group communication system which integrates Wiki and
+mailing list.
+.
+Homepage: http://qwik.jp/qwikweb/
