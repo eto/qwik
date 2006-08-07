@@ -16,3 +16,4 @@ qwikWeb is a group communication system which integrates Wiki and
 mailing list.
 .
 Homepage: http://qwik.jp/qwikweb/
+Tag: interface::web, made-of::lang:ruby, role::sw:server, web::wiki, mail::list

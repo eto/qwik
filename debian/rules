@@ -7,7 +7,7 @@
 #export DH_VERBOSE=1
 
 UPSTREAM = qwik
-UPSTREAM_VERSION = 0.8.1
+UPSTREAM_VERSION = 0.8.4
 
 CFLAGS = -Wall -g
 

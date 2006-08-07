@@ -1,3 +1,20 @@
+qwik (0.8.4.1) unstable; urgency=low
+
+  * New Upstream Released.
+  * debian/copyright file change.
+
+ -- Kouichirou Eto <2006@eto.com>  Mon,  7 Aug 2006 20:45:00 +0900
+
+qwik (0.8.3-1) unstable; urgency=low
+
+  * New Upstream Released.
+  * debian/copyright file change.
+  * debian/control file changed.
+    delete Conflicts: quickml
+	 delete Suggests: graphviz, ttf-sazanami-gothic,
+
+ -- Yasuo Eto <yasuo@etou.org>  Sat, 29 Jul 2006 21:00:13 +0900
+
 qwik (0.8.2.2) unstable; urgency=low
 
   * Official debian package: Closes #341674.
