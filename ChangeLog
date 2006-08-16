@@ -1,3 +1,10 @@
+2006-08-16  Kouichirou Eto  <2006@eto.com>
+
+	* smtp-session.rb: New file.
+	* ml-session.rb: Use the new class.
+	
+	* ml-sendmail.rb (Sendmail): Refactoring.
+
 2006-08-07  Kouichirou Eto  <2006@eto.com>
 
        * lib/qwik/version.rb (VERSION): 0.8.4.1.
