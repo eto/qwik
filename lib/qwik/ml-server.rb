@@ -77,7 +77,8 @@ module QuickML
 
     def process_session (socket)
       begin
-	session = Session.new(@config, socket)
+	c = @config
+	session = Session.new(c, c.logger, c.catalog, socket)
 	session.start
       rescue Exception => e
 	@logger.log "Unknown Session Error: #{e.class}: #{e.message}"

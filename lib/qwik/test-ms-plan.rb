@@ -24,15 +24,35 @@ class TestMSPlan < Test::Unit::TestCase
     ok_log '[test]: QwikPost: plan_19700115
 [test:2]: Send:'
     page = @site['plan_19700115']
-    eq "* plan_19700115\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
+    eq "* plan_19700115
+{{mail(bob@example.net,0)
+t
+}}
+", page.load
 
     # test_footer
-    eq "* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
+    eq "* Plan
+- [01-15] plan_19700115
+http://example.com/test/plan_19700115.html
+", @site.get_footer(Time.at(0))
 
     # Bob send a mail.
     res = sm('tt') { 't' }
     ok_log ['[test]: QwikPost: tt', '[test:3]: Send:']
-    eq "-- \narchive-> http://example.com/test/tt.html \nML-> test@q.example.com\n\n* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html", $ml_sm.buffer[-9..-3].join("\n")
+    eq "-- 
+archive-> http://example.com/test/tt.html 
+ML-> test@q.example.com
+
+* Plan
+- [01-15] plan_19700115
+http://example.com/test/plan_19700115.html", $ml_sm.buffer[-9..-3].join("\n")
+
+    page = @site['tt']
+    eq "* tt
+{{mail(bob@example.net,0)
+t
+}}
+", page.load
   end
 
   def test_plan2
@@ -43,16 +63,30 @@ class TestMSPlan < Test::Unit::TestCase
     res = sm('plan_19700115') { 't' }
     ok_log("[test]: QwikPost: plan_19700115\n[test:2]: Send:")
     page = @site['plan_19700115']
-    eq "* plan_19700115\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
+    eq "* plan_19700115
+{{mail(bob@example.net,0)
+t
+}}
+", page.load
 
     # Bob send the same mail again.msame a same mail with a date tag.
     res = sm('plan_19700115') { 't' }
     ok_log "[test]: QwikPost: plan_19700115\n[test:3]: Send:"
     page = @site['plan_19700115']
-    eq "* plan_19700115\n{{mail(bob@example.net,0)\nt\n}}\n{{mail(bob@example.net,0)\nt\n}}\n", page.load
+    eq "* plan_19700115
+{{mail(bob@example.net,0)
+t
+}}
+{{mail(bob@example.net,0)
+t
+}}
+", page.load
 
     # test_footer
-    eq "* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
+    eq "* Plan
+- [01-15] plan_19700115
+http://example.com/test/plan_19700115.html
+", @site.get_footer(Time.at(0))
   end
 
   def test_plan_japanese
@@ -64,10 +98,17 @@ class TestMSPlan < Test::Unit::TestCase
     res = sm('plan_19700115') { '‚¢' }
     ok_log "[test]: QwikPost: plan_19700115\n[test:2]: Send:"
     page = @site['plan_19700115']
-    eq "* plan_19700115\n{{mail(bob@example.net,0)\n‚¢\n}}\n", page.load
+    eq "* plan_19700115
+{{mail(bob@example.net,0)
+‚¢
+}}
+", page.load
 
     # test_footer
-    eq "* Plan\n- [01-15] plan_19700115\nhttp://example.com/test/plan_19700115.html\n", @site.get_footer(Time.at(0))
+    eq "* Plan
+- [01-15] plan_19700115
+http://example.com/test/plan_19700115.html
+", @site.get_footer(Time.at(0))
 
     # Bob send a mail.
     res = sm('‚¤‚¤') { '‚¦‚¦' }

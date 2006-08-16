@@ -102,7 +102,8 @@ QUIT
 "
     inputs = inputs.set_sourcecode_charset.to_mail_charset
     socket = QuickML::MockSocket.new(inputs)
-    session = QuickML::Session.new(@ml_config, socket)
+    c = @ml_config
+    session = QuickML::Session.new(c, c.logger, c.catalog, socket)
     session.start
     return socket.result
   end

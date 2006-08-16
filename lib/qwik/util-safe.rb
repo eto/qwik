@@ -10,7 +10,8 @@
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 
-class TooLongLine < Exception; end
+#class TooLongLine < StandardError; end
+class TooLongLine < Exception; end	# FIXME: should be StandardError.
 
 module SafeGetsModule
   def safe_gets (max_length = 1024)

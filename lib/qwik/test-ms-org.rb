@@ -59,17 +59,20 @@ class TestMLSessionOriginal < Test::Unit::TestCase
 
   def nu_test_basic
     socket = QuickML::MockSocket.new
-    session = QuickML::Session.new(@config, socket)
+    c = @config
+    session = QuickML::Session.new(c, c.logger, c.catalog, socket)
     session.start
     ok_eq(['220 localhost ESMTP QuickML'], socket.result)
 
     socket = QuickML::MockSocket.new('HELO')
-    session = QuickML::Session.new(@config, socket)
+    c = @config
+    session = QuickML::Session.new(c, c.logger, c.catalog, socket)
     session.start
     ok_eq(['220 localhost ESMTP QuickML'], socket.result)
 
     socket = QuickML::MockSocket.new('HELO localhost')
-    session = QuickML::Session.new(@config, socket)
+    c = @config
+    session = QuickML::Session.new(c, c.logger, c.catalog, socket)
     session.start
     ok_eq(['220 localhost ESMTP QuickML',
 	    '250 localhost'], socket.result)
@@ -118,7 +121,8 @@ DATA
 QUIT
 EOT
     socket = QuickML::MockSocket.new(inputs)
-    session = QuickML::Session.new(@config, socket)
+    c = @config
+    session = QuickML::Session.new(c, c.logger, c.catalog, socket)
     session.start
     return socket.result
   end

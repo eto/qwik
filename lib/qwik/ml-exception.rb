@@ -10,7 +10,6 @@
 
 module QuickML
   class QuickMLException < StandardError; end
-  class TooLargeMail < QuickMLException; end
   class TooManyMembers < QuickMLException; end
   class InvalidMLName < QuickMLException; end
 end
