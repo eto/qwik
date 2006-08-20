@@ -9,11 +9,10 @@ Standards-Version: 3.7.2
 Package: qwik
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ruby1.8 (>=1.8.2-3), libhtree-ruby1.8, libalgorithm-diff-ruby1.8, libzip-ruby1.8,  adduser
-Conflicts: quickml
-Suggests: libdb4.2-ruby1.8, graphviz, ttf-sazanami-gothic, libgd-ruby1.8, imagemagick, libopenssl-ruby1.8 
+Suggests: libdb4.2-ruby1.8, libgd-ruby1.8, imagemagick, libopenssl-ruby1.8 
 Description: a group communication system with Wiki and ML
  qwikWeb is a group communication system which integrates Wiki and
  mailing list.
  .
- Homepage: http://qwik.jp/qwikweb/
+ Homepage: http://qwik.jp/
 Tag: interface::web, made-of::lang:ruby, role::sw:server, web::wiki, mail::list
