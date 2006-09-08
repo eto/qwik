@@ -1,3 +1,12 @@
+qwik (0.8.4.2) unstable; urgency=low
+
+  * Official debian package, which closes: #341674.
+  * debian/copyright: Clarify a bit.
+  * debian/control: Tag should not be in this file.
+  * debian/rules: Added +x.
+
+ -- NIIBE Yutaka <gniibe@fsij.org>  Thu,  7 Sep 2006 10:55:05 +0900
+
 qwik (0.8.4.1) unstable; urgency=low
 
   * New Upstream Released.

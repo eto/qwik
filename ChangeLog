@@ -1,3 +1,11 @@
+2006-09-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* debian/changelog (0.8.4.2): Another trial to upload to Debian.
+
+	* debian/control (Tag): Removed.
+	* debian/copyright: Clarified more.
+	* debian/rules: Added +x bit.
+
 2006-08-16  Kouichirou Eto  <2006@eto.com>
 
 	* smtp-session.rb: New file.

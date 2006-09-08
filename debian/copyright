@@ -1,29 +1,18 @@
-This package was debianized by Yasuo Eto <yasuo@etou.org> on
+At first, the package was debianized by Yasuo Eto <yasuo@etou.org> on
 Wed, 15 Sep 2004 00:05:08 +0900.
 
-It was downloaded from http://qwik.jp/qwikweb/Install.html
+Currently, it is maintained as a native debian package at upstream.
+It can be downloaded from http://qwik.jp/qwikweb/Install.html
 
 Upstream Author: Kouichirou Eto<2006@eto.com>
 
 Copyright:
+qwikWeb consists of some files from different sources.
+As a whole, it can be distributed by GNU General Public License
+version 2.
 
-   This package is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; version 2 dated June, 1991.
-
-   This package is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this package; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  
-	02110-1301  USA.
-
-On Debian systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL'.
-
+Following is the copy of COPYRIGHT file in qwikWeb release 0.8.4.
+----------------
 * Copyright notice
 
 * The qwikWeb system
