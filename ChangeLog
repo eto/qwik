@@ -2,6 +2,7 @@
 
 	* debian/changelog (0.8.4.3): Another trial to upload to Debian.
 
+	* debian/docs (COPYING): Removed.
 	* debian/copyright: Spell fix.  Refer common-licenses/GPL-2.
 	* COPYRIGHT: Spell fix.
 
