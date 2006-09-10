@@ -1,17 +1,20 @@
 At first, the package was debianized by Yasuo Eto <yasuo@etou.org> on
 Wed, 15 Sep 2004 00:05:08 +0900.
 
-Currently, it is maintained as a native debian package at upstream.
+Currently, it is maintained as a native Debian package at upstream.
 It can be downloaded from http://qwik.jp/qwikweb/Install.html
 
 Upstream Author: Kouichirou Eto<2006@eto.com>
 
 Copyright:
-qwikWeb consists of some files from different sources.
-As a whole, it can be distributed by GNU General Public License
-version 2.
+qwikWeb consists of some files from different sources.  As a whole, it
+is distributed by GNU General Public License version 2.
 
-Following is the copy of COPYRIGHT file in qwikWeb release 0.8.4.
+On Debian systems, the complete text of the GNU General Public License,
+version 2, can be found in `/usr/share/common-licenses/GPL-2'.
+
+Following is the copy of COPYRIGHT file in qwikWeb release 0.8.4, 
+which lists copyright holders and licenses.
 ----------------
 * Copyright notice
 
@@ -86,7 +89,7 @@ Copyright:
 
 ** XMLFormatter
 
-Description: I use XMLFormatter as a Ruby extention.  This code is a
+Description: I use XMLFormatter as a Ruby extension.  This code is a
 part of "gonzui: a source code search engine".  I added some functions
 to this extension.
 

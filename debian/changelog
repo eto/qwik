@@ -1,6 +1,12 @@
-qwik (0.8.4.2) unstable; urgency=low
+qwik (0.8.4.3) unstable; urgency=low
 
   * Official debian package, which closes: #341674.
+  * debian/copyright: Fix spelling mistake, refer common-licenses/GPL-2.
+
+ -- NIIBE Yutaka <gniibe@fsij.org>  Sun, 10 Sep 2006 20:02:07 +0900
+
+qwik (0.8.4.2) unstable; urgency=low
+
   * debian/copyright: Clarify a bit.
   * debian/control: Tag should not be in this file.
   * debian/rules: Added +x.

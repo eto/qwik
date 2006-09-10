@@ -1,3 +1,10 @@
+2006-09-10  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* debian/changelog (0.8.4.3): Another trial to upload to Debian.
+
+	* debian/copyright: Spell fix.  Refer common-licenses/GPL-2.
+	* COPYRIGHT: Spell fix.
+
 2006-09-08  NIIBE Yutaka  <gniibe@fsij.org>
 
 	* debian/changelog (0.8.4.2): Another trial to upload to Debian.
