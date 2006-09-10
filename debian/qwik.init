@@ -6,6 +6,8 @@
 # Required-Stop:     $syslog $time $local_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      S 0 1 6
+# Short-Description: qwikWeb, a group communication system
+# Description:       qwik's services of web server and smtp server
 ### END INIT INFO
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
