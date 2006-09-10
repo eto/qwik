@@ -2,6 +2,7 @@ qwik (0.8.4.3) unstable; urgency=low
 
   * Official debian package, which closes: #341674.
   * debian/copyright: Fix spelling mistake, refer common-licenses/GPL-2.
+  * debian/docs (COPYING): Removed.
 
  -- NIIBE Yutaka <gniibe@fsij.org>  Sun, 10 Sep 2006 20:02:07 +0900
 
