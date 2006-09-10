@@ -85,7 +85,7 @@ install: build
 	-grep -rl \$$LOAD_PATH\ \<\<\ \'\.\.\/\.\.\/ext\'\ unless\ \$$LOAD_PATH\.include\?\(\'\.\.\/\.\.\/ext\'\) $(CURDIR)/debian/qwik\
 		| xargs sed -i -e "/\$$LOAD_PATH << '\.\.\/\.\.\/ext' unless \$$LOAD_PATH\.include?('\.\.\/\.\.\/ext')/D"
 	
-	-grep -rl \$$LOAD_PATH\ \<\<\ \'compat\'\ unless\ \$$LOAD_PATH\.include\?\ \'compat\' $(CURDIR)/debin/qwik\
+	-grep -rl \$$LOAD_PATH\ \<\<\ \'compat\'\ unless\ \$$LOAD_PATH\.include\?\ \'compat\' $(CURDIR)/debian/qwik\
 		| xargs sed -i -e "/\$$LOAD_PATH << 'compat' unless \$$LOAD_PATH\.include? 'compat'/D"
 	
 	-grep -rl \$$LOAD_PATH\ \<\<\ File\.expand_path\(File\.dirname\(__FILE__\)\+\'\/\.\.\/lib\'\) $(CURDIR)/debian/qwik\

@@ -1,5 +1,7 @@
 2006-09-10  NIIBE Yutaka  <gniibe@fsij.org>
 
+	* debian/rules: Fix debin -> debian.
+
 	* debian/changelog (0.8.4.3): Another trial to upload to Debian.
 
 	* debian/docs (COPYING): Removed.
