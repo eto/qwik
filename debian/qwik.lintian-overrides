@@ -1,0 +1,2 @@
+qwik: extra-license-file usr/lib/ruby/1.8/qwik/act-license.rb 
+qwik: extra-license-file usr/share/doc/qwik/COPYING.gz

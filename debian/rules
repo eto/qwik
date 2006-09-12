@@ -117,6 +117,14 @@ install: build
 	install -d $(CURDIR)/debian/qwik/etc/default/
 	cp debian/qwik.defaults $(CURDIR)/debian/qwik/etc/default/qwik
 
+	## lintian override
+	install -d $(CURDIR)/debian/qwik/usr/share/lintian/overrides/
+	install -m 0644 debian/qwik.lintian-overrides $(CURDIR)/debian/qwik/usr/share/lintian/overrides/qwik
+
+	## linda override
+	install -d $(CURDIR)/debian/qwik/usr/share/linda/overrides/
+	install -m 0644 debian/qwik.linda-overrides $(CURDIR)/debian/qwik/usr/share/linda/overrides/qwik
+
 # Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
