@@ -10,7 +10,7 @@
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/group'
-require 'qwik/ml-sendmail'
+require 'qwik/util-sendmail'
 require 'qwik/util-basic'
 
 module QuickML
@@ -22,12 +22,13 @@ module QuickML
 
       subject = Mail.encode_field(_("[%s] ML will be closed soon", name))
 
-      header = []
-      header.push(['To',	@address],
-		  ['From',	@address],
-		  ['Subject',	subject],
-		  ['Reply-To',	@address],
-		  ['Content-Type', content_type])
+      header = [
+	['To',	@address],
+	['From',	@address],
+	['Subject',	subject],
+	['Reply-To',	@address],
+	['Content-Type', content_type]
+      ]
       header.concat(quickml_fields)
 
       time_to_close = @db.last_article_time + @group_config[:ml_life_time]
@@ -39,11 +40,13 @@ module QuickML
       body << _("Time to close: %s.\n\n", time_to_close.strftime(datefmt))
       body << generate_footer(true)
 
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => get_active_members,
-		     :header => header,
-		     :body => body)
+      mail = {
+	:mail_from => '', 
+	:recipient => get_active_members,
+	:header => header,
+	:body => body,
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
       @logger.log "[#{@name}]: Alert: ML will be closed soon"
       close_alertedp_file
     end
@@ -94,32 +97,35 @@ module QuickML
 		  ['Reply-To',	@address],
 		  ['X-Mail-Count',@count])
       header.concat(quickml_fields)
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => @return_address, 
-		     :recipient => get_active_members,
-		     :header => header,
-		     :body => body)
+
+      mail = {
+	:mail_from => @return_address, 
+	:recipient => get_active_members,
+	:header => header,
+	:body => body
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
     end
 
     def send_confirmation (creator_address)
       header = []
-      subject = Mail.encode_field(_("[%s] Confirmation: %s",
-				    @name, @address))
+      subject = Mail.encode_field(_("[%s] Confirmation: %s", @name, @address))
       header.push(['To',	creator_address],
 		  ['From',	confirmation_address],
 		  ['Subject',	subject],
                   ['Content-Type', content_type])
-
       body = confirmation_message(@address)
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger, 
-		     :mail_from => '', 
-		     :recipient => creator_address,
-		     :header => header,
-		     :body => body)
+      mail = {
+	:mail_from => '', 
+	:recipient => creator_address,
+	:header => header,
+	:body => body,
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
       @logger.log "[#{@name}]: Send confirmation: #{confirmation_address} #{creator_address}"
     end
 
-    # FIXME: too similar to report_too_large_mail in server.rb
+    # FIXME: too similar to report_too_large_mail in ml-session.rb
     def report_too_large_mail (mail)
       header = []
       subject = Mail.encode_field(_("[QuickML] Error: %s", mail['Subject']))
@@ -135,35 +141,40 @@ module QuickML
       body << "To: #{mail['To']}\n"
       body << "From: #{mail['From']}\n"
       body << "Date: #{mail['Date']}\n"
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => mail.from,
-		     :header => header,
-		     :body => body)
+
+      mail = {
+	:mail_from => '', 
+	:recipient => mail.from,
+	:header => header,
+	:body => body,
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
     end
 
     def report_removed_member (error_address)
       return if @members.active_empty?
       subject = Mail.encode_field(_("[%s] Removed: <%s>", 
 				    @name, error_address))
-      header = []
-      header.push(['To',	@address],
-		  ['From',	@address],
-		  ['Subject',	subject],
-		  ['Reply-To',	@address],
-		  ['Content-Type', content_type])
+      header = [
+	['To',	@address],
+	['From',	@address],
+	['Subject',	subject],
+	['Reply-To',	@address],
+	['Content-Type', content_type]
+      ]
       header.concat(quickml_fields)
-
       body =  _("<%s> was removed from the mailing list:\n<%s>\n", 
 		error_address, @address)
       body << _("because the address was unreachable.\n")
       body << generate_footer(true)
 
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger, 
-		     :mail_from => '', 
-		     :recipient => get_active_members,
-		     :header => header,
-		     :body => body)
+      mail = {
+	:mail_from => '', 
+	:recipient => get_active_members,
+	:header => header,
+	:body => body,
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
       @logger.log "[#{@name}]: Notify: Remove #{error_address}"
     end
 

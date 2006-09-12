@@ -18,15 +18,15 @@ module Qwik
   class Action
     D_ExtArchive = {
       :dt => 'Site archive',
-      :dd => 'You can obtain a zip archive ot the site content.',
+      :dd => 'You can get a zip archive of the site.',
       :dc => "* Example
 {{zip}}
 
-You can get a zip archive of all text data of this Wiki site.
+You can get a zip archive with all text data of the Wiki site.
 
 The archive also contains static HTML files of the site.
-You can place the static HTML files on your web site
-as the static representation of the Wiki site.
+Thus, you can unzip the package and place them on your web site
+as the static Web pages.
 "
     }
 

@@ -22,7 +22,7 @@ module QuickML
       @gettext_charset = charset
     end
 
-    # used in ml-processor.rb, ml-quickml.rb, m-session.rb
+    # Used in group-sendmail.rb, ml-processor.rb, ml-session.rb
     def codeconv (text)
       return text if @gettext_catalog.nil?
       method = @gettext_catalog[:codeconv_method]
@@ -103,28 +103,28 @@ if defined?($test) && $test
       @message_charset	= nil
       set_catalog(nil)
       set_charset(nil)
-      t.ok_eq('hello', gettext('hello'))
-      t.ok_eq("Info: a\n", gettext("Info: %s\n", 'a'))
-      t.ok_eq("If you agree, then,\n", gettext("If you agree, then,\n"))
+      t.is 'hello', gettext('hello')
+      t.is "Info: a\n", gettext("Info: %s\n", 'a')
+      t.is "If you agree, then,\n", gettext("If you agree, then,\n")
 
       # test_codeconv
-      t.ok_eq('あ', codeconv('あ'))
+      t.is 'あ', codeconv('あ')
 
       # test after set catalog
       @catalog		= catalog_ja
       @message_charset	= 'iso-2022-jp'
       set_catalog(catalog_ja)
       set_charset('iso-2022-jp')
-      t.ok_eq('こんにちは'.set_sourcecode_charset.to_mail_charset, gettext('hello'))
-      t.ok_eq('こんにちは'.set_sourcecode_charset.to_mail_charset, _('hello'))
-      t.ok_eq('こんにちは'.set_sourcecode_charset.to_mail_charset, gettext2('hello'))
-      t.ok_eq('こんにちは'.set_sourcecode_charset.to_mail_charset, gettext('hello'))
-      t.ok_eq("使い方: a\n".set_sourcecode_charset.to_mail_charset, gettext("Info: %s\n", 'a'))
-      t.ok_eq("もし承認する場合、\n".set_sourcecode_charset.to_mail_charset,
-	      gettext("If you agree, then,\n"))
+      t.is 'こんにちは'.set_sourcecode_charset.to_mail_charset, gettext('hello')
+      t.is 'こんにちは'.set_sourcecode_charset.to_mail_charset, _('hello')
+      t.is 'こんにちは'.set_sourcecode_charset.to_mail_charset, gettext2('hello')
+      t.is 'こんにちは'.set_sourcecode_charset.to_mail_charset, gettext('hello')
+      t.is "使い方: a\n".set_sourcecode_charset.to_mail_charset, gettext("Info: %s\n", 'a')
+      t.is "もし承認する場合、\n".set_sourcecode_charset.to_mail_charset,
+	gettext("If you agree, then,\n")
 
       # test_codeconv_ja
-      t.ok_eq("\e$B$\"\e(B", codeconv('あ'))
+      t.is "\e$B$\"\e(B", codeconv('あ')
     end
   end
 

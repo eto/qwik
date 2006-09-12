@@ -132,7 +132,9 @@ This is {{br}} a test.
     # ==============================
     def plg_window(url, text=nil)
       text = url if text.nil?
-      return [:a, {:href=>url, :target=>'_blank'}, text]
+      a = [:a, {:href=>url, :class=>'external', :target=>'_blank'}, text]
+      # FIXME: Recognize the url is external or not.
+      return a
     end
 
     # ==============================
@@ -285,8 +287,10 @@ t
 }}'
 
       # test_window
-      ok_wi([:a, {:target=>'_blank', :href=>'url'}, 't'], '{{window(url,t)}}')
-      ok_wi([:a, {:target=>'_blank', :href=>'url'}, 'url'], '{{window(url)}}')
+      ok_wi [:a, {:class=>"external", :target=>'_blank', :href=>'url'}, 't'],
+	'{{window(url,t)}}'
+      ok_wi [:a, {:class=>"external", :target=>'_blank', :href=>'url'}, 'url'],
+	'{{window(url)}}'
 
       # test_admin_menu
       ok_wi([:a, {:href=>'.new'}, 'newpage'], '{{menu(newpage)}}')

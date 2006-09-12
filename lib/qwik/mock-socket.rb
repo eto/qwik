@@ -76,7 +76,7 @@ if defined?($test) && $test
 
       # test_print
       s.print('t')
-      ok_eq(['t'], s.buffer)
+      is ['t'], s.buffer
     end
   end
 end

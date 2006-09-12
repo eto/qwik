@@ -35,11 +35,14 @@ module QuickML
       body << "To: #{mail['To']}\n"
       body << "From: #{mail['From']}\n"
       body << "Date: #{mail['Date']}\n"
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => mail.from,
-		     :header => header,
-		     :body => body)
+
+      mail = {
+	:mail_from => '', 
+	:recipient => mail.from,
+	:header => header,
+	:body => body,
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
     end
 
     # FIXME: this is the same method of QuickML#content_type

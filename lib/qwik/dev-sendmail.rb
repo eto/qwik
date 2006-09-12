@@ -2,7 +2,7 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-# You can send a mail by using SMTP for check the status.
+# You can send a mail using SMTP for checking the status.
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'

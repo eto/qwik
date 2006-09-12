@@ -7,7 +7,15 @@ $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'pp'
 require 'qwik/autoreload'
 require 'qwik/util-webrick'
-require 'qwik/webdavhandler'
+
+begin
+  require 'qwik/webdavhandler'
+  $have_webdavhandler = true
+rescue LoadError
+  $have_webdavhandler = false
+end
+
+if $have_webdavhandler
 
 class MyWebDAVHandler < WEBrick::HTTPServlet::WebDAVHandler
   def do_OPTIONS(req, res)
@@ -52,4 +60,6 @@ if defined?($server) && $server
   if ! $running
     start_server
   end
+end
+
 end

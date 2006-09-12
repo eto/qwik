@@ -217,11 +217,13 @@ module QuickML
         body << @mail.body
       end
 
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => @mail.from,
-		     :header => header,
-		     :body => body)
+      mail = {
+	:mail_from => '', 
+	:recipient => @mail.from,
+	:header => header,
+	:body => body,
+      }
+      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger, mail)
       @logger.log "[#{ml.name}]: Reject: #{@mail.from}"
     end
 
@@ -243,22 +245,25 @@ module QuickML
 		 ml.address)
       end
       body << generate_footer
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => member,
-		     :header => header,
-		     :body => body)
+
+      mail = {
+	:mail_from => '', 
+	:recipient => member,
+	:header => header,
+	:body => body,
+      }
+      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger, mail)
       @logger.log "[#{ml.name}]: Unsubscribe: #{member}"
     end
 
     def report_too_many_members (ml, unadded_addresses)
-      header = []
-      subject = Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))
-      header.push(['To',	@mail.from],
-		  ['From',	ml.address],
-		  ['Subject',	subject],
-                  ['Content-Type', content_type])
-
+      header = [
+	['To',	@mail.from],
+	['From',	ml.address],
+	['Subject',
+	  Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))],
+	['Content-Type', content_type]
+      ]
       body =  _("The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)\n\n",
 		ml.address,
                 ml.get_max_members)
@@ -267,11 +272,14 @@ module QuickML
       }
 
       body << generate_footer
-      Sendmail.send_mail(@config.smtp_host, @config.smtp_port, @logger,
-		     :mail_from => '', 
-		     :recipient => @mail.from,
-		     :header => header,
-		     :body => body)
+
+      mail = {
+	:mail_from => '', 
+	:recipient => @mail.from,
+	:header => header,
+	:body => body,
+      }
+      Sendmail(@config.smtp_host, @config.smtp_port, @logger, mail)
 
       str = unadded_addresses.join(',')
       @logger.log "[#{ml.name}]: Too Many Members: #{str}"
