@@ -44,7 +44,9 @@ install: build
 	# Add here commands to install the package into debian/qwik.
 	
 	#/usr/sbin
-	cp -p bin/{quickml-server,qwik-service,qwikweb-server} $(CURDIR)/debian/qwik/usr/sbin/
+	cp -p bin/quickml-server $(CURDIR)/debian/qwik/usr/sbin/
+	cp -p bin/qwik-service $(CURDIR)/debian/qwik/usr/sbin/
+	cp -p bin/qwikweb-server $(CURDIR)/debian/qwik/usr/sbin/
 
 	#/usr/lib/ruby/1.8
 	install -d $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik
@@ -63,7 +65,9 @@ install: build
 	find $(CURDIR)/debian/qwik/usr/lib/ruby/1.8/qwik/ -type d -print |  xargs chmod 755
 
 	# /usr/share/
-	install -d $(CURDIR)/debian/qwik/usr/share/qwik/{super,theme,template}
+	install -d $(CURDIR)/debian/qwik/usr/share/qwik/super
+	install -d $(CURDIR)/debian/qwik/usr/share/qwik/theme
+	install -d $(CURDIR)/debian/qwik/usr/share/qwik/template
 	cp -r share/super/*  $(CURDIR)/debian/qwik/usr/share/qwik/super/
 	cp -r share/theme/*  $(CURDIR)/debian/qwik/usr/share/qwik/theme/
 	cp -r share/template/* $(CURDIR)/debian/qwik/usr/share/qwik/template/
