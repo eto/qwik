@@ -1,3 +1,12 @@
+qwik (0.8.4.4) unstable; urgency=low
+
+  * debian/rules: Avoid Bash features (curry braces). Closes: #389559.
+    install linda/lintian ovverrides.
+  * debian/qwik.lintian-overrides: New file.
+  * debian/qwik.linda-overrides: New file.
+
+ -- Yasuo Eto <yasuo@etou.org>  Wed, 27 Sep 2006 09:31:22 +0900
+
 qwik (0.8.4.3) unstable; urgency=low
 
   * Official debian package, which closes: #341674.
