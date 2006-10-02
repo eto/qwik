@@ -106,14 +106,15 @@ module Qwik
 	  exit
 	}
       }
-      optionparser.parse!(args)
+      begin
+	optionparser.parse!(args)
+      rescue OptionParser::ParseError => err
+	puts err.message
+	puts optionparser.to_s
+	exit
+      end
       if cmd.empty?
-	print '
-To show help,
-
- % qwik-service --help
-
-'
+        puts optionparser.to_s
 	exit
       end
       return config, cmd
