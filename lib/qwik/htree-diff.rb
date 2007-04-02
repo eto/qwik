@@ -3,7 +3,12 @@
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
-require 'diff'
+begin
+  require 'diff'
+rescue LoadError
+  require 'algorithm/diff'
+end
+
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-string'
 require 'qwik/htree-generator'

@@ -1,3 +1,12 @@
+2007-03-26  Kouichirou Eto  <2007 eto.com>
+
+	* ml-session.rb: Since I failed to add a new file smtp-session.rb,
+	I revert to old file.
+	* smtp-session.rb: Create an empty file.
+
+	* wabisabi-diff.rb: Change diff to algorithm/diff
+	* htree-diff.rb: Ditto.
+
 2006-09-12  Kouichirou Eto  <2006@eto.com>
 
 	* qwikgreen.css: Do not use MS P Gothic.

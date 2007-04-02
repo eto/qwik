@@ -5,7 +5,11 @@
 require 'timeout'
 
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
-require 'diff'
+begin
+  require 'diff'
+rescue LoadError
+  require 'algorithm/diff'
+end
 
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-string'
