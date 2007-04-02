@@ -7,6 +7,66 @@ require 'pp'
 $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-pathname'
 
+def dummy_replace_line(line)	# dummy
+  return line
+end
+
+def replace_line(line)
+  return line.gsub(/\$LOAD_PATH \<\< \'\.\.\'/) {
+    "$LOAD_PATH.unshift '..'"
+  }
+end
+
+def replace_content_by_line(content, dryrun)
+  replace = false
+  newcontent = ''
+  content.each {|line|
+    newline = replace_line(line)
+    if newline != line
+      yield
+      puts "-#{line}"
+      puts "+#{newline}"
+      replace = true
+    end
+    newline = line if dryrun		# for debug
+    newcontent << newline
+  }
+  return replace, newcontent, dryrun
+end
+
+def main
+  #dryrun = false
+  dryrun = true
+
+  #Dir.glob('test-sub-*.rb') {|fname|
+
+  last_fname = ''
+
+  Dir.glob('*.rb') {|fname|
+    next if fname == 'dev-replace.rb'
+    content = open(fname, 'rb') {|f| f.read }
+
+    replace, newcontent, dryrun = replace_content_by_line(content, dryrun) {
+      if last_fname != fname
+	puts "¡#{fname}"
+	last_fname = fname
+      end
+    }
+
+    if replace
+      open("#{fname}.bak", 'wb') {|f|
+	f.print content			# make backup
+      }
+      open(fname, 'wb') {|f|
+	f.print newcontent		# make new content
+      }
+    end
+  }
+end
+main
+
+=begin
+
 OLD_BANNER = <<"EOS"
 #
 # Copyright (C) 2003-2006 Kouichirou Eto
@@ -29,60 +89,6 @@ def replace_line(line)
     NEW_BANNER
   }
 end
-
-def dummy_replace_line(line)	# dummy
-  return line
-end
-
-def replace_content_by_line(content, dryrun)
-  replace = false
-  newcontent = ''
-  content.each {|line|
-    newline = replace_line(line)
-    if newline != line
-      yield
-      puts "-#{line}"
-      puts "+#{newline}"
-      replace = true
-    end
-    newline = line if dryrun		# for debug
-    newcontent << newline
-  }
-  return newcontent, dryrun
-end
-
-def main
-  #dryrun = false
-  dryrun = true
-
-  #Dir.glob('test-sub-*.rb') {|fname|
-
-  last_fname = ''
-
-  Dir.glob('*.rb') {|fname|
-    next if fname == 'dev-replace.rb'
-    content = open(fname, 'rb') {|f| f.read }
-
-    newcontent, dryrun = replace_content_by_line(content, dryrun) {
-      if last_fname != fname
-	puts "¡#{fname}"
-	last_fname = fname
-      end
-    }
-
-    if replace
-      open("#{fname}.bak", 'wb') {|f|
-	f.print content			# make backup
-      }
-      open(fname, 'wb') {|f|
-	f.print newcontent		# make new content
-      }
-    end
-  }
-end
-main
-
-=begin
 
 def nureplace_line(line)
   return line.gsub(%r|2003-2005|) {

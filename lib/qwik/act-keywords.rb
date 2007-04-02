@@ -124,6 +124,8 @@ if defined?($test) && $test
     end
 
     def test_plg_keywords
+      return unless $have_mecab
+
       page = @site.create('2')
       page.store("š")
 

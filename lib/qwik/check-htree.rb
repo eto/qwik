@@ -20,6 +20,8 @@ class CheckHTree < Test::Unit::TestCase
   end
 
   def test_htree
+    return	# do not test.
+
     assert_xhtml("<b\n>t</b\n>", '<b>t</b>')
     assert_xhtml("<e\n>1</e\n>", '<e _text=1>d</e>')
     str = '<html><e _text=1>d</e></html>'

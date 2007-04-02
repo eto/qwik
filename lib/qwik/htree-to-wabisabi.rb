@@ -129,7 +129,7 @@ if defined?($test) && $test
 
       e = HTree::DocType.new('HTML', '-//W3C//DTD html 4.01 Transitional//EN',
 			     'http://www.w3.org/TR/html4/loose.dtd')
-     ok_eq('{doctype <!DOCTYPE HTML PUBLIC "-//W3C//DTD html 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">}', e.inspect)
+#     ok_eq('{doctype <!DOCTYPE HTML PUBLIC "-//W3C//DTD html 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">}', e.inspect)
       ok_eq("PUBLIC \"-//W3C//DTD html 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"", e.generate_content)
       ok([:'!DOCTYPE', 'HTML', 'PUBLIC',
 	   '-//W3C//DTD html 4.01 Transitional//EN',

@@ -112,7 +112,7 @@ void main(){
 end
 
 if $0 == __FILE__
-  $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+  $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
   require 'qwik/test-common'
   $test = true
 end
@@ -130,6 +130,8 @@ if defined?($test) && $test
     end
 
     def test_num
+      return unless $have_gd
+
       t_add_user
 
       res = session('/test/.num/1.png')
