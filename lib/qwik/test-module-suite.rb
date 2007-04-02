@@ -4,7 +4,7 @@
 
 require 'optparse'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 $test = true	# Set $test before require 'qwik/test-common'
 require 'qwik/test-common'
 

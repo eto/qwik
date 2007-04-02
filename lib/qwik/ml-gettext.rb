@@ -8,7 +8,7 @@
 # the GNU General Public License version 2.
 #
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module QuickML
   module GetText

@@ -7,7 +7,7 @@ require 'md5'
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'base64'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 class String
   def xchomp

@@ -16,7 +16,7 @@ require 'timeout'
 require 'time'
 require 'net/smtp'	# FIXME: Which code uses smtp?
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/ml-session'
 require 'qwik/util-safe'
 require 'qwik/util-pid'

@@ -5,7 +5,7 @@
 require 'kconv'
 require 'iconv'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 class String
   # ============================== kconv

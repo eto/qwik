@@ -11,7 +11,7 @@ rescue LoadError
   require 'algorithm/diff'
 end
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-string'
 
 class DiffGenerator

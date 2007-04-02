@@ -38,7 +38,7 @@ def tp(*args)
 end
 
 if $0 == __FILE__
-  $LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+  $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
   $test = true
 end
 

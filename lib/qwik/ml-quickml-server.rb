@@ -12,7 +12,7 @@ $KCODE = 's'	# FIXME: Remove $KCODE
 
 require 'fileutils'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/ml-memory'
 require 'qwik/ml-server'

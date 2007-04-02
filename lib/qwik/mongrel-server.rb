@@ -6,7 +6,7 @@
 
 require 'mongrel'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/server'
 

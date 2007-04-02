@@ -10,7 +10,7 @@ $LOAD_PATH << CHISE_DIR unless $LOAD_PATH.include? CHISE_DIR
 require 'chise'
 require 'chise/ids'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action

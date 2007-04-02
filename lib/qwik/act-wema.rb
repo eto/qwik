@@ -4,7 +4,7 @@
 
 # Thanks to Mr. Kan Fushihara
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-monitor'
 
 module Qwik

@@ -9,7 +9,7 @@ rescue LoadError
   $have_bdb_so = false
 end
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-pathname'
 require 'qwik/db-b-backup'
 

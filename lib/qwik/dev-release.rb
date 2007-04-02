@@ -7,7 +7,7 @@ require 'time'
 require 'fileutils'
 include FileUtils
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/util-time'
 require 'qwik/util-pathname'

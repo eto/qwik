@@ -9,6 +9,7 @@
 	* act-code.rb: Change LOAD_PATH order beacause we have qwik lib in
 	the ruby directory.
 	* dev-replace.rb: Add a replace.
+	I changed all other related files.
 
 2007-03-26  Kouichirou Eto  <2007 eto.com>
 

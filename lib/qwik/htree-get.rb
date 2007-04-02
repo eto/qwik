@@ -5,7 +5,7 @@
 $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'htree'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/htree-template'
 
 module HTree

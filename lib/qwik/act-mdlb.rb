@@ -4,7 +4,7 @@
 
 # special mode for modulobe.com
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/modulobe'
 require 'qwik/act-metadata'
 require 'qwik/act-files'

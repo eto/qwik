@@ -5,7 +5,7 @@
 require 'uri'
 require 'net/http'
 
-$LOAD_PATH << '..' unless $LOAD_PATH.include? '..'
+$LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
