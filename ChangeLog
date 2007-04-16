@@ -1,5 +1,10 @@
 2007-04-12  Kouichirou Eto  <2007 eto.com>
 
+	* act-comment.rb (plg_nomore_mcomment): New plugin for just only
+	show the content of the comment.
+
+2007-04-12  Kouichirou Eto  <2007 eto.com>
+
 	* COPYRIGHT: Update the URL for Ms. rica's icons.
 
 2007-04-03  Kouichirou Eto  <2007 eto.com>

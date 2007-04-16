@@ -181,6 +181,16 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
     end
 
     # ============================== Multiline comment
+    def plg_nomore_mcomment(style='0', cols='50', rows='4')
+      # Just show the content. No more post.
+      content = ''
+      content = yield if block_given?
+      messages = mcomment_construct_messages(content)
+      div = [:div, {:class=>'mcomment'}]
+      div += messages
+      return div
+    end
+
     def plg_mcomment(style='0', cols='50', rows='4')
       # @mcomment_num is global for an action.
       @mcomment_num = 0 if !defined?(@mcomment_num)
@@ -192,22 +202,7 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 
       content = ''
       content = yield if block_given?
-      messages = []
-      content.each {|line|
-	line.chomp!
-	dummy, date, user, msg = line.split('|', 4)
-	date = Time.at(date.to_i).ymd
-	msg ||= ''
-	msg.gsub!(/\\n/, "\n")
-	mm = []
-	msg.each {|m|
-	  mm << m
-	  mm << [:br]
-	}
-	messages << [:div, {:class=>'msg'},
-	  [:dl, [:dt, [:span, {:class=>'date'}, date],
-	      [:span, {:class=>'user'}, user]], [:dd, *mm]]]
-      }
+      messages = mcomment_construct_messages(content)
 
       div = [:div, {:class=>'mcomment'}]
       div += messages if style == 0
@@ -234,6 +229,26 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 
       div += messages if style == 1
       return div
+    end
+
+    def mcomment_construct_messages(content)
+      messages = []
+      content.each {|line|
+	line.chomp!
+	dummy, date, user, msg = line.split('|', 4)
+	date = Time.at(date.to_i).ymd
+	msg ||= ''
+	msg.gsub!(/\\n/, "\n")
+	mm = []
+	msg.each {|m|
+	  mm << m
+	  mm << [:br]
+	}
+	messages << [:div, {:class=>'msg'},
+	  [:dl, [:dt, [:span, {:class=>'date'}, date],
+	      [:span, {:class=>'user'}, user]], [:dd, *mm]]]
+      }
+      return messages
     end
 
     def ext_mcomment
