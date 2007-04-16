@@ -3,6 +3,8 @@
 	* act-comment.rb (plg_nomore_mcomment): New plugin for just only
 	show the content of the comment.
 
+	* act-diary.rb: New file for diary plugin.
+
 2007-04-12  Kouichirou Eto  <2007 eto.com>
 
 	* COPYRIGHT: Update the URL for Ms. rica's icons.
