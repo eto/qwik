@@ -1,4 +1,8 @@
-2007-04-12  Kouichirou Eto  <2007 eto.com>
+2007-04-17  Kouichirou Eto  <2007 eto.com>
+
+	* act-diary.rb: Add description.
+
+2007-04-16  Kouichirou Eto  <2007 eto.com>
 
 	* act-comment.rb (plg_nomore_mcomment): New plugin for just only
 	show the content of the comment.

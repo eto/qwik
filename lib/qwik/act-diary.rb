@@ -7,6 +7,28 @@ require 'qwik/act-include'
 
 module Qwik
   class Action
+    D_PluginDiary = {
+      :dt => 'Diary plugin',
+      :dd => 'You can create a diary page.',
+      :dc => "* How to
+TBD
+"
+    }
+
+    D_PluginInclude_ja = {
+      :dt => '日記プラグイン',
+      :dd => '日記ページを作ります。',
+      :dc => "* 使い方
+例えば「User」というページ名のページを作ります。
+そのページに下記のように日記プラグインを埋め込みます。
+ {{diary}}
+
+日記ページは「User_20070417」というように「User_」というprefixの後に
+日付けが続くようなページ名で記述してください。
+「User」ページには、それらの日記の一覧が表示されます。
+"
+    }
+
     def plg_diary
       keys = []
       @site.each {|page|
