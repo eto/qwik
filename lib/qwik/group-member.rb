@@ -188,6 +188,7 @@ module QuickML
     def self.parse(active, former, error, content)
       content.each {|line| 
 	line.chomp!
+	next if line.empty?
 	if /^# (.*)/ =~ line	# removed address
 	  former.push($1) if ! former.include?($1)
 	elsif /^; (.*?) (\d+)(?: (\d+))?/ =~ line
@@ -272,6 +273,11 @@ if defined?($test) && $test
 
       # test_generate
       ok_eq('', c.generate([], [], []))
+
+      # test_parse
+      active, former, error = [], [], []
+      c.parse(active, former, error, "\n")
+      eq([[], [], []], [active, former, error])
     end
 
     def test_all

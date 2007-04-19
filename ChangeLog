@@ -3,6 +3,8 @@
 	* qwik-service.rb: Bug fix. Append config file information for
 	quickml_server. Thanks to Mr. MIWA Takayuki.
 
+	* group-member.rb: Skip empty lines. Thanks to Mr. cho45.
+
 2007-04-17  Kouichirou Eto  <2007 eto.com>
 
 	* act-diary.rb: Add description.
