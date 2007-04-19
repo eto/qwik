@@ -1,3 +1,8 @@
+2007-04-20  Kouichirou Eto  <2007 eto.com>
+
+	* qwik-service.rb: Bug fix. Append config file information for
+	quickml_server. Thanks to Mr. MIWA Takayuki.
+
 2007-04-17  Kouichirou Eto  <2007 eto.com>
 
 	* act-diary.rb: Add description.

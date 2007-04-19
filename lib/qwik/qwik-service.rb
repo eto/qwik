@@ -154,7 +154,7 @@ module Qwik
 
     def ml_start
       start_cmd('Starting QuickML services: ',
-		"#{QUICKML_SERVER}")
+		"#{QUICKML_SERVER} -c #{@config[:config_file]}")
     end
 
     def ml_stop
