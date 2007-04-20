@@ -91,7 +91,7 @@ class TypeKey
   # Return a URL to login to TypeKey
   def get_login_url(return_url, email = false)
     url  = @base_url
-    url += "login?t=#{}@token"
+    url += "login?t=#{@token}"
     url += (email ? '&need_email=1' : '')
     url += "&_return=#{URI.escape(return_url)}"
     url += "&v=#{@version}"

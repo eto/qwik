@@ -5,6 +5,8 @@
 
 	* group-member.rb: Skip empty lines. Thanks to Mr. cho45.
 
+	* typekey.rb: Bug fix. Set token correctly. Thanks to Mr. dotimpact.
+
 2007-04-17  Kouichirou Eto  <2007 eto.com>
 
 	* act-diary.rb: Add description.
