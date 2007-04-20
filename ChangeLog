@@ -7,6 +7,8 @@
 
 	* typekey.rb: Bug fix. Set token correctly. Thanks to Mr. dotimpact.
 
+	* qwikweb-watch.rb: Bug fix. Do not use util-tail.
+
 2007-04-17  Kouichirou Eto  <2007 eto.com>
 
 	* act-diary.rb: Add description.

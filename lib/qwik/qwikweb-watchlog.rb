@@ -4,7 +4,6 @@
 
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
-require 'qwik/util-tail'
 require 'qwik/util-pathname'
 require 'qwik/logger'
 
@@ -32,33 +31,28 @@ module Qwik
       p access_log = @config.log_dir.path + Logger::ACCESS_LOG
       p web_access_log = @config.log_dir.path + Logger::WEB_ACCESS_LOG
 
-      tail_f(error_log.to_s)
-      tail_f(web_access_log.to_s)
-      while true
-	sleep 1
-      end
+      t1 = start_tail_f(error_log.to_s)
+      t2 = start_tail_f(web_access_log.to_s)
+      loop { sleep 1 }
     end
 
-    def nu_tail_f(file)
-      Thread.new {
-	tail = Tail.new(file, 0, Tail::TAIL_END)
-	tail.gets { |line|
-	  print line
-	}
+    def start_tail_f(file)
+      return Thread.new {
+        open(file) {|log|
+	  log.seek(0, IO::SEEK_END)
+          tail_f(log) {|line| puts line }
+        }
       }
     end
 
-    def tail_f(file)
-      Thread.new {
-	open(file) {|f|
-	  f.seek(IO::SEEK_END, 0)
-	  while true
-	    while line = f.gets
-	      print line
-	    end
-	    #f.seek(IO::SEEK_CUR)
-	  end
-	}
+    def tail_f(input)
+      loop {
+        line = input.gets
+        yield line if line
+        if input.eof?
+          sleep 1
+          input.seek(input.tell)
+        end
       }
     end
   end
