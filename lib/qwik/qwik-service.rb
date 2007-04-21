@@ -106,6 +106,7 @@ module Qwik
 	  exit
 	}
       }
+
       begin
 	optionparser.parse!(args)
       rescue OptionParser::ParseError => err
@@ -196,9 +197,10 @@ module Qwik
       site = nil
       begin
 	site = farm.make_site(sitename)
+      rescue Errno::EACCES => e
+	error e.to_s
       rescue => e
-	warn "Error: The site [#{sitename}] is already exist."
-	exit 1
+	error "The site [#{sitename}] is already exist."
       end
 
       site = farm.get_site(sitename)
@@ -213,8 +215,7 @@ adding an initial user [#{mail}] is completed."
       require 'qwik/mailaddress'
 
       def usage
-	warn 'Usage: qwik-service --adduser sitename,mailaddress'
-	exit
+	die 'Usage: qwik-service --adduser sitename,mailaddress'
       end
 
       sitename, mail = args.split(/,/, 2)
@@ -230,13 +231,11 @@ adding an initial user [#{mail}] is completed."
 
       site = farm.get_site(sitename)
       if site.nil?
-	warn "Error: The site [#{sitename}] does not exist."
-	exit 1
+	error "The site [#{sitename}] does not exist."
       end
 
       if site.member.exist?(mail)
-	warn "Error: A user [#{mail}] is already exist."
-	exit 1
+	error "A user [#{mail}] is already exist."
       end
 
       site.member.add(mail)
@@ -248,8 +247,7 @@ adding an initial user [#{mail}] is completed."
       require 'qwik/mailaddress'
 
       def usage
-	warn 'Usage: qwik-service --showpassword mailaddress'
-	exit
+	die 'Usage: qwik-service --showpassword mailaddress'
       end
 
       return usage if mail.nil? || mail.empty?
@@ -267,8 +265,7 @@ adding an initial user [#{mail}] is completed."
       require 'qwik/password'
 
       def usage
-	warn 'Usage: qwik-service --showpassword mailaddress'
-	exit
+	die 'Usage: qwik-service --showpassword mailaddress'
       end
 
       return usage if mail.nil? || mail.empty?
@@ -285,6 +282,16 @@ adding an initial user [#{mail}] is completed."
     end
 
     private
+
+    def die(msg)
+      warn msg
+      exit
+    end
+
+    def error(msg)
+      warn "Error: " + msg
+      exit 1
+    end
 
     def start_cmd(msg, cmd)
       print msg

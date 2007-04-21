@@ -1,3 +1,15 @@
+2007-04-21  Kouichirou Eto  <2007 eto.com>
+
+	* bin/qwik-service.rb: Change LOAD_PATH order.
+	* bin/qwik-service.rb: Add error msg for Permission Denied.
+	* bin/qwik-service.rb (die): New method.
+	* bin/qwik-service.rb (error): New method.
+
+	* common-plugin.rb: Set local mode if the hostname is without
+	domain name.
+
+	* act-diary.rb: Update the format. Add titles for each pages.
+
 2007-04-20  Kouichirou Eto  <2007 eto.com>
 
 	* qwik-service.rb: Bug fix. Append config file information for

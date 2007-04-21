@@ -49,6 +49,7 @@ module Qwik
     def self.from_local?(h)
       if h == 'localhost' ||
 	  h == '127.0.0.1' ||
+	  /\A\w+\z/ =~ h ||
 	  /\A192\.168\..+\z/ =~ h ||
 	  /\A61\.193\.236/ =~ h
 	return true
@@ -89,6 +90,7 @@ if defined?($test) && $test
       # test_from_local?
       c = Qwik::Action
       eq true, c.from_local?('localhost')
+      eq true, c.from_local?('win')
       eq true, c.from_local?('127.0.0.1')
       eq true, c.from_local?('192.168.0.1')
       eq true, c.from_local?('192.168.2.1')

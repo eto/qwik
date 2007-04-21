@@ -29,18 +29,23 @@ TBD
 "
     }
 
-    def plg_diary
+    def plg_diary(include_days = 10)
       keys = []
       @site.each {|page|
-	if /\A#{@req.base}_(.+)\z/ =~ page.key
+	if /\A#{@req.base}_(\d\d\d\d\d\d\d\d)\z/ =~ page.key
 	  keys << page.key
 	end
       }
 
+      recent_days = keys.sort.reverse[0, include_days]
+
       div = []
-      keys.sort.reverse.each {|key|
-	div << plg_include(key)
+      recent_days.each {|key|
+	page = @site[key]
+	div << [:h2, [:a, {:href=>page.url}, page.get_title]]
+	div += plg_include(key)
       }
+
       return div
     end
   end
