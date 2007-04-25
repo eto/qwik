@@ -40,3 +40,5 @@ clean:
 realclean:	clean
 	-rm MANIFEST
 	cd ext; make clean; cd ..
+
+.PHONY: debug mldebug run mlrun watch test version manifest dist upload clean realclean

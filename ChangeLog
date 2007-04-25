@@ -3,6 +3,8 @@
 	* lib/qwik/mail-header.rb, lib/qwik/group-site.rb: Remove
 	own ml prefix only.
 
+	* Makefile: Add .PHONY target.
+
 2007-04-21  Kouichirou Eto  <2007 eto.com>
 
 	* bin/qwik-service.rb: Change LOAD_PATH order.
