@@ -58,8 +58,8 @@ module QuickML
     end
 
     # ==================== Get value.
-    def get_unified_subject
-      return Mail.get_unified_subject(self['Subject'])
+    def get_unified_subject(name)
+      return Mail.get_unified_subject(self['Subject'], name)
     end
 
     # ml-processor.rb:37:      if @mail.looping?
@@ -112,8 +112,8 @@ module QuickML
       return addresses.uniq
     end
 
-    def self.get_unified_subject(s)
-      s = Mail.clean_subject(s)
+    def self.get_unified_subject(s, name)
+      s = Mail.clean_subject(s, name)
       s.sub!(/(?:Re:\s*)+/i, '')
       s.sub!(/\A\s+/, '')
       s.sub!(/\s+\z/, '')
@@ -151,15 +151,15 @@ module QuickML
       return s
     end
 
-    def self.clean_subject(s)
+    def self.clean_subject(s, name)
       s = Mail.decode_subject(s)
-      s.gsub!(/(?:\[[^\]]+:\d+\])/, '')
+      s.gsub!(/(?:\[#{Regexp.quote(name)}:\d+\])/, '')
       s.sub!(/(?:Re:\s*)+/i, 'Re: ')
       return s
     end
 
     def self.rewrite_subject (s, name, count)
-      s = Mail.clean_subject(s)
+      s = Mail.clean_subject(s, name)
       s = "[#{name}:#{count}] " + s
       return Mail.encode_field(s)
     end
@@ -209,7 +209,7 @@ if defined?($test) && $test
 
       # test_get_unified_subject
       mail['Subject'] = 'Re: [t:1] s'
-      ok_eq('s', mail.get_unified_subject)
+      ok_eq('s', mail.get_unified_subject('t'))
 
       # test_looping?
       ok_eq(false, mail.looping?)
@@ -253,16 +253,16 @@ if defined?($test) && $test
       ok_eq(['a@example.net'], c.collect_address('a@example.net'))
 
       # test_get_unified_subject
-      ok_eq('t', c.get_unified_subject('t'))
-      ok_eq('t', c.get_unified_subject('Re: t'))
-      ok_eq('t', c.get_unified_subject(' t'))
-      ok_eq('t', c.get_unified_subject('t '))
-      ok_eq('t t', c.get_unified_subject('t t'))
-      ok_eq('t t', c.get_unified_subject('t  t'))
-      ok_eq('t t t', c.get_unified_subject('t t t'))
-      ok_eq('t t t', c.get_unified_subject('t  t  t'))
-      ok_eq('Test Mail', c.get_unified_subject('Re: [test:1] Test Mail'))
-      ok_eq('テスト', c.get_unified_subject('Re: [test:1] テスト '))
+      ok_eq('t', c.get_unified_subject('t', 'test'))
+      ok_eq('t', c.get_unified_subject('Re: t', 'test'))
+      ok_eq('t', c.get_unified_subject(' t', 'test'))
+      ok_eq('t', c.get_unified_subject('t ', 'test'))
+      ok_eq('t t', c.get_unified_subject('t t', 'test'))
+      ok_eq('t t', c.get_unified_subject('t  t', 'test'))
+      ok_eq('t t t', c.get_unified_subject('t t t', 'test'))
+      ok_eq('t t t', c.get_unified_subject('t  t  t', 'test'))
+      ok_eq('Test Mail', c.get_unified_subject('Re: [test:1] Test Mail', 'test'))
+      ok_eq('テスト', c.get_unified_subject('Re: [test:1] テスト ', 'test'))
 
       # test_remove_comment_in_field
       ok_eq('', c.remove_comment_in_field(''))
@@ -307,12 +307,15 @@ if defined?($test) && $test
       ok_eq("\202\240 ", c.decode_subject('=?iso-2022-jp?B?GyRCJCIbKEI=?= '))
 
       # test_clean_subject
-      ok_eq('t', c.clean_subject('t'))
-      ok_eq(' Re: Test ', c.clean_subject('[test:1] Re: Test '))
-      ok_eq('Re: テスト ', c.clean_subject('Re: [test:1] テスト '))
+      ok_eq('t', c.clean_subject('t', 'test'))
+      ok_eq(' Re: Test ', c.clean_subject('[test:1] Re: Test ', 'test'))
+      ok_eq('Re: テスト ', c.clean_subject('Re: [test:1] テスト ', 'test'))
+      ok_eq('[hoge:2] てすと ', c.clean_subject('[hoge:2] てすと ', 'test'))
+      ok_eq('[ttt:3] てすと ', c.clean_subject('[ttt:3] てすと ', 'test'))
 
       # test_rewrite_subject
       ok_eq('[n:2] t', c.rewrite_subject('t', 'n', '2'))
+      ok_eq('[test:2] [t:3] test', c.rewrite_subject('[t:3] test', 'test', '2'))
       ok_eq('[test:2] Re: Test Mail',
 	    c.rewrite_subject('Re: [test:1] Test Mail', 'test', 2))
       ok_eq('[test:2] Re: =?ISO-2022-JP?B?GyRCJUYlOSVIGyhCIA==?=',

@@ -87,7 +87,7 @@ module QuickML
 
     def post(mail)
       # Parse page title.
-      title = mail.get_unified_subject	# Get unified subject.
+      title = mail.get_unified_subject(@sitename)	# Get unified subject.
       page_title, tags = Qwik::Page.parse_title(title)
 
       page = @site.get_by_title(page_title)

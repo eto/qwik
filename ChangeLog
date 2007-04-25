@@ -1,3 +1,8 @@
+2007-04-25  Kazuhiro NISHIYAMA  <zn mbf.nifty.com>
+
+	* lib/qwik/mail-header.rb, lib/qwik/group-site.rb: Remove
+	own ml prefix only.
+
 2007-04-21  Kouichirou Eto  <2007 eto.com>
 
 	* bin/qwik-service.rb: Change LOAD_PATH order.
