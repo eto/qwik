@@ -72,36 +72,26 @@ module Qwik
       return [:plugin, {:method=>method, :param=>param}, data]
     end
 
-    def self.parse_ref(ref)
-      unless /\A(?:(.+)\|)?(.+)\z/s =~ ref
-	raise 'unknown ref'
+    def self.parse_ref(uri)
+      text, uri = $1, $2 if /\A([^|]*)\|(.+)\z/s =~ uri
+      if text.nil? or text.empty?
+        text = uri
       end
 
-      s = $1
-      href = $2
-
-      if /\A#{URL}/ =~ href
-	if /\.(?:jpg|jpeg|png|gif)\z/i =~ href && s.nil?
-	  s = href
-	  return [:img, {:src=>href, :alt=>s}]	# embed the image
-	end
-	s = href if s.nil?
-	return [:a, {:href=>href}, s]
-	#return [:a, {:href=>href.escape}, s]
-
-      elsif /\A(.+?):(.+)\z/ =~ href
-	disp = s ? s : "#{$1}:#{$2}"
-	return [:plugin, {:method=>'interwiki', :param=>"#{$1}:#{$2}"}, disp]
+      case uri
+      when /\A#{URL}/o
+        if /\.(?:jpg|jpeg|png|gif)\z/i =~ uri
+          [:img, {:src=>uri, :alt=>text}]
+        else
+          [:a, {:href=>uri}, text]
+        end
+      when /\A(.+?):(.+)\z/
+        [:plugin, {:method=>'interwiki', :param=>uri}, text]
+      else
+        uri = "#{uri}.html" unless uri.include?('.')
+        [:a, {:href=>uri}, text]
       end
-
-      s = href.dup if s.nil?
-      h = href.to_s	# do not escape it for now
-      h = "#{h}.html" unless h.include?('.')
-#     h = "#{h}.html" unless h[0] == ?.
-      result = [:a, {:href=>h}, s]
-      return result
     end
-
   end
 end
 
@@ -181,7 +171,7 @@ if defined?($test) && $test
       # test_img
       ok([[:img, {:alt=>'http://e.com/t.jpg', :src=>'http://e.com/t.jpg'}]],
 	 '[[http://e.com/t.jpg]]')
-      ok([[:a, {:href=>'http://e.com/t.jpg'}, 'm']],
+      ok([[:img, {:alt=>'m', :src=>'http://e.com/t.jpg'}]],
 	 '[[m|http://e.com/t.jpg]]')
 
       # test_security
@@ -215,6 +205,7 @@ if defined?($test) && $test
 
       # interwiki
       ok([:plugin, {:param=>'s:t', :method=>'interwiki'}, 's:t'], 's:t')
+      ok([:plugin, {:param=>'s:t', :method=>'interwiki'}, 'foo'], 'foo|s:t')
 
       # test_plugin_ref
       ok([:a, {:href=>'.attach'}, '.attach'], '.attach')
@@ -225,7 +216,7 @@ if defined?($test) && $test
       # test_img
       ok([:img, {:alt=>'http://e.com/t.jpg', :src=>'http://e.com/t.jpg'}],
 	 'http://e.com/t.jpg')
-      ok([:a, {:href=>'http://e.com/t.jpg'}, 's'],
+      ok([:img, {:alt=>'s', :src=>'http://e.com/t.jpg'}],
 	 's|http://e.com/t.jpg')
 
       # test security
@@ -239,6 +230,15 @@ if defined?($test) && $test
       # test_bug
       ok_eq("\226]", '–]')
       ok([:a, {:href=>"\226].html"}, "\226]"], '–]')
+
+      # abnormal cases
+      ok([:a, {:href=>'|.html'}, '|'],      '|')
+      ok([:a, {:href=>'|.html'}, '|'],      '||')
+      ok([:a, {:href=>'||.html'}, '||'],    '|||')
+      ok([:a, {:href=>'s|.html'}, 's|'],    's|')
+      ok([:a, {:href=>'s.html'},  's'],    '|s')
+      ok([:a, {:href=>'http://example.com'}, 'http://example.com'],    '|http://example.com')
+      ok([:plugin, {:param=>'s:t', :method=>'interwiki'}, 's:t'], '|s:t')
     end
   end
 end
