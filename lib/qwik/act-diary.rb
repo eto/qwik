@@ -15,7 +15,7 @@ TBD
 "
     }
 
-    D_PluginInclude_ja = {
+    D_PluginDiary_ja = {
       :dt => '日記プラグイン',
       :dd => '日記ページを作ります。',
       :dc => "* 使い方
