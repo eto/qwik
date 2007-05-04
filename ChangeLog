@@ -1,3 +1,11 @@
+2007-04-29  MIWA Takayuki  <mw-hawk proof.con.ne.jp>
+
+	* lib/qwik/parser-inline.rb: Fixed a bug in embedding images
+	with ALT text. See http://qwik.jp/qwikweb/23.html.
+
+	* lib/qwik/act-diary.rb: Removed duplicated definition of 
+	Qwik::Action::D_PluginInclude_ja.
+	
 2007-04-25  Kazuhiro NISHIYAMA  <zn mbf.nifty.com>
 
 	* lib/qwik/mail-header.rb, lib/qwik/group-site.rb: Remove
