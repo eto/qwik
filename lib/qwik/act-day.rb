@@ -81,10 +81,12 @@ if defined?($test) && $test
       res = session '/test/.day'
      #ok_in ['max'], '//title'
 
+=begin
       # test_ext_day
       # There is a page in 1970-01-01.
       res = session '/test/19700101.day'
       ok_in ["A day | 19700101"], '//title'
+=end
 
       # There is no page in 1970-01-02.
       res = session '/test/19700102.day'

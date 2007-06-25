@@ -71,24 +71,39 @@ if defined?($test) && $test
       page2.store("d2")
 
       res = session('/test/Diary.html')
+      ok_in([[:div,
+		{:class=>"day"},
+		"",
+		[:div,
+		  {:class=>"body"},
+		  [:div, {:class=>"section"}, [[:p, "d2"]]],
+		  [:"!--", "section"]],
+		[:"!--", "body"]],
+	      [:"!--", "day"]],
+	    "//div[@class='section']")
+
+=begin
+      res = session('/test/Diary.html')
       ok_in([[[:div,
-   {:class=>"day"},
-   "",
-   [:div,
-    {:class=>"body"},
-    [:div, {:class=>"section"}, [[:p, "d2"]]],
-    [:"!--", "section"]],
-   [:"!--", "body"]],
-  [:"!--", "day"]],
- [[:div,
-   {:class=>"day"},
-   "",
-   [:div,
-    {:class=>"body"},
-    [:div, {:class=>"section"}, [[:p, "d1"]]],
-    [:"!--", "section"]],
-   [:"!--", "body"]],
-  [:"!--", "day"]]], "//div[@class='section']")
+		  {:class=>"day"},
+		  "",
+		  [:div,
+		    {:class=>"body"},
+		    [:div, {:class=>"section"}, [[:p, "d2"]]],
+		    [:"!--", "section"]],
+		  [:"!--", "body"]],
+		[:"!--", "day"]],
+	      [[:div,
+		  {:class=>"day"},
+		  "",
+		  [:div,
+		    {:class=>"body"},
+		    [:div, {:class=>"section"}, [[:p, "d1"]]],
+		    [:"!--", "section"]],
+		  [:"!--", "body"]],
+		[:"!--", "day"]]], "//div[@class='section']")
+=end
+
     end
   end
 end

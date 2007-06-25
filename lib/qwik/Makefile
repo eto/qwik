@@ -4,12 +4,14 @@
 
 RUBY=ruby
 
-all:	m
+default:	test-suite-all
 
-# test suites.
+# shorcut for test suites.
 a:		test-suite-all
 b:		test-suite-basic
 m:		test-suite-ml
+
+# test suites.
 test-suite-all:
 	$(RUBY) -I.. test-suite-all.rb
 test-suite-basic:

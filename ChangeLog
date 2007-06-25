@@ -1,3 +1,12 @@
+2007-06-25  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/Makefile: Make test all default.
+	* Makefile: Ditto.
+
+	* lib/qwik/act-diary.rb: Fix a test case.
+	* lib/qwik/act-day.rb: Ditto.
+	* lib/qwik/util-charset.rb: Ditto.
+
 2007-04-29  MIWA Takayuki  <mw-hawk proof.con.ne.jp>
 
 	* lib/qwik/parser-inline.rb: Fixed a bug in embedding images
