@@ -1,3 +1,7 @@
+2007-08-05  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/page-files: Do not backup files in default.
+
 2007-06-25  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/Makefile: Make test all default.

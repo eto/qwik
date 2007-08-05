@@ -59,7 +59,8 @@ module Qwik
       return "#{num}-#{filename}"	# '1-t.txt'
     end
 
-    def delete(filename, backup=true)
+    DEFAULT_BACKUP = false
+    def delete(filename, backup = DEFAULT_BACKUP)
       fpath = path(filename)
       raise FileNotExist if ! fpath.exist?
 
