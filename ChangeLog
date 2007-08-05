@@ -1,8 +1,8 @@
 2007-08-05  Kouichirou Eto  <2007 eto.com>
 
-	* lib/qwik/page-files: Do not backup files in default.
+	* lib/qwik/page-files.rb: Do not backup files in default.
 
-	* lib/qwik/db-backup: Do not backup some pages.
+	* lib/qwik/db-backup.rb: Do not backup some pages.
 
 	* lib/qwik/act-files.rb: Set max file size.
 	* lib/qwik/site-config.rb: Ditto.
