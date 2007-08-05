@@ -8,6 +8,8 @@
 	* lib/qwik/site-config.rb: Ditto.
 	* lib/qwik/catalog-ja.rb: Ditto.
 
+	* lib/qwik/farm.rb: Do bury to same directory.
+
 2007-06-25  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/Makefile: Make test all default.

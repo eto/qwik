@@ -121,7 +121,8 @@ module Qwik
       dirtime = sitepath.mtime.to_i
       @grave_path.check_directory
       while true
-	gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
+	#gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
+	gravesitepath = sitepath.dirname + ".._#{dirtime}_#{sitename}"
 	if ! gravesitepath.exist?
 	  sitepath.rename(gravesitepath)
 	  break
