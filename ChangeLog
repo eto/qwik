@@ -4,6 +4,10 @@
 
 	* lib/qwik/db-backup: Do not backup some pages.
 
+	* lib/qwik/act-files.rb: Set max file size.
+	* lib/qwik/site-config.rb: Ditto.
+	* lib/qwik/catalog-ja.rb: Ditto.
+
 2007-06-25  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/Makefile: Make test all default.

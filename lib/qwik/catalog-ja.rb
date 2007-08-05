@@ -66,6 +66,9 @@ class Qwik::CatalogFactory
       '同名のファイルが存在しています',
       'Can not use Japanese character for file name' =>
       '日本語のファイル名は使えません',
+      'Max size exceeded.' => 'ファイルサイズの限界を超えています。',
+      'Max size' => '最大容量',
+      'File size' => 'ファイルサイズ',
       'The file is saved.' => 'ファイルをセーブしました。',
       'Attach file done' => 'ファイルを添付しました',
       'Attach file' => 'ファイル添付',

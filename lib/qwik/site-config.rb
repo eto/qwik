@@ -89,6 +89,7 @@ module Qwik
 	'redirect'	=> 'false',
 	'siteurl'	=> '',
 	'siteml'	=> '',
+	'max_file_size'	=> (10 * 1024 * 1024).to_s,	# 10MB
       }
     end
   end

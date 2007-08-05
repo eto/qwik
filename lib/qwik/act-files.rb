@@ -204,6 +204,15 @@ You can show the list of attached files.
 	#filename = fullfilename.path.basename.to_s
 	filename = Action.get_basename(fullfilename)
 
+	max_size = @site.siteconfig['max_file_size'].to_i
+	if max_size < data.length
+	  list << [:p, [:strong, filename], [:em, _('Max size exceeded.')],
+	    [:br],
+	    _('Max size'), max_size, [:br],
+	    _('File size'), data.length, [:br]]
+	  next
+	end
+
 	# If the file is saved as another name, you can use return value.
 	filename = @site.files(@req.base).fput(filename, data)
 
@@ -550,6 +559,31 @@ if defined?($test) && $test
       res = session('/test/1.files/t.txt')
       ok_eq('text/plain', res['Content-Type'])
       ok_eq('t', res.body)
+    end
+
+    def test_big_file
+      t_add_user
+
+      # Set max_file_size to 1MB.
+      config = @site['_SiteConfig']
+      max_size = 1 * 1024 * 1024	# 1MB
+      config.store(":max_file_size:#{max_size}")
+
+      page = @site.create_new
+      page.store('t')
+
+      # Try to store a file with 2MB size.
+      big_content = '0' * (2 * 1024 * 1024)	# 2MB
+      res = session('POST /test/1.files') {|req|
+	req.query.update('content'=>t_make_content('t.txt', big_content))
+      }
+      ok_title('Attach file done')
+      ok_in(["Max size exceeded."],
+	    "//div[@class='section']/p/em")
+
+      # Get the file.
+      res = session('/test/1.files/t.txt')
+      ok_title('No such file')
     end
   end
 end
