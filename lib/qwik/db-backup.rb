@@ -34,8 +34,16 @@ module Qwik
     def check(k, v)
     end
 
+    IGNORE_PAGES = %w(
+_SiteLog
+_SiteChanges
+_GroupCharset
+_GroupCount
+)
+
     def put(k, v, time)
       @backup_path.check_directory
+      return if IGNORE_PAGES.include?(k)
       path(k, time).put(v)
     end
     alias set put
@@ -80,24 +88,27 @@ end
 
 if defined?($test) && $test
   class TestBackupDB < Test::Unit::TestCase
-    def test_backupdb
+    def setup
       config = Qwik::Config.new
       config.update Qwik::Config::DebugConfig
       config.update Qwik::Config::TestConfig
-      path = 'test/'.path
-      path.setup
+      @path = 'test/'.path
+      @path.setup
 
       spath = config.super_dir.path
-      pagedb = Qwik::FileSystemDB.new(path, spath)
+      @pagedb = Qwik::FileSystemDB.new(@path, spath)
 
       # test_initialize
-      backupdb = Qwik::BackupDB.new(path)
-      pagedb.register_observer(backupdb)
+      backupdb = Qwik::BackupDB.new(@path)
+      @pagedb.register_observer(backupdb)
+    end
 
-      pagedb.create('1')
-      pagedb.put('1', 't', 1)
+    def test_backupdb
+      # test_put
+      @pagedb.create('1')
+      @pagedb.put('1', 't', 1)
 
-      budb = pagedb.backupdb
+      budb = @pagedb.backupdb
       assert_instance_of(Qwik::BackupDB, budb)
 
       # test_each_by_key
@@ -109,10 +120,24 @@ if defined?($test) && $test
 	eq v, s
       }
 
-      #put
-      #exist?
+      # FIXME: test_put, test_exist should be exist.
+    end
 
-      path.teardown
+    def test_ignore_pages
+      key = '_SiteLog'
+      @pagedb.create(key)
+      @pagedb.put(key, 't', 1)
+
+      # test_each_by_key
+      found = false
+      @pagedb.backupdb.each_by_key(key) {|v, time|
+        found = true
+      }
+      assert_equal false, found
+    end
+
+    def teardown
+      @path.teardown
     end
   end
 end

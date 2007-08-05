@@ -2,6 +2,8 @@
 
 	* lib/qwik/page-files: Do not backup files in default.
 
+	* lib/qwik/db-backup: Do not backup some pages.
+
 2007-06-25  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/Makefile: Make test all default.
