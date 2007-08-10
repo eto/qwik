@@ -10,6 +10,9 @@
 	to presen mode.
 	* share/super/_AdminMenu.txt: Add "presen_switch".
 
+	* lib/qwik/act-presen.rb: Make title to back link.
+	* share/theme/s5/qwikworld/pretty.css: Ditto.
+
 2007-08-05  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/page-files.rb: Do not backup files in default.

@@ -207,6 +207,9 @@ sup {
   padding: 0.5em 0.75em;
   font-weight: normal;
 }
+#footer h1 a {
+  color: #bbb;
+}
 #footer h1 {
   left: 0;
   font-size: 1em;

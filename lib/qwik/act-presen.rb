@@ -169,7 +169,7 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
       #theme = 'qwikblack'
       #theme = 'qwikborder'
 
-      return html_page(title, theme, wabisabi)
+      return html_page(title, theme, wabisabi, pagename)
     end
 
     REPLACE_H = {:h2=>:h1, :h3=>:h2, :h4=>:h3, :h5=>:h4, :h6=>:h5}
@@ -199,7 +199,7 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
 
     private
 
-    def self.html_page(title, theme, wabisabi)
+    def self.html_page(title, theme, wabisabi, pagename)
       theme_href = ".theme/s5/#{theme}/slides.css"
       html = [[:"!DOCTYPE", 'html', 'PUBLIC',
 	  '-//W3C//DTD HTML 4.01 Transitional//EN',
@@ -228,7 +228,7 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
 	      [:div, {:id=>'currentSlide'}, ''],
 	      [:div, {:id=>'header'}, ''],
 	      [:div, {:id=>'footer'},
-		[:h1, title]]],
+		[:h1, [:a, {:href=>"#{pagename}.html"}, title]]]],
 	    [:div, {:class=>'presentation'}, wabisabi]]]]
       return html
     end
@@ -254,8 +254,8 @@ if defined?($test) && $test
       page = @site.create("PresenTest")
       page.store('{{presen_switch}}')
       res = session('/test/PresenTest.html')
-      ok_in([:a, {:href=>"PresenTest.presen"}, "Presentation mode"],
-	    "//div[@class='section']/span")
+      ok_in([:a, {:href=>"PresenTest.presen"}, "Presen"],
+	    "//div[@class='section']")
     end
 
     def test_plg_presen_theme
@@ -339,7 +339,6 @@ b
 	      {:id=>'slideProj',
 		:rel=>'stylesheet',
 		:type=>'text/css',
-#		:href=>'.theme/s5/i18n/slides.css',
 		:href=>'.theme/s5/qwikworld/slides.css',
 		:media=>'projection'}],
 	    [:link,
@@ -369,7 +368,7 @@ b
 	      [:div, {:id=>'controls'}, ''],
 	      [:div, {:id=>'currentSlide'}, ''],
 	      [:div, {:id=>'header'}, ''],
-	      [:div, {:id=>'footer'}, [:h1, 'h']]],
+              [:div, {:id=>"footer"}, [:h1, [:a, {:href=>"1.html"}, "h"]]]],
 	    [:div,
 	      {:class=>'presentation'},
 	      [[:div, {:class=>'slide'}, [[:h1, 'h'], [:p, 'p']]],
