@@ -1,3 +1,7 @@
+2007-08-10  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/act-ruby.rb: Refactoring.
+
 2007-08-09  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: New plugin to embed ruby code.

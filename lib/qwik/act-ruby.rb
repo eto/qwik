@@ -24,27 +24,20 @@ Ask for the administrator.
     }
 
     def plg_ruby(*argv)
-      if ! @config.enable_ruby
-	return [:p, "Ruby plugin is not enabled."]
-      end
+      return [:p, "Ruby plugin is not enabled."] if ! @config.enable_ruby
 
       return if ! block_given?
       ruby_code = yield
 
-      require 'date'	# Ad hoc.. Too bad.
+      require 'date'
 
       th = Thread.new {
 	$SAFE = 4
 	eval(ruby_code)
       }
-      result = th.value
-      result = result.to_s
-
-      ht = HTree(result)
-      wabisabi = ht.to_wabisabi
-
+      result = th.value.to_s
+      wabisabi = HTree(result).to_wabisabi
       return [:p, wabisabi]
-      #return [:p, result]
     end
   end
 end
