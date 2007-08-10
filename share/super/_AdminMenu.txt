@@ -2,8 +2,8 @@
 
 {{only_member
 #- {{show_history}}
-#- {{show_presen}}
 #- {{menu(wysiwyg)}}
+- {{presen_switch}}
 - {{menu(newpage)}}
 - {{menu(edit)}}
 #- {{menu(wysiwyg)}}

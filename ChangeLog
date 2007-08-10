@@ -6,6 +6,10 @@
 	* etc/config.txt: Ditto.
 	* etc/config-debug.txt: Ditto.
 
+	* lib/qwik/act-presen.rb (plg_presen_switch): New plugin to switch
+	to presen mode.
+	* share/super/_AdminMenu.txt: Add "presen_switch".
+
 2007-08-05  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/page-files.rb: Do not backup files in default.

@@ -49,6 +49,12 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
 '
     }
 
+    def plg_presen_switch
+      return nil if ! defined?(@req.base) || @req.base.nil?
+      return plg_ext('presen', _('Presen')) if /^Presen/ =~ @req.base
+      return nil
+    end
+
     def plg_presen
       return nil if ! defined?(@req.base) || @req.base.nil?
       return page_attribute('presen', _('Presentation mode'))
@@ -241,6 +247,15 @@ if defined?($test) && $test
     def test_plg_presen
       ok_wi [:span, {:class=>'attribute'}, [:a, {:href=>'1.presen'},
 		'Presentation mode']], '{{presen}}'
+
+      # test_plg_presen_switch
+      ok_wi [], '{{presen_switch}}'
+
+      page = @site.create("PresenTest")
+      page.store('{{presen_switch}}')
+      res = session('/test/PresenTest.html')
+      ok_in([:a, {:href=>"PresenTest.presen"}, "Presentation mode"],
+	    "//div[@class='section']/span")
     end
 
     def test_plg_presen_theme
