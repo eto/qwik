@@ -156,7 +156,8 @@ if defined?($test) && $test
       # test_exist?
       assert_equal false, !!farm.exist?('test')
       assert_equal nil, farm.get_site('test')
-      assert_equal false, (@dir+"test").exist?
+      #assert_equal false, (@dir+"test").exist?
+      assert_equal false, 'test'.path.exist?
 
       # test_make_site
       assert_equal false, (@dir+"test").exist?
