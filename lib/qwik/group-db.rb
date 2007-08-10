@@ -36,7 +36,7 @@ module QuickML
       @sites_dir = sites_dir
       @group_name = group_name
       @site = nil
-      get_dirpath.check_directory	# Make a new directory here.
+      #get_dirpath.check_directory	# Make a new directory here.
     end
 
     def set_site(site)

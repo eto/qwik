@@ -166,12 +166,12 @@ if defined?($test) && $test
       assert_equal "1970-01-01T09:00:00", 'test/_QwikSite.txt'.path.read
       assert_equal false, 'test/test'.path.exist?
       assert_equal true, !!farm.exist?('test')
-      assert_equal true, 'test/test'.path.exist?
+      assert_equal false, 'test/test'.path.exist?
 
-      assert_equal true, 'test/test'.path.exist?
       site = farm.get_site('test')
       assert_equal true, 'test'.path.exist?
-      assert_equal true, 'test/test'.path.exist?
+      assert_equal false, 'test/test'.path.exist?
+      #assert_equal true, 'test/test'.path.exist?
       assert_equal 'test', site.sitename
 
       # test_raise
@@ -179,8 +179,6 @@ if defined?($test) && $test
 	# Creating a site with same name cause error.
 	farm.make_site('test')
       }
-
-      assert_equal true, (@dir+"test").exist?
     end
 
     def test_all

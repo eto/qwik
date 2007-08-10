@@ -67,7 +67,7 @@ if defined?($test) && $test
       pa.mkdir
       assert_equal false, (pa+sitename).exist?
       site = Qwik::Site.new(@config, @memory, sitename)
-      assert_equal true, (pa+sitename).exist?
+      assert_equal false, (pa+sitename).exist?
       pa.rmtree
     end
   end
