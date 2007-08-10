@@ -38,6 +38,7 @@ upload:	dist
 
 clean:
 	-rm *~ .config InstalledFiles
+	cd lib/qwik; make clean; cd ../..
 
 realclean:	clean
 	-rm MANIFEST

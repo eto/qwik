@@ -51,6 +51,7 @@ module Qwik
       # Experimental.
       :db		=> 'fsdb',
       :ssl		=> false,
+      :enable_ruby	=> false,
 
       # For Graphviz plugin.
       :graphviz_dot_path	=> '/usr/bin/dot',
