@@ -5,6 +5,10 @@
 	* lib/qwik/farm.rb: Create _QwikSite.txt when the site is created.
 	* lib/qwik/site.rb: Add a test case to check unnecessary directory.
 
+	* lib/qwik/group-db.rb: Do not create unnecessary directory.
+	* lib/qwik/farm.rb: Add check.
+	* lib/qwik/site.rb: Ditto.
+
 2007-08-09  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: New plugin to embed ruby code.
