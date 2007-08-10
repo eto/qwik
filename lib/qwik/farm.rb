@@ -5,6 +5,7 @@
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site'
 require 'qwik/util-pathname'
+require 'qwik/util-time'
 
 # $update_group_files = true
 $update_group_files = false
@@ -67,10 +68,12 @@ module Qwik
       }
     end
 
-    def make_site(sitename)
+    def make_site(sitename, now = Time.now)
       sitepath = @data_path + sitename
       raise 'site already exist' if sitepath.exist?	# Check the path first.
       sitepath.mkdir
+      page = (sitepath + "_QwikSite.txt")
+      page.write(now.rfc_date)
       return nil
     end
 
@@ -151,22 +154,19 @@ if defined?($test) && $test
       @dir.rmdir  if @dir.directory?
 
       # test_exist?
-      eq false, !!farm.exist?('test')
-      eq nil, farm.get_site('test')
-
+      assert_equal false, !!farm.exist?('test')
+      assert_equal nil, farm.get_site('test')
       assert_equal false, (@dir+"test").exist?
 
       # test_make_site
       assert_equal false, (@dir+"test").exist?
-
       farm.make_site('test')
       assert_equal false, (@dir+"test").exist?
-      eq true, !!farm.exist?('test')
-      #assert_equal false, (@dir+"test").exist?
+      assert_equal true, !!farm.exist?('test')
 
       site = farm.get_site('test')
-      #assert_equal false, (@dir+"test").exist?
-      eq 'test', site.sitename
+      assert_equal true, (@dir+"test").exist?
+      assert_equal 'test', site.sitename
 
       # test_raise
       assert_raise(RuntimeError) {
@@ -174,7 +174,7 @@ if defined?($test) && $test
 	farm.make_site('test')
       }
 
-      #assert_equal false, (@dir+"test").exist?
+      assert_equal true, (@dir+"test").exist?
     end
 
     def test_all
