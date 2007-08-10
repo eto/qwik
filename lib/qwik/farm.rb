@@ -156,17 +156,22 @@ if defined?($test) && $test
       # test_exist?
       assert_equal false, !!farm.exist?('test')
       assert_equal nil, farm.get_site('test')
-      #assert_equal false, (@dir+"test").exist?
       assert_equal false, 'test'.path.exist?
 
       # test_make_site
-      assert_equal false, (@dir+"test").exist?
-      farm.make_site('test')
-      assert_equal false, (@dir+"test").exist?
+      assert_equal false, 'test'.path.exist?
+      farm.make_site('test', Time.at(0))
+      assert_equal true, 'test'.path.exist?
+      assert_equal true, 'test/_QwikSite.txt'.path.exist?
+      assert_equal "1970-01-01T09:00:00", 'test/_QwikSite.txt'.path.read
+      assert_equal false, 'test/test'.path.exist?
       assert_equal true, !!farm.exist?('test')
+      assert_equal true, 'test/test'.path.exist?
 
+      assert_equal true, 'test/test'.path.exist?
       site = farm.get_site('test')
-      assert_equal true, (@dir+"test").exist?
+      assert_equal true, 'test'.path.exist?
+      assert_equal true, 'test/test'.path.exist?
       assert_equal 'test', site.sitename
 
       # test_raise

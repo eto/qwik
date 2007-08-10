@@ -61,6 +61,14 @@ if defined?($test) && $test
     include TestSession
 
     def test_all
+      sitename = 'site_test'
+      pa = sitename.path
+      pa.rmtree if pa.exist?
+      pa.mkdir
+      assert_equal false, (pa+sitename).exist?
+      site = Qwik::Site.new(@config, @memory, sitename)
+      assert_equal true, (pa+sitename).exist?
+      pa.rmtree
     end
   end
 end
