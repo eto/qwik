@@ -103,7 +103,7 @@ module Qwik
 	sitename = entry.to_s
 	next if sitename[0] == ?.	# begin with dot?
 	next if sitename == 'CVS'
-	#next if (pa + "_GroupMembers.txt").exist?	# check the site.
+	#next if (pa + '_SiteConfig.txt').exist?	# check the site.
 	dummy = get_site(sitename)	# the site is added to @site
       }
       return nil
@@ -115,6 +115,8 @@ module Qwik
 	# Do not bury default site.
 	next if sitename == @top_sitename
 	site = get_site(sitename)
+	# Check a particular page to check the directory is a site or not.
+	next if ! site.exist?('_SiteConfig')
 	inactive_sites << sitename if site && site.inactive?
       }
       return inactive_sites

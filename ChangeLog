@@ -1,6 +1,8 @@
 2007-08-12  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/farm.rb (each): Add check site (stub).
+	* lib/qwik/farm.rb (check_inactive_sites): Check the directory is
+	a site or not.
 
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
