@@ -19,6 +19,7 @@ module Qwik
 
       # Load all actions here.
       LoadLibrary.load_libs_here('qwik/act-*.rb')
+      LoadLibrary.load_libs_here('qwik/plugin/act-*.rb')
 
       if config[:server_type] == 'webrick'
 	server = Server.new(config)
