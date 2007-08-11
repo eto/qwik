@@ -1,3 +1,7 @@
+2007-08-12  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/farm.rb (each): Add check site (stub).
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.

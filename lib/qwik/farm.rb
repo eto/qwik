@@ -98,11 +98,13 @@ module Qwik
 
       # Then, check the direcotry entries.
       @data_path.each_entry {|entry|
-	next if ! (@data_path+entry).directory?	# is not a directory?
+	pa = @data_path + entry
+	next if ! pa.directory?	# is not a directory?
 	sitename = entry.to_s
 	next if sitename[0] == ?.	# begin with dot?
 	next if sitename == 'CVS'
-	dummy = get_site(sitename)
+	#next if (pa + "_GroupMembers.txt").exist?	# check the site.
+	dummy = get_site(sitename)	# the site is added to @site
       }
       return nil
     end
