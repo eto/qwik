@@ -6,6 +6,8 @@
 
 	* lib/qwik/qwikweb-server.rb: Add plugin directory.
 
+	* lib/qwik/helper.rb: New file as load path helper.
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.
