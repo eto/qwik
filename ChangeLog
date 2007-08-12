@@ -11,6 +11,7 @@
 	* lib/qwik/page-wikidb.rb: Add a test case to check tab.
 
 	* share/super/_SiteConfig.txt: Add default setting.
+	* share/super/_SiteConfig.txt: Add description.
 
 	* lib/qwik/site-config.rb: Get default config from super site.
 

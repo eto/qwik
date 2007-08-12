@@ -9,15 +9,19 @@
 レポートメール送信間隔をhourly, daily, weeklyから選べます。falseにすると送られなくなります。
 :redirect:false
 外部へのリンクをリダイレクトするかどうかを選べます。trueにすると、redirectしてから外部リンクへ飛ぶようになります。
-
 * 高度な設定
 以下は高度な設定です。詳しい設定方法はソースを参照してください。
 :aid:	q02-22
+Amazon Associate IDです。
 :ml_life_time:	2678400
 60 * 60 * 24 * 31、1ヶ月。
 :reportfrom:
+ページの編集記録のfromです。
 :titlelink:	false
+section titleに、そのsectionへのリンクを付与するかどうかです。
 :siteurl:
+siteのURL自体を指定できます。外部URLからqwikWebのサービスを使えます。
 :siteml:
+siteに対応するMLのアドレスです。
 :max_file_size:	10485760
-10 * 1024 * 1024、10MB。
+サイトに添付できるファイルの大きさの上限です。10 * 1024 * 1024、10MB。
