@@ -25,3 +25,6 @@ siteのURL自体を指定できます。外部URLからqwikWebのサービスを使えます。
 siteに対応するMLのアドレスです。
 :max_file_size:	10485760
 サイトに添付できるファイルの大きさの上限です。10 * 1024 * 1024、10MB。
+#:page_title_first:	true
+:page_title_first:	false
+ページのタイトルを、ページタイトル、サイト名の順にします。

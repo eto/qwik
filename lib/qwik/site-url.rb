@@ -57,7 +57,11 @@ module Qwik
 
       sitetitle = self.title
       if ! sitetitle.empty?
-	return "#{sitetitle} - #{page_title}"
+	if self.siteconfig['page_title_first'] == 'true'
+	  return "#{page_title} - #{sitetitle}"
+	else
+	  return "#{sitetitle} - #{page_title}"
+	end
       end
 
       return page_title
@@ -96,6 +100,25 @@ if defined?($test) && $test
       t_without_testmode {
 	eq 't', site.title
 	eq 't - 1', site.get_page_title('1')
+      }
+    end
+
+    def test_get_page_title
+      site = @site
+      page = site.create_new
+      t_without_testmode {
+	eq 'example.com/test - 1', site.get_page_title('1')
+      }
+
+      siteconfig = site.create('_SiteConfig')
+      siteconfig.store(":page_title_first:true\n")
+      t_without_testmode {
+	eq '1 - example.com/test', site.get_page_title('1')
+      }
+
+      siteconfig.store(":page_title_first:false\n")
+      t_without_testmode {
+	eq 'example.com/test - 1', site.get_page_title('1')
       }
     end
 

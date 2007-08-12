@@ -15,6 +15,9 @@
 
 	* lib/qwik/site-config.rb: Get default config from super site.
 
+	* lib/qwik/site-url.rb: You can select title order of web page.
+	* share/super/_SiteConfig.txt: Add setting for it.
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.
