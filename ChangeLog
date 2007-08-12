@@ -8,6 +8,10 @@
 
 	* lib/qwik/helper.rb: New file as load path helper.
 
+	* lib/qwik/page-wikidb.rb: Add a test case to check tab.
+
+	* share/super/_SiteConfig.txt: Add default setting.
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.

@@ -9,3 +9,13 @@
 レポートメール送信間隔をhourly, daily, weeklyから選べます。falseにすると送られなくなります。
 :redirect:false
 外部へのリンクをリダイレクトするかどうかを選べます。trueにすると、redirectしてから外部リンクへ飛ぶようになります。
+
+* 高度な設定
+以下は高度な設定です。詳しい設定方法はソースを参照してください。
+:aid:	q02-22
+:ml_life_time:	60 * 60 * 24 * 31
+:reportfrom:
+:titlelink:	false
+:siteurl:
+:siteml:
+:max_file_size:	10 * 1024 * 1024

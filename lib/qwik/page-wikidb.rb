@@ -155,6 +155,7 @@ if defined?($test) && $test
       eq [["k", ["v"]]], c.parse('|k|v')
       eq [["k", "v"]], c.parse(':k:v')
       eq [["k", "v"]], c.parse(':k: v')
+      eq [["k", "v"]], c.parse(':k:	v')
 
       # test_encode_line
       eq ',k,v', c.encode_line('k', 'v')
