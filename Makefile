@@ -46,5 +46,9 @@ realclean:	clean
 
 svnprop:
 	svn propdel svn:executable INSTALL
+	svn propset svn:ignore -F .svnignore .
+
+chmod:
+	chmod 644 .???ignore
 
 .PHONY: debug mldebug run mlrun watch test version manifest dist upload clean realclean
