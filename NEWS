@@ -1,7 +1,20 @@
 == Overview of Changes in qwikWeb 0.8.5 - 2007-08-??
 
-* 1 minor enhancement:
+* 7 minor enhancements:
   * You can select title order on web page.
+  * You see switch to 'presen' menu when the page name starts with 'Presen'.
+  * New plugin: Embed ruby code plugin.
+  * Do not create backups on some pages.
+  * Set max files size for attached files.
+  * New experimental plugin: Diary plugin.
+  * New plugin: Show comment only plugin.
+
+* 5 bugfixes:
+  * Fixed a bug in embedding images with ALT text.
+  * Append config file information for quickml_server.
+  * Skip empty lines on member file.
+  * Set typekey token correctly.
+  * Watch command does not require util-tail now.
 
 Overview of Changes in qwikWeb 0.8.4 - 2006-07-31
 
