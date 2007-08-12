@@ -12,6 +12,8 @@
 
 	* share/super/_SiteConfig.txt: Add default setting.
 
+	* lib/qwik/site-config.rb: Get default config from super site.
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.

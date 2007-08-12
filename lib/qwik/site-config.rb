@@ -17,42 +17,9 @@ module Qwik
   end
 
   class SiteConfig
-    DefaultConfig = {
-      # Site access control.
-      :open		=> false,
-
-      # Site URL setting.
-      :siteurl		=> '',
-      :siteml		=> '',
-
-      # Site look and feel.
-      :theme		=> 'qwikgreen',
-      :sitename		=> '',
-      :redirect		=> 'false',
-      :titlelink	=> 'false',
-      :aid		=> 'q02-22',		# Amazon associate id
-
-      # Mailing list releation.
-      :reportmail	=> 'daily',
-      :reportfrom	=> '',
-      :ml_life_time	=> (60 * 60 * 24 * 31).to_s,	# 1 month
-=begin
-      # Config for each group.
-      :auto_unsubscribe_count	=> 5,
-      :max_mail_length		=> 100 * 1024,	# 100KB
-      :max_ml_mail_length	=> 100 * 1024,	# 100KB
-      :max_members		=> 100,
-      :ml_alert_time		=> 86400 * 24,
-      :ml_life_time		=> 86400 * 31,
-=end
-    }
-
     def initialize(config, site)
       @config = config
       @site = site
-
-      @site_config = {}
-      @config.update(DefaultConfig)
 
       @default = default_config
 
@@ -75,22 +42,13 @@ module Qwik
 
     private
 
-    # FIXME: Read default site config from super/_SiteConfig.txt
+    # Read default site config from super/_SiteConfig.txt
     def default_config
-      {
-	'open'		=> 'false',
-	'theme'		=> 'qwikgreen',
-	'sitename'	=> '',
-	'aid'		=> 'q02-22',	# amazon associate id
-	'ml_life_time'	=> (60 * 60 * 24 * 31).to_s,	# 1 month
-	'reportmail'	=> 'hourly',
-	'reportfrom'	=> '',
-	'titlelink'	=> 'false',
-	'redirect'	=> 'false',
-	'siteurl'	=> '',
-	'siteml'	=> '',
-	'max_file_size'	=> (10 * 1024 * 1024).to_s,	# 10MB
-      }
+      dir = @config.super_dir.path
+      str = (dir + '_SiteConfig.txt').read
+      array = WikiDB.parse(str)
+      hash = array.to_hash
+      return hash
     end
   end
 end
@@ -142,6 +100,16 @@ if defined?($test) && $test
 #      eq '1 - TestSite', @site.title('1')
       page.store('* TestTitle')
 #      eq 'TestTitle - TestSite', @site.title('1')
+    end
+
+    def test_siteconfig_class
+      siteconfig = @site.siteconfig
+
+      assert_equal "#<Page:_SiteConfig>", siteconfig.get_page.inspect
+
+      assert_equal 'false', siteconfig['open']
+
+      assert_equal '10485760', siteconfig['max_file_size']
     end
   end
 end
