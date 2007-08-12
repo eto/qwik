@@ -44,4 +44,7 @@ realclean:	clean
 	-rm MANIFEST
 	cd ext; make clean; cd ..
 
+svnprop:
+	svn propdel svn:executable INSTALL
+
 .PHONY: debug mldebug run mlrun watch test version manifest dist upload clean realclean
