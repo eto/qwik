@@ -92,14 +92,14 @@ if defined?($test) && $test
       eq 'test@q.example.com', site.ml_address
       t_without_testmode {
 	eq 'example.com/test', site.title
-	eq 'example.com/test - 1', site.get_page_title('1')
+	eq '1 - example.com/test', site.get_page_title('1')
       }
 
       siteconfig = site.create('_SiteConfig')
       siteconfig.store(":sitename:t\n")
       t_without_testmode {
 	eq 't', site.title
-	eq 't - 1', site.get_page_title('1')
+	eq '1 - t', site.get_page_title('1')
       }
     end
 
@@ -107,7 +107,7 @@ if defined?($test) && $test
       site = @site
       page = site.create_new
       t_without_testmode {
-	eq 'example.com/test - 1', site.get_page_title('1')
+	eq '1 - example.com/test', site.get_page_title('1')
       }
 
       siteconfig = site.create('_SiteConfig')
@@ -132,7 +132,7 @@ if defined?($test) && $test
       eq 'www@q.example.com', site.ml_address
       t_without_testmode {
 	eq 'example.com', site.title
-	eq 'example.com - 1', site.get_page_title('1')
+	eq '1 - example.com', site.get_page_title('1')
       }
     end
 
@@ -148,7 +148,7 @@ if defined?($test) && $test
 	eq 'info@example.org', @site.ml_address
 	t_without_testmode {
 	  eq 'example.org/q', @site.title
-	  eq 'example.org/q - 1', @site.get_page_title('1')
+	  eq '1 - example.org/q', @site.get_page_title('1')
 	}
       }
     end
@@ -166,7 +166,7 @@ if defined?($test) && $test
       eq 'info@example.net', site.ml_address
       t_without_testmode {
 	eq 'https://example.net', site.title
-	eq 'https://example.net - 1', site.get_page_title('1')
+	eq '1 - https://example.net', site.get_page_title('1')
       }
     end
 
@@ -180,7 +180,7 @@ if defined?($test) && $test
 	eq 'test@q.example.com', site.ml_address
 	t_without_testmode {
 	  eq 'www.example.org/qwik/test', site.title
-	  eq 'www.example.org/qwik/test - 1', site.get_page_title('1')
+	  eq '1 - www.example.org/qwik/test', site.get_page_title('1')
 	}
       }
     end

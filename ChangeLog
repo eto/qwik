@@ -18,6 +18,9 @@
 	* lib/qwik/site-url.rb: You can select title order of web page.
 	* share/super/_SiteConfig.txt: Add setting for it.
 
+	* share/super/_SiteConfig.txt: Change default to page title first.
+	* lib/qwik/site-url.rb: Update test caeses.
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.
