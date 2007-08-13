@@ -428,12 +428,16 @@ if defined?($test) && $test
     end
 
     def ok_file(e, file)
-      str = "test/#{file}".path.read
+      dir = @config.sites_dir.path
+      #str = "test/#{file}".path.read
+      str = (dir + "test/#{file}").path.read
       ok_eq(e, str)
     end
 
     def ok_config(e)
-      str = 'test/_GroupConfig.txt'.path.read
+      dir = @config.sites_dir.path
+      #str = 'test/_GroupConfig.txt'.path.read
+      str = (dir + 'test/_GroupConfig.txt').path.read
       hash = QuickML::GroupConfig.parse_hash(str)
       ok_eq(e, hash)
     end

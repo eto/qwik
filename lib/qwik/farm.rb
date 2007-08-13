@@ -157,25 +157,27 @@ if defined?($test) && $test
       @dir.rmtree if @dir.directory?
       @dir.rmdir  if @dir.directory?
 
+      dir = @config.sites_dir.path
+
       # test_exist?
       assert_equal false, !!farm.exist?('test')
       assert_equal nil, farm.get_site('test')
-      assert_equal false, 'test'.path.exist?
+      assert_equal false, (dir + 'test').exist?
 
       # test_make_site
-      assert_equal false, 'test'.path.exist?
+      assert_equal false, (dir + 'test').path.exist?
       farm.make_site('test', Time.at(0))
-      assert_equal true, 'test'.path.exist?
-      assert_equal true, 'test/_QwikSite.txt'.path.exist?
-      assert_equal "1970-01-01T09:00:00", 'test/_QwikSite.txt'.path.read
-      assert_equal false, 'test/test'.path.exist?
+      assert_equal true, (dir + 'test').path.exist?
+      assert_equal true, (dir + 'test/_QwikSite.txt').path.exist?
+      assert_equal "1970-01-01T09:00:00", (dir + 'test/_QwikSite.txt').path.read
+      assert_equal false, (dir + 'test/test').path.exist?
       assert_equal true, !!farm.exist?('test')
-      assert_equal false, 'test/test'.path.exist?
+      assert_equal false, (dir + 'test/test').path.exist?
 
       site = farm.get_site('test')
-      assert_equal true, 'test'.path.exist?
-      assert_equal false, 'test/test'.path.exist?
-      #assert_equal true, 'test/test'.path.exist?
+      assert_equal true, (dir + 'test'.path).exist?
+      assert_equal false, (dir + 'test/test').path.exist?
+      #assert_equal true, (dir + 'test/test').path.exist?
       assert_equal 'test', site.sitename
 
       # test_raise

@@ -47,7 +47,7 @@ class Pathname
       end
       return	# The directory is already exist.
     end
-    self.mkdir
+    self.mkpath
   end
 
   def erase_all

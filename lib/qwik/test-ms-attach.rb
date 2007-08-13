@@ -80,7 +80,8 @@ test
 ", page.load
     files = @site.files('1')
     eq true, files.exist?('t.txt')
-    eq './test/1.files/t.txt', files.path('t.txt').to_s
+    #eq './test/1.files/t.txt', files.path('t.txt').to_s
+    eq '.test/data/test/1.files/t.txt', files.path('t.txt').to_s
     str = files.path('t.txt').read
     eq "test\r\n", str
 

@@ -105,11 +105,18 @@ module Qwik
 #      :default_sitename	=> 'top',
       :ml_domain	=> 'q.example.com',
       :ml_postmaster	=> 'postmaster@q.example.com',
+=begin
       :sites_dir	=> '.',
       :grave_dir	=> '.',
       :cache_dir	=> '.',
       :etc_dir		=> '.',
       :log_dir		=> '.',
+=end
+      :sites_dir	=> '.test/data',
+      :grave_dir	=> '.test/grave',
+      :cache_dir	=> '.test/cache',
+      :etc_dir		=> '.test/etc',
+      :log_dir		=> '.test/log',
       :web_pid_file	=> 'qwikweb.pid',
       :ml_pid_file	=> 'quickml.pid',
     }

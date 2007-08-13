@@ -22,12 +22,13 @@ module Qwik
     GENERATION_FILE = 'generation.txt'
 
     def initialize(config)
-      @site_password_file = config.etc_dir.path+PASSWORD_FILE
+      etc_path = config.etc_dir.path
+      @site_password_file = etc_path + PASSWORD_FILE
       @site_password = DEFAULT_SITE_PASSWORD
       if @site_password_file.exist?
 	@site_password = @site_password_file.read.to_s.chomp
       end
-      @generation_file = config.etc_dir.path+GENERATION_FILE
+      @generation_file = etc_path + GENERATION_FILE
       @generation = PasswordGenerator.generation_get(@generation_file)
     end
 

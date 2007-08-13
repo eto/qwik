@@ -330,10 +330,10 @@ if defined?($test) && $test
 
       # test_create_model
       model = Modulobe::ModelFile.new(file)
-      ok_eq('./test/c.files/test1.mdlb', model.file.to_s)
+      ok_eq('.test/data/test/c.files/test1.mdlb', model.file.to_s)
       ok_eq(Time.at(0), model.mtime)
       ok_eq(563, model.length)
-      ok_eq('./test/c.files/test1.gif', model.image_file.to_s)
+      ok_eq('.test/data/test/c.files/test1.gif', model.image_file.to_s)
 
       # test_internal_info
       ok_eq(nil, model.name)
@@ -363,12 +363,12 @@ if defined?($test) && $test
 
       # test_modulobe_image_link
       file, relative = @action.modulobe_image_link(model.file)
-      ok_eq('./test/c.files/test1.gif', file.to_s)
+      ok_eq('.test/data/test/c.files/test1.gif', file.to_s)
       ok_eq('c.files/test1.gif', relative)
 
       # test_modulobe_thumb_link
       file, relative = @action.modulobe_thumb_link(model.file)
-      ok_eq('./test/c.files/.thumb/test1.gif', file.to_s)
+      ok_eq('.test/data/test/c.files/.thumb/test1.gif', file.to_s)
       ok_eq('c.files/.thumb/test1.gif', relative)
 
       path = 'c.files'

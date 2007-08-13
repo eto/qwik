@@ -62,7 +62,7 @@ if defined?($test) && $test
 
     def test_all
       sitename = 'site_test'
-      pa = sitename.path
+      pa = @config.sites_dir.path + sitename
       pa.rmtree if pa.exist?
       pa.mkdir
       assert_equal false, (pa+sitename).exist?

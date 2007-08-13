@@ -37,6 +37,12 @@ module TestSession
     @config = $test_config
     @org_sites_dir = $test_org_sites_dir
 
+    @config.sites_dir.path.check_directory
+    @config.grave_dir.path.check_directory
+    @config.cache_dir.path.check_directory
+    @config.etc_dir.path.check_directory
+    @config.log_dir.path.check_directory
+
     # setup memory
     if ! defined?($test_memory)
       memory = Qwik::ServerMemory.new(@config)
@@ -49,9 +55,9 @@ module TestSession
     @memory = $test_memory
 
     # setup dir
-    @wwwdir = 'www/'.path
+    @wwwdir = @config.sites_dir.path + 'www'
     @wwwdir.setup
-    @dir = 'test/'.path
+    @dir = @config.sites_dir.path + 'test'
     @dir.setup
 
     # setup site

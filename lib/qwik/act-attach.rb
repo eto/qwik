@@ -162,9 +162,9 @@ if defined?($test) && $test
       t_add_user
 
       # Check directory.
-      ok_eq('./test', @site.path.to_s)
+      ok_eq('.test/data/test', @site.path.to_s)
       attach_path = @site.path+'.attach'
-      ok_eq('./test/.attach'.path, attach_path)
+      ok_eq('.test/data/test/.attach', attach_path.to_s)
 
       filename = 't.txt'
       file = attach_path+filename
