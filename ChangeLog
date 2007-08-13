@@ -21,6 +21,15 @@
 	* share/super/_SiteConfig.txt: Change default to page title first.
 	* lib/qwik/site-url.rb: Update test caeses.
 
+	* lib/qwik/config.rb: Change test directory to '.test'.
+	* lib/qwik/farm.rb: Ditto.
+	* lib/qwik/act-attach.rb: Ditto.
+	* lib/qwik/ml-processor.rb: Ditto.
+	* lib/qwik/password.rb: Ditto.
+	* lib/qwik/test-module-session.rb: Ditto.
+
+	* lib/qwik/util-pathname.rb: Create direcotry with mkpath
+
 2007-08-10  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/act-ruby.rb: Refactoring.
