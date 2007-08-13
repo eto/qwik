@@ -110,14 +110,19 @@ You can show the list of attached files.
       return files_put(content) if content
 
       # Show files form and the list.
+      return show_files_form_and_the_list
+    end
+    alias act_files ext_files
+
+    def show_files_form_and_the_list
       c_require_member
       ar = plg_files_form(20)
-      return c_notice(_('Attach file')) {[
+      w = c_notice(_('Attach file')) {[
 	  [:p, _('Attach a file')],
 	  ar
 	]}
+      return w
     end
-    alias act_files ext_files
 
     def files_parse_filename(args)
       filename = args.join('/').set_url_charset		# Must be UTF-8
