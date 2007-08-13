@@ -5,6 +5,12 @@
 	* lib/qwik/act-files.rb (show_files_form_and_the_list): Divided.
 	* lib/qwik/act-files.rb: Refactoring.
 
+	* lib/qwik/act-files.rb: Force download if the filename contains
+	disallowable characters.
+	* lib/qwik/util-filename.rb (allowable_characters_for_path?): New
+	method to check if the character only contains allowable
+	characters or not.
+
 2007-08-12  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/farm.rb (each): Add check site (stub).

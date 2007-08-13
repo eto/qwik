@@ -112,6 +112,10 @@ You can show the list of attached files.
 	  return c_download(files.path(filename).to_s)	# Download it.
 	end
 
+	if ! Filename.allowable_characters_for_path?(filename)
+	  return c_download(files.path(filename).to_s)	# Download it.
+	end
+
 	return c_simple_send(files.path(filename).to_s)	# Send it.
       end
 
@@ -599,6 +603,29 @@ if defined?($test) && $test
       # Get the file.
       res = session('/test/1.files/t.txt')
       ok_title('No such file')
+    end
+
+    def test_force_download_by_character
+      t_add_user
+
+      page = @site.create_new
+      page.store('t')
+
+      # Put a file.
+      res = session('POST /test/1.files') {|req|
+	req.query.update('content'=>t_make_content('t!.txt', 't'))
+      }
+      ok_title('Attach file done')
+
+      # Download the file.
+      res = session('/test/1.download/t!.txt')
+      ok_eq("attachment; filename=\"t!.txt\"", res['Content-Disposition'])
+      ok_eq('t', res.body)
+
+      # Download by files extension.
+      res = session('/test/1.files/t!.txt')
+      ok_eq("attachment; filename=\"t!.txt\"", res['Content-Disposition'])
+      ok_eq('t', res.body)
     end
   end
 end

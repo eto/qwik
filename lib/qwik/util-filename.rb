@@ -42,6 +42,13 @@ module Qwik
       return File.extname(filename).sub(/\A\./, '')
     end
 
+    ALLOWABLE_CHARACTERS_FOR_PATH_RE = /\A[\/ 0-9A-Za-z_.-]+\z/
+
+    def self.allowable_characters_for_path?(f)
+      return true if ALLOWABLE_CHARACTERS_FOR_PATH_RE =~ f
+      return false
+    end
+
     private
 
     ALLOWABLE_CHARACTERS_RE = /\A[ 0-9A-Za-z_.-]+\z/
@@ -93,6 +100,10 @@ if defined?($test) && $test
       ok_eq(true,  c.allowable_characters?('t.-_t'))
       ok_eq(true,  c.allowable_characters?('t..t'))
       ok_eq(false, c.allowable_characters?("\202\240"))
+      ok_eq(false,  c.allowable_characters?('t/t'))
+
+      # test_allowable_characters_for_path?
+      ok_eq(true,  c.allowable_characters_for_path?('t/t'))
 
       # test_extname
       ok_eq('txt',  c.extname('t.txt'))
