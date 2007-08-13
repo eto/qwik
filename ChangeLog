@@ -3,6 +3,7 @@
 	* lib/qwik/Makefile: Reset target clean.
 
 	* lib/qwik/act-files.rb (show_files_form_and_the_list): Divided.
+	* lib/qwik/act-files.rb: Refactoring.
 
 2007-08-12  Kouichirou Eto  <2007 eto.com>
 

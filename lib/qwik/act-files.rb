@@ -68,20 +68,31 @@ You can show the list of attached files.
     end
 
     # ============================== download
-    def ext_download
-      return c_nerror(_('Error')) if 0 == @req.path_args.length
+    FILES_FORCE_DOWNLOAD = %w(doc xls ppt)
 
-      filename = files_parse_filename(@req.path_args)
-      files = @site.files(@req.base)
-      if files.nil? || ! files.exist?(filename)
-	return c_notfound(_('No such file'))
+    def ext_download
+      if 0 < @req.path_args.length	# has target file
+	if @req.path_args[0] == '.theme'
+	  @req.path_args.shift
+	  return pre_act_theme
+	end
+
+	filename = files_parse_filename(@req.path_args)
+	files = @site.files(@req.base)
+	if files.nil? || ! files.exist?(filename)
+	  return c_notfound(_('No such file'))
+	end
+
+	if FILES_FORCE_DOWNLOAD.include?(filename.path.ext)
+	  return c_download(files.path(filename).to_s)	# Download it.
+	end
+
+	return c_download(files.path(filename).to_s)	# Download it.
       end
 
-      return c_download(files.path(filename).to_s)	# Download it.
+      return c_nerror(_('Error')) 
     end
     alias act_download ext_download
-
-    FILES_FORCE_DOWNLOAD = %w(doc xls ppt)
 
     # ============================== files
     def ext_files
@@ -98,7 +109,6 @@ You can show the list of attached files.
 	end
 
 	if FILES_FORCE_DOWNLOAD.include?(filename.path.ext)
-	 #return ext_download
 	  return c_download(files.path(filename).to_s)	# Download it.
 	end
 
