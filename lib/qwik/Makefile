@@ -42,14 +42,20 @@ x:
 
 # clean
 clean:
+	-rm -rf .test
+	-rm -rf test
+	-rm quickml.log
+
+oldclean:
+	-rm -rf site_test
 	-rm -rf compat/.cache
 	-rm -rf compat/compat
-	-rm -rf test www sid
+	-rm -rf www sid
 	-rm testtemp.zip
-	-rm access.log qwik-access.log qwik-error.log quickml.log
+	-rm access.log qwik-access.log qwik-error.log
+	-rm generation.txt testlog.txt
 	-rm t .#* *~ *.stackdump
 	-rm ../../cache/sid/????????????????????????????????
-	-rm generation.txt testlog.txt
 
 realclean:	clean
 	-rm *.profile profile.txt rbprof.txt rbprof-bench.txt rbprof-table.txt

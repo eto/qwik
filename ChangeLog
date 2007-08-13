@@ -1,5 +1,9 @@
 2007-08-12  Kouichirou Eto  <2007 eto.com>
 
+	* lib/qwik/Makefile: Reset target clean.
+
+2007-08-12  Kouichirou Eto  <2007 eto.com>
+
 	* lib/qwik/farm.rb (each): Add check site (stub).
 	* lib/qwik/farm.rb (check_inactive_sites): Check the directory is
 	a site or not.
