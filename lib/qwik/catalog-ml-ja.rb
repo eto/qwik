@@ -32,6 +32,9 @@ module QuickML
 	"You are not a member of the mailing list:\n<%s>\n" =>
 	"あなたは <%s> メーリングリストのメンバーではありません。\n",
 
+	"The original body is ommited due to avoid spam trouble.\n" =>
+	"メール本体はスパム対策のため省略されました。\n",
+
 	"You are removed from the mailing list:\n<%s>\n" =>
 	"あなたは <%s> メーリングリストから削除されました。\n",
 

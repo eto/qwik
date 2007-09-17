@@ -198,6 +198,7 @@ module QuickML
       body << "Date: #{@mail['Date']}\n"
       body << "\n"
 
+=begin
       if @mail.multipart?
         ['Content-Type', 'Mime-Version', 
           'Content-Transfer-Encoding'].each {|key|
@@ -216,6 +217,9 @@ module QuickML
         end
         body << @mail.body
       end
+=end
+
+      body <<  _("The original body is ommited due to avoid spam trouble.\n")
 
       mail = {
 	:mail_from => '', 

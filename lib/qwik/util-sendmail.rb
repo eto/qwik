@@ -74,6 +74,11 @@ class Sendmail
       logger.log "Error: Unable to send mail: #{e.class}: #{e.message}"
     end
 
+    if $test
+      $quickml_sendmail = [smtp_host, smtp_port,
+	mail[:mail_from], mail[:recipient], msg]
+    end
+
     return result	# Only for test
   end
 

@@ -1,3 +1,11 @@
+2007-09-17  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/smtp-session.rb: New file for smtp-session.
+
+	* lib/qwik/ml-processor.rb: Do not quote original body message to
+	avoid transfer spam message.
+	* lib/qwik/test-ms-ignore-spam.rb: Fot test it.
+
 2007-08-13  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/Makefile: Reset target clean.
