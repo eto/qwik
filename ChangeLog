@@ -5,6 +5,8 @@
 	* lib/qwik/ml-processor.rb: Do not quote original body message to
 	avoid transfer spam message.
 	* lib/qwik/test-ms-ignore-spam.rb: Fot test it.
+	* lib/qwik/catalog-ml-ja.rb: The message.
+	* lib/qwik/util-sendmail.rb: Add a global variable to test sendmail.
 
 2007-08-13  Kouichirou Eto  <2007 eto.com>
 
