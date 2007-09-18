@@ -30,6 +30,7 @@ module Qwik
 
     def url_path
       siteurl = self.siteconfig['siteurl']
+      return '' if siteurl.nil?
       return '' if ! siteurl.empty? || self.top_site?
       return "#{@sitename}/"
     end
