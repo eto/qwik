@@ -11,6 +11,12 @@
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/util-string'
 
+class NilClass
+  def empty?
+    return true
+  end
+end
+
 class Integer
   # 12345.commify => '12,345'
   def commify
@@ -73,6 +79,10 @@ end
 
 if defined?($test) && $test
   class TestUtilBasic < Test::Unit::TestCase
+    def test_nil
+      assert_equal true, nil.empty?
+    end
+
     def test_integer
       assert_equal '12,345', 12345.commify
       assert_equal '123,456,789', 123456789.commify

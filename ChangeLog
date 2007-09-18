@@ -1,3 +1,8 @@
+2007-09-18  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/site-url.rb: Check nil.
+	* lib/qwik/util-basic.rb: Add NilClass#empty?
+
 2007-09-17  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/smtp-session.rb: New file for smtp-session.
