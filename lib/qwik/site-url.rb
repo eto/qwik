@@ -10,7 +10,7 @@ module Qwik
   class Site
     def host_url
       host_url =  self.siteconfig['siteurl']
-      if host_url.empty?
+      if ! host_url.nil? && host_url.empty?
 	host_url = @config.public_url
       end
       uri = URI(host_url)
@@ -20,7 +20,7 @@ module Qwik
 
     def site_url
       siteurl = self.siteconfig['siteurl']
-      return siteurl if ! siteurl.empty?
+      return siteurl if ! siteurl.nil? && ! siteurl.empty?
       return "#{@config.public_url}#{self.url_path}"
     end
 
@@ -37,13 +37,13 @@ module Qwik
 
     def ml_address
       siteml = self.siteconfig['siteml']
-      return siteml if ! siteml.empty?
+      return siteml if ! siteml.nil? && ! siteml.empty?
       return "#{@sitename}@#{@config.ml_domain}"
     end
 
     def title
       sitetitle = self.siteconfig['sitename']
-      if sitetitle.empty?
+      if ! sitetitle.nil? && sitetitle.empty?
 	return '' if @config.test
 	sitetitle = self.site_url.sub(%r|\Ahttp://|, "").sub(%r|/\z|, "")
 	#sitetitle = sitetitle.sub(%r|\Awww\.|, "")
