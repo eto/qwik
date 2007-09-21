@@ -78,6 +78,8 @@ module Qwik
     end
 
     def sweep
+      p 'do not sweep for now.'
+      return
       @logger.log(WEBrick::Log::INFO, 'start sweep') unless $test
       inactive_sites = check_inactive_sites
       buried = []
@@ -86,6 +88,20 @@ module Qwik
 	buried << bury(sitename)
       }
       return buried
+    end
+
+    def check_inactive_sites
+      inactive_sites = []
+      self.each {|sitename|
+	p sitename
+	# Do not bury default site.
+	next if sitename == @top_sitename
+	site = get_site(sitename)
+	# Check a particular page to check the directory is a site or not.
+	next if ! site.exist?('_SiteConfig')
+	inactive_sites << sitename if site && site.inactive?
+      }
+      return inactive_sites
     end
 
     private
@@ -107,19 +123,6 @@ module Qwik
 	dummy = get_site(sitename)	# the site is added to @site
       }
       return nil
-    end
-
-    def check_inactive_sites
-      inactive_sites = []
-      self.each {|sitename|
-	# Do not bury default site.
-	next if sitename == @top_sitename
-	site = get_site(sitename)
-	# Check a particular page to check the directory is a site or not.
-	next if ! site.exist?('_SiteConfig')
-	inactive_sites << sitename if site && site.inactive?
-      }
-      return inactive_sites
     end
 
     def bury(sitename)

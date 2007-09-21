@@ -96,6 +96,11 @@ module Qwik
 	  cmd = [:incgen, a]
 	}
 	opts.separator ''
+	opts.separator 'Debug options:'
+	opts.on('--showinactive', 'Show inactive sites.') {|a|
+	  cmd = [:showinactive, a]
+	}
+	opts.separator ''
 	opts.separator 'Common options:'
 	opts.on_tail('-h', '--help', 'Show this message.') {
 	  puts opts
@@ -105,6 +110,7 @@ module Qwik
 	  puts VERSION
 	  exit
 	}
+
       }
 
       begin
@@ -279,6 +285,15 @@ adding an initial user [#{mail}] is completed."
       puts "mail: #{mail}"
       puts "generation: #{g}"
       puts "increment generation done."
+    end
+
+    def showinactive(*a)
+      require 'qwik/farm'
+
+      memory = ServerMemory.new(@config)
+      farm = Farm.new(@config, memory)
+      inactive_sites = farm.check_inactive_sites
+      p inactive_sites
     end
 
     private
