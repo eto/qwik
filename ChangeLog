@@ -4,7 +4,7 @@
 
 	* lib/qwik/qwik-service.rb: Add debug option showinactive.
 
- 2007-09-18  Kouichirou Eto  <2007 eto.com>
+2007-09-18  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/site-url.rb: Check nil.
 	* lib/qwik/util-basic.rb: Add NilClass#empty?
