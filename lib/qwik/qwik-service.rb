@@ -150,6 +150,7 @@ module Qwik
 
     def web_stop
       pidfile = @config[:web_pid_file] || QWIKWEB_PID
+      pidfile += '-d' if @config[:debug]
       stop_cmd('Stopping qwikWeb services: ', pidfile)
     end
 
