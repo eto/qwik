@@ -42,8 +42,27 @@ module Qwik
 
     private
 
-    # Read default site config from super/_SiteConfig.txt
+    # FIXME: Read default site config from super/_SiteConfig.txt
     def default_config
+      {
+	'open'		=> 'false',
+	'theme'		=> 'qwikgreen',
+	'sitename'	=> '',
+	'aid'		=> 'q02-22',	# amazon associate id
+	'ml_life_time'	=> (60 * 60 * 24 * 31).to_s,	# 1 month
+	'reportmail'	=> 'hourly',
+	'reportfrom'	=> '',
+	'titlelink'	=> 'false',
+	'redirect'	=> 'false',
+	'siteurl'	=> '',
+	'siteml'	=> '',
+	'max_file_size'	=> (10 * 1024 * 1024).to_s,	# 10MB
+	'page_title_first'=> 'true',
+      }
+    end
+
+    # Read default site config from super/_SiteConfig.txt
+    def read_default_config
       dir = @config.super_dir.path
       str = (dir + '_SiteConfig.txt').read
       array = WikiDB.parse(str)

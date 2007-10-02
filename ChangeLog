@@ -4,6 +4,10 @@
 
 	* lib/qwik/group-site.rb: Fix spell.
 
+	* lib/qwik/site-config.rb: Go back to original default_config.
+
+	* lib/qwik/farm.rb: Comment out sweep test for now.
+
 2007-09-21  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/farm.rb: For the trouble, do not sweep sites for now.

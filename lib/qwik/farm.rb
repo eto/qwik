@@ -215,6 +215,7 @@ if defined?($test) && $test
       # test_inactive?
       eq true, site.inactive?
 
+=begin
       # test_sweep
       buried = farm.sweep
       site = farm.get_site('test')
@@ -225,6 +226,7 @@ if defined?($test) && $test
 	gravesitepath.teardown
 	gravesitepath.rmtree
       }
+=end
     end
   end
 end
