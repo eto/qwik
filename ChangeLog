@@ -8,6 +8,10 @@
 
 	* lib/qwik/farm.rb: Comment out sweep test for now.
 
+	* lib/qwik/group-db.rb: BUGFIX: Make directory here.
+	* lib/qwik/ml-processor.rb: Add test case for create new group.
+	* lib/qwik/site-group.rb: Fix directory for create site.
+
 2007-09-21  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/farm.rb: For the trouble, do not sweep sites for now.

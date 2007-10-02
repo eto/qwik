@@ -431,16 +431,37 @@ if defined?($test) && $test
       eq false, c.unsubscribe_requested?('I want to unsubscribe.')
     end
 
+    def test_instance_method
+      mail = QuickML::Mail.generate {
+'From: "Test User" <user@e.com>
+To: "Test Mailing List" <test@example.com>
+Subject: Test Mail
+Date: Mon, 3 Feb 2001 12:34:56 +0900
+
+This is a test.
+'
+      }
+      pro = QuickML::Processor.new(@ml_config, mail)
+
+      # test_to_return_address
+      t_make_public(QuickML::Processor, :to_return_address?)
+      eq nil, pro.to_return_address?('t@example.com')
+      assert pro.to_return_address?('t=return@example.com')
+
+      # test_to_confirmation_address
+      t_make_public(QuickML::Processor, :to_confirmation_address?)
+      eq nil, pro.to_confirmation_address?('t@example.com')
+      assert pro.to_confirmation_address?('confirm+t@example.com')
+    end
+
     def ok_file(e, file)
       dir = @config.sites_dir.path
-      #str = "test/#{file}".path.read
       str = (dir + "test/#{file}").path.read
       ok_eq(e, str)
     end
 
     def ok_config(e)
       dir = @config.sites_dir.path
-      #str = 'test/_GroupConfig.txt'.path.read
       str = (dir + 'test/_GroupConfig.txt').path.read
       hash = QuickML::GroupConfig.parse_hash(str)
       ok_eq(e, hash)
@@ -483,8 +504,14 @@ This is a test.
       mail = QuickML::Mail.generate { message }
       org_confirm_ml_creation = @ml_config[:confirm_ml_creation]
       @ml_config[:confirm_ml_creation] = true
+
+      ".test/data/test".path.rmtree
+
       processor = QuickML::Processor.new(@ml_config, mail)
       processor.process
+
+      eq " reply this mail to create ML <test@example.com>.\n",
+	$quickml_sendmail[4][-50..9999]
 
       ok_file('', '_GroupMembers.txt')
       ok_file("user@e.com\n", '_GroupWaitingMembers.txt')
@@ -514,6 +541,7 @@ This is a test.
       mail = QuickML::Mail.generate { message }
       processor = QuickML::Processor.new(@ml_config, mail)
       processor.process
+      eq "To: user@e.com\nFrom: postmaster@q.example.com\nSubject: [QuickML] Error: Test Mail\nContent-Type: text/plain\n\nInvalid mailing list name: <invalid_mlname@example.com>\nYou can only use 0-9, a-z, A-Z,  `-' for mailing list name\n\n-- \nInfo: http://example.com/\n", $quickml_sendmail[4]
     end
   end
 end

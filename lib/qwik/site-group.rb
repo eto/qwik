@@ -21,7 +21,7 @@ module Qwik
     private
 
     def init_group_config
-      db = QuickML::GroupDB.new(@path.to_s, @sitename)
+      db = QuickML::GroupDB.new(@config.sites_dir.to_s, @sitename)
       db.set_site(self)
       @group_config = QuickML::GroupConfig.new(db)
     end
