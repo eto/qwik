@@ -1,3 +1,9 @@
+2007-10-02  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/qwikweb-*.rb: Commented out unused codes.
+
+	* lib/qwik/group-site.rb: Fix spell.
+
 2007-09-21  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/farm.rb: For the trouble, do not sweep sites for now.

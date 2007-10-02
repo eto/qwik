@@ -2,6 +2,7 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
+=begin
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/config'
 require 'qwik/farm'
@@ -37,3 +38,4 @@ module Qwik
     end
   end
 end
+=end

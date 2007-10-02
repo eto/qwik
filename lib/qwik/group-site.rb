@@ -79,7 +79,7 @@ module QuickML
 
       @sitename = sitename
       @site = @memory.farm.get_site(@sitename)
-      raise 'site is not exist' if @site.nil?	# Check if the site is exist.
+      raise 'site does not exist' if @site.nil?	# Check if the site is exist.
       @key = nil
     end
     attr_reader :key
