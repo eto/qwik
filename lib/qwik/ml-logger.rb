@@ -64,13 +64,14 @@ end
 if defined?($test) && $test
   class TestMLLogger < Test::Unit::TestCase
     def test_all
-      logger = QuickML::Logger.new('testlog.txt')
+      file = '.test/testlog.txt'
+      logger = QuickML::Logger.new(file)
 
       # test_log
       logger.log('t')
-      str = open('testlog.txt') {|f| f.read }
+      str = open(file) {|f| f.read }
       assert_match(/: t\n/, str)
-      'testlog.txt'.path.unlink
+      file.path.unlink
 
       # TODO
       # test_vlog

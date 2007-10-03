@@ -1,3 +1,8 @@
+2007-10-03  Kouichirou Eto  <2007 eto.com>
+
+	* lib/qwik/ml-logger.rb: Change filename in a test case.
+	* lib/qwik/test-module-session.rb: Ditto.
+
 2007-10-02  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/qwikweb-*.rb: Commented out unused codes.

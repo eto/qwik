@@ -46,7 +46,7 @@ module TestSession
     # setup memory
     if ! defined?($test_memory)
       memory = Qwik::ServerMemory.new(@config)
-      logfile = 'testlog.txt'
+      logfile = '.test/testlog.txt'
       loglevel = WEBrick::Log::INFO
       logger = WEBrick::Log::new(logfile, loglevel)
       memory[:logger] = logger
