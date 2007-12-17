@@ -124,6 +124,7 @@ module Qwik
 	:to      => user,
 	:subject => "#{siteurl} Report",
 	:content => "Recent changes on #{siteurl}\n\n#{rep}",
+	:precedence => "bulk",
       }
 
       lang = get_lang
