@@ -82,7 +82,7 @@ as the static Web pages.
       base = "#{site.sitename}/#{page.key}"
 
       # Add original txt file.
-      add_entry(zos, "#{base}.txt", page.load)
+      add_entry(zos, "#{base}.txt", page.load, page.mtime)
 
       # Generate a html file.
       html_path = site_cache_path+"#{page.key}.html"
@@ -103,8 +103,8 @@ as the static Web pages.
       end
     end
 
-    def self.add_entry(zos, filename, content)
-      e = Zip::ZipEntry.new('', filename)
+    def self.add_entry(zos, filename, content, mtime = Time.new)
+      e = Zip::ZipEntry.new('', filename, '', '', 0,0, Zip::ZipEntry::DEFLATED, 0, mtime)
       zos.put_next_entry(e)
       zos.write(content)
     end
@@ -168,10 +168,10 @@ if defined?($test) && $test
   class TestActArchive < Test::Unit::TestCase
     include TestSession
 
-    def ok_nx(zis, f)
-      e = zis.get_next_entry
-      assert_equal_or_match(f, e.name)
-    end
+#     def ok_nx(zis, f)
+#       e = zis.get_next_entry
+#       assert_equal_or_match(f, e.name)
+#     end
 
     def test_act_zip
       t_add_user
@@ -190,6 +190,8 @@ if defined?($test) && $test
 
       page = @site.create('PresenTest')
       page.store '* A presentation test page'
+
+      presenTestMTime = page.mtime
 
       res = session '/test/test.zip'
       ok_eq 'application/zip', res['Content-Type']
@@ -254,6 +256,18 @@ test/1-presen.html
 	eq false, list.include?(file)
       }
 
+      Zip::ZipInputStream.open('testtemp.zip') {|zis|
+	while e = zis.get_next_entry
+	  if e.name == 'test/PresenTest.txt'
+	    t1 = (e.time.to_i) /2*2
+	    t2 = (presenTestMTime .to_i) /2*2
+	    ok_eq(t1, t2)
+# 	    puts e.time.to_i, presenTestMTime.to_i
+# 	    ok_eq(e.time, presenTestMTime)
+	  end
+	end
+      }
+
       'testtemp.zip'.path.unlink
     end
   end
@@ -277,11 +291,20 @@ test/1-presen.html
       return if $0 != __FILE__		# Only for separated test.
 
       file = 'test.zip'
+      time = Time.now - (60*60*24) # yesterday
       Zip::ZipOutputStream.open(file) {|zos|
 	zos.put_next_entry('test/test.txt')
 	zos.print('test')
 
-	e = Zip::ZipEntry.new(file, 'test2.txt')
+#     Signature of Zip::ZipEntry.new()
+# 	new(zipfile = "", name = "", comment = "", extra = "",
+# 	    compressed_size = 0, crc = 0,
+# 	    compression_method = ZipEntry::DEFLATED, size = 0,
+# 	    time = Time.now)   
+
+	e = Zip::ZipEntry.new('', 'test2.txt', '', '',
+			      0, 0, 
+			      Zip::ZipEntry::DEFLATED, 0, time)
 	zos.put_next_entry(e)
 	zos.print('test2')
       }
@@ -295,9 +318,17 @@ test/1-presen.html
 	ok_eq('test/test.txt', e.name)
 	ok_eq('test', zis.read)
 
+
 	e = zis.get_next_entry
 	ok_eq('test2.txt', e.name)
 	ok_eq('test2', zis.read)
+
+	# in parse_binary_dos_format(),
+	# 'second' should not be odd value
+	#   second = 2 * (       0b11111 & binaryDosTime)
+	time_i = time.to_i / 2 * 2
+	e_time_i = e.time.to_i / 2 * 2
+	ok_eq(time_i, e_time_i)
 
 	e = zis.get_next_entry
 	ok_eq(nil, e)
