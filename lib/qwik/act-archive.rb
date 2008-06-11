@@ -323,9 +323,9 @@ test/1-presen.html
 	ok_eq('test2.txt', e.name)
 	ok_eq('test2', zis.read)
 
-	# in parse_binary_dos_format(),
+	# in parse_binary_dos_format() in zip/stdrubyext.rb,
 	# 'second' should not be odd value
-	#   second = 2 * (       0b11111 & binaryDosTime)
+	# 86:     second = 2 * (       0b11111 & binaryDosTime)
 	time_i = time.to_i / 2 * 2
 	e_time_i = e.time.to_i / 2 * 2
 	ok_eq(time_i, e_time_i)
