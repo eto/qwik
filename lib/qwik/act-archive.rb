@@ -187,11 +187,14 @@ if defined?($test) && $test
 {{presen}}
 * Header 2
 '
+      mtime = {}
+      mtime[page.key] = page.mtime
+
+      sleep(1)			# let mtime be odd value
 
       page = @site.create('PresenTest')
       page.store '* A presentation test page'
-
-      presenTestMTime = page.mtime
+      mtime[page.key] = page.mtime
 
       res = session '/test/test.zip'
       ok_eq 'application/zip', res['Content-Type']
@@ -258,12 +261,11 @@ test/1-presen.html
 
       Zip::ZipInputStream.open('testtemp.zip') {|zis|
 	while e = zis.get_next_entry
-	  if e.name == 'test/PresenTest.txt'
-	    t1 = (e.time.to_i) /2*2
-	    t2 = (presenTestMTime .to_i) /2*2
-	    ok_eq(t1, t2)
-# 	    puts e.time.to_i, presenTestMTime.to_i
-# 	    ok_eq(e.time, presenTestMTime)
+	  e_name = File.basename(e.name,'.txt')
+	  if mtime.has_key? e_name
+	    expected = mtime[e_name].to_i / 2 * 2
+	    actual = e.time.to_i / 2 * 2
+	    ok_eq(expected, actual)
 	  end
 	end
       }
@@ -318,12 +320,11 @@ test/1-presen.html
 	ok_eq('test/test.txt', e.name)
 	ok_eq('test', zis.read)
 
-
 	e = zis.get_next_entry
 	ok_eq('test2.txt', e.name)
 	ok_eq('test2', zis.read)
 
-	# in parse_binary_dos_format() in zip/stdrubyext.rb,
+	# at parse_binary_dos_format() in zip/stdrubyext.rb,
 	# 'second' should not be odd value
 	# 86:     second = 2 * (       0b11111 & binaryDosTime)
 	time_i = time.to_i / 2 * 2
