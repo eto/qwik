@@ -31,6 +31,14 @@ module QuickML
       else
 	@message_charset = mail.charset
       end
+
+      # FIXME: too ad-hoc
+      @rejection_ignore_list = %w()
+      if $test
+	if $rejection_ignore_list
+	  @rejection_ignore_list = $rejection_ignore_list
+	end
+      end
     end
 
     def process
@@ -176,6 +184,9 @@ module QuickML
     end
 
     def report_rejection (ml)
+      # FIXME: too ad-hoc
+      return if @rejection_ignore_list.include?(ml.name)
+
       header = []
       subject = Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))
       header.push(['To',	@mail.from],
