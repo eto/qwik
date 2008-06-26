@@ -1,3 +1,4 @@
+# -*- coding: cp932 -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -78,7 +79,7 @@ http://qwik.jp/.theme/i/login_qwik_logo.gif
       message.chomp!
       image_url.chomp! if image_url
       query_str = {
-	:m => message.set_page_charset.to_utf8,
+	:m => message.set_page_charset.to_euc,
 	:u => image_url
       }.to_query_string
       url = "http://gedo-style.com/crstl/crstl.php?#{query_str}"
