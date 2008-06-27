@@ -130,13 +130,20 @@ if defined?($test) && $test
       res = session '/test/test.tgz'
       str_file_list = res.body.read
       ok_eq 'text/plain', res['Content-Type']
-      assert_match %r(test/
-test/.backup/
-test/.backup/\d{10}_1
-test/.backup/\d{10}__SiteMember
-test/1.txt
-test/_SiteMember.txt
-), str_file_list
+      assert_match %r(^test/$), str_file_list
+      assert_match %r(^test/.backup/$), str_file_list
+      assert_match %r(^test/.backup/\d{10}_1$), str_file_list
+      assert_match %r(^test/.backup/\d{10}__SiteMember$), str_file_list
+      assert_match %r(^test/1.txt$), str_file_list
+      assert_match %r(^test/_SiteMember.txt$), str_file_list
+
+#       assert_match %r(test/
+# test/.backup/
+# test/.backup/\d{10}_1
+# test/.backup/\d{10}__SiteMember
+# test/1.txt
+# test/_SiteMember.txt
+# ), str_file_list
 
       # Download backup
       res = session '/test/test.tgz'
@@ -169,19 +176,32 @@ test/_SiteMember.txt
       ok_eq 'text/plain', res['Content-Type']
 
       # Confirm that archive is updated
-      assert_match %r(test/
-test/.backup/
-test/.backup/\d{10}_1
-test/.backup/\d{10}__SiteMember
-test/.backup/\d{10}_1
-test/.backup/\d{10}__SiteChanged
-test/1.files/
-test/1.files/t.txt
-test/1.txt
-test/_SiteChanged.txt
-test/_SiteLog.txt
-test/_SiteMember.txt
-), str_file_list
+      assert_match %r(^test/$), str_file_list
+      assert_match %r(^test/.backup/$), str_file_list
+      assert_match %r(^test/.backup/\d{10}_1$), str_file_list
+      assert_match %r(^test/.backup/\d{10}__SiteMember$), str_file_list
+      assert_match %r(^test/.backup/\d{10}_1$), str_file_list
+      assert_match %r(^test/.backup/\d{10}__SiteChanged$), str_file_list
+      assert_match %r(^test/1.files/$), str_file_list
+      assert_match %r(^test/1.files/t.txt$), str_file_list
+      assert_match %r(^test/1.txt$), str_file_list
+      assert_match %r(^test/_SiteChanged.txt$), str_file_list
+      assert_match %r(^test/_SiteLog.txt$), str_file_list
+      assert_match %r(^test/_SiteMember.txt$), str_file_list
+
+#       assert_match %r(test/
+# test/.backup/
+# test/.backup/\d{10}_1
+# test/.backup/\d{10}__SiteMember
+# test/.backup/\d{10}_1
+# test/.backup/\d{10}__SiteChanged
+# test/1.files/
+# test/1.files/t.txt
+# test/1.txt
+# test/_SiteChanged.txt
+# test/_SiteLog.txt
+# test/_SiteMember.txt
+# ), str_file_list
 
       # Download again
       res = session '/test/test.tgz'
