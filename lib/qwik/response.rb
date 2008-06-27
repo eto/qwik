@@ -105,6 +105,8 @@ module Qwik
 	return body # do not convert
       when String
 	return body
+      when IO
+	return body
       else
 	return body.to_s
       end

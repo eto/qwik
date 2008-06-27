@@ -141,6 +141,7 @@ module Qwik
 	  [:li, [:a, {:href=>'.chronology'}, _('Chronology')]],
 	  [:li, [:a, {:href=>'_GroupMembers.html'}, _('Group members')]],
 	  [:li, [:a, {:href=>"#{@site.sitename}.zip"}, _('SiteArchive')]],
+	  [:li, [:a, {:href=>"#{@site.sitename}.tgz"}, _('Site backup')]],
 	  [:li, [:a, {:href=>"_GroupConfig.html"}, _('ML Config')]],
 	  [:li, [:a, {:href=>".sendpass"}, _('Send Password')]],
 	]]

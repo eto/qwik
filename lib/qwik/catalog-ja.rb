@@ -1,3 +1,4 @@
+# -*- coding: cp932 -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -439,6 +440,9 @@ class Qwik::CatalogFactory
       'Draw Line' => '線を引く',
       'Text color' => '文字色',
       'Background' => '背景色',
+
+      # act-site-backup
+      'Site backup' => 'サイトバックアップ',
 
       # Add you catalog here.
       '' => '',
