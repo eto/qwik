@@ -15,19 +15,20 @@ module Qwik
 
     D_SiteBackup = {
       :dt => 'Site backup',
-      :dd => 'You can obtain a tgz(tar.gz) backup at the site content.',
+      :dd => 'You can obtain a tgz(tar.gz) archive of the whole site content.',
       :dc => '* Example
 {{tgz}}
 
-You can get a tgz(tar.gz) archive of all data of this Wiki site.
+You can get a tgz(tar.gz) archive of the whole site content.
 
-You can extract the package and place them on your qwikWeb data directory
-to move your site.
+You can move your site by getting the archive and placing them on your
+qwikWeb data directory.
 
-At first click, it displays archiving process.
-And then, you can reload or back-and-click again to download the archive file.
+At the first click, it only shows the progress of archiving.
+You can reload or back-and-click again to see the progress.
+After the archiving is finished, you can download the archive file.
 
-If anything is modifed on the site, it reprodued with clicking this link.
+If you change anything on the site, it\'ll recreate the archive.
 '
     }
 
