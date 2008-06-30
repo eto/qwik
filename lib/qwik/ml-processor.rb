@@ -185,7 +185,12 @@ module QuickML
 
     def report_rejection (ml)
       # FIXME: too ad-hoc
-      return if @rejection_ignore_list.include?(ml.name)
+      if @rejection_ignore_list.include?(ml.name)
+	@logger.log "[#{ml.name}]: Reject quietly: #{@mail.from}"
+
+	# do nothing
+	return 
+      end
 
       header = []
       subject = Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))
