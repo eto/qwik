@@ -1,3 +1,4 @@
+# -*- coding: cp932 -*-
 #
 # Copyright (C) 2002-2004 Satoru Takabayashi <satoru@namazu.org> 
 # Copyright (C) 2003-2006 Kouichirou Eto
@@ -35,6 +36,7 @@ module QuickML
       # FIXME: too ad-hoc
       @rejection_ignore_list = %w()
       if $test
+	@rejection_ignore_list = []
 	if $rejection_ignore_list
 	  @rejection_ignore_list = $rejection_ignore_list
 	end
