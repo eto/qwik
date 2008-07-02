@@ -37,8 +37,8 @@ module QuickML
       @rejection_ignore_list = %w()
       if $test
 	@rejection_ignore_list = []
-	if $rejection_ignore_list
-	  @rejection_ignore_list = $rejection_ignore_list
+	if $test_rejection_ignore_list
+	  @rejection_ignore_list = $test_rejection_ignore_list
 	end
       end
     end

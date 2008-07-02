@@ -56,7 +56,7 @@ The original body is ommited due to avoid spam trouble.
   end
 
   def test_ignore_list
-    $rejection_ignore_list = ["test"]
+    $test_rejection_ignore_list = ["test"]
 
     # 
     # normal case
@@ -95,7 +95,7 @@ The original body is ommited due to avoid spam trouble.
     ok_eq(expected, actual)
 
     # clean up for test suite
-    $rejection_ignore_list = nil
+    $test_rejection_ignore_list = nil
   end
 
 end
