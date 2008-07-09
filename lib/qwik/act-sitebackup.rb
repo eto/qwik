@@ -5,8 +5,6 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-require 'open3'
-
 module Qwik
   class Site
     def lastmod_of_all
