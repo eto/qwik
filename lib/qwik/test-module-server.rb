@@ -12,7 +12,7 @@ require 'qwik/test-module-path'
 
 module TestServerSetupModule
   def setup
-    @dir = '../../data/test'.path
+    @dir = '.test/data/test'.path
     @dir.setup
   end
 
