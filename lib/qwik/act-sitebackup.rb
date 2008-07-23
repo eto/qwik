@@ -160,7 +160,7 @@ If you change anything on the site, it\'ll recreate the archive.
 
     def command
       "#{TAR_CMD} zcf #{@tmpfile_path} -C #{@config.sites_dir} " +
-	"--exclude .cache --exclude .svn #{@site.sitename}"
+	"--exclude .cache --exclude .svn -h #{@site.sitename}"
     end
 
     def generate
