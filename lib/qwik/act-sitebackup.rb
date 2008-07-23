@@ -341,7 +341,7 @@ if defined?($test) && $test
 
     def test_command
       expected = "#{Qwik::SiteBackup::TAR_CMD} zcf .test/data/test/.cache/sitebackup.tmp -C .test/data/ " +
-	"--exclude .cache --exclude .svn test"
+	"--exclude .cache --exclude .svn -h test"
       actual = @backup.command
       is expected, actual
     end
