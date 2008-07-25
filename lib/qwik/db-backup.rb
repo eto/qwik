@@ -34,16 +34,17 @@ module Qwik
     def check(k, v)
     end
 
-    IGNORE_PAGES = %w(
-_SiteLog
-_SiteChanges
-_GroupCharset
-_GroupCount
-)
+    IGNORE_PAGES = [
+/\A_SiteLog\Z/, 
+/\A_SiteChanges\Z/, 
+/\A_GroupCharset\Z/, 
+/\A_GroupCount\Z/,
+/\A_counter_[_A-Za-z0-9]+\Z/
+]
 
     def put(k, v, time)
       @backup_path.check_directory
-      return if IGNORE_PAGES.include?(k)
+      return if IGNORE_PAGES.any? {|re| re =~ k }
       path(k, time).put(v)
     end
     alias set put
@@ -134,6 +135,45 @@ if defined?($test) && $test
         found = true
       }
       assert_equal false, found
+    end
+
+    def test_ignore_pages2
+      key = '_counter_1'
+      @pagedb.create(key)
+      @pagedb.put(key, 't', 1)
+
+      # test_each_by_key
+      found = false
+      @pagedb.backupdb.each_by_key(key) {|v, time|
+        found = true
+      }
+      assert_equal false, found
+    end
+
+    def test_ignore_pages3
+      key = '_counter_'
+      @pagedb.create(key)
+      @pagedb.put(key, 't', 1)
+
+      # test_each_by_key
+      found = false
+      @pagedb.backupdb.each_by_key(key) {|v, time|
+        found = true
+      }
+      assert_equal true, found
+    end
+
+    def test_ignore_pages4
+      key = '_SiteLogHoge'
+      @pagedb.create(key)
+      @pagedb.put(key, 't', 1)
+
+      # test_each_by_key
+      found = false
+      @pagedb.backupdb.each_by_key(key) {|v, time|
+        found = true
+      }
+      assert_equal true, found
     end
 
     def teardown
