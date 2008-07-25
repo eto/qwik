@@ -561,5 +561,49 @@ This is a test.
       processor.process
       eq "To: user@e.com\nFrom: postmaster@q.example.com\nSubject: [QuickML] Error: Test Mail\nContent-Type: text/plain\n\nInvalid mailing list name: <invalid_mlname@example.com>\nYou can only use 0-9, a-z, A-Z,  `-' for mailing list name\n\n-- \nInfo: http://example.com/\n", $quickml_sendmail[4]
     end
+
+    def test_ignore_list
+      $test_rejection_ignore_list = ["test"]
+
+      # 
+      # normal case
+      # 
+      send_normal_mail('bob@example.net')		# Bob creates a new ML.
+
+      sendmail('bob@example.net', 'test@q.example.com', 'test mail') {
+	"This is a test."
+      }
+      eq true, @site.exist?('1')
+      eq 'test mail', @site['1'].get_title
+      eq "* test mail\n{{mail(bob@example.net,0)\nThis is a test.\n}}\n",
+      @site['1'].load
+
+      # 
+      # sent from alien
+      # 
+
+      # clear probe
+      $quickml_sendmail = nil
+
+      # rejection message should be null
+      expected = nil
+
+      input = []
+      input << 'alice@example.net' # from
+      input << 'test@q.example.com' # to
+      input << 'spam mail'	# subject
+      inputBody =  'This is spam.'
+
+      sendmail(*input) {
+	inputBody
+      }
+      actual = $quickml_sendmail
+
+      ok_eq(expected, actual)
+
+      # clean up for test suite
+      $test_rejection_ignore_list = nil
+    end
+
   end
 end
