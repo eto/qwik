@@ -36,7 +36,7 @@ module Qwik
 
     IGNORE_PAGES = [
 /\A_SiteLog\Z/, 
-/\A_SiteChanges\Z/, 
+/\A_SiteChanged\Z/, 
 /\A_GroupCharset\Z/, 
 /\A_GroupCount\Z/,
 /\A_counter_[_A-Za-z0-9]+\Z/

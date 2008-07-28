@@ -1,3 +1,7 @@
+2008-07-28  Kouichirou Eto  <2008 eto.com>
+
+	* lib/qwik/db-backup.rb: Fix bug in IGNORE_PAGES.
+
 2007-10-03  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/ml-logger.rb: Change filename in a test case.
