@@ -2,6 +2,111 @@
 
 	* lib/qwik/db-backup.rb: Fix bug in IGNORE_PAGES.
 
+2008-07-25  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/db-backup.rb: Do not backup counter pages
+
+2008-07-25  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/ml-processor.rb, lib/qwik/test-ms-ignore-spam.rb: move
+	  one test case
+
+2008-07-23  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-sitebackup.rb: change test to follow the previous
+	  commit
+
+2008-07-23  eto
+
+	* lib/qwik/act-sitebackup.rb: Support symbolic link.
+
+2008-07-22  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/test-module-server.rb: fix bug: using real data/test/
+	  directory at test suite
+
+2008-07-16  Keiki Shimada <shimada-k aist.go.jp>
+
+	* share/theme/css/base.css: remove unused style
+
+2008-07-09  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-sitebackup.rb: remove unused REQUIRE statement
+
+2008-07-09  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-sitebackup.rb: change path to tar command
+
+2008-07-08  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-edit.rb, lib/qwik/act-sitebackup.rb: rewrite
+	  sitebackup
+
+2008-07-02  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/ml-processor.rb, lib/qwik/test-ms-ignore-spam.rb: change
+	  variable name used in test
+
+2008-07-01  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/ml-processor.rb: fix code for test: in case
+	  @rejection_ignore_list includes "test"
+
+2008-06-30  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/ml-processor.rb: add log message on Rejection ignored
+
+2008-06-27  eto
+
+	* lib/qwik/act-sitebackup.rb: update.
+
+2008-06-27  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-sitebackup.rb: change test to avoid a side effect of
+	  test suite
+
+2008-06-27  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-edit.rb, lib/qwik/act-sitebackup.rb,
+	  lib/qwik/catalog-ja.rb, lib/qwik/response.rb: add feature: Site
+	  Backup
+
+2008-06-26  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-christel.rb: change query encoding to euc
+
+2008-06-13  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/ml-processor.rb, lib/qwik/test-ms-ignore-spam.rb: avoid
+	  sending rejection-report to specific spam mails
+
+2008-06-12  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-archive.rb: add test: odd second for timestamp
+
+2008-06-11  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-archive.rb: change comment a bit
+
+2008-06-11  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/act-archive.rb: set timestamp in archive files. ref:
+	  http://qwik.jp/qwikweb/13.html
+
+2008-06-09  Keiki Shimada <shimada-k aist.go.jp>
+
+	* test.txt: remove commit-test file
+
+2008-06-09  Keiki Shimada <shimada-k aist.go.jp>
+
+	* test.txt: this is just a test commit
+
+2007-12-17  y-eto
+
+	* lib/qwik/site-report.rb: report mail header "Precedence: bulk"
+	  added.
+	  thanks for Masao Takaku <masao nii.ac.jp>.
+
 2007-10-03  Kouichirou Eto  <2007 eto.com>
 
 	* lib/qwik/ml-logger.rb: Change filename in a test case.
