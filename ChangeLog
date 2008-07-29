@@ -1,3 +1,11 @@
+2008-07-29  Keiki Shimada <shimada-k aist.go.jp>
+
+	* lib/qwik/db-backup.rb, lib/qwik/db-filesystem.rb,
+	  lib/qwik/db-indexer.rb, lib/qwik/group-config.rb,
+	  lib/qwik/group-db.rb, lib/qwik/page-files.rb,
+	  lib/qwik/page-images.rb, lib/qwik/site-files.rb: Use './.test/'
+	  directory for test
+
 2008-07-28  Kouichirou Eto  <2008 eto.com>
 
 	* lib/qwik/db-backup.rb: Fix bug in IGNORE_PAGES.
