@@ -106,7 +106,7 @@ if defined?($test) && $test
     end
 
     def test_all
-      dir = './test/'.path
+      dir = './.test/'.path
       dir.setup
       files = Qwik::PageFiles.new(dir.to_s, '1')
 

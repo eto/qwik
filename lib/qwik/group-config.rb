@@ -194,7 +194,7 @@ if defined?($test) && $test
     end
 
     def test_all
-      sites_dir = '.'
+      sites_dir = '.test/data/'
       group_name = 'test'
       db = QuickML::GroupDB.new(sites_dir, group_name)
       db.set_site(@site)

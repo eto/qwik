@@ -265,21 +265,21 @@ if defined?($test) && $test
     include TestSession
 
     def test_db
-      sites_dir = '.'
+      sites_dir = './.test/data'
       group_name = 'test'
 
       db = QuickML::GroupDB.new(sites_dir, group_name)
 
-      ok_eq(true, './test'.path.exist?)
+      ok_eq(true, './.test/data/test'.path.exist?)
 
       db.set_site(@site)
 
       # test_get_filepath
       t_make_public(QuickML::GroupDB, :get_filepath)
-      ok_eq('./test/,count', db.get_filepath(:Count).to_s)
+      ok_eq('./.test/data/test/,count', db.get_filepath(:Count).to_s)
 
       t_make_public(QuickML::GroupDB, :get_dirpath)
-      ok_eq('./test', db.get_dirpath.to_s)
+      ok_eq('./.test/data/test', db.get_dirpath.to_s)
 
       # test_put
       db.put(:Count, 'v')

@@ -42,7 +42,7 @@ end
 if defined?($test) && $test
   class TestSiteAttach < Test::Unit::TestCase
     def test_site_attach
-      dir = 'test/'.path
+      dir = '.test/'.path
       dir.setup
       attach = Qwik::SiteAttach.new(dir)
 
@@ -57,7 +57,7 @@ if defined?($test) && $test
 
       # test get
       path = attach.path('t.txt')
-      ok_eq('test/.attach/t.txt', path.to_s)
+      ok_eq('.test/.attach/t.txt', path.to_s)
       ok_eq('t', path.read)
 
       # test delete

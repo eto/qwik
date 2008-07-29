@@ -143,7 +143,7 @@ if defined?($test) && $test
     include TestModulePublic
 
     def setup_files
-      dir = 'test/'.path
+      dir = '.test/'.path
       dir.setup
       files = Qwik::PageFiles.new(dir.to_s, '1')
 

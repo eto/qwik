@@ -196,7 +196,7 @@ if defined?($test) && $test
       config.update Qwik::Config::DebugConfig
       config.update Qwik::Config::TestConfig
       spath = config.super_dir.path
-      path = 'test/'.path
+      path = '.test/'.path
       path.setup
       db = Qwik::FileSystemDB.new(path, spath)
 

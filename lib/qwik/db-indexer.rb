@@ -97,7 +97,7 @@ if defined?($test) && $test
     def setup_db
       config = Qwik::Config.new
       spath = config.super_dir.path
-      path = './test/'.path
+      path = './.test/'.path
       path.setup
       db = Qwik::FileSystemDB.new(path, spath)
       return path, db

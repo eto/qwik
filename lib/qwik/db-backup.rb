@@ -93,7 +93,7 @@ if defined?($test) && $test
       config = Qwik::Config.new
       config.update Qwik::Config::DebugConfig
       config.update Qwik::Config::TestConfig
-      @path = 'test/'.path
+      @path = '.test/'.path
       @path.setup
 
       spath = config.super_dir.path
