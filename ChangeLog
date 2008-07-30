@@ -1,3 +1,7 @@
+2008-07-30  Keiki Shimada <shimada-k aist.go.jp>
+	* lib/qwik/group-site.rb, lib/qwik/test-submit-japanese.rb:
+	Support various charsets
+
 2008-07-29  Keiki Shimada <shimada-k aist.go.jp>
 
 	* lib/qwik/db-backup.rb, lib/qwik/db-filesystem.rb,
