@@ -1,3 +1,4 @@
+# -*- coding: cp932 -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -117,10 +118,12 @@ module QuickML
 
     def self.make_content(site, key, mail, now)
       content = ''
+      mail_default_charset = 'ISO-2022-JP'
       mail.each_part {|sub_mail|
 	if sub_mail.plain_text_body?
 	  c = sub_mail.decoded_body.normalize_eol
-	  c = c.set_mail_charset.to_page_charset
+ 	  charset = c.guess_charset || mail_default_charset
+ 	  c = c.set_charset(charset).to_page_charset
 	  content << c
 	else
 	  filename = sub_mail.filename

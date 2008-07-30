@@ -1,3 +1,4 @@
+# -*- coding: cp932 -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -76,4 +77,25 @@ AAAAAElFTkSuQmCC
 ", page.load)
     ok_eq(true, @site.files('1').exist?('1x1.png'))
   end
+
+  def test_submit_cp932
+    qml = QuickML::Group.new(@ml_config, 'test@example.com')
+    qml.setup_test_config
+
+    mail = QuickML::Mail.new
+    mail.read(
+'Date: Mon, 3 Feb 2001 12:34:56 +0900
+From: "Test User" <bob@example.net>
+To: "Test Mailing List" <test@example.com>
+Subject: Re: [test:932] テスト
+Content-Type: text/plain; charset=CP932
+
+メーリングリストを立ち上げると，自動的に参加者だけが使えるWikiサイトが作られ，そこで文章の共同編集などの共同作業が行えます．メールで送られた情報は自動的にWikiのページとして保存され，知識の構造化が支援されます．
+')
+    mail.store_addresses
+    qml.site_post(mail, true)
+    ok_eq("テスト", @site['1'].get_title)
+    ok_eq("* テスト\n{{mail(bob@example.net,0)\nメーリングリストを立ち上げると，自動的に参加者だけが使えるWikiサイトが作られ，そこで文章の共同編集などの共同作業が行えます．メールで送られた情報は自動的にWikiのページとして保存され，知識の構造化が支援されます．\n}}\n", @site['1'].load)
+  end
+
 end
