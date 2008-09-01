@@ -346,6 +346,18 @@ if defined?($test) && $test
       is expected, actual
     end
 
+    def test_do_concurrent
+      t1 = t2 = nil
+      thread = @backup.do_concurrent {
+	Thread.pass
+	sleep 0.1
+	t1 = Time.now
+      }
+      t2 = Time.now
+      thread.join
+      assert_not_equal t1.to_f, t2.to_f
+    end
+
   end
 
   class TestActSiteBackup < Test::Unit::TestCase
