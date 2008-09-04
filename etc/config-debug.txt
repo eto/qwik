@@ -13,7 +13,8 @@
 :ml_port:	9195
 
 # Public Web address.
-:public_url:	http://example.com/
+#:public_url:	http://example.com/
+:public_url:	http://localhost/qwik/
 :default_sitename:	www
 
 # Mailing list setting.

@@ -78,8 +78,6 @@ module Qwik
     end
 
     def sweep
-      p 'do not sweep for now.'
-      return
       @logger.log(WEBrick::Log::INFO, 'start sweep') unless $test
       inactive_sites = check_inactive_sites
       buried = []
@@ -126,15 +124,19 @@ module Qwik
     end
 
     def bury(sitename)
+      puts "do not bury"
+      return
+
       site = get_site(sitename)
       sitepath = site.path
       dirtime = sitepath.mtime.to_i
       @grave_path.check_directory
       while true
-	#gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
-	gravesitepath = sitepath.dirname + ".._#{dirtime}_#{sitename}"
+	gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
+	#gravesitepath = sitepath.dirname + ".._#{dirtime}_#{sitename}"
 	if ! gravesitepath.exist?
-	  sitepath.rename(gravesitepath)
+	  FileUtils.mv(sitepath, gravesitepath)
+	  #sitepath.rename(gravesitepath)
 	  break
 	end
 	dirtime += 1
