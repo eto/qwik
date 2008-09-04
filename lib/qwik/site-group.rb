@@ -10,22 +10,12 @@ module Qwik
     def inactive?(now = Time.now)
       return false if @group_config.forward? || @group_config.permanent?
 
-      log = @memory[:bury_log]
-
       last_article_time = @pages.last_article_time
-      if last_article_time.nil?		# No file here.
-	log.info("site #{@sitename}: last_article_time is nil") if log
-	return true
-      end
+      return true if last_article_time.nil?		# No file here.
 
       ml_life_time = self.siteconfig['ml_life_time']
 
-      result = last_article_time.to_i + ml_life_time.to_i <= now.to_i
-      if result
-	ymdhms = last_article_time.strftime("%Y-%m-%d %H:%M:%S") 
-	log.info("site #{@sitename}: last_article_time is #{ymdhms}") if log
-      end
-      return result
+      return (last_article_time.to_i + ml_life_time.to_i <= now.to_i)
     end
 
     private

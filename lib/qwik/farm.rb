@@ -78,26 +78,22 @@ module Qwik
     end
 
     def sweep
+      p 'do not sweep for now.'
+      return
       @logger.log(WEBrick::Log::INFO, 'start sweep') unless $test
-
-      log = @memory[:bury_log]
-      log.info("start sweep")
-
       inactive_sites = check_inactive_sites
       buried = []
       inactive_sites.each {|sitename|
 	@logger.log(WEBrick::Log::INFO, 'sweep '+sitename) unless $test
-	buried << bury_dummy(sitename)
+	buried << bury(sitename)
       }
-
-      log.info("end sweep")
-
       return buried
     end
 
     def check_inactive_sites
       inactive_sites = []
       self.each {|sitename|
+	p sitename
 	# Do not bury default site.
 	next if sitename == @top_sitename
 	site = get_site(sitename)
@@ -130,50 +126,21 @@ module Qwik
     end
 
     def bury(sitename)
-      puts "do not bury"
-      return
-
       site = get_site(sitename)
       sitepath = site.path
       dirtime = sitepath.mtime.to_i
       @grave_path.check_directory
       while true
-	gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
+	#gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
+	gravesitepath = sitepath.dirname + ".._#{dirtime}_#{sitename}"
 	if ! gravesitepath.exist?
-	  FileUtils.mv(sitepath, gravesitepath)
+	  sitepath.rename(gravesitepath)
 	  break
 	end
 	dirtime += 1
       end
       return gravesitepath
     end
-
-    def bury_dummy(sitename)
-      site = get_site(sitename)
-      report_buried(site)
-      
-      return site.path
-    end
-
-    require 'stringio'
-    def report_buried(site)
-      log = @memory[:bury_log]
-      buff = StringIO.new
-      buff.puts("buried: #{site.sitename}")
-
-      ml_life_time = site.siteconfig['ml_life_time'].to_i
-      days = ml_life_time / (60*60*24)
-      buff.puts("ml_life_time: #{ml_life_time} (#{days}d)")
-
-      site.path.children.sort{|a,b| b.mtime <=> a.mtime }.each do |path|
-	buff << path.mtime.strftime("%Y-%m-%d %H:%M:%S ")
-	buff << sprintf("% 8d ", path.size)
-	buff << path.basename.to_s
-	buff << "\n"
-      end
-      log.info(buff.string)
-    end
-
   end
 end
 
