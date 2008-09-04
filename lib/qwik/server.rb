@@ -16,6 +16,8 @@ require 'qwik/response'
 require 'qwik/util-pid'
 require 'qwik/qp'
 
+require 'logger'
+
 module Qwik
   class Server < WEBrick::HTTPServer
     include PidModule
@@ -34,6 +36,8 @@ module Qwik
       init_directory(@qconfig)
 
       webrick_conf, @pidfile = init_webrick_conf(@qconfig, @memory)
+
+      init_bury_logger
 
       super(webrick_conf)
 
@@ -139,6 +143,14 @@ module Qwik
       # access.log is an instance of WEBrick::BasicLog
       webrick_accesslog = @config[:AccessLog][0][0]
       webrick_accesslog.reopen
+    end
+
+    def init_bury_logger
+      log_file = (@qconfig.log_dir.path + "bury.log").to_s
+      # 'Logger' at top-level name space
+      log = ::Logger.new(log_file, 2, 20*1024*1024) # 20M size, 2 shifted files.
+      log.level = ::Logger::INFO
+      @memory[:bury_log] = log
     end
 
     def self.version
