@@ -4,9 +4,10 @@
 
 require 'rake'
 
+task :default => :extract
+
 task :extract do
-  sh 'ruby dev-extract-catalog.rb .'
-  sh 'cat catalog-ja.txt catalog-ml-ja.txt > interfaces.txt'
+  sh 'ruby dev-extract-catalog.rb'
 end
 
 task :chmod do
