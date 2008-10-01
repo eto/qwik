@@ -77,9 +77,6 @@ class ExtractCatalog
 	next if e.nil?
 	next if j.nil?
 
-#	next if e == '->'
-#	next if e == '<-'
-
 	e.del!(/\A'/)
 	j.del!(/['"],\z/)
 	e.del!(/\\n/)
@@ -89,6 +86,9 @@ class ExtractCatalog
 
 	next if e.empty?
 	next if j.empty?
+
+	next if e == '->'
+	next if e == '<-'
 
 	out.puts j
 	out.puts e
