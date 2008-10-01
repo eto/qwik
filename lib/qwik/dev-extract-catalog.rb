@@ -31,7 +31,7 @@ class ExtractCatalog
   def main
     mypath = Pathname.new(__FILE__)
 
-    outpath = Pathname.new 'interfaces.txt'
+    outpath = Pathname.new '../../interfaces.txt'
     outpath.unlink
     
     catalog_ja = mypath.parent + 'catalog-ja.rb'
