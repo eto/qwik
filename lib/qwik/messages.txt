@@ -1,0 +1,1257 @@
+act-archive.rb   19:     D_ExtArchive = {
+act-archive.rb   20:       :dt => 'Site archive',
+act-archive.rb   21:       :dd => 'You can get a zip archive of the site.',
+act-archive.rb   22:       :dc => "* Example
+act-archive.rb   23: {{zip}}
+act-archive.rb   24: 
+act-archive.rb   25: You can get a zip archive with all text data of the Wiki site.
+act-archive.rb   26: 
+act-archive.rb   27: The archive also contains static HTML files of the site.
+act-archive.rb   28: Thus, you can unzip the package and place them on your web site
+act-archive.rb   29: as the static Web pages.
+act-archive.rb   30: "
+
+act-backup.rb   11:       :dt => 'Backup pages',
+act-backup.rb   12:       :dd => 'You can see backup of the page.',
+act-backup.rb   13:       :dc => "* How to
+act-backup.rb   14: Go edit page, follow 'Backup' link in the right side.
+act-backup.rb   15: You see the backup list of the page.
+act-backup.rb   16: "
+act-backup.rb   52:       return c_nerror('only one time stamp') if 1 < args.length
+act-backup.rb   54:       return c_nerror('should be number') unless /\A[0-9]+\z/ =~ time
+act-backup.rb   59:         return c_notfound('not found')
+act-backup.rb   72:       return c_notfound('no data?') if index.nil?
+
+act-basic.rb   11:       :dt => 'Basic plugins',
+act-basic.rb   12:       :dd => 'Simple and Basic plugins.',
+act-basic.rb   13:       :dc => '* Description
+act-basic.rb   14: ** BR plugin
+act-basic.rb   15: You can break a line by using <br> element.
+act-basic.rb   16:  This is {{br}} a test.
+act-basic.rb   17: This is {{br}} a test.
+act-basic.rb   18: ** Open with new window plugin
+act-basic.rb   19: You can make a link to show the page in a new window.
+act-basic.rb   20:  {{window(http://qwik.jp/)}}
+act-basic.rb   21: {{window(http://qwik.jp/)}}
+act-basic.rb   22: ** Show last modified plugin
+act-basic.rb   23: You can show last modified by this plugin.
+act-basic.rb   24:  {{last_modified}}
+act-basic.rb   25: {{last_modified}}
+act-basic.rb   26: ** Information only for a group
+act-basic.rb   27: You can specify content only for guests or for members.
+act-basic.rb   28: {{only_guest
+act-basic.rb   29: You are a guest.
+act-basic.rb   30: }}
+act-basic.rb   31: {{only_member
+act-basic.rb   32: You are a member.
+act-basic.rb   33: }}
+act-basic.rb   34:  {{only_guest
+act-basic.rb   35:  You are a guest.
+act-basic.rb   36:  }}
+act-basic.rb   37:  {{only_member
+act-basic.rb   38:  You are a member.
+act-basic.rb   39:  }}
+act-basic.rb   40: ** Comment out plugin
+act-basic.rb   41: You can comment out the content.
+act-basic.rb   42:  {{com
+act-basic.rb   43:  You can not see this line.
+act-basic.rb   44:  You can not see this line also.
+act-basic.rb   45:  }}
+act-basic.rb   46: {{com
+act-basic.rb   47: You can not see this line.
+act-basic.rb   48: You can not see this line also.
+act-basic.rb   49: }}
+act-basic.rb   50: ** My group
+act-basic.rb   51: You can see your group list.
+act-basic.rb   52:  {{my_group}}
+act-basic.rb   53: {{my_group}}
+act-basic.rb   54: ** Plugin list plugin
+act-basic.rb   55: プラグインの一覧を表示します。
+act-basic.rb   56:  {{plugin_list}}
+act-basic.rb   57: {{plugin_list}}
+act-basic.rb   58: '
+
+act-book.rb   10:       :dt => 'Book and ISBN plugins',
+act-book.rb   11:       :dd => 'Add a link to a book or to search by a phrase.',
+act-book.rb   12:       :dc => "* Example
+act-book.rb   13: ** ISBN plugin
+act-book.rb   14: Add a link to a book by isbn.
+act-book.rb   15:  {{isbn(4797318325)}}
+act-book.rb   16: {{isbn(4797318325)}}
+act-book.rb   17:  {{isbn_amazon(4797318325)}}
+act-book.rb   18: {{isbn_amazon(4797318325)}}
+act-book.rb   19:  {{isbn_amazon(4797318325,書名)}}
+act-book.rb   20: {{isbn_amazon(4797318325,書名)}}
+act-book.rb   21: ** Book Serach plugin
+act-book.rb   22:  {{book_search(Wiki)}}
+act-book.rb   23: {{book_search(Wiki)}}
+act-book.rb   24:  {{book_search(ブログ)}}
+act-book.rb   25: {{book_search(ブログ)}}
+act-book.rb   26: You can edit the book stores list on [[_BookSearch]].
+act-book.rb   27: "
+
+act-calc.rb   11:       :dt => 'Spreadsheet plugin',
+act-calc.rb   12:       :dd => 'You can caliculate sum by a simple table.',
+act-calc.rb   13:       :dc => '* Example
+act-calc.rb   14:  {{calc
+act-calc.rb   15:  ,$100        ,CPU
+act-calc.rb   16:  ,$100        ,Memory
+act-calc.rb   17:  ,$20.5        ,Cable
+act-calc.rb   18:  ,$250        ,Graphic Card
+act-calc.rb   19:  ,$250        ,HDD
+act-calc.rb   20:  ,$400        ,Mother Board
+act-calc.rb   21:  }}
+act-calc.rb   22: {{calc
+act-calc.rb   23: ,$100        ,CPU
+act-calc.rb   24: ,$100        ,Memory
+act-calc.rb   25: ,$20.5        ,Cable
+act-calc.rb   26: ,$250        ,Graphic Card
+act-calc.rb   27: ,$250        ,HDD
+act-calc.rb   28: ,$400        ,Mother Board
+act-calc.rb   29: }}
+act-calc.rb   30: * Tab Caliculator Plugin
+act-calc.rb   31: You can use a table splited by tabs.
+act-calc.rb   32:  {{tab_calc
+act-calc.rb   33:  6000        Book
+act-calc.rb   34:  3000        Mouse
+act-calc.rb   35:  }}
+act-calc.rb   36: {{tab_calc
+act-calc.rb   37: 6000        Book
+act-calc.rb   38: 3000        Mouse
+act-calc.rb   39: }}
+act-calc.rb   40: '
+
+act-christel.rb   11:       :dt => 'Takigawa Christel plugin',
+act-christel.rb   12:       :dd => 'You can embed Takigawa Christel image.',
+act-christel.rb   13:       :dc => "
+act-christel.rb   14: Follow [[PluginChristel.describe]]"
+act-christel.rb   15:     }
+act-christel.rb   16: 
+act-christel.rb   17:     D_PluginChristel = {
+act-christel.rb   18:       :dt => 'Takigawa Christel plugin',
+act-christel.rb   19:       :dd => 'You can embed Takigawa Christel image.',
+act-christel.rb   20:       :dc => "* Example
+act-christel.rb   21: {{christel
+act-christel.rb   22: This is Takigawa Christel plugin.
+act-christel.rb   23: }}
+act-christel.rb   24:  {{christel
+act-christel.rb   25:  This is Takigawa Christel plugin.
+act-christel.rb   26:  }}
+act-christel.rb   27: 
+act-christel.rb   28: {{christel
+act-christel.rb   29: You can embed images.
+act-christel.rb   30: http://qwik.jp/.theme/i/login_qwik_logo.gif
+act-christel.rb   31: }}
+act-christel.rb   32:  {{christel
+act-christel.rb   33:  You can embed images.
+act-christel.rb   34:  http://qwik.jp/.theme/i/login_qwik_logo.gif
+act-christel.rb   35:  }}
+act-christel.rb   36: 
+act-christel.rb   37: {{christel(640)
+act-christel.rb   38: You can see bigger one.
+act-christel.rb   39: }}
+act-christel.rb   40:  {{christel(640)
+act-christel.rb   41:  You can see bigger one.
+act-christel.rb   42:  }}
+act-christel.rb   43: "
+
+act-chronology.rb   11:       :dt => 'Chronology of site',
+act-chronology.rb   12:       :dd => "You can see when the pages are created and updated.",
+act-chronology.rb   13:       :dc => "* How to
+act-chronology.rb   14: Please go [[.chronology]] page to see the chronology of this site.
+act-chronology.rb   15: "
+act-chronology.rb   49:       return [:p, "No files here."] if times.nil?
+act-chronology.rb   51:       return [:p, "No files here."] if page_num == 0
+
+act-code.rb   15:       :dt => 'Code input plugin',
+act-code.rb   16:       :dd => 'You can input code on the page.',
+act-code.rb   17:       :dc => "
+act-code.rb   18: Follow [[PluginCode.describe]]"
+act-code.rb   19:     }
+act-code.rb   20: 
+act-code.rb   21:     D_PluginCode = {
+act-code.rb   22:       :dt => 'Code input plugin',
+act-code.rb   23:       :dd => 'You can input code on the page.',
+act-code.rb   24:       :dc => "* Examples
+act-code.rb   25:  {{code
+act-code.rb   26:  puts \"hello, world!\"
+act-code.rb   27:  puts \"hello, qwik users!\"
+act-code.rb   28:  }}
+act-code.rb   29: {{code
+act-code.rb   30: puts \"hello, world!\"
+act-code.rb   31: puts \"hello, qwik users!\"
+act-code.rb   32: }}
+act-code.rb   33: {{code
+act-code.rb   34: \#include <stdio.h>
+act-code.rb   35: 
+act-code.rb   36: void main(){
+act-code.rb   37:   printf(\"hello, world!\\n\");
+act-code.rb   38: }
+act-code.rb   39: }}
+act-code.rb   40: "
+
+act-comment.rb   10:       :dt => 'Comment plugin',
+act-comment.rb   11:       :dd => 'You can show comment field.',
+act-comment.rb   12:       :dc => "
+act-comment.rb   13: * Multiline comment plugin
+act-comment.rb   14: You can show a multi line comment field.
+act-comment.rb   15: {{mcomment}}
+act-comment.rb   16:  {{mcomment}}
+act-comment.rb   17: Add (1) to args, then you see the newest comment on the top.
+act-comment.rb   18:  {{mcomment(1)}}
+act-comment.rb   19: * Hiki like comment plugin
+act-comment.rb   20: You can show a Hiki like comment field.
+act-comment.rb   21:  {{hcomment}}
+act-comment.rb   22: {{hcomment}}
+act-comment.rb   23: Add (1) to args, then you see the newest comment on the top.
+act-comment.rb   24:  {{hcomment(1)}}
+act-comment.rb   25: * Old comment plugin
+act-comment.rb   26: This plugin is obsolete.  Please use 'mcomment' plugin instead.
+act-comment.rb   27:  {{comment}}
+act-comment.rb   28: {{comment}}
+act-comment.rb   29: "
+act-comment.rb  118:       return c_nerror('no message') if msg.nil? || msg.empty?
+
+act-config.rb   10:       :dt => 'Site Config mode',
+act-config.rb   11:       :dd => 'You can edit site configurations.',
+act-config.rb   12:       :dc => "* Example
+act-config.rb   13: [[site.config]]
+act-config.rb   14: "
+
+act-counter.rb   10:       :dt => 'Counter plugin',
+act-counter.rb   11:       :dd => 'You can show a conter for the page.',
+act-counter.rb   12:       :dc => '* Example
+act-counter.rb   13:  {{counter}}
+act-counter.rb   14: {{counter}}
+act-counter.rb   15: '
+
+
+act-day.rb   33:       return c_nerror('require arg') if day.nil?
+act-day.rb   38:         return c_nerror('wrong format')
+act-day.rb   47:       return c_nerror('no contents') if keys.nil?
+
+act-describe.rb   13:       :dt => 'Description of functions',
+act-describe.rb   14:       :dd => 'You can see the description of each functions of qwikWeb.',
+act-describe.rb   15:       :dc => "* Example
+act-describe.rb   16:  [[QwikWeb.describe]]
+act-describe.rb   17: [[QwikWeb.describe]]
+act-describe.rb   18: 
+act-describe.rb   19: You can see the list below.
+act-describe.rb   20: "
+act-describe.rb   84:       return c_nerror('No such description') if hash.nil?
+
+act-diary.rb   11:       :dt => 'Diary plugin',
+act-diary.rb   12:       :dd => 'You can create a diary page.',
+act-diary.rb   13:       :dc => "* How to
+act-diary.rb   14: TBD
+
+act-embed-html.rb   11:       :dt => 'Embed HTML plugin',
+act-embed-html.rb   12:       :dd => 'You can embed bare HTML in the page.',
+act-embed-html.rb   13:       :dc => "* Example
+act-embed-html.rb   14:  {{html
+act-embed-html.rb   15:  This is <font color='red'>red</font>.
+act-embed-html.rb   16:  }}
+act-embed-html.rb   17: {{html
+act-embed-html.rb   18: This is <font color='red'>red</font>.
+act-embed-html.rb   19: }}
+act-embed-html.rb   20: * Allowed elements
+act-embed-html.rb   21: You can input allowed elements only.
+act-embed-html.rb   22: ** valid tags
+act-embed-html.rb   23: #{WabisabiValidator::VALID_TAGS.join(' ')}
+act-embed-html.rb   24: ** valid attributes
+act-embed-html.rb   25: #{WabisabiValidator::VALID_ATTR.join(' ')}
+act-embed-html.rb   26: 
+act-embed-html.rb   27: * HTMLの中へのプラグインの埋め込み
+act-embed-html.rb   28: You can also embed plugins like this.
+act-embed-html.rb   29:  {{html
+act-embed-html.rb   30:  <plugin param=\"1\" method=\"recent\"></plugin>
+act-embed-html.rb   31:  }}
+act-embed-html.rb   32: {{html
+act-embed-html.rb   33: <plugin param=\"1\" method=\"recent\"></plugin>
+act-embed-html.rb   34: }}
+act-embed-html.rb   35: 
+act-embed-html.rb   36: * Example
+act-embed-html.rb   37: <html>
+act-embed-html.rb   38: <H3>Header 2</H3>
+act-embed-html.rb   39: <H4>Header 3</H4>
+act-embed-html.rb   40: <H5>Header 4</H5>
+act-embed-html.rb   41: <H6>Header 5</H6>
+act-embed-html.rb   42: <UL>
+act-embed-html.rb   43: <LI>List 1
+act-embed-html.rb   44: <UL>
+act-embed-html.rb   45: <LI>List 2
+act-embed-html.rb   46: <UL>
+act-embed-html.rb   47: <LI>List 3</LI></UL></LI></UL></LI></UL>
+act-embed-html.rb   48: <OL>
+act-embed-html.rb   49: <LI>Ordered List 1
+act-embed-html.rb   50: <OL>
+act-embed-html.rb   51: <LI>Ordered List 2
+act-embed-html.rb   52: <OL>
+act-embed-html.rb   53: <LI>Ordered List 3</LI></OL></LI></OL></LI></OL>
+act-embed-html.rb   54: <PRE>Pre-formatted text.</PRE>
+act-embed-html.rb   55: <BLOCKQUOTE>
+act-embed-html.rb   56: <P>This is a quoted text.</P>
+act-embed-html.rb   57: </BLOCKQUOTE>
+act-embed-html.rb   58: <DL>
+act-embed-html.rb   59: <DT>Wiki
+act-embed-html.rb   60: <DD>A writable Web system.
+act-embed-html.rb   61: <DT>QuickML
+act-embed-html.rb   62: <DD>An easy-to-use mailing list management system.</DD></DL>
+act-embed-html.rb   63: <TABLE>
+act-embed-html.rb   64: <TBODY>
+act-embed-html.rb   65: <TR>
+act-embed-html.rb   66: <TD>Table 1-1</TD>
+act-embed-html.rb   67: <TD>Table 1-2</TD>
+act-embed-html.rb   68: <TD>Table 1-3</TD></TR>
+act-embed-html.rb   69: <TR>
+act-embed-html.rb   70: <TD>Table 2-1</TD>
+act-embed-html.rb   71: <TD>Table 2-2</TD>
+act-embed-html.rb   72: <TD>Table 2-3</TD></TR></TBODY></TABLE>
+act-embed-html.rb   73: <P><EM>Emphasis</EM>、
+act-embed-html.rb   74: <STRONG>Strong</STRONG>、
+act-embed-html.rb   75: <DEL>Delete</DEL>
+act-embed-html.rb   76: <A href=\"http://qwik.jp/.theme/new.png\">new</A>
+act-embed-html.rb   77: <A href=\"FrontPage.html\">FrontPage</A>
+act-embed-html.rb   78: <A href=\"http://www.yahoo.co.jp/\">Yahoo!</A>
+act-embed-html.rb   79: </P>
+act-embed-html.rb   80: 
+act-embed-html.rb   81: <PLUGIN param=\"1\" method=\"recent\"></PLUGIN>
+act-embed-html.rb   82: </html>
+act-embed-html.rb   83: "
+act-embed-html.rb  164:         return "can not use [#{v}]"
+
+act-files.rb   10:       :dt => 'Attach file function',
+act-files.rb   11:       :dd => 'You can attach files to pages.',
+act-files.rb   12:       :dc => "* How to
+act-files.rb   13: Go to edit page, you see attach file form on the bottom.
+act-files.rb   14: You can attach many files at once by following 'attach many' link.
+act-files.rb   15: 
+act-files.rb   16: If you attached files, system automatically added link to the files.
+act-files.rb   17:  {{file(\"somefile.txt\")}}
+act-files.rb   18: ** Show attached files plugin
+act-files.rb   19: {{show_files}}
+act-files.rb   20:  {{show_files}}
+act-files.rb   21: You can show the list of attached files.
+act-files.rb   22: "
+
+act-history.rb   11:       :dt => 'History mode',
+act-history.rb   12:       :dd => 'You can see the history of the page interactively.',
+act-history.rb   13:       :dc => "* How to
+act-history.rb   14: Go edit page, follow 'Time machine' link in the right side.
+act-history.rb   15: You see the interactive history of the page.
+act-history.rb   42:       return c_nerror('no path args') if 0 < @req.path_args.length
+act-history.rb   43:       return c_nerror('no ext args')  if 0 < @req.ext_args.length
+
+act-include.rb   10:       :dt => 'Include plugin',
+act-include.rb   11:       :dd => 'You can include other page.',
+act-include.rb   12:       :dc => "* Example
+act-include.rb   13: You can see the FrontPage is included here.
+act-include.rb   14: {{include('FrontPage')}}
+act-include.rb   15:  {{include('FrontPage')}}
+act-include.rb   16: "
+
+act-interwiki.rb   10:       :dt => 'InterWiki plugin',
+act-interwiki.rb   11:       :dd => 'Make a link for another Wiki.',
+act-interwiki.rb   12:       :dc => "* Example
+act-interwiki.rb   13: You can create a link to another Wiki easily.
+act-interwiki.rb   14:  [[qwikjp:InstallOnDebian]]
+act-interwiki.rb   15: [[qwikjp:InstallOnDebian]]
+act-interwiki.rb   16: You'll see the link to InstallOnDebian page on qwik.jp.
+act-interwiki.rb   17: 
+act-interwiki.rb   18:  [[google:qwikWeb]]
+act-interwiki.rb   19: [[google:qwikWeb]]
+act-interwiki.rb   20: You can also create a link to search qwikWeb on Google.
+act-interwiki.rb   21: 
+act-interwiki.rb   22: You can edit the links on the Page [[_InterWikiName]].
+act-interwiki.rb   23: "
+
+act-keywords.rb   17:       :dt => 'Show keywords plugin',
+act-keywords.rb   18:       :dd => 'You can see the list of keywords of the page.',
+act-keywords.rb   19:       :dc => "* Example
+act-keywords.rb   20: You see the keyword list of FrontPage.
+act-keywords.rb   21:  {{keywords}}
+act-keywords.rb   22: {{keywords}}
+act-keywords.rb   23: You see the keyword list of TextFormat.
+act-keywords.rb   24:  {{keywords(TextFormat)}}
+act-keywords.rb   25: {{keywords(TextFormat)}}
+act-keywords.rb   26: 
+act-keywords.rb   27: \'\'\'Warning:\'\'\' This plugin works only for Japanese document.
+act-keywords.rb   48:       return "no mecab" if ! $have_mecab
+
+act-license.rb   17:       'cc' => "You can use the files on this site under [[Creative Commons by 2.1|http://creativecommons.org/licenses/by/2.1/jp/]] license.",
+act-license.rb   18:       'cc-by-sa-2.5' => "You can use the files on this site under [[Creative Commons Attribution-ShareAlike 2.5|http://creativecommons.org/licenses/by-sa/2.5/]] license.",
+act-license.rb   19:       'upload-cc-by-sa-2.5' => "The files you uploaded will be under [[Creative Commons Attribution-ShareAlike 2.5|http://creativecommons.org/licenses/by-sa/2.5/]] license."
+
+act-list.rb   10:       :dt => 'List editing plugin',
+act-list.rb   11:       :dd => 'You can edit a list in the page.',
+act-list.rb   12:       :dc => "* Example
+act-list.rb   13: {{list
+act-list.rb   14: - A
+act-list.rb   15: - B
+act-list.rb   16: - C
+act-list.rb   17: }}
+act-list.rb   18: You can see a list with three lines.
+act-list.rb   19: 
+act-list.rb   20: - By clicking the item, you can edit the item.
+act-list.rb   21: - You can drag-and-drop the list.
+act-list.rb   22: The system automatically save your editing by Ajax method.
+act-list.rb   23: "
+
+act-login.rb   16:       :dt => 'qwikWeb login',
+act-login.rb   17:       :dd => 'You can login by using three auth methods.',
+act-login.rb   18:       :dc => "* How to
+act-login.rb   19: ** Login by TypeKey
+act-login.rb   20: You can login by using TypeKey authentication.
+act-login.rb   21: In login screen, you see 'Login by TypeKey' link.
+act-login.rb   22: Follow the link and login at the TypeKey authentication page.
+act-login.rb   23: Since the qwikWeb system uses your mailaddress for the authentication,
+act-login.rb   24: it is necessary to select to tell your mail address.
+act-login.rb   25: ** Login by password
+act-login.rb   26: Please input your mail address as user ID and input your password.
+act-login.rb   27: The password to login qwikWeb is automatically generated by the system.
+act-login.rb   28: Please follow 'Get Password' link to get the password.
+act-login.rb   29: ** Login by Basic Authentication
+act-login.rb   30: You can use Basic Authentication.
+act-login.rb   31: When you are using a mobile phone that only have Basic Authentication method,
+act-login.rb   32: please follow 'Login by Basic Auth' link.
+act-login.rb   33: "
+
+act-map.rb   10:       :dt => 'Map plugin',
+act-map.rb   11:       :dd => 'You can embed a map and create makers.',
+act-map.rb   12:       :dc => "* Example
+act-map.rb   13: {{{
+act-map.rb   14: {{map(139.7005, 35.6595, 3)
+act-map.rb   15: * [139.7005,35.6595] Shibuya
+act-map.rb   16: - Hachiko Mae
+act-map.rb   17: * [139.7030,35.6715] Harajuku
+act-map.rb   18: - Takeshita St.
+act-map.rb   19: }}
+act-map.rb   20: }}}
+act-map.rb   21: See [[PluginMap]] for example.
+act-map.rb   22: * Thanks
+act-map.rb   23: I use '[[Google Local|http://maps.google.com/]]' for the map.
+act-map.rb   24: Thank you very much.
+act-map.rb   68:       c_nerror('No such page.') if page.nil?
+
+act-member.rb   13:       :dt => 'Member control function',
+act-member.rb   14:       :dd => 'Member control.',
+act-member.rb   15:       :dc => "* How to
+act-member.rb   16: ** Member add
+act-member.rb   17: [[.member_add]]
+act-member.rb   18: ** Member list
+act-member.rb   19: [[.member_list]]
+act-member.rb   20: ** Member list in CSV format
+act-member.rb   21: [[.member_list_csv]]
+act-member.rb   22: "
+
+act-menu.rb   10:       :dt => 'Menu plugin',
+act-menu.rb   11:       :dd => 'You can show a pull down menu.',
+act-menu.rb   12:       :dc => "* Example
+act-menu.rb   13: {{hmenu
+act-menu.rb   14: - [[Yahoo!|http://www.yahoo.co.jp/]]
+act-menu.rb   15: -- [[map|http://map.yahoo.co.jp/]]
+act-menu.rb   16: -- [[auctions|http://aunctions.yahoo.co.jp/]]
+act-menu.rb   17: - [[Google|http://www.google.co.jp/]]
+act-menu.rb   18: -- [[news|http://news.google.com/]]
+act-menu.rb   19: -- [[map|http://map.google.com/]]
+act-menu.rb   20: - [[qwik|http://qwik.jp/]]
+act-menu.rb   21: -- [[hello|http://qwik.jp/HelloQwik/]]
+act-menu.rb   22: }}
+act-menu.rb   23: 
+act-menu.rb   24: {{br}}
+act-menu.rb   25: {{br}}
+act-menu.rb   26: {{br}}
+act-menu.rb   27: {{br}}
+act-menu.rb   28: 
+act-menu.rb   29: {{{
+act-menu.rb   30: {{hmenu
+act-menu.rb   31: - [[Yahoo!|http://www.yahoo.co.jp/]]
+act-menu.rb   32: -- [[map|http://map.yahoo.co.jp/]]
+act-menu.rb   33: -- [[auctions|http://aunctions.yahoo.co.jp/]]
+act-menu.rb   34: - [[Google|http://www.google.co.jp/]]
+act-menu.rb   35: -- [[news|http://news.google.com/]]
+act-menu.rb   36: -- [[map|http://map.google.com/]]
+act-menu.rb   37: - [[qwik|http://qwik.jp/]]
+act-menu.rb   38: -- [[hello|http://qwik.jp/HelloQwik/]]
+act-menu.rb   39: }}
+act-menu.rb   40: }}}
+act-menu.rb   41: "
+
+act-media.rb   22:           return c_nerror("already deleted: #{file.to_s}") unless output.exist?
+act-media.rb   24:           return c_notice("delete content: #{file.to_s}"){}
+act-media.rb   38:         return c_notfound('File not found.') unless f.exist?
+act-media.rb   40:         return c_notice("pulish the content: #{file.to_s}")
+act-media.rb   66:       return c_notice('media server') {[:ul, ul]}
+act-media.rb  106:           return c_notice('start encoding all')
+act-media.rb  111:         return c_notfound('File not found.') unless f.exist?
+act-media.rb  117:         return c_notice("start encoding: #{file.to_s}")
+act-media.rb  141:       return c_notice('movie file list') { [:ul, ul] }
+
+act-password.rb   10:       :dt => 'Set password plugin',
+act-password.rb   11:       :dd => 'You can lock a page by a password.',
+act-password.rb   12:       :dc => "* Example
+act-password.rb   13:  {{password(\"a password string\")}}
+act-password.rb   14: You can lock your page by setting this password plugin.
+act-password.rb   15: 
+act-password.rb   16: '''Warning:''' There is no way to unlock the page.
+act-password.rb   17: If you forgot your password, you can not edit the page.
+act-password.rb   18: Please be careful.
+act-password.rb   19: "
+
+act-plan.rb   11:       :dt => 'Show plan plugin',
+act-plan.rb   12:       :dd => 'You can show the plan of this group.',
+act-plan.rb   13:       :dc => "* Example
+act-plan.rb   14:  {{plan}}
+act-plan.rb   15: {{plan}}
+act-plan.rb   16: You can see plans of this group.
+act-plan.rb   17: If there are no plan for this group, you see nothing.
+act-plan.rb   18: * How to create new plan.
+act-plan.rb   19: Follow '''Create a new plan''' link and create a new plan page.
+act-plan.rb   20: You'll see plans on sidemenu.
+act-plan.rb   21: '''Notice''' We changed the format of the date of pages.
+act-plan.rb   22: You can not use tag notation to specify date now.
+act-plan.rb   23: "
+
+act-povray.rb   12:       :dt => 'PovRay plugin',
+act-povray.rb   13:       :dd => 'You can embed ray tracing rendered 3D CG.',
+act-povray.rb   14:       :dc => "* Example
+act-povray.rb   15:  {{povray
+act-povray.rb   16:  sphere { <0, 0, 9>, 3
+act-povray.rb   17:  finish { ambient 0.2 diffuse 0.8 phong 1 }
+act-povray.rb   18:  pigment { red 1 }
+act-povray.rb   19:  }
+act-povray.rb   20:  light_source { <-9, 9, 0> rgb 1 }
+act-povray.rb   21:  }}
+act-povray.rb   22: {{povray
+act-povray.rb   23: sphere { <0, 0, 9>, 3
+act-povray.rb   24: finish { ambient 0.2 diffuse 0.8 phong 1 }
+act-povray.rb   25: pigment { red 1 }
+act-povray.rb   26: }
+act-povray.rb   27: light_source { <-9, 9, 0> rgb 1 }
+act-povray.rb   28: }}
+act-povray.rb   29: - I recommend [[POVRay Short Code Contest, Round 3|http://astronomy.swin.edu.au/~pbourke/raytracing/scc3/final/]] for samples of POV-Ray source code.
+act-povray.rb   30: "
+act-povray.rb   62:           [:p, 'No povray command.']
+
+act-presen.rb   10:       :dt => 'Presentaion mode',
+act-presen.rb   11:       :dd => 'You can show the page in presentation mode.',
+act-presen.rb   12:       :dc => "* How to
+act-presen.rb   13:  [[FrontPage.presen]]
+act-presen.rb   14: [[FrontPage.presen]]
+act-presen.rb   15: Follow this link and you'll see the presen mode of the FrontPage.
+act-presen.rb   16:  {{presen}}
+act-presen.rb   17: You can show a link to presentation mode.
+act-presen.rb   18: ** Specify Presentation theme
+act-presen.rb   19:  {{presen_theme(qwikblack)}}
+act-presen.rb   20: You can specify the presentation theme by this plugin.
+act-presen.rb   21: {{presen_theme_list}}
+act-presen.rb   22: You can choose from this list.
+act-presen.rb   23: * Thanks
+act-presen.rb   24: I use
+act-presen.rb   25: [[S5: A Simple Standards-Based Slide Show System|http://www.meyerweb.com/eric/tools/s5/]]
+act-presen.rb   26: by Mr. Eric Meyer for this presentation mode.  Thank you very much.
+act-presen.rb   27: "
+
+act-redirect.rb   10:       :dt => 'Redirect mode',
+act-redirect.rb   11:       :dd => 'You can use redirect at all external link on your site.',
+act-redirect.rb   12:       :dc => '* How to
+act-redirect.rb   13: Go to [[_SiteConfig]] page, find this line.
+act-redirect.rb   14:  :redirect:false
+act-redirect.rb   15: Change the line to this.
+act-redirect.rb   16:  :redirect:true
+act-redirect.rb   17: 
+act-redirect.rb   18: All external links will be redirect link.  When you are using redirect,
+act-redirect.rb   19: nobody can see the referere to know where the link come from.
+act-redirect.rb   20: '
+
+act-ring.rb   14:       :dt => 'Ring mode',
+act-ring.rb   15:       :dd => 'This is a special mode for Ring.',
+act-ring.rb   16:       :dc => "* How to
+act-ring.rb   17: * invite
+act-ring.rb   18: {{ring_invite_form}}
+act-ring.rb   19: ** invite list
+act-ring.rb   20: {{ring_invite_list}}
+act-ring.rb   21: * maker
+act-ring.rb   22: {{ring_make_form}}
+act-ring.rb   23: * msg
+act-ring.rb   24: {{ring_message_form}}
+act-ring.rb   25: ** date
+act-ring.rb   26: {{ring_date(1)}}
+act-ring.rb   27: * user
+act-ring.rb   28: {{ring_user(guest@example.com, mail)}}
+act-ring.rb   29: {{ring_show(mail)}}
+act-ring.rb   30: {{ring_link(guest@example.com)}}
+act-ring.rb   31: {{ring_get_user_from_pagename(1)}}
+act-ring.rb   32: {{ring_see(1)}}
+act-ring.rb   33: {{ring_personal_info}}
+act-ring.rb   34: {{ring_ul(guest@example.com)}}
+act-ring.rb   35: 
+act-ring.rb   36: "
+
+act-ruby.rb    8:       :dt => 'Embed Ruby code plugin',
+act-ruby.rb    9:       :dd => 'You can embed ruby code on pages.',
+act-ruby.rb   10:       :dc => "* Examples
+act-ruby.rb   11:  {{ruby
+act-ruby.rb   12:  \"<b>hello</b>\"
+act-ruby.rb   13:  }}
+act-ruby.rb   14: {{ruby
+act-ruby.rb   15: \"<b>hello</b>\"
+act-ruby.rb   16: }}
+act-ruby.rb   17: 
+act-ruby.rb   18: * enable_ruby
+act-ruby.rb   19: 
+act-ruby.rb   20: Please enable ruby plugin from 'config.txt'.
+act-ruby.rb   21: Ask for the administrator.
+act-ruby.rb   22: }}
+act-ruby.rb   23: "
+act-ruby.rb   27:       return [:p, "Ruby plugin is not enabled."] if ! @config.enable_ruby
+
+act-sample.rb   16:       :dt => 'Sample plugins',
+act-sample.rb   17:       :dd => 'These are sample plugins.',
+act-sample.rb   18:       :dc => "* Example
+act-sample.rb   19: You can show famous \"hello, world!\" string by this plugin.
+act-sample.rb   20: 
+act-sample.rb   21: As you know, this \"hello world\" plugin is an example to describe
+act-sample.rb   22: how you can create your own plugin.
+act-sample.rb   23: 
+act-sample.rb   24: Please check this URL for detail.
+act-sample.rb   25: http://qwik.jp/HowToMakePlugin.html
+act-sample.rb   26: 
+act-sample.rb   27: ** hello world plugin
+act-sample.rb   28:  {{hello}}
+act-sample.rb   29: {{hello}}
+act-sample.rb   30:  {{hello(\"qwik users\")}}
+act-sample.rb   31: {{hello(\"qwik users\")}}
+act-sample.rb   32: You can specify the target in the argument.
+act-sample.rb   33: ** hello world action
+act-sample.rb   34:  [[.hello]]
+act-sample.rb   35: [[.hello]]
+act-sample.rb   36: You can see a page with 'hello world' message.
+act-sample.rb   37: ** Monospace plugin
+act-sample.rb   38: {{tt(\"This is a test.\")}}
+act-sample.rb   39:  {{tt(\"This is a test.\")}}
+act-sample.rb   40: You can make the string as monotype font face.
+act-sample.rb   41: 
+act-sample.rb   42: ** Quote plugin
+act-sample.rb   43: {{quote
+act-sample.rb   44: This is a text to quote.
+act-sample.rb   45: }}
+act-sample.rb   46:  {{quote
+act-sample.rb   47:  This is a text to quote.
+act-sample.rb   48:  }}
+act-sample.rb   49: You can make block quote of the string.
+act-sample.rb   50: "
+
+act-schedule.rb   12:       :dt => 'Input your scuedule plugin',
+act-schedule.rb   13:       :dd => 'You can input your schedule.',
+act-schedule.rb   14:       :dc => "* Example
+act-schedule.rb   15:  {{schedule}}
+act-schedule.rb   16: {{schedule}}
+act-schedule.rb   17: You can see a 5x5 table here.
+act-schedule.rb   18: You can not edit this table because this is a description page.
+act-schedule.rb   19: "
+
+act-search.rb   13:       :dt => 'Search plugin',
+act-search.rb   14:       :dd => 'You can show a search form.',
+act-search.rb   15:       :dc => '* Example
+act-search.rb   16:  {{search}}
+act-search.rb   17: {{search}}
+act-search.rb   18: #* Incremental search
+act-search.rb   19: # {{isearch}}
+act-search.rb   20: #{{isearch}}
+act-search.rb   21: #You can also make incremenatl search form.
+act-search.rb   22: '
+
+act-sitebackup.rb   22:       :dt => 'Site backup',
+act-sitebackup.rb   23:       :dd => 'You can get a tgz(tar.gz) archive of the whole site content.',
+act-sitebackup.rb   24:       :dc => '* Example
+act-sitebackup.rb   25: {{sitebackup}}
+act-sitebackup.rb   26: 
+act-sitebackup.rb   27: You can get a zip archive with all text data of the Wiki site.
+act-sitebackup.rb   28: You can get a tgz(tar and gziped) archive of the whole site content.
+act-sitebackup.rb   29: 
+act-sitebackup.rb   30: You can move your site by getting the archive and placing them on your
+act-sitebackup.rb   31: qwikWeb data directory.
+act-sitebackup.rb   32: 
+act-sitebackup.rb   33: At the first click, it only shows the progress of archiving.
+act-sitebackup.rb   34: After the archiving is finished, you can download the archive file.
+act-sitebackup.rb   35: 
+act-sitebackup.rb   36: If you change anything on the site, it\'ll recreate the archive.
+act-sitebackup.rb   37: '
+act-sitebackup.rb   59:       return "no tar command" if ! SiteBackup.command_exist?
+act-sitebackup.rb   64:       return c_nerror("no tar command") if ! SiteBackup.command_exist?
+act-sitebackup.rb   70:         return c_notice("Download archive", "#{@site.sitename}.tgz", 200, 2) {
+act-sitebackup.rb   71:           [:p, "Backup process is complete. download ",
+act-sitebackup.rb   79:         return c_notice("in progress", "#{@site.sitename}.sitebackup", 200, 5) {
+act-sitebackup.rb   80:           [:p, "Backup process is running."]
+act-sitebackup.rb   85:       return c_notice("starting", "#{@site.sitename}.sitebackup", 200, 5) {
+act-sitebackup.rb   86:         [:p, "Backup process is starting"]
+act-sitebackup.rb   99:         return c_notfound { "no latest backup" }
+
+act-sitelog.rb   10:       :dt => 'Show SiteLog',
+act-sitelog.rb   11:       :dd => 'You can see sitelog of this site.',
+act-sitelog.rb   12:       :dc => "* How to
+act-sitelog.rb   13:  [[.sitelog]]
+act-sitelog.rb   14: Follow this link. [[.sitelog]]
+act-sitelog.rb   15: "
+
+act-smil.rb   13:       :dt => 'Video editing plugin',
+act-smil.rb   14:       :dd => 'You can control the timeline of the video.',
+act-smil.rb   15:       :dc => "* Example
+act-smil.rb   16: ** Tokyo Setagaya ward Congress
+act-smil.rb   17: {{smil
+act-smil.rb   18: :url:rtsp://realgi.city.setagaya.tokyo.jp/20030918-2.rm
+act-smil.rb   19: |3:12:15|3:12:20|
+act-smil.rb   20: |3:19:58|3:21:12|
+act-smil.rb   21: }}
+act-smil.rb   22:  {{smil
+act-smil.rb   23:  :url:rtsp://realgi.city.setagaya.tokyo.jp/20030918-2.rm
+act-smil.rb   24:  |3:12:15|3:12:20|
+act-smil.rb   25:  |3:19:58|3:21:12|
+act-smil.rb   26:  }}
+act-smil.rb   27: This is just an example to use smil plugin.
+act-smil.rb   28: "
+act-smil.rb   73:         return c_notice(1) { "filename is #{filename}" }
+
+act-style.rb   12:       :dt => 'Style plugin',
+act-style.rb   13:       :dd => 'You can specify styles of the page.',
+act-style.rb   14:       :dc => '* Examples
+act-style.rb   15: ** Embed CSS
+act-style.rb   16:  {{css
+act-style.rb   17:  body {
+act-style.rb   18:   background: #efe;
+act-style.rb   19:  }
+act-style.rb   20:  }}
+act-style.rb   21: {{css
+act-style.rb   22: body {
+act-style.rb   23:  background: #efe;
+act-style.rb   24: }
+act-style.rb   25: }}
+act-style.rb   26: 
+act-style.rb   27: You can embed any CSS style except some inhibit pattern by this plugin.
+act-style.rb   28: This code specifies the background color of this page.
+act-style.rb   29: 
+act-style.rb   30: *** CSS Inhibit Patterns List
+act-style.rb   31: {{css_inhibit_pattern}}
+act-style.rb   32: 
+act-style.rb   33: ** Specify style to a div block
+act-style.rb   34:  {{style_div("font-size:200%;")
+act-style.rb   35:  This is a test.
+act-style.rb   36:  }}
+act-style.rb   37: {{style_div("font-size:200%;")
+act-style.rb   38: This is a test.
+act-style.rb   39: }}
+act-style.rb   40: 
+act-style.rb   41: ** Specify class for a div block
+act-style.rb   42: {{block_div("notice")
+act-style.rb   43: This is a test.
+act-style.rb   44: }}
+act-style.rb   45:  {{block_div("notice")
+act-style.rb   46:  This is a test.
+act-style.rb   47:  }}
+act-style.rb   48: You can specify any class here.
+act-style.rb   49: 
+act-style.rb   50: ** Align center
+act-style.rb   51:  {{center
+act-style.rb   52:  This is a test.~
+act-style.rb   53:  This is a test too.
+act-style.rb   54:  }}
+act-style.rb   55: {{center
+act-style.rb   56: This is a test.~
+act-style.rb   57: This is a test too.
+act-style.rb   58: }}
+act-style.rb   59: 
+act-style.rb   60: ** Align right
+act-style.rb   61:  {{right
+act-style.rb   62:  This is a test.~
+act-style.rb   63:  This is a test too.
+act-style.rb   64:  }}
+act-style.rb   65: {{right
+act-style.rb   66: This is a test.~
+act-style.rb   67: This is a test too.
+act-style.rb   68: }}
+act-style.rb   69: 
+act-style.rb   70: ** Align left
+act-style.rb   71:  {{left
+act-style.rb   72:  This is a test.~
+act-style.rb   73:  This is a test too.
+act-style.rb   74:  }}
+act-style.rb   75: {{left
+act-style.rb   76: This is a test.~
+act-style.rb   77: This is a test too.
+act-style.rb   78: }}
+act-style.rb   79: 
+act-style.rb   80: Usually, this plugin is not useful.
+act-style.rb   81: I made this plugin only for the symmetry of plugins.
+act-style.rb   82: 
+act-style.rb   83: ** Float left
+act-style.rb   84: {{float_left
+act-style.rb   85: This is a test.
+act-style.rb   86: }}
+act-style.rb   87: This is a dummy text.~
+act-style.rb   88: This is a dummy text.~
+act-style.rb   89: This is a dummy text.~
+act-style.rb   90:  {{float_left
+act-style.rb   91:  This is a test.
+act-style.rb   92:  }}
+act-style.rb   93: 
+act-style.rb   94: ** Float right
+act-style.rb   95: {{float_right
+act-style.rb   96: This is a test.
+act-style.rb   97: }}
+act-style.rb   98: This is a dummy text.~
+act-style.rb   99: This is a dummy text.~
+act-style.rb  100: This is a dummy text.~
+act-style.rb  101:  {{float_right
+act-style.rb  102:  This is a test.
+act-style.rb  103:  }}
+act-style.rb  104: 
+act-style.rb  105: ** Style span
+act-style.rb  106:  This is a {{style_span("font-size:200%;", "very big")}} test string.
+act-style.rb  107: This is a {{style_span("font-size:200%;", "very big")}} test string.
+act-style.rb  108: 
+act-style.rb  109: ** Small
+act-style.rb  110:  This is a {{small("small")}} string.
+act-style.rb  111: This is a {{small("small")}} string.
+act-style.rb  112: 
+act-style.rb  113: ** Insert an image
+act-style.rb  114:  {{img(".theme/i/login_qwik_logo.gif")}}
+act-style.rb  115: {{img(".theme/i/login_qwik_logo.gif")}}
+act-style.rb  116: You can specify a link.
+act-style.rb  117:  {{img(".theme/i/login_qwik_logo.gif", "qwikWeb", "http://qwik.jp/")}}
+act-style.rb  118: {{img(".theme/i/login_qwik_logo.gif", "qwikWeb", "http://qwik.jp/")}}
+act-style.rb  119: 
+act-style.rb  120: ** Make a link to a pge
+act-style.rb  121:  {{a(FrontPage)}}
+act-style.rb  122: {{a(FrontPage)}}
+act-style.rb  123:  {{a(FrontPage, go back)}}
+act-style.rb  124: {{a(FrontPage, go back)}}
+act-style.rb  125: 
+act-style.rb  126: ** Ascii Art plugin
+act-style.rb  127: You can include ascii art.
+act-style.rb  128: This plugin specifies style sheet for ascii art.
+act-style.rb  129: 
+act-style.rb  130: {{{
+act-style.rb  131: {{aa
+act-style.rb  132: 　　 ∧＿∧　　／￣￣￣￣￣
+act-style.rb  133: 　　（　´∀｀）＜　monar
+act-style.rb  134: 　　（　　　　） 　＼＿＿＿＿＿
+act-style.rb  135: 　　｜ ｜　|
+act-style.rb  136: 　　（_＿）＿）
+act-style.rb  137: }}
+act-style.rb  138: }}}
+act-style.rb  139: {{aa
+act-style.rb  140: 　　 ∧＿∧　　／￣￣￣￣￣
+act-style.rb  141: 　　（　´∀｀）＜　monar
+act-style.rb  142: 　　（　　　　） 　＼＿＿＿＿＿
+act-style.rb  143: 　　｜ ｜　|
+act-style.rb  144: 　　（_＿）＿）
+act-style.rb  145: }}
+act-style.rb  146: 
+act-style.rb  147: {{aa
+act-style.rb  148: 　　　〇＿〇 
+act-style.rb  149: 　　 （　・(ｪ)・） 　＜Kumar!
+act-style.rb  150: 　　/J　▽J 
+act-style.rb  151: 　　し―-J 
+act-style.rb  152: }}
+act-style.rb  153: 
+act-style.rb  154: The style sheet simply set "MS P Gothic" font and the line height.
+act-style.rb  155: 
+act-style.rb  156: ** Code plugin
+act-style.rb  157: You can show codes by this plugin.
+act-style.rb  158:  {{code
+act-style.rb  159:  puts "hello, world!"
+act-style.rb  160:  puts "hello, qwik users!"
+act-style.rb  161:  }}
+act-style.rb  162: {{code
+act-style.rb  163: puts "hello, world!"
+act-style.rb  164: puts "hello, qwik users!"
+act-style.rb  165: }}
+act-style.rb  166: You can see line number in the left of each line.
+act-style.rb  167: 
+act-style.rb  168: ** Notice plugin
+act-style.rb  169: You can show a notice by this plugin.
+act-style.rb  170: {{notice
+act-style.rb  171: \'\'\'WARNING\'\'\': This is just a sample!
+act-style.rb  172: }}
+act-style.rb  173:  {{notice
+act-style.rb  174:  \'\'\'WARNING\'\'\': This is just a sample!
+act-style.rb  175:  }}
+act-style.rb  176: 
+act-style.rb  177: * Monta method plugin
+act-style.rb  178: You can hide a part of text.  Click black box and you\'ll see the text.
+act-style.rb  179:  {{monta("This is an example.")}}
+act-style.rb  180: {{monta("This is an example.")}}
+act-style.rb  181: '
+
+act-table.rb   12:       :dt => 'Table edit plugin',
+act-table.rb   13:       :dd => 'You can edit a table in the page.',
+act-table.rb   14:       :dc => "* Example
+act-table.rb   15: {{table}}
+act-table.rb   16:  {{table}}
+act-table.rb   17: You see a five by five table here.
+act-table.rb   18: You can edit the table in the page.
+act-table.rb   19: 
+act-table.rb   20: This is just a description page.
+act-table.rb   21: You should try this plugin on your own page.
+act-table.rb   22: "
+
+act-textarea.rb   10:       :dt => 'Textarea plugin',
+act-textarea.rb   11:       :dd => 'You can show a simple textarea field.',
+act-textarea.rb   12:       :dc => "* Example
+act-textarea.rb   13: {{textarea
+act-textarea.rb   14: This is an example for textarea.
+act-textarea.rb   15: }}
+act-textarea.rb   16:  {{textarea
+act-textarea.rb   17:  This is an example for textarea.
+act-textarea.rb   18:  }}
+act-textarea.rb   19: You can show an editable text field.
+act-textarea.rb   20: "
+
+act-theme.rb   13:       :dt => 'Site Theme',
+act-theme.rb   14:       :dd => 'You can choose your favorite page design.',
+act-theme.rb   15:       :dc => '* How to
+act-theme.rb   16: ** Choose from themes of qwikWeb
+act-theme.rb   17: {{theme_list}}
+act-theme.rb   18: You can choose a theme from this list.
+act-theme.rb   19: Go to [[_SiteConfig]] page, replace
+act-theme.rb   20:  :theme:qwikgreen
+act-theme.rb   21: line. The page design will be changed.
+act-theme.rb   22: 
+act-theme.rb   23: \'\'\'Caution:\'\'\' Some themes, such as qwiksystem, are for system pages.
+act-theme.rb   24: If you choose to use such themes, the page design will be strange.
+act-theme.rb   25: 
+act-theme.rb   26: ** Use your own CSS file
+act-theme.rb   27: Go to [[_SiteTheme]] page, attach your css file with the filename
+act-theme.rb   28: "\'\'\'theme.css\'\'\'".
+act-theme.rb   29: 
+act-theme.rb   30: \'\'\'Caution:\'\'\' There are several inhibited elements in CSS.
+act-theme.rb   31: Please see [[PluginStyle.describe]].
+act-theme.rb   32: 
+act-theme.rb   33: {{warning_for_css}}
+act-theme.rb   34: 
+act-theme.rb   35: ** Use CSS file on external Web site
+act-theme.rb   36: Goto [[_SiteConfig]] page,
+act-theme.rb   37: replace
+act-theme.rb   38:  :theme:qwikgreen
+act-theme.rb   39: line to something like
+act-theme.rb   40:  :theme:http://d.hatena.ne.jp/theme/clover/clover.css
+act-theme.rb   41: to specify the css file. The page design will be changed.
+act-theme.rb   42: 
+act-theme.rb   43: \'\'\'Caution:\'\'\' Even if you are using an external CSS file,
+act-theme.rb   44: there are several inhibited pattern. Please see [[PluginStyle.describe]].
+act-theme.rb   45: '
+
+act-typekey.rb   67:       return c_nredirect('Go TypeKey', url)        # Redirect to TypeKey
+
+act-webservice.rb   10:       :dt => 'Web service plugins',
+act-webservice.rb   11:       :dd => 'You can use several external Web services.',
+act-webservice.rb   12:       :dc => '
+act-webservice.rb   13: * Hatena Point plugin
+act-webservice.rb   14:  {{hatena_point(eto)}}
+act-webservice.rb   15: You can embed hatena point tag.
+act-webservice.rb   16: * Trackfeed plugin
+act-webservice.rb   17: You can use trackfeed by this plugin.
+act-webservice.rb   18:  {{trackfeed(yourid)}}
+act-webservice.rb   19: * Subscribe Bloglines plugin
+act-webservice.rb   20: You can show subscribe bloglines button.
+act-webservice.rb   21:  {{sub_bloglines}}
+act-webservice.rb   22: {{sub_bloglines}}
+act-webservice.rb   23: 
+act-webservice.rb   24: You can write a specific URL in the argument.
+act-webservice.rb   25:  {{sub_bloglines("http://www.ruby-lang.org/")}}
+act-webservice.rb   26: {{sub_bloglines("http://www.ruby-lang.org/")}}
+act-webservice.rb   27: * E Words plugin
+act-webservice.rb   28: You can show words description.
+act-webservice.rb   29:  {{e_words}}
+act-webservice.rb   30: {{e_words}}
+act-webservice.rb   31: * Google AdSense plugin
+act-webservice.rb   32: You can show an ad by Google AdSense.
+act-webservice.rb   33:  {{google_ad}}
+act-webservice.rb   34: {{google_ad}}
+act-webservice.rb   35:  {{google_ad_button}}
+act-webservice.rb   36: {{google_ad_button}}
+act-webservice.rb   37: You can select from the two sizes.
+act-webservice.rb   38: There is no way to use another size for now.
+act-webservice.rb   39: * Show translate link plugin
+act-webservice.rb   40: You can show an translation link.
+act-webservice.rb   41:  {{translate_ej}}
+act-webservice.rb   42: Specify translate English to Japanese link.
+act-webservice.rb   43:  {{translate_je}}
+act-webservice.rb   44: Specify translate Japanese to English link.
+act-webservice.rb   45: '
+
+act-wema.rb   16:       :dt => 'Post-it plugin',
+act-wema.rb   17:       :dd => 'You can put post-it notes on the page.',
+act-wema.rb   18:       :dc => "* How to
+act-wema.rb   19:  {{wema}}
+act-wema.rb   20: {{wema}}
+act-wema.rb   21: 
+act-wema.rb   22: Embed this wema plugin to your page.
+act-wema.rb   23: Click 'New Post-it' link, then you see a small window.
+act-wema.rb   24: Enter some text and save it.
+act-wema.rb   25: You can move the small window and click set for setting the position.
+act-wema.rb   26: * Thanks
+act-wema.rb   27: I start development from [[wema|http://wema.sourceforge.jp/]]
+act-wema.rb   28: by Mr. Kan Fushihara.  Thank you very much.
+act-wema.rb   29: "
+
+act-wysiwyg.rb   15:       :dt => 'WYSIWYG editing mode',
+act-wysiwyg.rb   16:       :dd => 'You can edit a page in wysiwyg mode.',
+act-wysiwyg.rb   17:       :dc => "* Example
+act-wysiwyg.rb   18: You can access [[edit FrontPage|FrontPage.wysiwyg]] in wysiwyg mode.
+act-wysiwyg.rb   19: 
+act-wysiwyg.rb   20: You can show a link to wysiwyg mode by this plugin.
+act-wysiwyg.rb   21:  {{wysiwyg}}
+act-wysiwyg.rb   22: {{wysiwyg}}
+act-wysiwyg.rb   23: "
+act-wysiwyg.rb   88:       return c_nerror('null content') if wtext.nil? || wtext.empty?
+
+description.rb    8:       :dt => 'How to qwikWeb',
+description.rb    9:       :dd => 'How you can use qwikWeb',
+description.rb   10: #You can see brief descriptions of qwikWeb functions.
+description.rb   11:       :dc => "
+description.rb   12: '''qwikWeb''' is a group communication system that integrate
+description.rb   13: WikiWikiWeb and mailing list.
+description.rb   14: 
+description.rb   15: Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] to the detail.
+description.rb   16: 
+description.rb   17: You can see the list of qwikWeb functions below.
+description.rb   18: "
+description.rb   19:     }
+description.rb   20: 
+description.rb   21:     D_SiteManagement = {
+description.rb   22:       :dt => 'Site management',
+description.rb   23:       :dd => 'Site management menu.',
+description.rb   24:       :dc => '
+description.rb   25: * Site management function
+description.rb   26: You can access site management pages from the right side of edit page.
+description.rb   27: You can aceess the same pages here.
+description.rb   28: - [[Config|_SiteConfig]] Site configuration page
+description.rb   29: - [[Chronology|.chronology]] You can see the chronology of this site.
+description.rb   30: - [[Members|_GroupMembers]] You can add or delete the members of this group.
+description.rb   31: -- Please enter a mail address in each line.  (Do not use comma separated values form.)
+description.rb   32: -- \'\'\'Warning:\'\'\' If you delete your mail from this page, you can not login this site again.
+description.rb   33: - {{zip}} You can get a site archive.
+description.rb   34: -- The archive includes the static HTML pages. You can place the HTML pages onto a web site.
+description.rb   35: * Site pages configuration
+description.rb   36: You can edit menus, such as sidemenu, from here.
+description.rb   37: - [[AdminMenu|_AdminMenu]] On the top of this page.
+description.rb   38: - [[SideMenu|_SideMenu]] On the side of this page.
+description.rb   39: - [[PageAttribute|_PageAttribute]] As the page attribute.
+description.rb   40: - [[EditorFooter|_EditorFooter]] The footer of edit page.
+description.rb   41: You can also edit several configurations.
+description.rb   42: - [[_SiteTheme]] You can attach your own css file to this page.
+description.rb   43: - [[_InterWikiName]] Inter wiki link.
+description.rb   44: - [[_IsbnLink]] Used for isbn plugin.
+description.rb   45: - [[_BookSearch]] Used for book search plugin.
+description.rb   46: - [[_LoginMessage]] If you created this page, you\'ll see message in Login page.
+description.rb   47: 
+description.rb   48: These pages are inherited from the parent pages.
+description.rb   49: If you edited the pages, the content is copied from the parent pages.
+description.rb   50: Even if the parent pages are edited, the changes will not be appeared.
+description.rb   51: 
+description.rb   52: If so, please save the content of the current page to your editor,
+description.rb   53: erase the page.  Then you\'ll see the content of the parent page.
+description.rb   54: After that, please re-edit the page.
+description.rb   55: 
+description.rb   56: * Etc.
+description.rb   57: - [[SandBox]]
+description.rb   58: - [[SiteLog|_SiteLogView]]
+description.rb   59: Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] for detail.
+description.rb   60: '
+description.rb   61:     }
+description.rb   62: 
+description.rb   63:     D_TextFormatSimple = {
+description.rb   64:       :dt => 'TextFormat',
+description.rb   65:       :dd => 'You can see brief description of text format.',
+description.rb   66:       :dc => "* Text Format
+description.rb   67: Please also access the [[full text format|TextFormat.describe]].
+description.rb   68: ** Header 2
+description.rb   69: *** Header 3
+description.rb   70: **** Header 4
+description.rb   71: ***** Header 5
+description.rb   72: - List level 1
+description.rb   73: -- List level 2
+description.rb   74: --- List level 3
+description.rb   75: + Unordered list 1
+description.rb   76: ++ Unordered list 2
+description.rb   77: +++ Unordered list 3
+description.rb   78:  Pre formatted text.
+description.rb   79: > This is a quote.
+description.rb   80: :Wiki:A writable Web system.
+description.rb   81: :QuickML:An easy to use mailing list system.
+description.rb   82: ,Data 1-1,Data 1-2,Data 1-3
+description.rb   83: ,Data 2-1,Data 2-2,Data 2-3
+description.rb   84: ''emphasis text'', '''strong text''', ==stroke out text==
+description.rb   85: [[new|http://qwik.jp/.theme/new.png]]
+description.rb   86: [[FrontPage]]
+description.rb   87: [[Yahoo!|http://www.yahoo.co.jp/]]
+description.rb   88: {{recent(1)}}
+description.rb   89: {{{
+description.rb   90: ** Header 2
+description.rb   91: *** Header 3
+description.rb   92: **** Header 4
+description.rb   93: ***** Header 5
+description.rb   94: - List level 1
+description.rb   95: -- List level 2
+description.rb   96: --- List level 3
+description.rb   97: + Unordered list 1
+description.rb   98: ++ Unordered list 2
+description.rb   99: +++ Unordered list 3
+description.rb  100:  Pre formatted text.
+description.rb  101: > This is a quote.
+description.rb  102: :Wiki:A writable Web system.
+description.rb  103: :QuickML:An easy to use mailing list system.
+description.rb  104: ,Data 1-1,Data 1-2,Data 1-3
+description.rb  105: ,Data 2-1,Data 2-2,Data 2-3
+description.rb  106: ''emphasis text'', '''strong text''', ==stroke out text==
+description.rb  107: [[new|http://qwik.jp/.theme/new.png]]
+description.rb  108: [[FrontPage]]
+description.rb  109: [[Yahoo!|http://www.yahoo.co.jp/]]
+description.rb  110: {{recent(1)}}
+description.rb  111: }}}
+description.rb  112: "
+description.rb  113:     }
+description.rb  114: 
+description.rb  115:     D_TextFormat = {
+description.rb  116:       :dt => 'TextFormat',
+description.rb  117:       :dd => 'You can see the text format of qwikWeb.',
+description.rb  118:       :dc => "* Text Format
+description.rb  119: Please also access the [[simplified text format|TextFormatSimple.describe]].
+description.rb  120: * Header
+description.rb  121: - You can describe header by placing '*' on the beginning of the lin.
+description.rb  122: - You can use '*' from one to five.  The stars are translate fromo h2 to h6.
+description.rb  123:  * Header 1
+description.rb  124:  ** Header 2
+description.rb  125:  *** Header 3
+description.rb  126:  **** Header 4
+description.rb  127:  ***** Header 5
+description.rb  128: * Header 1
+description.rb  129: ** Header 2
+description.rb  130: *** Header 3
+description.rb  131: **** Header 4
+description.rb  132: ***** Header 5
+description.rb  133: * Page Title
+description.rb  134: You can specify the page title by using '*' on the first line of the page.
+description.rb  135: The header acts as the page title.
+description.rb  136: You can link the page by using the page title.
+description.rb  137: 
+description.rb  138: For example, you can link to the TextFormat page by [[TextFormat]].
+description.rb  139: And you can also use [[書式一覧詳細版]] to link the page.
+description.rb  140: 
+description.rb  141: But usually, please use page ID to link the page.
+description.rb  142: Because if you use page title to linke the page,
+description.rb  143: the page link will be disconnected.
+description.rb  144: If you use page ID to link the page, the page title will be appear
+description.rb  145: instead of the page ID.
+description.rb  146: * List
+description.rb  147: - You can use unordered list by using '-' on the begining of the line.
+description.rb  148: - You can use '-' from one to three times.  You can use nested list.
+description.rb  149: - You can use ordered list by using '+' also.
+description.rb  150:  - List level 1
+description.rb  151:  -- List level 2
+description.rb  152:  --- List level 3
+description.rb  153:  + Unordered list 1
+description.rb  154:  ++ Unordered list 2
+description.rb  155:  +++ Unordered list 3
+description.rb  156: - List level 1
+description.rb  157: -- List level 2
+description.rb  158: --- List level 3
+description.rb  159: + Unordered list 1
+description.rb  160: ++ Unordered list 2
+description.rb  161: +++ Unordered list 3
+description.rb  162: * Paragraph
+description.rb  163: - You can describe normal paragraphs.
+description.rb  164: - The blank lines are becomes the separator between paragraphs.
+description.rb  165:  For example,
+description.rb  166:  you can describe several lines
+description.rb  167:  by using several lines.
+description.rb  168: For example,
+description.rb  169: you can describe several lines
+description.rb  170: by using several lines.
+description.rb  171: * Horizontal rules
+description.rb  172: - You can describe a horizontal rule by usign '===='.
+description.rb  173:  There is a separator between this word
+description.rb  174:  ====
+description.rb  175:  and this word.
+description.rb  176: There is a separator between this word
+description.rb  177: ====
+description.rb  178: and this word.
+description.rb  179: * Pre-formated text
+description.rb  180: You can describe pre-formated text by using ' ' or 'tab'.
+description.rb  181:  This is a
+description.rb  182:  pre formatted text.
+description.rb  183: You can also use '{{{' and
+description.rb  184: '}}}' for specifing pre-formated text.
+description.rb  185:  {{{
+description.rb  186:  void main()
+description.rb  187:  {
+description.rb  188:      printf(\"hello, world\n\");
+description.rb  189:  }
+description.rb  190:  }}}
+description.rb  191: {{{
+description.rb  192: void main()
+description.rb  193: {
+description.rb  194:     printf(\"hello, world\n\");
+description.rb  195: }
+description.rb  196: }}}
+description.rb  197: * Quote
+description.rb  198: You can describe a quote by using '>'.
+description.rb  199:  > This is a quote.
+description.rb  200: > This is a quote.
+description.rb  201: * Word description
+description.rb  202: You can describe a word description by using ':'.
+description.rb  203:  :Wiki:A writable Web system.
+description.rb  204:  :QuickML:An easy to use mailing list system.
+description.rb  205: :Wiki:A writable Web system.
+description.rb  206: :QuickML:An easy to use mailing list system.
+description.rb  207: * Table
+description.rb  208: You can use a table by using ',' or '|'.
+description.rb  209:  ,Data 1-1,Data 1-2,Data 1-3
+description.rb  210:  ,Data 2-1,Data 2-2,Data 2-3
+description.rb  211: ,Data 1-1,Data 1-2,Data 1-3
+description.rb  212: ,Data 2-1,Data 2-2,Data 2-3
+description.rb  213: * Inline Elements
+description.rb  214: You can specify inline elements.
+description.rb  215: - You can use emphasis a text enclosing by \"''\".
+description.rb  216: - You can make strong a text enclosing by \"'''\".
+description.rb  217: - You can make it strike out by enclosing \"=='\".
+description.rb  218:  This is \'\'emphasis text\'\'.
+description.rb  219:  This is \'\'\'strong text\'\'\'.
+description.rb  220:  This is ==stroke out text==.
+description.rb  221: This is \'\'emphasis text\'\'.
+description.rb  222: This is \'\'\'strong text\'\'\'.
+description.rb  223: This is ==stroke out text==.
+description.rb  224: * Link
+description.rb  225: You can make a link to a page by using '[[' and ']]'.
+description.rb  226: 
+description.rb  227:  For example, this is a link to [[FrontPage]].
+description.rb  228: For example, this is a link to [[FrontPage]].
+description.rb  229: * Create a new page
+description.rb  230: You can create a new page by follwing new page link.
+description.rb  231: * Delete a page.
+description.rb  232: You can delete a page by saving the page with null string.
+description.rb  233: * Link to a URL
+description.rb  234: You can link a URL by describing the URL in the text.
+description.rb  235:  You can access qwikWeb homepage from http://qwik.jp/ .
+description.rb  236: You can access qwikWeb homepage from http://qwik.jp/ .
+description.rb  237: 
+description.rb  238: And also, you can specify the link by using '[[' and ']]'.
+description.rb  239:  You can use it by alias like this [[qwik|http://qwik.jp/]].
+description.rb  240: You can use it by alias like this [[qwik|http://qwik.jp/]].
+description.rb  241: 
+description.rb  242: If the suffix of the link is one of jpg, jpeg, png and gif,
+description.rb  243: the images will be embeded to the page.
+description.rb  244:  [[New!|http://img.yahoo.co.jp/images/new2.gif]]
+description.rb  245: [[New!|http://img.yahoo.co.jp/images/new2.gif]]
+description.rb  246: * InterWiki function.
+description.rb  247: You can describe a link to the other Wiki sites.
+description.rb  248:  - [[google:qwikWeb]]
+description.rb  249:  - [[isbn:4797318325]]
+description.rb  250:  - [[amazon:Wiki]]
+description.rb  251: - [[google:qwikWeb]]
+description.rb  252: - [[isbn:4797318325]]
+description.rb  253: - [[amazon:Wiki]]
+description.rb  254: "
+
