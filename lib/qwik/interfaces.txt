@@ -145,9 +145,6 @@ The file is deleted.
 現在添付されているファイル
 File list
 
-→
-->
-
 添付する
 attach
 
