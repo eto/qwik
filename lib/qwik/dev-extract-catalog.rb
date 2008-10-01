@@ -77,7 +77,8 @@ class ExtractCatalog
 	next if e.nil?
 	next if j.nil?
 
-	next if /[<->]/ =~ j
+#	next if e == '->'
+#	next if e == '<-'
 
 	e.del!(/\A'/)
 	j.del!(/['"],\z/)
