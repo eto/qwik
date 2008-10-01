@@ -21,6 +21,10 @@ class String
     self.sub!(/\A['"]/, '')
     self.sub!(/['"]\Z/, '')
   end
+
+  def del!(regexp)
+    self.gsub!(regexp) { '' }
+  end
 end
 
 def parse(path)
@@ -41,7 +45,7 @@ def parse(path)
   }
 
   ar = []
-  lines = str2.split(/','/)
+  lines = str2.split(/['"],['"]/)
   lines.each {|line|
     e, j = line.split(/['"]\s*=>\s*['"]/)
     ar << [e, j]
@@ -59,6 +63,17 @@ def main
   outpath = Pathname.new 'catalog-ja.txt'
   outpath.open('w') {|out|
     ar.each {|e, j|
+      next if e.nil?
+      next if j.nil?
+
+      e.del!(/\A'/)
+      j.del!(/',\z/)
+
+      e.gsub!(/\\\"/) { '"' }
+
+      next if e.empty?
+      next if j.empty?
+
       out.puts e
       out.puts j
       out.puts
