@@ -31,15 +31,14 @@ class ExtractCatalog
   def main
     mypath = Pathname.new(__FILE__)
 
-    outpath = Pathname.new '../../interfaces.txt'
-    outpath.unlink
-    
     catalog_ja = mypath.parent + 'catalog-ja.rb'
     ar = parse(catalog_ja)
+    outpath = Pathname.new '../../interfaces-web.txt'
     output(outpath, ar)
 
     catalog_ml_ja = mypath.parent + 'catalog-ml-ja.rb'
     ar = parse(catalog_ml_ja)
+    outpath = Pathname.new '../../interfaces-ml.txt'
     output(outpath, ar)
   end
 
@@ -72,7 +71,7 @@ class ExtractCatalog
   end
 
   def output(outpath, ar)
-    outpath.open('a') {|out|
+    outpath.open('w') {|out|
       ar.each {|e, j|
 	next if e.nil?
 	next if j.nil?

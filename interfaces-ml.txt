@@ -1,0 +1,111 @@
+こんにちは
+hello
+
+<%s> はメーリングリスト <%s> から削除されました。
+<%s> was removed from the mailing list:<%s>
+
+メールが届かないためです。
+because the address was unreachable.
+
+このメーリングリストは %d日以内に投稿がないと消滅します。
+ML will be closed if no article is posted for %d days.
+
+消滅予定日時: %s
+Time to close: %s.
+
+%Y年%m月%d日 %H時%M分
+%Y-%m-%d %H:%M
+
+あなたは <%s> メーリングリストのメンバーではありません。
+You are not a member of the mailing list:<%s>
+
+メール本体はスパム対策のため省略されました。
+The original body is ommited due to avoid spam trouble.
+
+あなたは <%s> メーリングリストから削除されました。
+You are removed from the mailing list:<%s>
+
+<%s> が削除をお願いしたためです。
+by the request of <%s>.
+
+あなたは <%s> メーリングリストから退会しました。
+You have unsubscribed from the mailing list:<%s>.
+
+<%s> メーリングリストはメンバーの最大人数 (%d人)に達したので以下のアドレスは追加できませんでした。
+The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)
+
+<%s> は正しくないメーリングリスト名です。
+Invalid mailing list name: <%s>
+
+メーリングリスト名には 0-9, a-z, A-Z, 「-」だけが使えます。
+You can only use 0-9, a-z, A-Z,  `-' for mailing list name
+
+申し訳ありません。あなたのメールのサイズは制限を超えました。
+Sorry, your mail exceeds the limitation of the length.
+
+メールのサイズの制限は %s バイトです。
+The max length is %s bytes.
+
+[%s] 退会: %s
+[%s] Unsubscribe: %s
+
+[%s] メーリングリスト停止のご案内
+[%s] ML will be closed soon
+
+[%s] メンバー削除: <%s>
+[%s] Removed: <%s>
+
+<%s> のメンバー:
+Members of <%s>:
+
+このMLを退会する方法:
+How to unsubscribe from the ML:
+
+- 本文が空のメールを <%s> に送ってください
+- Just send an empty message to <%s>.
+
+- 本文が空のメールを送れない場合は、
+- Or, if you cannot send an empty message for some reason,
+
+  本文に「退会」とだけ書いたメールを <%s> に送ってください
+  please send a message just saying 'unsubscribe' to <%s>.
+
+  (署名やhotmailの広告などがついて空メールを送れない場合など)
+  (e.g., hotmail's advertisement, signature, etc.)
+
+[QuickML] エラー: %s
+[QuickML] Error: %s
+
+新メンバー: %s
+New Member: %s
+
+メーリングリストに登録したメールアドレスと異なるアドレスからメールを送信していませんか?
+Did you send a mail with a different address from the address registered in the mailing list?
+
+差出人のメールアドレスを確認してください。
+Please check your 'From:' address.
+
+使い方: %s
+Info: %s
+
+----- 元のメッセージ -----
+----- Original Message -----
+
+[%s] 確認: %s
+[%s] Confirmation: %s
+
+まず下記の利用規約をお読み下さい。
+At the first, please read the agreement of this service.
+
+http://qwik.jp/qwikjpAgreementJ.html
+http://qwik.jp/qwikjpAgreementE.html
+
+このサービスを利用するには、利用規約を承認していただく必要があります。
+You have to agree this agreement to use this service.
+
+もし承認する場合、
+If you agree, then,
+
+このメールに返信すると <%s> メーリングリストが作られます。
+Please simply reply this mail to create ML <%s>.
+
