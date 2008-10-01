@@ -86,8 +86,8 @@ class ExtractCatalog
 	next if e.empty?
 	next if j.empty?
 
-	out.puts e
 	out.puts j
+	out.puts e
 	out.puts
       }
     }

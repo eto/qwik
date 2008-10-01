@@ -1,111 +1,111 @@
-hello
 こんにちは
+hello
 
-<%s> was removed from the mailing list:<%s>
 <%s> はメーリングリスト <%s> から削除されました。
+<%s> was removed from the mailing list:<%s>
 
-because the address was unreachable.
 メールが届かないためです。
+because the address was unreachable.
 
-ML will be closed if no article is posted for %d days.
 このメーリングリストは %d日以内に投稿がないと消滅します。
+ML will be closed if no article is posted for %d days.
 
-Time to close: %s.
 消滅予定日時: %s
+Time to close: %s.
 
-%Y-%m-%d %H:%M
 %Y年%m月%d日 %H時%M分
+%Y-%m-%d %H:%M
 
-You are not a member of the mailing list:<%s>
 あなたは <%s> メーリングリストのメンバーではありません。
+You are not a member of the mailing list:<%s>
 
-The original body is ommited due to avoid spam trouble.
 メール本体はスパム対策のため省略されました。
+The original body is ommited due to avoid spam trouble.
 
-You are removed from the mailing list:<%s>
 あなたは <%s> メーリングリストから削除されました。
+You are removed from the mailing list:<%s>
 
-by the request of <%s>.
 <%s> が削除をお願いしたためです。
+by the request of <%s>.
 
-You have unsubscribed from the mailing list:<%s>.
 あなたは <%s> メーリングリストから退会しました。
+You have unsubscribed from the mailing list:<%s>.
 
-The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)
 <%s> メーリングリストはメンバーの最大人数 (%d人)に達したので以下のアドレスは追加できませんでした。
+The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)
 
-Invalid mailing list name: <%s>
 <%s> は正しくないメーリングリスト名です。
+Invalid mailing list name: <%s>
 
-You can only use 0-9, a-z, A-Z,  `-' for mailing list name
 メーリングリスト名には 0-9, a-z, A-Z, 「-」だけが使えます。
+You can only use 0-9, a-z, A-Z,  `-' for mailing list name
 
-Sorry, your mail exceeds the limitation of the length.
 申し訳ありません。あなたのメールのサイズは制限を超えました。
+Sorry, your mail exceeds the limitation of the length.
 
-The max length is %s bytes.
 メールのサイズの制限は %s バイトです。
+The max length is %s bytes.
 
-[%s] Unsubscribe: %s
 [%s] 退会: %s
+[%s] Unsubscribe: %s
 
-[%s] ML will be closed soon
 [%s] メーリングリスト停止のご案内
+[%s] ML will be closed soon
 
-[%s] Removed: <%s>
 [%s] メンバー削除: <%s>
+[%s] Removed: <%s>
 
-Members of <%s>:
 <%s> のメンバー:
+Members of <%s>:
 
-How to unsubscribe from the ML:
 このMLを退会する方法:
+How to unsubscribe from the ML:
 
-- Just send an empty message to <%s>.
 - 本文が空のメールを <%s> に送ってください
+- Just send an empty message to <%s>.
 
-- Or, if you cannot send an empty message for some reason,
 - 本文が空のメールを送れない場合は、
+- Or, if you cannot send an empty message for some reason,
 
-  please send a message just saying 'unsubscribe' to <%s>.
   本文に「退会」とだけ書いたメールを <%s> に送ってください
+  please send a message just saying 'unsubscribe' to <%s>.
 
-  (e.g., hotmail's advertisement, signature, etc.)
   (署名やhotmailの広告などがついて空メールを送れない場合など)
+  (e.g., hotmail's advertisement, signature, etc.)
 
-[QuickML] Error: %s
 [QuickML] エラー: %s
+[QuickML] Error: %s
 
-New Member: %s
 新メンバー: %s
+New Member: %s
 
-Did you send a mail with a different address from the address registered in the mailing list?
 メーリングリストに登録したメールアドレスと異なるアドレスからメールを送信していませんか?
+Did you send a mail with a different address from the address registered in the mailing list?
 
-Please check your 'From:' address.
 差出人のメールアドレスを確認してください。
+Please check your 'From:' address.
 
-Info: %s
 使い方: %s
+Info: %s
 
------ Original Message -----
 ----- 元のメッセージ -----
+----- Original Message -----
 
-[%s] Confirmation: %s
 [%s] 確認: %s
+[%s] Confirmation: %s
 
-At the first, please read the agreement of this service.
 まず下記の利用規約をお読み下さい。
+At the first, please read the agreement of this service.
 
-http://qwik.jp/qwikjpAgreementE.html
 http://qwik.jp/qwikjpAgreementJ.html
+http://qwik.jp/qwikjpAgreementE.html
 
-You have to agree this agreement to use this service.
 このサービスを利用するには、利用規約を承認していただく必要があります。
+You have to agree this agreement to use this service.
 
-If you agree, then,
 もし承認する場合、
+If you agree, then,
 
-Please simply reply this mail to create ML <%s>.
 このメールに返信すると <%s> メーリングリストが作られます。
+Please simply reply this mail to create ML <%s>.
 
