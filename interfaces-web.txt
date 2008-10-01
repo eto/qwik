@@ -1,12 +1,3 @@
-こんにちは
-hello
-
-エラー
-Error
-
-失敗
-Failed
-
 メッセージがありません
 No message
 

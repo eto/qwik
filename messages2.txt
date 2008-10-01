@@ -1,5 +1,4 @@
-============================================================
-qwikWebの使い方
+\subsection{qwikWebの使い方}
 qwikWebの説明です。
 '''qwikWeb'''はWikiWikiWebとメーリングリスト管理システムが統合された
 グループ・コミュニケーション・システムです。
@@ -7,16 +6,14 @@ qwikWebの説明です。
 ご覧ください。
 下記に、qwikWebの機能一覧を示します。
 
-==============================
-How to qwikWeb
+\subsubsection{How to qwikWeb}
 How you can use qwikWeb
 '''qwikWeb''' is a group communication system that integrate
 WikiWikiWeb and mailing list.
 Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] to the detail.
 You can see the list of qwikWeb functions below.
 
-============================================================
-サイト管理
+\subsection{サイト管理}
 サイトを管理するためのメニューです。
 * サイト管理機能
 サイト管理機能はページ編集画面の右側にまとめてあります。
@@ -52,8 +49,7 @@ You can see the list of qwikWeb functions below.
 - [[書込記録|_SiteLogView]]
 詳細な説明は[[qwikWebホームページ|http://qwik.jp/qwikWeb.html]]をご覧ください。
 
-==============================
-Site management
+\subsubsection{Site management}
 Site management menu.
 * Site management function
 You can access site management pages from the right side of edit page.
@@ -88,20 +84,17 @@ After that, please re-edit the page.
 - [[SiteLog|_SiteLogView]]
 Please see [[qwikWeb|http://qwik.jp/qwikWeb.html]] for detail.
 
-============================================================
-書式一覧
+\subsection{書式一覧}
 qwikWebの書式一覧簡略版です。
 * 書式一覧
 詳細な説明は[[書式一覧詳細版|TextFormat.describe]]をごらんください。
 
-==============================
-TextFormat
+\subsubsection{TextFormat}
 You can see brief description of text format.
 * Text Format
 Please also access the [[full text format|TextFormat.describe]].
 
-============================================================
-書式一覧詳細版
+\subsection{書式一覧詳細版}
 qwikWebの書式一覧です。
 * 書式一覧
 簡略化した説明は[[TextFormatSimple.describe]]をご覧下さい。
@@ -166,19 +159,12 @@ qwikWebの書式一覧です。
 
 * 表
 表(テーブル)は「,」または「|」で始め、コラム毎にその記号で区切ります。
- ,項目1-1,項目1-2,項目1-3
- ,項目2-1,項目2-2,項目2-3
-,項目1-1,項目1-2,項目1-3
-,項目2-1,項目2-2,項目2-3
 
 * 文字要素の指定
 文章中の一部分の文字要素を変化させます。
 - 「\'」2個ではさんだ部分は強調されます。
 - 「\'」3個ではさんだ部分はさらに強調されます。
 - 「=」2個ではさんだ部分は取消線になります。
- このようにすると\'\'強調\'\'になります。
- そして、このようにすると\'\'\'さらに強調\'\'\'されます。
- ==なんとなく==取り消し線もサポートしています。
 このようにすると\'\'強調\'\'になります。
 そして、このようにすると\'\'\'さらに強調\'\'\'されます。
 ==なんとなく==取り消し線もサポートしています。
@@ -201,15 +187,13 @@ qwikWebの書式一覧です。
 (指定した単語がALT要素に設定されます。)
 
 パラグラフ中にURLのようなものがあると、自動的にリンクとなります。
- qwikWebのホームページはhttp://qwik.jp/です。
 qwikWebのホームページはhttp://qwik.jp/です。
 
 * InterWiki
 InterWikiとは、他のWikiページへ簡単にリンクをはる機能です。
 またその拡張として、GoogleやAmazonなどに簡単にリンクをはる機能も提供します。
 
-==============================
-TextFormat
+\subsubsection{TextFormat}
 You can see the text format of qwikWeb.
 * Text Format
 Please also access the [[simplified text format|TextFormatSimple.describe]].
@@ -269,19 +253,12 @@ You can describe a word description by using ':'.
 
 * Table
 You can use a table by using ',' or '|'.
- ,Data 1-1,Data 1-2,Data 1-3
- ,Data 2-1,Data 2-2,Data 2-3
-,Data 1-1,Data 1-2,Data 1-3
-,Data 2-1,Data 2-2,Data 2-3
 
 * Inline Elements
 You can specify inline elements.
 - You can use emphasis a text enclosing by \"''\".
 - You can make strong a text enclosing by \"'''\".
 - You can make it strike out by enclosing \"=='\".
- This is \'\'emphasis text\'\'.
- This is \'\'\'strong text\'\'\'.
- This is ==stroke out text==.
 This is \'\'emphasis text\'\'.
 This is \'\'\'strong text\'\'\'.
 This is ==stroke out text==.
