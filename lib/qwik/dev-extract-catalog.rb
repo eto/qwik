@@ -27,106 +27,71 @@ class String
   end
 end
 
-def parse(path)
-  str = path.read
+class ExtractCatalog
+  def main
+    mypath = Pathname.new(__FILE__)
 
-  str2 = ''
-  str.each_line {|line|
-    line.trim_line!
+    catalog_ja = mypath.parent + 'catalog-ja.rb'
+    ar = parse(catalog_ja)
+    outpath = Pathname.new 'catalog-ja.txt'
+    output(outpath, ar)
 
-    next if line.empty?
+    catalog_ml_ja = mypath.parent + 'catalog-ml-ja.rb'
+    ar = parse(catalog_ml_ja)
+    outpath = Pathname.new 'catalog-ml-ja.txt'
+    output(outpath, ar)
+  end
 
-    case line
-    when /^#/, /^module /, /^class /, /^def /, /^\{/, /^\}/, /^end$/
-      next
-    end
+  def parse(path)
+    str = path.read
 
-    str2 << line
-  }
+    str2 = ''
+    str.each_line {|line|
+      line.trim_line!
 
-  ar = []
-  lines = str2.split(/['"],['"]/)
-  lines.each {|line|
-    e, j = line.split(/['"]\s*=>\s*['"]/)
-    ar << [e, j]
-  }
+      next if line.empty?
 
-  return ar
-end
+      case line
+      when /^#/, /^module /, /^class /, /^def /, /^\{/, /^\}/, /^end$/,
+	  /^:charset/, /^:codeconv/
+	next
+      end
 
-def main
-  mypath = Pathname.new(__FILE__)
-  catalog_ja = mypath.parent + 'catalog-ja.rb'
-  catalog_ml_ja = mypath.parent + 'catalog-ml-ja.rb'
-
-  ar = parse(catalog_ja)
-  outpath = Pathname.new 'catalog-ja.txt'
-  outpath.open('w') {|out|
-    ar.each {|e, j|
-      next if e.nil?
-      next if j.nil?
-
-      e.del!(/\A'/)
-      j.del!(/',\z/)
-
-      e.gsub!(/\\\"/) { '"' }
-
-      next if e.empty?
-      next if j.empty?
-
-      out.puts e
-      out.puts j
-      out.puts
+      str2 << line
     }
-  }
-end
 
-main
+    ar = []
+    lines = str2.split(/['"],['"]/)
+    lines.each {|line|
+      e, j = line.split(/['"]\s*=>\s*['"]/)
+      ar << [e, j]
+    }
 
-exit
-
-def parse_file(input_path)
-  out = ''
-  input_path.open("r").each_line do |line|
-    line.trim_line!
-    case line
-    when /^#/, /^:charset/, /^:codeconv_method/
-      next
-    when /^(.+)\s*=>$/
-      k = $1
-      k.trim_line!
-      k.strip_metachar!
-      out << k+"\n"
-    when /^(.+)\s*=>\s+(.+)\s*,$/
-      k = $1
-      k.trim_line!
-      k.strip_metachar!
-      v = $2
-      v.trim_line!
-      v.strip_metachar!
-      out << k+"\n"
-      out << v+"\n"
-      out << "\n"
-    when /^(.+)\s*,$/
-      v = $1
-      v.trim_line!
-      v.strip_metachar!
-      out << v+"\n"
-      out << "\n"
-    end
+    return ar
   end
-  return out
-end
 
-def process(output_path, input_path)
-  input_path = Pathname.new input_path
-  out = parse_file(input_path)
+  def output(outpath, ar)
+    outpath.open('w') {|out|
+      ar.each {|e, j|
+	next if e.nil?
+	next if j.nil?
 
-  output_path = Pathname.new output_path
-  output_path.open("w") do |output|
-    output.print out
+	e.del!(/\A'/)
+	j.del!(/['"],\z/)
+	e.del!(/\\n/)
+	j.del!(/\\n/)
+
+	e.gsub!(/\\\"/) { '"' }
+
+	next if e.empty?
+	next if j.empty?
+
+	out.puts e
+	out.puts j
+	out.puts
+      }
+    }
   end
 end
 
-process("catalog-ja.txt", catalog_ja)
-process("catalog-ml-ja.txt", catalog_ml_ja)
+ExtractCatalog.new.main
