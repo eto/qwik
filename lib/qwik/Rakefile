@@ -9,3 +9,8 @@ task :extract do
   sh 'cat catalog-ja.txt catalog-ml-ja.txt > interfaces.txt'
 end
 
+task :chmod do
+  sh "chmod 644 *"
+  sh "chmod +x compat"
+end
+
