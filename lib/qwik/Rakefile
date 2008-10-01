@@ -6,5 +6,6 @@ require 'rake'
 
 task :extract do
   sh 'ruby dev-extract-catalog.rb .'
+  sh 'cat catalog-ja.txt catalog-ml-ja.txt > interfaces.txt'
 end
 
