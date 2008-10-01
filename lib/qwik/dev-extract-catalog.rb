@@ -3,30 +3,10 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-# Description:
-# Read catalog-ja.rb and catarog-ml-ja.rb, output flat text file.
-#   argument: path to lib/qwik
-#   output: "catalog-ja.txt", "catalog-ml.txt" (on current directory)
-
 require 'pathname'
+require 'pp'
 require 'stringio'
 $KCODE = 'SJIS'
-
-if ARGV.length < 1
-  warn "ruby #{$0} path/to/lib/qwik"
-  exit(1)
-end
-
-def die(msg)
-  warn msg
-  exit(1)
-end
-
-libpath = Pathname.new(ARGV[0])
-catalog_ja = libpath + 'catalog-ja.rb'
-catalog_ml_ja = libpath + 'catalog-ml-ja.rb'
-die "#{catalog_ja} is not exist." unless catalog_ja.exist?
-die "#{catalog_ml_ja} is not exist." unless catalog_ml_ja.exist?
 
 class String
   def trim_line!
@@ -42,6 +22,53 @@ class String
     self.sub!(/['"]\Z/, '')
   end
 end
+
+def parse(path)
+  str = path.read
+
+  str2 = ''
+  str.each_line {|line|
+    line.trim_line!
+
+    next if line.empty?
+
+    case line
+    when /^#/, /^module /, /^class /, /^def /, /^\{/, /^\}/, /^end$/
+      next
+    end
+
+    str2 << line
+  }
+
+  ar = []
+  lines = str2.split(/','/)
+  lines.each {|line|
+    e, j = line.split(/['"]\s*=>\s*['"]/)
+    ar << [e, j]
+  }
+
+  return ar
+end
+
+def main
+  mypath = Pathname.new(__FILE__)
+  catalog_ja = mypath.parent + 'catalog-ja.rb'
+  catalog_ml_ja = mypath.parent + 'catalog-ml-ja.rb'
+
+  ar = parse(catalog_ja)
+  outpath = Pathname.new 'catalog-ja.txt'
+  outpath.open('w') {|out|
+    ar.each {|e, j|
+      out.puts e
+      out.puts j
+      out.puts
+    }
+  }
+end
+
+main
+
+exit
 
 def parse_file(input_path)
   out = ''
