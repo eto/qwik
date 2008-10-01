@@ -17,7 +17,7 @@ MLDAEMON=/usr/sbin/quickml-server
 
 WEBNAME=qwikweb
 MLNAME=quickml
-DESC=qwikiWeb
+DESC=qwikWeb
 PIDDIR=/var/run/qwik/
 
 test -f $WEBDAEMON || exit 0
