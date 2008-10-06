@@ -1,3 +1,4 @@
+# -*- coding: cp932 -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -68,8 +69,6 @@ You can show the list of attached files.
     end
 
     # ============================== download
-    FILES_FORCE_DOWNLOAD = %w(doc xls ppt)
-
     def ext_download
       if 0 < @req.path_args.length	# has target file
 	if @req.path_args[0] == '.theme'
@@ -81,10 +80,6 @@ You can show the list of attached files.
 	files = @site.files(@req.base)
 	if files.nil? || ! files.exist?(filename)
 	  return c_notfound(_('No such file'))
-	end
-
-	if FILES_FORCE_DOWNLOAD.include?(filename.path.ext)
-	  return c_download(files.path(filename).to_s)	# Download it.
 	end
 
 	return c_download(files.path(filename).to_s)	# Download it.
@@ -108,7 +103,7 @@ You can show the list of attached files.
 	  return c_notfound(_('No such file'))
 	end
 
-	if FILES_FORCE_DOWNLOAD.include?(filename.path.ext)
+	if files_force_download?(filename)
 	  return c_download(files.path(filename).to_s)	# Download it.
 	end
 
@@ -142,6 +137,12 @@ You can show the list of attached files.
       filename = args.join('/').set_url_charset		# Must be UTF-8
       filename = Filename.decode(filename)
       return filename
+    end
+
+    FILES_FORCE_DOWNLOAD = %w(doc xls ppt html htm)
+    def files_force_download?(filename)
+      ext = filename.path.ext
+      FILES_FORCE_DOWNLOAD.detect { |bad_ext| bad_ext.downcase == ext.downcase }
     end
 
     def ext_file_del
@@ -553,6 +554,31 @@ if defined?($test) && $test
       res = session('/test/1.files/t.doc')
       ok_eq('application/msword', res['Content-Type'])
       ok_eq("attachment; filename=\"t.doc\"", res['Content-Disposition'])
+      ok_eq('t', res.body)
+    end
+
+    def test_force_download_capital_ext
+      t_add_user
+
+      page = @site.create_new
+      page.store('t')
+
+      # Put a file.
+      res = session('POST /test/1.files') {|req|
+	req.query.update('content'=>t_make_content('T.DOC', 't'))
+      }
+      ok_title('Attach file done')
+
+      # Download the file.
+      res = session('/test/1.download/T.DOC')
+      ok_eq('application/msword', res['Content-Type'])
+      ok_eq("attachment; filename=\"T.DOC\"", res['Content-Disposition'])
+      ok_eq('t', res.body)
+
+      # Download by files extension.
+      res = session('/test/1.files/T.DOC')
+      ok_eq('application/msword', res['Content-Type'])
+      ok_eq("attachment; filename=\"T.DOC\"", res['Content-Disposition'])
       ok_eq('t', res.body)
     end
 
