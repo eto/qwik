@@ -1,8 +1,13 @@
+2008-10-06  Keiki SHIMADA  <shimada-k aist.go.jp>
+
+	* lib/qwik/act-files.rb: Force download attached html files, Add
+	case-insensitive check for compromise file extentions.
+	
+
 2008-09-04  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/farm.rb, lib/qwik/server.rb, lib/qwik/site-group.rb:
 	Add logging bury info to log/bury.log
-
 	
 2008-07-30  Keiki Shimada <shimada-k aist.go.jp>
 	* lib/qwik/group-site.rb, lib/qwik/test-submit-japanese.rb:
