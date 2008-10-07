@@ -148,7 +148,7 @@ module Qwik
     def init_bury_logger
       log_file = (@qconfig.log_dir.path + "bury.log").to_s
       # 'Logger' at top-level name space
-      log = ::Logger.new(log_file, 2, 20*1024*1024) # 20M size, 2 shifted files.
+      log = ::Logger.new(log_file, 5, 20*1024*1024) # 20M size, 5 shifted files.
       log.level = ::Logger::INFO
       @memory[:bury_log] = log
     end
