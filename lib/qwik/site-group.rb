@@ -7,6 +7,7 @@ require 'qwik/group-config'
 
 module Qwik
   class Site
+    ML_LIFE_TIME_ALLOWANCE = 60*60*24*31*6
     def inactive?(now = Time.now)
       return false if @group_config.forward? || @group_config.permanent?
 
@@ -18,7 +19,8 @@ module Qwik
 	return true
       end
 
-      ml_life_time = self.siteconfig['ml_life_time']
+      ml_life_time = self.siteconfig['ml_life_time'].to_i
+      ml_life_time += ML_LIFE_TIME_ALLOWANCE
 
       result = last_article_time.to_i + ml_life_time.to_i <= now.to_i
       if result
@@ -26,6 +28,11 @@ module Qwik
 	log.info("site #{@sitename}: last_article_time is #{ymdhms}") if log
       end
       return result
+    end
+
+    def unconfirmed?
+      member.list.empty? &&
+	@pages.exist?('_GroupWaitingMembers') && @pages.exist?('_GroupWaitingMessage')
     end
 
     private
@@ -60,7 +67,7 @@ if defined?($test) && $test
       # Change the life time to 0.
       page = site['_SiteConfig']
       page.put_with_time(':ml_life_time:0', 0)	# Die soon.
-      ok_eq(true, site.inactive?(Time.at(0)))
+      ok_eq(true, site.inactive?(Time.at(0 + Qwik::Site::ML_LIFE_TIME_ALLOWANCE)))
 
       # Set GroupConfig to forward mode.
       page = site.create('_GroupConfig')

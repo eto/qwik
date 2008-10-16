@@ -131,12 +131,7 @@ module Qwik
 	f = @path+file
 	next unless f.file?
 	base = file.to_s
-
-	next if /\A\./ =~ base ||
-	  base == ',config' ||
-	  base == '_GroupConfig.txt' ||
-	  base == ',charset' ||
-	  base == '_GroupCharset.txt'
+	next if ignore_on_last_article_time?(base)
 
 	mt = f.mtime
 	if max.nil? || max < mt
@@ -148,6 +143,18 @@ module Qwik
     end
 
     private
+
+    IGNORE_ON_LAST_ARTICLE_TIME =
+      [
+       ',config', '_GroupConfig.txt',
+       ',charset', '_GroupCharset.txt',
+       ',alerted', '_GroupAlerted.txt',
+       /\A\./,
+       /\A_counter_[a-zA-Z0-9_]+\.txt\z/,
+      ]
+    def ignore_on_last_article_time?(base)
+      IGNORE_ON_LAST_ARTICLE_TIME.detect { |entry| entry === base }
+    end
 
     def path(k)
       return gen_path(@path, @path_h, k)

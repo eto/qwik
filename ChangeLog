@@ -1,4 +1,10 @@
-2008-10-06  Keiki SHIMADA  <shimada-k aist.go.jp>
+2008-10-16  Keiki Shimada  <shimada-k aist.go.jp>
+
+	* lib/qwik/farm.rb, lib/qwik/site-group, lib/qwikdb-filesystem.rb,
+	lib/qwik/test-module-session.rb, test-ms-confirm.rb: Enable burying.
+	Delete unconfirmed group at burying.
+
+2008-10-06  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/act-files.rb: Force download attached html files, Add
 	case-insensitive check for compromise file extentions.

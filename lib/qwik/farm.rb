@@ -87,7 +87,7 @@ module Qwik
       buried = []
       inactive_sites.each {|sitename|
 	@logger.log(WEBrick::Log::INFO, 'sweep '+sitename) unless $test
-	buried << bury_dummy(sitename)
+	buried << bury(sitename)
       }
 
       log.info("end sweep")
@@ -130,17 +130,26 @@ module Qwik
     end
 
     def bury(sitename)
-      puts "do not bury"
-      return
-
       site = get_site(sitename)
+      if site.unconfirmed?
+	dump_site(site, 'deleted')
+	delete(site)
+	return
+      end
+      dump_site(site, 'buried')
+
       sitepath = site.path
       dirtime = sitepath.mtime.to_i
       @grave_path.check_directory
+      (sitepath.parent + ".grave").check_directory
       while true
+	tempgravepath = sitepath.parent + ".grave" + "#{dirtime}_#{sitename}"
 	gravesitepath = @grave_path + "#{dirtime}_#{sitename}"
-	if ! gravesitepath.exist?
-	  FileUtils.mv(sitepath, gravesitepath)
+	unless tempgravepath.exist? || gravesitepath.exist?
+	  # step1. move atomically on same disk volume
+	  sitepath.rename(tempgravepath)
+	  # step2. move across disk volume
+	  FileUtils.mv(tempgravepath, gravesitepath)
 	  break
 	end
 	dirtime += 1
@@ -148,18 +157,11 @@ module Qwik
       return gravesitepath
     end
 
-    def bury_dummy(sitename)
-      site = get_site(sitename)
-      report_buried(site)
-      
-      return site.path
-    end
-
     require 'stringio'
-    def report_buried(site)
+    def dump_site(site, message)
       log = @memory[:bury_log]
       buff = StringIO.new
-      buff.puts("buried: #{site.sitename}")
+      buff.puts("#{message}: #{site.sitename}")
 
       ml_life_time = site.siteconfig['ml_life_time'].to_i
       days = ml_life_time / (60*60*24)
@@ -172,6 +174,11 @@ module Qwik
 	buff << "\n"
       end
       log.info(buff.string)
+    end
+
+    def delete(site)
+      sitepath = site.path
+      sitepath.remove_directory
     end
 
   end
@@ -248,7 +255,6 @@ if defined?($test) && $test
       # test_inactive?
       eq true, site.inactive?
 
-=begin
       # test_sweep
       buried = farm.sweep
       site = farm.get_site('test')
@@ -259,7 +265,15 @@ if defined?($test) && $test
 	gravesitepath.teardown
 	gravesitepath.rmtree
       }
-=end
+    end
+
+    def test_delete
+      farm = @memory.farm
+      site = farm.get_site('test')
+      site_path = site.path
+      t_make_public(Qwik::Farm, :delete)
+      farm.delete(site)
+      eq false, site_path.exist?
     end
   end
 end

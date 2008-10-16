@@ -12,6 +12,7 @@ require 'qwik/request'
 require 'qwik/response'
 require 'qwik/loadlib'
 require 'qwik/qp'
+require 'logger'
 
 module TestSession
   include TestModulePublic
@@ -50,6 +51,12 @@ module TestSession
       loglevel = WEBrick::Log::INFO
       logger = WEBrick::Log::new(logfile, loglevel)
       memory[:logger] = logger
+
+      burylogfile = '.test/testburylog.txt'
+      log = ::Logger.new(burylogfile)
+      log.level = ::Logger::INFO
+      memory[:bury_log] = log
+
       $test_memory = memory
     end
     @memory = $test_memory

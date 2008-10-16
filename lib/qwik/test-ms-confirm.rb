@@ -28,12 +28,16 @@ class TestMSConfirm < Test::Unit::TestCase
       confirmation_to = $1
     end
 
+    ok_eq(true, @site.unconfirmed?, 'Before reply, unconfirmed? must be true.')
+
     # Bob replies the confirmation mail.
     send_confirmation_mail('bob@example.net', confirmation_to)
     ok_log(["[test]: Add: bob@example.net",
 	     "[test]: QwikPost: test",
 	     "[test:1]: Send:",
 	     "[test]: Accept confirmation:  test@q.example.com"])
+
+    ok_eq(false, @site.unconfirmed?, 'After reply, unconfirmed? must be false.')
 
     # Bob send a mail.
     send_normal_mail('bob@example.net')
