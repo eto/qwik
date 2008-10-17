@@ -159,7 +159,7 @@ module Qwik
 
     def bury_dummy(sitename)
       site = get_site(sitename)
-      report_buried(site)
+      dump_site(site, 'buried')
       return site.path
     end
 
