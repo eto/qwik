@@ -87,7 +87,7 @@ module Qwik
       buried = []
       inactive_sites.each {|sitename|
 	@logger.log(WEBrick::Log::INFO, 'sweep '+sitename) unless $test
-	buried << bury(sitename)
+	buried << bury_dummy(sitename)
       }
 
       log.info("end sweep")
@@ -155,6 +155,12 @@ module Qwik
 	dirtime += 1
       end
       return gravesitepath
+    end
+
+    def bury_dummy(sitename)
+      site = get_site(sitename)
+      report_buried(site)
+      return site.path
     end
 
     require 'stringio'
