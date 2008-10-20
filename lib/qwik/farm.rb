@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -87,7 +88,7 @@ module Qwik
       buried = []
       inactive_sites.each {|sitename|
 	@logger.log(WEBrick::Log::INFO, 'sweep '+sitename) unless $test
-	buried << bury_dummy(sitename)
+	buried << bury(sitename)
       }
 
       log.info("end sweep")
@@ -149,7 +150,7 @@ module Qwik
 	  # step1. move atomically on same disk volume
 	  sitepath.rename(tempgravepath)
 	  # step2. move across disk volume
-	  FileUtils.mv(tempgravepath, gravesitepath)
+	  #FileUtils.mv(tempgravepath, gravesitepath)
 	  break
 	end
 	dirtime += 1
@@ -159,7 +160,7 @@ module Qwik
 
     def bury_dummy(sitename)
       site = get_site(sitename)
-      dump_site(site, 'buried')
+      dump_site(site, 'bury dummy')
       return site.path
     end
 
