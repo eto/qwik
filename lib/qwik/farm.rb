@@ -155,7 +155,8 @@ module Qwik
 	end
 	dirtime += 1
       end
-      return gravesitepath
+      #return gravesitepath
+      return tempgravepath
     end
 
     def bury_dummy(sitename)
