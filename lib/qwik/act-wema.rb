@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -71,6 +72,7 @@ Windowを動かして、「set」を押すと位置をセットします。
 
     def ext_wema
       c_require_post
+      c_require_login
 
       wp = WemaPage.new(@site, @site[@req.base])
       redirect = "#{@req.base}.html"
@@ -537,6 +539,19 @@ if defined?($test) && $test
       ok_title 'Delete a Post-it.'
       page = @site['_1_wema_1']
       eq nil, page
+    end
+
+    def test_act_wema_without_login
+      t_add_user
+
+      page = @site.create_new
+
+      res = session('POST /test/1.wema?mode=edit&body=t') {|req|
+	req.cookies.delete('user')
+	req.cookies.delete('pass')
+      }
+      ok_title 'Login'
+      eq false, @site.exist?('_1_wema_1')
     end
   end
 end

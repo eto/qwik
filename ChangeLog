@@ -1,3 +1,7 @@
+2008-10-21  Keiki Shimada  <shimada-k aist.go.jp>
+
+	* lib/qwik/act-wema.rb: require login when edit wema.
+
 2008-10-16  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/farm.rb, lib/qwik/site-group, lib/qwikdb-filesystem.rb,
