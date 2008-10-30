@@ -1,3 +1,10 @@
+2008-10-30  Keiki Shimada  <shimada-k aist.go.jp>
+
+	* lib/qwik/act-getpass.rb, lib/qwik/act-httpauth.rb
+	lib/qwik/act-login.rb, lib/qwik/act-ring.rb, lib/qwik/catalog-ja.rb
+	lib/qwik/common-basic.rb, lib/qwik/password.rb, lib/qwik/qwik-service.rb
+	lib/qwik/test-module-session.rb: Generate random password for each user.
+
 2008-10-21  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/act-wema.rb: require login when edit wema.

@@ -1,4 +1,4 @@
-# -*- coding: cp932 -*-
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -194,6 +194,11 @@ class Qwik::CatalogFactory
 #      'メンバーにパスワードを送ることができます。',
       'Mail address' => 'メールアドレス',
       'Go back to Login' => 'ログイン画面にもどる',
+
+      'Password was updated' => 'パスワードが更新されました',
+      'For security reason, your password was updated.' =>
+      'セキュリティ強化のためパスワードを自動更新しました',
+      'You will get the new password by e-mail.' => '新しいパスワードをメールで送ります',
 
       'Send' => '送信',
 

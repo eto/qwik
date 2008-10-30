@@ -69,6 +69,11 @@ module TestSession
 
     # setup site
     @site = @memory.farm.get_site('test')
+
+    # add user
+    @memory.passdb.store("user@e.com", "dummypass")
+    @memory.passdb.store("test@example.com", "dummypass")
+    @memory.passdb.store('gu@e.com', "dummypass")
   end
 
   # ============================== teardown
@@ -144,7 +149,7 @@ module TestSession
 
   def t_setup_user(memory, req, user)
     req.cookies['user'] = user
-    req.cookies['pass'] = memory.passgen.generate(user)
+    req.cookies['pass'] = memory.passdb.fetch(user)
   end
   private :t_setup_user
 
