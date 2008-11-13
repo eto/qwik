@@ -1,11 +1,18 @@
-# -*- coding: cp932 -*-
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/test-module-ml'
-#require 'qwik/quickml'
+if $0 == __FILE__
+  require 'qwik/server-memory'
+  require 'qwik/farm'
+  require 'qwik/group-site'
+  require 'qwik/group'
+  require 'qwik/password'
+  $test = true
+end
 
 class TestSubmitJapanese < Test::Unit::TestCase
   include TestModuleML
@@ -78,24 +85,51 @@ AAAAAElFTkSuQmCC
     ok_eq(true, @site.files('1').exist?('1x1.png'))
   end
 
-  def test_submit_cp932
+  def test_cp932
     qml = QuickML::Group.new(@ml_config, 'test@example.com')
     qml.setup_test_config
 
     mail = QuickML::Mail.new
     mail.read(
-'Date: Mon, 3 Feb 2001 12:34:56 +0900
-From: "Test User" <bob@example.net>
-To: "Test Mailing List" <test@example.com>
-Subject: Re: [test:932] テスト
-Content-Type: text/plain; charset=CP932
+'From: bob@example.net
+To: test@example.com
+Content-Type: text/plain;
+	charset=CP932;
+	format=flowed
+Content-Transfer-Encoding: base64
+Mime-Version: 1.0 (Apple Message framework v926)
+Subject: [test:27] =?CP932?Q?Re: __=83e=83X=83g?=
+Date: Fri, 31 Oct 2008 17:08:25 +0900
 
-メーリングリストを立ち上げると，自動的に参加者だけが使えるWikiサイトが作られ，そこで文章の共同編集などの共同作業が行えます．メールで送られた情報は自動的にWikiのページとして保存され，知識の構造化が支援されます．
+h0A=
 ')
     mail.store_addresses
     qml.site_post(mail, true)
-    ok_eq("テスト", @site['1'].get_title)
-    ok_eq("* テスト\n{{mail(bob@example.net,0)\nメーリングリストを立ち上げると，自動的に参加者だけが使えるWikiサイトが作られ，そこで文章の共同編集などの共同作業が行えます．メールで送られた情報は自動的にWikiのページとして保存され，知識の構造化が支援されます．\n}}\n", @site['1'].load)
+    ok_eq("\203e\203X\203g", @site['1'].get_title)
+    ok_eq("* \203e\203X\203g\n{{mail(bob@example.net,0)\n\207@\n}}\n", @site['1'].load)
   end
 
+
+  def test_cp932_quoted_printable
+    qml = QuickML::Group.new(@ml_config, 'test@example.com')
+    qml.setup_test_config
+
+    mail = QuickML::Mail.new
+    mail.read(
+'From: bob@example.net
+To: smd@qwik.jp
+Content-Type: text/plain; charset=CP932; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Apple Message framework v926)
+Date: Tue, 4 Nov 2008 18:19:37 +0900
+Subject: test
+
+=95=D4=90M
+')
+    mail.store_addresses
+    qml.site_post(mail, true)
+    ok_eq("test", @site['test'].get_title)
+    ok_eq("* test\n{{mail(bob@example.net,0)\n返信\n}}\n", @site['test'].load)
+  end
 end
+

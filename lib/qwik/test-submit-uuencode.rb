@@ -10,6 +10,7 @@ if $0 == __FILE__
   require 'qwik/farm'
   require 'qwik/group-site'
   require 'qwik/group'
+  require 'qwik/password'
   $test = true
 end
 

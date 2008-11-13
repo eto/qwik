@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 #
 # Copyright (C) 2002-2004 Satoru Takabayashi <satoru@namazu.org> 
 # Copyright (C) 2003-2006 Kouichirou Eto
@@ -146,9 +147,21 @@ module QuickML
     end
 
     def self.decode_subject(s)
-      s = s.gsub(/\n\s+/, ' ').gsub(/\n/, '')
-      s = s.tosjis
-      return s
+      s = join_lines(s) if multiline?(s)
+      s = SubjectDecoder.decode(s)
+      s.tosjis
+    end
+
+    def self.multiline?(s)
+      /\n/ =~ s
+    end
+
+    def self.join_lines(s)
+      result = s.dup
+      result.gsub!(/\?=\s*\n\s+=\?/, '?==?')
+      result.gsub!(/\n\s+/, ' ')
+      result.gsub!(/\n/, '')
+      return result
     end
 
     def self.clean_subject(s, name)
@@ -177,6 +190,58 @@ module QuickML
     end
 
   end
+
+  class SubjectDecoder
+    ENCODED_WORDS = /=\?(iso-2022-jp|euc-jp|shift_jis|cp932)\?([QB])\?([^?]+)\?=/i
+    def self.decode(str)
+      str.gsub(ENCODED_WORDS) {|s|
+	charset = $1.downcase
+	encoding = $2.upcase
+	contents = $3
+	decoder = self.new(charset, encoding, contents)
+	decoder.decode
+      }
+    end
+
+    def initialize(charset, encoding, contents)
+      @charset = charset
+      @encoding = encoding
+      @contents = contents
+    end
+
+    def decode
+      return @contents if @charset.nil? and @encoding.nil?
+      decode_encoding!
+      convert_charset!
+      return @contents
+    end
+
+    def decode_encoding!
+      result = @contents
+      case @encoding
+      when "B"
+	result = @contents.unpack("m").first
+      when "Q"
+	result = @contents.unpack("M").first
+	result.gsub!("_", " ")
+      end
+      @contents = result
+    end
+
+    def convert_charset!
+      case @charset
+      when "iso-2022-jp"
+	@contents = @contents.jistosjis
+      when "euc-jp"
+	@contents = @contents.euctosjis
+      when "shift_jis", "cp932"
+	:do_nothing
+      when "utf-8"
+	@contents = @contents.u8tosjis
+      end
+    end
+
+  end
 end
 
 if $0 == __FILE__
@@ -185,6 +250,65 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
+  class TestSubjectDecoder < Test::Unit::TestCase
+    def test_usascii_none
+      input = "test"
+      expected = "test"
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_cp932_quotedprintable
+      input = "=?CP932?B?gqAg?="
+      expected = "\202\240 "
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_iso2022jp_base64
+      input = '=?iso-2022-jp?B?GyRCJCIbKEI=?= '
+      expected = "\202\240 "
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_1
+      input = "[smd:30] =?ISO-2022-JP?B?GyRCRnxLXDhsJTUlViU4JSclLyVIGyhC?="
+      expected = "[smd:30] 日本語サブジェクト"
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_2
+      input = "=?ISO-2022-JP?B?UmU6IFtzbWQ6MzA=?==?ISO-2022-JP?B?XSAbJEJGfEtcOGwlNSVWJTglJyUvJUgbKEI=?="
+      expected = "Re: [smd:30] 日本語サブジェクト"
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_3
+      input = "[smd:31] Re: =?ISO-2022-JP?B?GyRCRnxLXDhsJTUlViU4JSclLyVIGyhC?="
+      expected = "[smd:31] Re: 日本語サブジェクト"
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_4
+      input = "[smd:32] =?CP932?Q?Re: __=93=FA=96{=8C=EA=83T=83u=83W=83F=83N=83g?="
+      expected = "[smd:32] Re:   日本語サブジェクト"
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+    def test_5
+      input = "=?ISO-2022-JP?B?UmU6IFtzbWQ6MzBdIBskQkZ8S1w4bCU1JVYlOBsoQg==?==?ISO-2022-JP?B?GyRCJSclLyVIGyhC?="
+      expected = "Re: [smd:30] 日本語サブジェクト"
+      actual = QuickML::SubjectDecoder.decode(input)
+      ok_eq(expected, actual)
+    end
+
+  end
+
   class TestMailHeader < Test::Unit::TestCase
     def test_all
       mail = QuickML::Mail.new
@@ -305,6 +429,21 @@ if defined?($test) && $test
       ok_eq('st', c.decode_subject("s\nt"))
       ok_eq('s t', c.decode_subject("s\n t"))
       ok_eq("\202\240 ", c.decode_subject('=?iso-2022-jp?B?GyRCJCIbKEI=?= '))
+      ok_eq( '[test:33] とてもとてもとてもとてもとてもとても長い長い長い長い長い長い長い長い長いとてもとてもとてもとてもとてもとても長い長い長い長い長い長い長い長い長い日本語サブジェクトのテスト',
+	     c.decode_subject('[test:33] =?ISO-2022-JP?B?GyRCJEgkRiRiJEgkRiRiJEgkRiRiJEgbKEI=?=
+ =?ISO-2022-JP?B?GyRCJEYkYiRIJEYkYiRIJEYkYkQ5JCQbKEI=?=
+ =?ISO-2022-JP?B?GyRCRDkkJEQ5JCREOSQkRDkkJEQ5JCQbKEI=?=
+ =?ISO-2022-JP?B?GyRCRDkkJEQ5JCREOSQkJEgkRiRiJEgbKEI=?=
+ =?ISO-2022-JP?B?GyRCJEYkYiRIJEYkYiRIJEYkYiRIJEYbKEI=?=
+ =?ISO-2022-JP?B?GyRCJGIkSCRGJGJEOSQkRDkkJEQ5JCQbKEI=?=
+ =?ISO-2022-JP?B?GyRCRDkkJEQ5JCREOSQkRDkkJEQ5JCQbKEI=?=
+ =?ISO-2022-JP?B?GyRCRDkkJEZ8S1w4bCU1JVYlOCUnJS8bKEI=?=
+ =?ISO-2022-JP?B?GyRCJUgkTiVGJTklSBsoQg==?=
+'))
+      ok_eq('[test:34] very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long なサブジェクトのテスト',
+	    c.decode_subject('[test:34] very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long =?ISO-2022-JP?B?GyRCJEolNSVWJTglJyUvJUgkTiVGJTkbKEI=?=
+ =?ISO-2022-JP?B?GyRCJUgbKEI=?=
+'))
 
       # test_clean_subject
       ok_eq('t', c.clean_subject('t', 'test'))

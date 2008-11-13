@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 #
 # Copyright (C) 2002-2004 Satoru Takabayashi <satoru@namazu.org> 
 # Copyright (C) 2003-2006 Kouichirou Eto
@@ -61,7 +62,7 @@ module QuickML
 
     def self.plain_text_body?(ct, cte)
       return true if (ct.empty? || /\btext\/plain\b/i =~ ct) &&
-	(cte.empty? || /^[78]bit$/i =~ cte)
+	(cte.empty? || /^[78]bit$/i =~ cte || /^base64$/i =~ cte || /quoted-printable/i =~ cte)
       return false
     end
 
