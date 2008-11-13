@@ -1,4 +1,3 @@
-# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -12,46 +11,25 @@ module Qwik
   class Action
     # ref: webrick/httpauth.rb
     def check_basicauth
-      user, pass = basicauth_parse_header
-      return if user.nil? || user.empty?
-      return unless MailAddress.valid?(user)
-      if @memory.passdb.match?(user, pass)
-	@req.user = user
-	@req.auth = 'basicauth'
-      end
-    end
-
-    def basicauth_parse_header
       auth = @req['Authorization']
       return if auth.nil?
       return unless /^Basic\s+(.*)/o =~ auth
+
       user, pass = Base64.decode64($1).split(':', 2)
-      return user, pass
+      return if user.nil?
+
+      raise InvalidUserError if user.nil? || user.empty?
+      raise InvalidUserError unless MailAddress.valid?(user)
+      gen = @memory.passgen
+      raise InvalidUserError if !gen.match?(user, pass)
+      @req.user = user
+      @req.auth = 'basicauth'
+      return
     end
 
     # ref: webrick/httpauth.rb
     def pre_act_basicauth
-      # Already logged in or success at check_basicauth()
-      if @req.user
-	if @req.auth == 'basicauth'
-	  return basicauth_success
-	else
-	  return basicauth_logined_by_cookie
-	end
-      end
-      # password unmatch
-      user, pass = basicauth_parse_header
-      return basicauth_login unless MailAddress.valid?(user)
-
-      if old_md5_password?(user, pass)
-	@memory.passdb.generate(user)
-	return login_show_password_updated_page(user)
-      end
-      # authentication faild
-      return basicauth_login
-    end
-
-    def basicauth_login
+      if ! @req.user	# Try to Login by using Basic Auth.
 	realm = 'qwik'
 	@res['WWW-Authenticate'] = "Basic realm=\"#{realm}\""
 	# status code must be 401
@@ -61,21 +39,21 @@ module Qwik
 	    [:hr],
 	    [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
 	}
-    end
+      end
 
-    def basicauth_success
+      # Already logged in.
+      if @req.auth != 'basicauth'	# But, the method is not Basic Auth.
+	return c_notice(_('Login by cookie')) {
+	  [[:h2, _('You are already login by cookie.')],
+	    [:hr],
+	    [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
+	}
+      end
+
       return c_notice(_('Login by Basic Auth')) {
 	[[:h2, _('Login by using Basic Auth.')],
-	 [:hr],
-	 [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
-      }
-    end
-
-    def basicauth_logined_by_cookie
-      return c_notice(_('Login by cookie')) {
-	[[:h2, _('You are already login by cookie.')],
-	 [:hr],
-	 [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
+	  [:hr],
+	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
       }
     end
 
@@ -88,12 +66,6 @@ module Qwik
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
       }
     end
-
-    private
-
-    def old_md5_password?(user, pass)
-      @memory.passgen.match?(user, pass) and not @memory.passdb.exist?(user)
-    end
   end
 end
 
@@ -105,10 +77,6 @@ end
 if defined?($test) && $test
   class TestActHttpAuth < Test::Unit::TestCase
     include TestSession
-
-    def b64(str)
-      [str].pack("m").chomp
-    end
 
     def test_all
       t_add_user
@@ -151,7 +119,7 @@ if defined?($test) && $test
       res = session('/test/.basicauth') {|req|
 	req.cookies.clear
 	req.header['authorization'] =
-	  ["Basic #{b64 "test@example.com:dummypass"}"]
+	  ["Basic dGVzdEBleGFtcGxlLmNvbTo0NDQ4NDEyNQ=="]
       }
       ok_title('Login by Basic Auth')
       ok_eq(200, @res.status)
@@ -162,33 +130,15 @@ if defined?($test) && $test
       res = session('/test/') {|req|
 	req.cookies.clear
 	req.header['authorization'] =
-	  ["Basic #{b64 "user@e.com:dummypass"}"]
+	  ["Basic dXNlckBlLmNvbTo5NTk4ODU5Mw=="]
       }
       ok_title('FrontPage')
-
-      # Old Password
-      res = session('/test/.basicauth') {|req|
-	req.cookies.clear
-	req.header['authorization'] =
-	  ["Basic #{b64 "user2@e.com:94754948"}"]
-      }
-      ok_title('Password was updated')
-
-      # Again, but new password was generated
-      res = session('/test/.basicauth') {|req|
-	req.cookies.clear
-	req.header['authorization'] =
-	  ["Basic #{b64 "user2@e.com:94754948"}"]
-      }
-      ok_title('Login by Basic Auth')
-      ok_eq(401, @res.status)
-      ok_eq("Basic realm=\"qwik\"", @res['WWW-Authenticate'])
 
       # test_logout
       res = session('/test/.logout') {|req|
 	req.cookies.clear
 	req.header['authorization'] =
-	  ["Basic #{b64 "user@e.com:dummypass"}"]
+	  ["Basic dXNlckBlLmNvbTo5NTk4ODU5Mw=="]
       }
       ok_title('Basic Auth Logout')
       assert_text('Can not logout.', 'h2')

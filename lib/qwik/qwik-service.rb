@@ -92,12 +92,6 @@ module Qwik
 	opts.on('--showpassword mailaddress', 'Show password.') {|a|
 	  cmd = [:showpassword, a]
 	}
-	opts.on('--showpassword_old mailaddress', 'Show old md5 based password.') {|a|
-	  cmd = [:showpassword_old, a]
-	}
-	opts.on('--regenerate mailaddress', 'Regenarate password.') {|a|
-	  cmd = [:regenerate, a]
-	}
 	opts.on('--incgen mailaddress', 'Increment a generation.') {|a|
 	  cmd = [:incgen, a]
 	}
@@ -269,60 +263,16 @@ adding an initial user [#{mail}] is completed."
 	return usage 
       end
 
-      pdb = PasswordDB.new(@config)
-      pass = pdb.fetch(mail)
-      unless pass
-	warn "Error: mail address [#{mail}] dose not registerd"
-	return usage
-      end
-      puts "mail: #{mail}"
-      puts "pass: #{pass}"
-    end
-
-    def showpassword_old(mail)
-      require 'qwik/password'
-      require 'qwik/mailaddress'
-
-      def usage
-	die 'Usage: qwik-service --showpassword_old mailaddress'
-      end
-
-      return usage if mail.nil? || mail.empty?
-      if ! MailAddress.valid?(mail)
-	warn "Error: invalid mail form [#{mail}]"
-	return usage
-      end
-
       gen = PasswordGenerator.new(@config)
       puts "mail: #{mail}"
       puts "pass: #{gen.generate(mail)}"
-    end
-
-    def regenerate(mail)
-      require 'qwik/password'
-
-      def usage
-	die 'Usage: qwik-service --regenerate mailaddress'
-      end
-
-      return usage if mail.nil? || mail.empty?
-      if ! MailAddress.valid?(mail)
-	warn "Error: invalid mail form [#{mail}]"
-	return usage
-      end
-
-      pdb = PasswordDB.new(@config)
-      pass = pdb.generate(mail)
-      puts "mail: #{mail}"
-      puts "pass: #{pass}"
-      puts "password regeneration done."
     end
 
     def incgen(mail)
       require 'qwik/password'
 
       def usage
-	die 'Usage: qwik-service --incgen mailaddress'
+	die 'Usage: qwik-service --showpassword mailaddress'
       end
 
       return usage if mail.nil? || mail.empty?

@@ -1,4 +1,3 @@
-# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -68,14 +67,14 @@ module Qwik
       }
     end
 
-    def getpass_form(addr='', form_style='text-align: center; margin: 32px 0 48px;',
+    def getpass_form(form_style='text-align: center; margin: 32px 0 48px;',
 		     div_style='margin: 16px 0 8px', klass='focus')
       return [:form, {:action=>'.getpass',
 	  :style=>form_style},
 	[:div, {:style=>div_style},
 	  [:em, _('Mail address'), ': '], 
 	  [:input,
-	   {:name=>'mail', :size=>'40', :istyle=>'3', :class=>klass, :value=>addr}]],
+	    {:name=>'mail', :size=>'40', :istyle=>'3', :class=>klass}]],
 	[:div, {:class=>'rightbutton'},
 	  [:input, {:type=>'submit', :value=>_('Send')}]]]
     end
@@ -94,9 +93,7 @@ module Qwik
     private
 
     def generate_password_mail(user)
-      pdb = @memory.passdb
-      pdb.generate(user) unless pdb.exist?(user)
-      password = pdb.fetch(user)
+      password   = @memory.passgen.generate(user)
 
       msg = ''
       msg << _('This is your user name and the password on ')+"#{@site.host_url}\n"
@@ -149,7 +146,7 @@ if defined?($test) && $test
       res = session '/test/.getpass'
       ok_title 'Get Password'
       ok_in ['Get Password'], 'h1'
-      ok_xp [:input, {:istyle=>'3', :size=>'40', :class=>'focus', :value=>'',
+      ok_xp [:input, {:istyle=>'3', :size=>'40', :class=>'focus',
 	  :name=>'mail'}], '//input'
       ok_xp [:input, {:value=>'Send', :type=>'submit'}], '//input[2]'
 
@@ -167,7 +164,7 @@ if defined?($test) && $test
       ok_in ['user@e.com'], 'em'
       eq ['test@q.example.com', 'user@e.com'], $smtp_sendmail[2..3]
       assert_match /user@e.com/, $smtp_sendmail[4]
-      assert_match /dummypass/, $smtp_sendmail[4]
+      assert_match /95988593/, $smtp_sendmail[4]
       header =
 "From: test@q.example.com
 To: user@e.com
@@ -178,12 +175,12 @@ Content-Type: text/plain; charset=\"ISO-2022-JP\"
       body = 'This is your user name and the password on http://example.com
 
 Username:	user@e.com
-Password:	dummypass
+Password:	95988593
 
 Please access login page on http://example.com/test/.login
 
 You can input user and pass from this URL automatically.
-http://example.com/test/.login?user=user@e.com&pass=dummypass
+http://example.com/test/.login?user=user@e.com&pass=95988593
 
 '.set_sourcecode_charset
       eq header+body.to_mail_charset, $smtp_sendmail[4]
@@ -196,7 +193,7 @@ http://example.com/test/.login?user=user@e.com&pass=dummypass
       ok_in ['user@e.com'], 'em'
       eq ['test@q.example.com', 'user@e.com'], $smtp_sendmail[2..3]
       assert_match /user@e.com/, $smtp_sendmail[4]
-      assert_match /dummypass/, $smtp_sendmail[4]
+      assert_match /95988593/, $smtp_sendmail[4]
       header =
 "From: test@q.example.com
 To: user@e.com
@@ -208,12 +205,12 @@ Content-Type: text/plain; charset=\"ISO-2022-JP\"
 'このサイトにおけるユーザ名とパスワードです : http://example.com
 
 ユーザ名:	user@e.com
-パスワード:	dummypass
+パスワード:	95988593
 
 ログインページにアクセスしてください : http://example.com/test/.login
 
 下記URLにアクセスすると、自動的にユーザー名とパスワードを入力します。
-http://example.com/test/.login?user=user@e.com&pass=dummypass
+http://example.com/test/.login?user=user@e.com&pass=95988593
 
 '.set_sourcecode_charset
       str = header+body.to_mail_charset
@@ -254,7 +251,7 @@ http://example.com/test/.login?user=user@e.com&pass=dummypass
       mail = @action.generate_password_mail 'user@e.com'
       eq({:from=>"test@q.example.com", :to=>"user@e.com",
 	   :subject=>"Your password on http://example.com",
-	   :content=>"This is your user name and the password on http://example.com\n\nUsername:\tuser@e.com\nPassword:\tdummypass\n\nPlease access login page on http://example.com/test/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.com/test/.login?user=user@e.com&pass=dummypass\n"
+	   :content=>"This is your user name and the password on http://example.com\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.com/test/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
 	 }, mail)
 
       @action.instance_eval {
@@ -267,7 +264,7 @@ http://example.com/test/.login?user=user@e.com&pass=dummypass
       $KCODE = "s"
       eq({:from=>"test@q.example.com", :to=>"user@e.com",
 	   :subject=>"パスワード : http://example.com",
-	   :content=>"このサイトにおけるユーザ名とパスワードです : http://example.com\n\nユーザ名:\tuser@e.com\nパスワード:\tdummypass\n\nログインページにアクセスしてください : http://example.com/test/.login\n\n下記URLにアクセスすると、自動的にユーザー名とパスワードを入力します。\nhttp://example.com/test/.login?user=user@e.com&pass=dummypass\n"
+	   :content=>"このサイトにおけるユーザ名とパスワードです : http://example.com\n\nユーザ名:\tuser@e.com\nパスワード:\t95988593\n\nログインページにアクセスしてください : http://example.com/test/.login\n\n下記URLにアクセスすると、自動的にユーザー名とパスワードを入力します。\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
 	 }, mail)
     end
 
@@ -290,7 +287,7 @@ http://example.com/test/.login?user=user@e.com&pass=dummypass
       eq({:from=>"info@example.org",
 	   :to=>"user@e.com",
 	   :subject=>"Your password on http://example.org",
-	   :content=>"This is your user name and the password on http://example.org\n\nUsername:\tuser@e.com\nPassword:\tdummypass\n\nPlease access login page on http://example.org/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.org/.login?user=user@e.com&pass=dummypass\n"}, mail)
+	   :content=>"This is your user name and the password on http://example.org\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.org/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.org/.login?user=user@e.com&pass=95988593\n"}, mail)
     end
 
   end

@@ -1,4 +1,3 @@
-# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -827,7 +826,7 @@ if defined?($test) && $test
       # Login as guest.
       res = session('/test/r.html') {|req|
 	req.cookies.clear		# login as the guest
-	pass = @memory.passdb.fetch('gu@e.com')
+	pass = @memory.passgen.generate('gu@e.com')
 	req.cookies.update({'user'=>'gu@e.com', 'pass'=>pass})
       }
       assert_rattr({:action=>'r.ring_make', :method=>'POST'}, '//form')
@@ -835,7 +834,7 @@ if defined?($test) && $test
       # Make my page.
       res = session("/test/1.ring_make?page=RingMakePage&username=ゲスト&realname=山田太郎&faculty=総合政策&year=1990") {|req|
 	req.cookies.clear		# login as the guest
-	pass = @memory.passdb.fetch('gu@e.com')
+	pass = @memory.passgen.generate('gu@e.com')
 	req.cookies.update({'user'=>'gu@e.com', 'pass'=>pass})
       }
       ok_in(["MAKER_REGISTERD"], "//div[@class='section']//h3")
@@ -853,7 +852,7 @@ if defined?($test) && $test
       # See my page.
       res = session('/test/1.html') {|req|
 	req.cookies.clear		# login as the guest
-	pass = @memory.passdb.fetch('gu@e.com')
+	pass = @memory.passgen.generate('gu@e.com')
 	req.cookies.update({'user'=>'gu@e.com', 'pass'=>pass})
       }
       assert_text("ゲスト", 'h1')

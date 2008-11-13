@@ -17,7 +17,6 @@ module Qwik
   class InvalidUserError < QwikError; end
   class BaseIsNotSitename < QwikError; end
   class NoCorrespondingPlugin < QwikError; end	# plugin
-  class OldMd5Password < QwikError; end
 
   class Action
     # ============================== response

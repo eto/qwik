@@ -1,3 +1,7 @@
+2008-11-13  Keiki Shimada  <shimada-k aist.go.jp>
+
+	* revert last commit to get to work on some more minor changes.
+
 2008-10-30  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/act-getpass.rb, lib/qwik/act-httpauth.rb

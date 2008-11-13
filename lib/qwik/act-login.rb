@@ -1,4 +1,3 @@
-# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -112,8 +111,8 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
       if user
 	return if user.nil? || user.empty?
 	return unless MailAddress.valid?(user)
-	pdb = @memory.passdb
-	return unless pdb.match?(user, pass)
+	gen = @memory.passgen
+	return unless gen.match?(user, pass)
 
 	@req.user = user
 	@req.auth = 'cookie'
@@ -155,34 +154,17 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 	raise InvalidUserError if user.nil? || user.empty?
 	raise InvalidUserError unless MailAddress.valid?(user)
 	gen = @memory.passgen
-	raise OldMd5Password if gen.match?(user, pass)
-	pdb = @memory.passdb
-	raise InvalidUserError unless pdb.match?(user, pass)
+	raise InvalidUserError unless gen.match?(user, pass)
 
       rescue InvalidUserError
 	@res.clear_cookies		# IMPORTANT!
 	return login_invalid_user	# password does not match
-      rescue OldMd5Password
-	@res.clear_cookies
-	return login_invalid_user if @memory.passdb.exist?(user)
-	@memory.passdb.generate(user)
-	return login_show_password_updated_page(user)
       end
 
       sid = session_store(user)
       @res.set_cookie('sid', sid) # Set Session id by cookie.
 
       return login_show_login_suceed_page
-    end
-
-    def login_show_password_updated_page(user)
-      c_notice(_('Password was updated')) {
-	[[:h2, _('For security reason, your password was updated.')],
-	 [:p, _('You will get the new password by e-mail.')],
-	 [:p, _('Please input your mail address.')],
-	 getpass_form(user),
-	 [:p, [:a, {:href=>'.login'}, _('Go back to Login')]]]
-      }
     end
 
     def login_already_logged_in(user)
@@ -222,7 +204,7 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
       div << [:div,
 	[:h2, _("If you don't have password")],
 	[:p, _('Please input your mail address.')],
-	getpass_form('', '', '', ''),
+	getpass_form('', '', ''),
 #	[:p, [:a, {:href=>'.sendpass'},
 #	    _('You can send password for members.')]],
       ]
@@ -324,7 +306,7 @@ if defined?($test) && $test
       # Get password by e-mail.  See act-getpass.
 
       # Invalid mail address
-      res = session('/test/.login?user=invalid!@example') {|req|
+      res = session('/test/.login?user=test@example') {|req|
 	req.cookies.clear
       }
       assert_text('Invalid ID(E-mail) or Password.', 'p')
@@ -335,32 +317,22 @@ if defined?($test) && $test
       }
       assert_text('Invalid ID(E-mail) or Password.', 'p')
 
-      # Old password
-      res = session('/test/.login?user=userX@e.com&pass=06289272') {|req|
-	req.cookies.clear
-      }
-      ok_title 'Password was updated'
-
-      # Again, but new password was generated
-      res = session('/test/.login?user=userX@e.com&pass=06289272') {|req|
-	req.cookies.clear
-      }
-      ok_title 'Login Error'
-
       # Login by GET method. Set cookies and redirect to FrontPage.
-      res = session('/test/.login?user=user@e.com&pass=dummypass') {|req|
+      res = session('/test/.login?user=user@e.com&pass=95988593') {|req|
 	req.cookies.clear
       }
       ok_title 'Login succeed'
+      #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
       eq 'sid', @res.cookies[0].name
       eq 32, @res.cookies[0].value.length
+      #pw('//head')
       ok_xp([:meta, {:content=>'0; url=FrontPage.html',
 		'http-equiv'=>'Refresh'}],
 	    '//meta[2]') # force redirect for security reason.
 
       # Set the cookie
       res = session('/test/') {|req|
-	req.cookies.update({'user'=>'user@e.com', 'pass'=>'dummypass'})
+	req.cookies.update({'user'=>'user@e.com', 'pass'=>'95988593'})
       }
       ok_title 'FrontPage'
       assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'},
@@ -369,7 +341,7 @@ if defined?($test) && $test
       #eq 32, @res.cookies[0].value.length
 
       # Use POST method to set user and pass by queries.
-      res = session('POST /test/.login?user=user@e.com&pass=dummypass') {|req|
+      res = session('POST /test/.login?user=user@e.com&pass=95988593') {|req|
 	req.cookies.clear
       }
       ok_title 'Login succeed'
