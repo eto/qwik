@@ -28,7 +28,7 @@ module QuickML
 	sub_mail.read(parts.first)
 	if sub_mail.content_type == 'text/plain'
 	  sub_mail.body = header + sub_mail.body if header
-	  sub_mail.body += footer
+	  sub_mail.body += footer if /^[78]bit$/ =~ sub_mail['Content-Transfer-Encoding']
 	end
 	parts[0] = sub_mail.to_s
 	mail.body = Mail.join_parts(parts, mail.boundary)
