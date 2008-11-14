@@ -26,7 +26,8 @@ module QuickML
 	parts = mail.parts
 	sub_mail = Mail.new
 	sub_mail.read(parts.first)
-	if sub_mail.content_type == 'text/plain'
+	cte = sub_mail['Content-Transfer-Encoding']
+	if sub_mail.content_type == 'text/plain' and cte.nil? or cte.empty? or cte =~ /^[78]bit$/
 	  sub_mail.body = header + sub_mail.body if header
 	  sub_mail.body += footer if /^[78]bit$/ =~ sub_mail['Content-Transfer-Encoding']
 	end
@@ -35,7 +36,8 @@ module QuickML
 	return mail.body
       end
 
-      if mail.plain_text_body?
+      cte = mail['Content-Transfer-Encoding']
+      if mail.plain_text_body? and cte.nil? or cte.empty? or cte =~ /^[78]bit$/
 	mail.body = header + mail.body if header
 	mail.body += footer
 	return mail.body
