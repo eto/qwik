@@ -1,3 +1,8 @@
+2008-12-01  Keiki Shimada  <shimada-k aist.go.jp>
+
+	* lib/qwik/page-get.rb: Fix bug: Ignore line start with ``#'' in
+	super_pre and comment plugin.
+
 2008-11-13  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/mail-body.rb, lib/qwik/mail-header.rb,
