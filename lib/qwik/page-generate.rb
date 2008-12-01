@@ -59,3 +59,24 @@ module Qwik
     end
   end
 end
+
+if $0 == __FILE__
+  require 'qwik/farm'
+  require 'qwik/server-memory'
+  require 'qwik/test-module-session'
+  $test = true
+end
+
+if defined?($test) && $test
+  class TestPageGet < Test::Unit::TestCase
+    include TestSession
+
+    def test_get_body_tree_superpre_sharp
+      page = @site.create_new
+      page.store "{{{\n#t\n}}}\n"
+      expected = [[:pre, "#t\n"]]
+      actual = page.get_body_tree
+      ok_eq expected, actual
+    end
+  end
+end

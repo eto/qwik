@@ -168,5 +168,15 @@ if defined?($test) && $test
       ok_title '1'
 
     end
+
+    def test_superpre_sharp_mark
+      t_add_user
+      page = @site.create_new
+      page.store '{{{
+#t
+}}}'
+      session '/test/1.html'
+      ok_in ["#t\n"], "//div[@class='section']/pre"
+    end
   end
 end

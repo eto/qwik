@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -92,7 +93,7 @@ module Qwik
       first_line = true
       start_body = true
       str.each_line {|line|
-	next if /\A#/ =~ line	# Skip comment.
+# 	next if /\A#/ =~ line	# Skip comment.
 	if first_line
 	  first_line = false
 	  if line[0] == ?* && line[1] != ?*
@@ -245,11 +246,17 @@ if defined?($test) && $test
       c = Qwik::Page
       ok_eq('b',	c.get_body("* t\nb"))
       ok_eq('b',	c.get_body("* t\n\nb"))
-      ok_eq('b',	c.get_body("# c\n* t\nb"))
+#      ok_eq('b',	c.get_body("# c\n* t\nb"))
       ok_eq("b1\nb2",	c.get_body("b1\nb2"))
       ok_eq("** t\nb",	c.get_body("** t\nb"))
       ok_eq('* t2',	c.get_body("* t\n* t2"))
       ok_eq('* t2',	c.get_body("* t\n\n* t2"))
     end
+
+    def test_get_body_sharp
+      c = Qwik::Page
+      ok_eq("a\n#b\nc",	c.get_body("a\n#b\nc"))
+    end
+
   end
 end
