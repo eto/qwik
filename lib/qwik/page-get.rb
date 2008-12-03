@@ -93,7 +93,6 @@ module Qwik
       first_line = true
       start_body = true
       str.each_line {|line|
-# 	next if /\A#/ =~ line	# Skip comment.
 	if first_line
 	  first_line = false
 	  if line[0] == ?* && line[1] != ?*
