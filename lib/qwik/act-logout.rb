@@ -20,15 +20,15 @@ module Qwik
       @res.clear_cookie('pass')
       @res.clear_cookie('sid')
 
-      return c_notice(_('Logout done.'), 'FrontPage.html') {
+      return c_notice(_('Log out done.'), 'FrontPage.html') {
 	[:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]
       }
     end
 
     def logout_show_confirm
-      title = _('Logout')+' '+_('Confirm')
+      title = _('Log out')+' '+_('Confirm')
       c_notice(title) {
-	[[:p, _("Push \"Do Logout\".")],
+	[[:p, _('Push "Log out".')],
 	  logout_form,
 	  [:hr],
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go next')]]]
@@ -39,7 +39,7 @@ module Qwik
       return [:div, {:class=>'logout'},
 	[:form, {:method=>'POST', :action=>'.logout'},
 	  [:input, {:type=>'hidden', :name=>'confirm', :value=>'yes'}],
-	  [:input, {:type=>'submit', :value=>_('Do Logout'), :class=>'focus'}]]]
+	  [:input, {:type=>'submit', :value=>_('Log out'), :class=>'focus'}]]]
     end
   end
 end

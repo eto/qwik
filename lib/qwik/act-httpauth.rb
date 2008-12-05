@@ -33,9 +33,9 @@ module Qwik
 	realm = 'qwik'
 	@res['WWW-Authenticate'] = "Basic realm=\"#{realm}\""
 	# status code must be 401
-	return c_notice(_('Login by Basic Auth'), nil, 401) {
-	  [[:h2, _('Do login by Basic Auth.')],
-	    [:p, _("Please input ID(E-mail) and password.")],
+	return c_notice(_('Log in by Basic Authentication.'), nil, 401) {
+	  [[:h2, _('Logging in by Basic Authentication.')],
+	    [:p, _("Please input ID (E-mail) and password.")],
 	    [:hr],
 	    [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
 	}
@@ -50,17 +50,17 @@ module Qwik
 	}
       end
 
-      return c_notice(_('Login by Basic Auth')) {
-	[[:h2, _('Login by using Basic Auth.')],
+      return c_notice(_('Log in by Basic Authentication.')) {
+	[[:h2, _('Log in using Basic Authentication.')],
 	  [:hr],
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
       }
     end
 
     def basicauth_logout
-      return c_notice(_('Basic Auth') + ' ' + _('Logout')) {
-	[[:h2, _('Can not logout.')],
-	  [:p, _('You can not logout in Basic Auth mode.'), [:br],
+      return c_notice(_('Basic Authentication') + ' ' + _('Log out')) {
+	[[:h2, _('Can not log out.')],
+	  [:p, _('You can not log out in Basic Authentication mode.'), [:br],
 	    _('Please close browser and access again.')],
 	  [:hr],
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
@@ -100,14 +100,14 @@ if defined?($test) && $test
       ok_title 'Login'
 #      ok_xp [:a, {:href=>'.getpass'}, [:em, 'Get Password']],
 #	    "//div[@class='section']/a"
-#      ok_xp [:a, {:href=>'.basicauth'}, 'Login by Basic Auth'],
+#      ok_xp [:a, {:href=>'.basicauth'}, 'Log in by Basic Authentication.'],
 #	    "//div[@class='section']/a[2]"
 
       # See the Basic Auth Login page.
       res = session('/test/.basicauth') {|req|
 	req.cookies.clear
       }
-      ok_title('Login by Basic Auth')
+      ok_title('Log in by Basic Authentication.')
       ok_eq(401, @res.status)
       ok_eq("Basic realm=\"qwik\"", @res['WWW-Authenticate'])
 
@@ -115,13 +115,13 @@ if defined?($test) && $test
       ok_eq("dXNlckBlLmNvbTo5NTk4ODU5Mw==\n",
 	    Base64.encode64(DEFAULT_USER+':95988593'))
 
-      # Try to Login by Basic Auth.
+      # Try to Login by Basic Authenticate.
       res = session('/test/.basicauth') {|req|
 	req.cookies.clear
 	req.header['authorization'] =
 	  ["Basic dGVzdEBleGFtcGxlLmNvbTo0NDQ4NDEyNQ=="]
       }
-      ok_title('Login by Basic Auth')
+      ok_title('Log in by Basic Authentication.')
       ok_eq(200, @res.status)
       ok_eq(nil, @res['WWW-Authenticate'])
       ok_xp([:a, {:href=>'FrontPage.html'}, 'Go back'], '//a')
@@ -140,8 +140,8 @@ if defined?($test) && $test
 	req.header['authorization'] =
 	  ["Basic dXNlckBlLmNvbTo5NTk4ODU5Mw=="]
       }
-      ok_title('Basic Auth Logout')
-      assert_text('Can not logout.', 'h2')
+      ok_title('Basic Authentication Log out')
+      assert_text('Can not log out.', 'h2')
     end
   end
 end

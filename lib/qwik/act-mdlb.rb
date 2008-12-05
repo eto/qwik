@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -341,7 +342,7 @@ div.modulobe_uploader td input {
 	list << [:p, [:strong, filename], ' : ', _('The file is saved.')]
       else
 	list << [:p, [:strong, filename], ' -> ', [:strong, result_filename],
-	  ' : ', _('The file is saved as this filename.')]
+	  ' : ', _('The file is saved with this filename.')]
       end
 
       if image
@@ -385,7 +386,7 @@ div.modulobe_uploader td input {
       list << [:hr]
       url = @req.base+'.html'
       list << [:p,_('Go next'),' : ',[:a,{:href=>url},url]]
-      return c_surface(_('Attach file done')){list}
+      return c_surface(_('File attachment completed')){list}
     end
 
     def modulobe_files_error(msg)
@@ -642,7 +643,7 @@ http://www.modulobe.com/
       session('POST /test/c.modulobe_files_upload') {|req|	# Put a file.
 	req.query.update({'content'=>content, 'image'=>image})
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       sitelog = @site.sitelog	# Check log.
       ok_eq(",0.000000,user@e.com,modulobe file attach,c\n",
 	    @site['_SiteLog'].load)
@@ -679,7 +680,7 @@ http://www.modulobe.com/
       res = session('POST /test/c.modulobe_files_upload') {|req| # Put a file.
 	req.query.update({'content'=>content, 'image'=>image})
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_xp([:p, [:strong, 'test 2.mdlb'], ' : ', 'The file is saved.'],
 	    "//div[@class='body_main']/p")
 
@@ -688,7 +689,7 @@ http://www.modulobe.com/
       res = session('POST /test/c.modulobe_files_upload') {|req|
 	req.query.update({'content'=>content, 'image'=>image})
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_xp([:p, [:strong, 'test+2.mdlb'], ' : ', 'The file is saved.'],
 	    "//div[@class='body_main']/p")
 
@@ -711,7 +712,7 @@ http://www.modulobe.com/
       res = session('POST /test/c.modulobe_files_upload') {|req|
 	req.query.update({'content'=>content, 'image'=>image})
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_xp([:p, [:strong, '‚ .mdlb'], ' : ', 'The file is saved.'],
 	    "//div[@class='body_main']/p")
 
@@ -725,9 +726,9 @@ http://www.modulobe.com/
       res = session('POST /test/c.modulobe_files_upload') {|req|
 	req.query.update({'content'=>content, 'image'=>image})
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_xp([:p, [:strong, '‚ .mdlb'], ' -> ', [:strong, '1-‚ .mdlb'], ' : ',
-	      'The file is saved as this filename.'],
+	      'The file is saved with this filename.'],
 	    "//div[@class='body_main']/p")
 
       # Get the file.

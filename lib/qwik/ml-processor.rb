@@ -1,4 +1,4 @@
-# -*- coding: cp932 -*-
+# -*- coding: shift_jis -*-
 #
 # Copyright (C) 2002-2004 Satoru Takabayashi <satoru@namazu.org> 
 # Copyright (C) 2003-2006 Kouichirou Eto
@@ -237,7 +237,7 @@ module QuickML
       end
 =end
 
-      body <<  _("The original body is ommited due to avoid spam trouble.\n")
+      body <<  _("The original body is omitted to avoid spam trouble.\n")
 
       mail = {
 	:mail_from => '', 
@@ -286,7 +286,7 @@ module QuickML
 	  Mail.encode_field(_("[QuickML] Error: %s", @mail['Subject']))],
 	['Content-Type', content_type]
       ]
-      body =  _("The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)\n\n",
+      body =  _("The following addresses cannot be added because <%s> mailing list reaches the maximum number of members (%d persons)\n\n",
 		ml.address,
                 ml.get_max_members)
       unadded_addresses.each {|address|
@@ -528,7 +528,7 @@ This is a test.
       processor = QuickML::Processor.new(@ml_config, mail)
       processor.process
 
-      eq " reply this mail to create ML <test@example.com>.\n",
+      eq "ply to this mail to create ML <test@example.com>.\n",
 	$quickml_sendmail[4][-50..9999]
 
       ok_file('', '_GroupMembers.txt')

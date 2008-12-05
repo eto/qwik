@@ -83,7 +83,7 @@ module QuickML
       return "\n" +
         _("How to unsubscribe from the ML:\n") +
         _("- Just send an empty message to <%s>.\n", address) +
-        _("- Or, if you cannot send an empty message for some reason,\n") +
+        _("- Alternatively, if you cannot send an empty message for some reason,\n") +
         _("  please send a message just saying 'unsubscribe' to <%s>.\n", address) +
         _("  (e.g., hotmail's advertisement, signature, etc.)\n") #'
     end
@@ -134,7 +134,7 @@ ML-> test@example.com
 
       # test_generate_unsubscribe_info
       t_make_public(QuickML::Group, :generate_unsubscribe_info)
-      ok_eq("\nHow to unsubscribe from the ML:\n- Just send an empty message to <test@example.com>.\n- Or, if you cannot send an empty message for some reason,\n  please send a message just saying 'unsubscribe' to <test@example.com>.\n  (e.g., hotmail's advertisement, signature, etc.)\n",
+      ok_eq("\nHow to unsubscribe from the ML:\n- Just send an empty message to <test@example.com>.\n- Alternatively, if you cannot send an empty message for some reason,\n  please send a message just saying 'unsubscribe' to <test@example.com>.\n  (e.g., hotmail's advertisement, signature, etc.)\n",
 	    group.generate_unsubscribe_info('test@example.com'))
 
     end

@@ -50,7 +50,7 @@ To: test@q.example.com
 From: spammer@example.org
 Date: 
 
-The original body is ommited due to avoid spam trouble.
+The original body is omitted to avoid spam trouble.
 ", $quickml_sendmail[4]
 
   end

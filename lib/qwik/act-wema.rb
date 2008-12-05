@@ -334,7 +334,7 @@ Windowを動かして、「set」を押すと位置をセットします。
     def self.make_menu
       return [:span, {:class=>'attribute'}, 'Post-it', ': ',
 	[:a, {:href=>'javascript:wema_editor_show()'}, 'New Post-it'],
-	' (', [:a, {:href=>'javascript:wema_help_show()'}, 'help'], ')']
+	' (', [:a, {:href=>'javascript:wema_help_show()'}, 'Help'], ')']
     end
 
     def self.load_js
@@ -480,7 +480,7 @@ if defined?($test) && $test
       page = @site.create_new
 
       res = session '/test/1.wema'
-      ok_title 'Need POST'
+      ok_title 'Please input POST'
 
       res = session 'POST /test/1.wema'
       assert_text 'Unknown mode: []', 'title'

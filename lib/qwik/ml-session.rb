@@ -281,7 +281,7 @@ module QuickML
                   ['Content-Type', content_type])
 
       max  = @config.max_mail_length.commify
-      body =   _("Sorry, your mail exceeds the limitation of the length.\n")
+      body =   _("Sorry, your mail exceeds the length limitation.\n")
       body <<  _("The max length is %s bytes.\n\n", max)
       orig_subject = codeconv(Mail.decode_subject(mail['Subject']))
       body << "Subject: #{orig_subject}\n"

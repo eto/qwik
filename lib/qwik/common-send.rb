@@ -132,7 +132,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Get the content using simple send.
       res = session('/test/1.files/t.txt')
@@ -159,7 +159,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Get the content by download.
       res = session('/test/1.download/t.txt')

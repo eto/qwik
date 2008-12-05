@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -132,7 +133,7 @@ g_weditor.check();
 	[:a, {:href=>'javascript:wysiwyg_save()'},
 	  [:img, {:alt=>'Save', :src=>'.theme/i/action_save.gif'}]],
 	[:input, {:type=>'checkbox', :name=>'autosave',
-	    :title=>'Auto save'}],
+	    :title=>'Auto-save'}],
 
 	[:a, {:href=>"javascript:wysiwyg_command('bold')"},
 	  [:img, {:alt=>'Bold', :src=>'.theme/i/text_bold.png'}]],

@@ -25,7 +25,7 @@ module Qwik
     def config_site
       @req.base = SITE_CONFIG		# Fake.
       w = []
-      w << [:h1, _('Site config')]
+      w << [:h1, _('Site Configuration')]
       w = c_res(content)
       w = TDiaryResolver.resolve(@config, @site, self, w)
       title = _('Function')+' | '+hash[:dt]

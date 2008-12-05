@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -18,7 +19,7 @@ module Qwik
       :dc => "* How to
 ** Login by TypeKey
 You can login by using TypeKey authentication.
-In login screen, you see 'Login by TypeKey' link.
+In login screen, you see 'Log in by TypeKey' link.
 Follow the link and login at the TypeKey authentication page.
 Since the qwikWeb system uses your mailaddress for the authentication,
 it is necessary to select to tell your mail address.
@@ -29,7 +30,7 @@ Please follow 'Get Password' link to get the password.
 ** Login by Basic Authentication
 You can use Basic Authentication.
 When you are using a mobile phone that only have Basic Authentication method,
-please follow 'Login by Basic Auth' link.
+please follow 'Log in by Basic Authentication.' link.
 "
     }
 
@@ -126,9 +127,9 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
     # called from action.rb
     def login_invalid_user
       c_nerror(_('Login Error')){[
-	  [:p, [:strong, _('Invalid ID(E-mail) or Password.')]],
+	  [:p, [:strong, _('Invalid ID (E-mail) or Password.')]],
 	  [:p, {:class=>'warning'},
-	    _("If you don't have password, "), _('access here'), [:br],
+	    _('If you have no password,'), _('Access here'), [:br],
 	    [:a, {:href=>'.getpass'}, [:em, _('Get Password')]]],
 	  login_page_form,
 	  login_page_menu,
@@ -169,14 +170,14 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 
     def login_already_logged_in(user)
       ar = []
-      ar << [:p, _('You are now logged in as this user id.'), [:br],
+      ar << [:p, _('You are now logged in with this user id.'), [:br],
 	[:strong, user]]
-      ar << [:p, _('If you would like to login as another account,'), [:br],
-	_('do logout at the first.')]
+      ar << [:p, _('If you would like to log in on another account,'), [:br],
+	_('please log out first.')]
       ar << logout_form
       ar << [:hr]
       ar << login_go_frontpage
-      return c_nerror(_('Already logged in')){ar}
+      return c_nerror(_('Already logged in.')){ar}
     end
 
     def login_go_frontpage
@@ -191,8 +192,8 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 	login_msg = [:div, {:class=>'warning'}, c_res(page.load)]
       end
       login_target_div = [:div,
-	[:h2, _('Login to '), [:em, url]],
-	[:p, _('Please input ID(E-mail) and password.')]]
+	[:h2, _('Log in to '), [:em, url]],
+	[:p, _('Please input ID (E-mail) and password.')]]
 
       div = [:div, {:class=>'login_page'}]
       div << login_target_div
@@ -202,7 +203,7 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 
       div << [:hr]
       div << [:div,
-	[:h2, _("If you don't have password")],
+	[:h2, _('If you have no password')],
 	[:p, _('Please input your mail address.')],
 	getpass_form('', '', ''),
 #	[:p, [:a, {:href=>'.sendpass'},
@@ -211,13 +212,13 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 
       div << [:hr]
       div << [:div,
-	[:h2, [:a, {:href=>'.typekey'}, _('Login by TypeKey')]],
+	[:h2, [:a, {:href=>'.typekey'}, _('Log in by TypeKey')]],
 	[:p, _('Please send mail address for authentication.')]]
 
       div << [:hr]
       div << [:div,
-	[:h2, [:a, {:href=>'.basicauth'}, _('Login by Basic Auth')]],
-	[:p, _('For mobile phone user')]]
+	[:h2, [:a, {:href=>'.basicauth'}, _('Log in by Basic Authentication.')]],
+	[:p, _('For mobile phone users')]]
 
 #      div << [:hr]
 #      div << login_page_menu
@@ -233,7 +234,7 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
 
     def login_show_login_suceed_page
       url = 'FrontPage.html'
-      title = _('Login') + ' ' + _('succeed')
+      title = _('Login') + ' ' + _('Success')
       return c_notice(title, url) {
 	[login_go_frontpage]
       }
@@ -257,10 +258,10 @@ BASIC認証も使えます。携帯電話のように、BASIC認証だけしかできない場合は、
       return [:ul,
 #	[:li, _("If you don't have password"), ' : ',
 #	  [:a, {:href=>'.getpass'}, [:em, _('Get Password')]]],
-	[:li, _('For mobile phone user'), ' : ',
-	  [:a, {:href=>'.basicauth'}, _('Login by Basic Auth')]],
+	[:li, _('For mobile phone users'), ' : ',
+	  [:a, {:href=>'.basicauth'}, _('Log in by Basic Authentication.')]],
 #	[:li,
-#	  [:a, {:href=>'.typekey'}, _('Login by TypeKey')]]
+#	  [:a, {:href=>'.typekey'}, _('Log in by TypeKey')]]
 ]
     end
   end
@@ -309,19 +310,19 @@ if defined?($test) && $test
       res = session('/test/.login?user=test@example') {|req|
 	req.cookies.clear
       }
-      assert_text('Invalid ID(E-mail) or Password.', 'p')
+      assert_text('Invalid ID (E-mail) or Password.', 'p')
 
       # Invalid password
       res = session('/test/.login?user=user@e.com&pass=wrongpassword') {|req|
 	req.cookies.clear
       }
-      assert_text('Invalid ID(E-mail) or Password.', 'p')
+      assert_text('Invalid ID (E-mail) or Password.', 'p')
 
       # Login by GET method. Set cookies and redirect to FrontPage.
       res = session('/test/.login?user=user@e.com&pass=95988593') {|req|
 	req.cookies.clear
       }
-      ok_title 'Login succeed'
+      ok_title 'Login Success'
       #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
       eq 'sid', @res.cookies[0].name
       eq 32, @res.cookies[0].value.length
@@ -344,7 +345,7 @@ if defined?($test) && $test
       res = session('POST /test/.login?user=user@e.com&pass=95988593') {|req|
 	req.cookies.clear
       }
-      ok_title 'Login succeed'
+      ok_title 'Login Success'
       eq 200, @res.status
       #assert_cookie({'user'=>'user@e.com', 'pass'=>'95988593'}, @res.cookies)
       eq 'sid', @res.cookies[0].name
@@ -364,20 +365,20 @@ if defined?($test) && $test
 
       # See the Logout page.
       res = session('/test/.logout')
-      ok_title 'Logout Confirm'
+      ok_title 'Log out Confirm'
       ok_xp([:form, {:action=>'.logout', :method=>'POST'},
 	      [:input, {:value=>'yes', :type=>'hidden',
-		  :name=>'confirm'}], [:input, {:value=>'Do Logout',
+		  :name=>'confirm'}], [:input, {:value=>'Log out',
 		  :type=>'submit', :class=>'focus'}]], '//form')
       ok_xp([:input, {:value=>'yes', :type=>'hidden', :name=>'confirm'}],
 	    '//input')
-      ok_xp([:input, {:value=>'Do Logout',
+      ok_xp([:input, {:value=>'Log out',
 		:type=>'submit', :class=>'focus'}], '//input[2]')
 
       # Confirm Logout.
       res = session('/test/.logout?confirm=yes')
-      ok_title 'Logout done.'
-      assert_text('Logout done.', 'h1')
+      ok_title 'Log out done.'
+      assert_text('Log out done.', 'h1')
       ok_xp([:p, [:a, {:href=>'FrontPage.html'}, 'Go back']],
 	    "//div[@class='section']/p")
       assert_cookie({'user'=>'', 'pass'=>'', 'sid'=>''}, @res.cookies)

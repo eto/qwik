@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -42,9 +43,9 @@ module Qwik
 	sendmail.send(passmail)
       rescue
 	return c_nerror(_('Send Password Error')) {
-	  [[:p, _('Send failed for system error.')],
-	    [:p, _('Please contact administrator.')],
-	    [:p, [:a, {:href=>'.login'}, _('Go back to Login')]]]
+	  [[:p, _('Send failed because of system error.')],
+	    [:p, _('Please contact the administrator.')],
+	    [:p, [:a, {:href=>'.login'}, _('Go back to Login screen')]]]
 	}
       end
 
@@ -54,16 +55,16 @@ module Qwik
 	    _('Please check your mailbox.')],
 	  [:p, {:style=>'margin: 1.5em 0'}, [:em, mail]],
 	  [:hr],
-	  [:p, [:a, {:href=>'.login'}, _('Go back to Login')]]]
+	  [:p, [:a, {:href=>'.login'}, _('Go back to Login screen')]]]
       }
     end
 
     def getpass_show_form
       c_notice(_('Get Password')) {
-	[[:h2, _('You will get the password by e-mail.')],
+	[[:h2, _('You will receive the password by e-mail.')],
 	  [:p, _('Please input your mail address.')],
 	  getpass_form,
-	  [:p, [:a, {:href=>'.login'}, _('Go back to Login')]]]
+	  [:p, [:a, {:href=>'.login'}, _('Go back to Login screen')]]]
       }
     end
 
@@ -80,12 +81,12 @@ module Qwik
     end
 
     def getpass_not_member(user, ml)
-      c_nerror(_('Member Only')) {
-	  [[:p, _('You input this e-mail address as user id.'), [:br],
+      c_nerror(_('Members Only')) {
+	  [[:p, _('You input this e-mail address as user ID.'), [:br],
 	    [:strong, user]],
-	  [:p, _('This user id is not a member of this group.'), [:br],
+	  [:p, _('This user with this ID is not a member of this group.'), [:br],
 	    [:strong, ml]],
-	  [:p, _('Only the member of this group can get password.')],
+	  [:p, _('Only the member of this group can get a password.')],
 	  [:p, [:a, {:href=>'.getpass'}, _('Go back')]]]
 	}
     end
@@ -96,20 +97,20 @@ module Qwik
       password   = @memory.passgen.generate(user)
 
       msg = ''
-      msg << _('This is your user name and the password on ')+"#{@site.host_url}\n"
+      msg << _('This is your user name and password: ')+"#{@site.host_url}\n"
       msg << "\n"
       msg << _('Username')+":	#{user}\n"
       msg << _('Password')+":	#{password}\n"
       msg << "\n"
-      msg << _('Please access login page on')+" #{@site.site_url}.login\n"
+      msg << _('Please access login page')+" #{@site.site_url}.login\n"
       msg << "\n"
-      msg << _('You can input user and pass from this URL automatically.')+"\n"
+      msg << _('You can input the user name and password from this URL automatically.')+"\n"
       msg << "#{@site.site_url}.login?user=#{user}&pass=#{password}\n"
 
       mail = {
 	:from    => @site.ml_address,
 	:to      => user,
-	:subject => _('Your password on')+" #{@site.host_url}",
+	:subject => _('Your password:')+" #{@site.host_url}",
 	:content => msg,
       }
       return mail
@@ -130,7 +131,7 @@ if defined?($test) && $test
     def test_private_site
       # Try to see a get password page, but you can't.
       res = session '/test/.getpass'
-      ok_title 'Member Only'
+      ok_title 'Members Only'
 
       # But you can see the page without login.
       res = session('/test/.getpass') {|req|
@@ -156,7 +157,7 @@ if defined?($test) && $test
 
       # You can not get pass if you are not a member.
       res = session '/test/.getpass?mail=guest@example.com'
-      ok_title 'Member Only'
+      ok_title 'Members Only'
 
       # Input your mail address
       res = session '/test/.getpass?mail=user@e.com'
@@ -168,18 +169,18 @@ if defined?($test) && $test
       header =
 "From: test@q.example.com
 To: user@e.com
-Subject: Your password on http://example.com
+Subject: Your password: http://example.com
 Content-Type: text/plain; charset=\"ISO-2022-JP\"
 
 "
-      body = 'This is your user name and the password on http://example.com
+      body = 'This is your user name and password: http://example.com
 
 Username:	user@e.com
 Password:	95988593
 
-Please access login page on http://example.com/test/.login
+Please access login page http://example.com/test/.login
 
-You can input user and pass from this URL automatically.
+You can input the user name and password from this URL automatically.
 http://example.com/test/.login?user=user@e.com&pass=95988593
 
 '.set_sourcecode_charset
@@ -250,8 +251,8 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
       t_make_public(Qwik::Action, :generate_password_mail)
       mail = @action.generate_password_mail 'user@e.com'
       eq({:from=>"test@q.example.com", :to=>"user@e.com",
-	   :subject=>"Your password on http://example.com",
-	   :content=>"This is your user name and the password on http://example.com\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.com/test/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
+	   :subject=>"Your password: http://example.com",
+	   :content=>"This is your user name and password: http://example.com\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page http://example.com/test/.login\n\nYou can input the user name and password from this URL automatically.\nhttp://example.com/test/.login?user=user@e.com&pass=95988593\n"
 	 }, mail)
 
       @action.instance_eval {
@@ -276,7 +277,7 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
 ')
 
       res = session '/test/'
-      ok_title 'Member Only'
+      ok_title 'Members Only'
 
       t_add_user
       res = session '/test/'
@@ -286,8 +287,8 @@ http://example.com/test/.login?user=user@e.com&pass=95988593
       mail = @action.generate_password_mail 'user@e.com'
       eq({:from=>"info@example.org",
 	   :to=>"user@e.com",
-	   :subject=>"Your password on http://example.org",
-	   :content=>"This is your user name and the password on http://example.org\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page on http://example.org/.login\n\nYou can input user and pass from this URL automatically.\nhttp://example.org/.login?user=user@e.com&pass=95988593\n"}, mail)
+	   :subject=>"Your password: http://example.org",
+	   :content=>"This is your user name and password: http://example.org\n\nUsername:\tuser@e.com\nPassword:\t95988593\n\nPlease access login page http://example.org/.login\n\nYou can input the user name and password from this URL automatically.\nhttp://example.org/.login?user=user@e.com&pass=95988593\n"}, mail)
     end
 
   end

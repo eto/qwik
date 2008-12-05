@@ -41,7 +41,7 @@ module Qwik
       return nil if tokens.length == 0
 
       w = TextParser.make_tree(tokens).get_single
-      w = [[:h5, _('contents')],
+      w = [[:h5, _('Contents')],
 	[:div, {:id=>'tocinside'}, w]]
       return w
     end
@@ -69,7 +69,7 @@ if defined?($test) && $test
 *t1
 *t2")
       session('/test/1.html')
-      ok_in([[:h5, 'contents'],
+      ok_in([[:h5, 'Contents'],
 	      [:div, {:id=>'tocinside'},
 		[:ol, [:li, [:a, {:href=>"#t1"}, 't1']],
 		  [:li, [:a, {:href=>"#t2"}, 't2']]]]],
@@ -80,7 +80,7 @@ if defined?($test) && $test
 *t1
 **t2")
       session('/test/1.html')
-      ok_in([[:h5, 'contents'],
+      ok_in([[:h5, 'Contents'],
  [:div, {:id=>'tocinside'},
   [:ol, [:li, [:a, {:href=>"#t1"}, 't1']], [:ol, [:li, 't2']]]]],
 	    "//div[@class='toc']")
@@ -89,7 +89,7 @@ if defined?($test) && $test
       page.store("{{toc}}
 *[hoge]hhh")
       session('/test/1.html')
-      ok_in([[:h5, 'contents'],
+      ok_in([[:h5, 'Contents'],
  [:div,
   {:id=>'tocinside'},
   [:ol, [:li, [:a, {:href=>"#815417267f76f6f460a4a61f9db75fdb"}, "[hoge]hhh"]]]]],
@@ -101,7 +101,7 @@ if defined?($test) && $test
 *t1
 ***[hoge]hhh")
       session('/test/1.html')
-      ok_in([[:h5, 'contents'],
+      ok_in([[:h5, 'Contents'],
  [:div,
   {:id=>'tocinside'},
   [:ol, [:li, [:a, {:href=>"#t1"}, 't1']], [:ol, [:ol, [:li, "[", 'hoge', "]", 'hhh']]]]]],

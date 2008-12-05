@@ -53,7 +53,7 @@ module Qwik
         ar << surface_get_body(page)
         pageattribute = c_page_res('_PageAttribute')
       }
-      return c_surface(_('A day') + ' | ' + ymd) {
+      return c_surface(_('One day') + ' | ' + ymd) {
         ar
       }
     end
@@ -85,7 +85,7 @@ if defined?($test) && $test
       # test_ext_day
       # There is a page in 1970-01-01.
       res = session '/test/19700101.day'
-      ok_in ["A day | 19700101"], '//title'
+      ok_in ["One day | 19700101"], '//title'
 =end
 
       # There is no page in 1970-01-02.

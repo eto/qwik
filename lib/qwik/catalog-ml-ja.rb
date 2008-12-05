@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -32,7 +33,7 @@ module QuickML
 	"You are not a member of the mailing list:\n<%s>\n" =>
 	"あなたは <%s> メーリングリストのメンバーではありません。\n",
 
-	"The original body is ommited due to avoid spam trouble.\n" =>
+	"The original body is omitted to avoid spam trouble.\n" =>
 	"メール本体はスパム対策のため省略されました。\n",
 
 	"You are removed from the mailing list:\n<%s>\n" =>
@@ -44,7 +45,8 @@ module QuickML
 	"You have unsubscribed from the mailing list:\n<%s>.\n" =>
 	"あなたは <%s> メーリングリストから退会しました。",
 
-	"The following addresses cannot be added because <%s> mailing list reaches the max number of members (%d persons)\n\n" =>
+
+	"The following addresses cannot be added because <%s> mailing list reaches the maximum number of members (%d persons)\n\n" =>
 	"<%s> メーリングリストはメンバーの最大人数 (%d人)\nに達したので以下のアドレスは追加できませんでした。\n\n",
 
 	"Invalid mailing list name: <%s>\n" =>
@@ -53,7 +55,7 @@ module QuickML
 	"You can only use 0-9, a-z, A-Z,  `-' for mailing list name\n" =>
 	"メーリングリスト名には 0-9, a-z, A-Z, 「-」だけが使えます。\n",
 
-	"Sorry, your mail exceeds the limitation of the length.\n" =>
+	"Sorry, your mail exceeds the length limitation.\n" =>
 	"申し訳ありません。あなたのメールのサイズは制限を超えました。\n",
 
 	"The max length is %s bytes.\n\n" =>
@@ -77,7 +79,7 @@ module QuickML
 	"- Just send an empty message to <%s>.\n" =>
 	"- 本文が空のメールを <%s> に送ってください\n",
 
-	"- Or, if you cannot send an empty message for some reason,\n" =>
+	"- Alternatively, if you cannot send an empty message for some reason,\n" =>
 	"- 本文が空のメールを送れない場合は、\n",
 
 	"  please send a message just saying 'unsubscribe' to <%s>.\n" =>
@@ -108,19 +110,19 @@ module QuickML
 	"[%s] 確認: %s",
 
 	# qwikWeb messages.
-	"At the first, please read the agreement of this service.\n" =>
+	"First, please read the agreement of this service.\n" =>
 	"まず下記の利用規約をお読み下さい。\n",
 
 	"http://qwik.jp/qwikjpAgreementE.html\n" =>
 	"http://qwik.jp/qwikjpAgreementJ.html\n",
 
-	"You have to agree this agreement to use this service.\n" =>
+	"You must agree with this agreement to use the service.\n" =>
 	"このサービスを利用するには、利用規約を承認していただく必要があります。\n",
 
 	"If you agree, then,\n" =>
 	"もし承認する場合、\n",
 
-	"Please simply reply this mail to create ML <%s>.\n" =>
+	"Please simply reply to this mail to create ML <%s>.\n" =>
 	"このメールに返信すると <%s> メーリングリストが作られます。\n",
       }
     end

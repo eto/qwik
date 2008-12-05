@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -46,7 +47,7 @@ as the static Web pages.
     }
 
     def plg_zip
-      return page_attribute('zip', _('site archive'), @site.sitename)
+      return page_attribute('zip', _('Site archive'), @site.sitename)
     end
 
     def ext_zip
@@ -161,7 +162,7 @@ if defined?($test) && $test
     def test_plg_zip
       ok_wi [:p, [:a, {:href=>'test.zip'}, 'test.zip']], '[[test.zip]]'
       ok_wi [:span, {:class=>'attribute'},
-	      [:a, {:href=>'test.zip'}, 'site archive']], '{{zip}}'
+	      [:a, {:href=>'test.zip'}, 'Site archive']], '{{zip}}'
     end
   end
 

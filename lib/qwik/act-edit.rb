@@ -110,11 +110,11 @@ module Qwik
 	  [:li, [:tt, '*'], ' ', _('Header')],
 	  [:li, [:tt, '-'], ' ', _('List')],
 	  [:li, [:tt, '+'], ' ', _('Ordered list')],
-	  [:li, [:tt, '>'], ' ', _('Blockquote')],
+	  [:li, [:tt, '>'], ' ', _('Block quote')],
 	  [:li, [:tt, ':'], ' ', _('Word'), ': ', _('Definition')],
 	  [:li, [:tt, ','], ' ', _('Table')],
 	  [:li, [:tt, "''"], _('Emphasis'), [:tt, "''"]],
-	  [:li, [:tt, "'''"], _('Strong'), [:tt, "'''"]],
+	  [:li, [:tt, "'''"], _('Stronger'), [:tt, "'''"]],
 	  [:li, [:tt, '[['], 'FrontPage', [:tt, ']]'], ' ', _('Link')]],
 	[:p, [:a, {:href=>'TextFormat.describe'}, _('more help')]]]
     end
@@ -127,22 +127,22 @@ module Qwik
 	  [:li, [:a, {:href=>"#{pagename}.history"}, _('Time machine')]],
 	  [:li, [:a, {:href=>"#{pagename}.presen"},  _('Presentation mode')]],
 	  [:li, [:a, {:href=>"#{pagename}.wysiwyg"}, _('Edit in this page')]],
-	  [:li, [:a, {:href=>"PluginWema.describe"}, _('How to Post-it')]],
+	  [:li, [:a, {:href=>"PluginWema.describe"}, _('How to use post-its')]],
 	]]
     end
 
     def editor_site_admin
       return [:div, {:class=>'section edithistory'},
-	[:h2, _('Site admin')],
+	[:h2, _('Site administration')],
 	[:ul,
-	  [:li, [:a, {:href=>'SiteManagement.describe'}, _('SiteMenu')]],
-	  [:li, [:a, {:href=>'_SiteConfig.html'}, _('SiteConfig')]],
+	  [:li, [:a, {:href=>'SiteManagement.describe'}, _('Site Menu')]],
+	  [:li, [:a, {:href=>'_SiteConfig.html'}, _('Site Configuration')]],
 	  [:li, [:a, {:href=>'.plan'}, _('Create a new plan')]],
 	  [:li, [:a, {:href=>'.chronology'}, _('Chronology')]],
 	  [:li, [:a, {:href=>'_GroupMembers.html'}, _('Group members')]],
-	  [:li, [:a, {:href=>"#{@site.sitename}.zip"}, _('SiteArchive')]],
+	  [:li, [:a, {:href=>"#{@site.sitename}.zip"}, _('Site Archive')]],
 	  [:li, [:a, {:href=>"#{@site.sitename}.sitebackup"}, _('Site backup')]],
-	  [:li, [:a, {:href=>"_GroupConfig.html"}, _('ML Config')]],
+	  [:li, [:a, {:href=>"_GroupConfig.html"}, _('Mailing List Configuration')]],
 	  [:li, [:a, {:href=>".sendpass"}, _('Send Password')]],
 	]]
     end

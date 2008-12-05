@@ -168,9 +168,9 @@ module Qwik
     end
 
     def action_no_such_site(sitename)
-      c_notfound(_('No such site')) {
+      c_notfound(_('No such site.')) {
 	[:div,
-	  [:p, [:b, sitename], ' : ', _('no correspond site')],
+	  [:p, [:b, sitename], ' : ', _('No corresponding site.')],
 	  [:p , _('Please send mail to make a site')],
 	  [:p, [:a, {:href=>'http://qwik.jp/'}, 'qwik.jp'],
 	    _('Access here and see how to.')]]
@@ -181,15 +181,15 @@ module Qwik
       url = c_relative_to_root('.login')
       c_notice(_('Login'), url, 200, 1) {
 	[:div,
-	  [:p, _('Please login.')],
+	  [:p, _('Please log in.')],
 	  [:p, login_create_login_link]]
       }
     end
 
     def action_require_login
-      c_nerror(_('Please login.')) {
+      c_nerror(_('Please log in.')) {
 	[:div,
-	  [:p, _('You need login to use this function.')],
+	  [:p, _('You need to log in to use this function.')],
 	  [:p, login_create_login_link, ' : ' + _('Access here.')],
 	  [:hr],
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
@@ -197,28 +197,28 @@ module Qwik
     end
 
     def action_member_only_form(user, ml)
-      c_nerror(_('Member Only')) {
+      c_nerror(_('Members Only')) {
 	[:div,
-	  [:p, _('You are now logged in as this user id.'), [:br],
+	  [:p, _('You are now logged in with this user id.'), [:br],
 	    [:strong, user]],
-	  [:p, _('This user id is not a member of this group.'), [:br],
+	  [:p, _('This user with this ID is not a member of this group.'), [:br],
 	    [:strong, ml]],
-	  [:p, _('If you would like to login as another account,'), [:br],
-	    _('do logout at the first.')],
+	  [:p, _('If you would like to log in on another account,'), [:br],
+	    _('please log out first.')],
 	  logout_form]
       }
     end
 
     def action_require_post
-      c_nerror(_('Need POST')) {
-	[[:p, _('This function needs POST method.')],
+      c_nerror(_('Please input POST')) {
+	[[:p, _('This function requires POST input.')],
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]]]
       }
     end
 
     def action_require_no_path_args
-      c_notfound(_('Require no path args')) {
-	[:h2, _('Path argments are not acceptable.')]
+      c_notfound(_('Incorrect path arguments.')) {
+	[:h2, _('Path arguments are not acceptable.')]
       }
     end
 
@@ -253,16 +253,16 @@ if defined?($test) && $test
 
     def test_nonexistent_site
       res = session '/nosuchsite/'
-      ok_title 'No such site'
-      assert_text 'No such site', 'h1'
+      ok_title 'No such site.'
+      assert_text 'No such site.', 'h1'
       assert_text 'nosuchsite', 'b'
       eq 404, @res.status
     end
 
     def test_private_site
       res = session '/test/'
-      ok_title 'Member Only'
-      ok_xp [:p, 'You are now logged in as this user id.', [:br],
+      ok_title 'Members Only'
+      ok_xp [:p, 'You are now logged in with this user id.', [:br],
 	[:strong, 'user@e.com']],'//p'
     end
 

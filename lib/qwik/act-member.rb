@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -45,7 +46,7 @@ module Qwik
     def member_add_exec(tomail)
       return member_error(_('Error')) if tomail.nil?
       return member_error(_('Invalid Mail')) if ! MailAddress.valid?(tomail)
-      return member_error(_('Already exist')) if @site.member.exist?(tomail)
+      return member_error(_('Already exists')) if @site.member.exist?(tomail)
 
       @site.member.add(tomail, @req.user)
 

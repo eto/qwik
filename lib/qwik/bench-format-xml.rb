@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -38,7 +39,7 @@ class BenchFormatXml
 			  [:img, {:src=>'.attach/qrcode-test.png', :alt=>'http://example.com/test/'}],
 			  [:br], 'http://example.com/test/']],
 		      [:div, 'last modified: 2004-10-05'],
-		      [:a, {:href=>'TestPage.backup'}, 'backup list']]]],
+		      [:a, {:href=>'TestPage.backup'}, 'Backup list']]]],
 		[:div, {:class=>'body_leave'}, '']]]],
 	  [:div, {:id=>'sidemenu', :class=>'sidebar'},
 	    [[:h2, 'menu'],

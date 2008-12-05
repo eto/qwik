@@ -44,13 +44,13 @@ module Qwik
       sid = session_store(email)
       @res.set_cookie('sid', sid)	# Set Session id by cookie
 
-      return c_notice(_('Login')+' '+_('succeed'), 'FrontPage.html') {
+      return c_notice(_('Login')+' '+_('Success'), 'FrontPage.html') {
 	[:p, [:a, {:href=>'FrontPage.html'}, _('Go next')]]
       }
     end
 
     def typekey_error_no_sitetoken
-      return c_nerror(_('Can not use.')) {
+      return c_nerror(_('Cannot use.')) {
 	[:p, _('There is no site token for TypeKey.')]
       }
     end

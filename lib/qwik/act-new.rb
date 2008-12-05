@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -61,10 +62,10 @@ module Qwik
 
     def new_already_exist(title, key)
       ar = []
-      ar << [:h2, _('Already exist')]
+      ar << [:h2, _('Already exists')]
       form = new_form(title) {
 	[:p, [:a, {:href=>key+'.html'}, [:strong, title]],
-	  _(' is already exist.'), [:br],
+	  _(' already exists.'), [:br],
 	  _('Please specify another title.')]
       }
       return new_tail(ar, form)
@@ -103,7 +104,7 @@ module Qwik
 	  [:p, [:a, {:href=>'FrontPage.html'}, _('Go back')]],
 	  [:hr],
 	  new_form(title) {
-	    [:p,  _("Push create if you'd like to create the page.")]
+	    [:p,  _('Push create if you would like to create the page.')]
 	  }
 	]
       }
@@ -161,8 +162,8 @@ if defined?($test) && $test
       res = session('/test/.new') {|req|
 	req.cookies.clear
       }
-      ok_title('Please login.') # You can't see the form.
-      ok_in(['You need login to use this function.'], 'p')
+      ok_title('Please log in.') # You can't see the form.
+      ok_in(['You need to log in to use this function.'], 'p')
     end
   end
 
@@ -204,13 +205,13 @@ if defined?($test) && $test
 
       # Try to create with the same key.
       res = session("/test/.new?t=FirstPage")
-      ok_in(['Already exist'], '//h2')
+      ok_in(['Already exists'], '//h2')
       ok_xp([:a, {:href=>'FirstPage.html'}, [:strong, 'FirstPage']],
 	    "//div[@class='section']/a")
 
       # Try to create with the same key.
       res = session("POST /test/.new?t=FirstPage")
-      ok_in(['Already exist'], '//h2')
+      ok_in(['Already exists'], '//h2')
       ok_xp([:a, {:href=>'FirstPage.html'}, [:strong, 'FirstPage']],
 	    "//div[@class='section']/a")
     end
@@ -264,13 +265,13 @@ if defined?($test) && $test
 
       # Try to create with the same key.
       res = session("/test/.new?t=First+Page")
-      ok_in(['Already exist'], '//h2')
+      ok_in(['Already exists'], '//h2')
       ok_xp([:a, {:href=>'1.html'}, [:strong, 'First Page']],
 	    "//div[@class='section']/a")
 
       # Try to create with the same key.
       res = session("POST /test/.new?t=First+Page")
-      ok_in(['Already exist'], '//h2')
+      ok_in(['Already exists'], '//h2')
       ok_xp([:a, {:href=>'1.html'}, [:strong, 'First Page']],
 	    "//div[@class='section']/a")
 
@@ -375,7 +376,7 @@ if defined?($test) && $test
 
       # Try to create with the same key.
       res = session("POST /test/.new?t=ç≈èâÇÃÉyÅ[ÉW")
-      ok_in(['Already exist'], '//h2')
+      ok_in(['Already exists'], '//h2')
 
       # Let's create a page again.  At the first, embed the title.
       page = @site['FrontPage']

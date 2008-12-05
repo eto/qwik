@@ -42,7 +42,7 @@ Thank you very much.
 	[:br],
 	[:div, {:style=>'margin: 0 0 1em 0;'},
 	  [:a, {:href=>fullhref, :style=>'font-size:x-small;'},
-	    _('Show map in fullscreen.')]]]
+	    _('Show map in full screen.')]]]
       content = yield
       elements = c_res(content)
       div += elements

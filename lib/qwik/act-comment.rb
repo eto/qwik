@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -80,8 +81,8 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
       page.add(content)
       c_make_log('comment')	# COMMENT
       url = @req.base+'.html'
-      return c_notice(_('Message is added.'), url) {
-	[[:h2, _('Message is added.')],
+      return c_notice(_('Message has been added.'), url) {
+	[[:h2, _('Message has been added.')],
 	  [:p, [:a, {:href=>url}, _('Go back')]]]
       }
     end
@@ -141,7 +142,7 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 
       url = @req.base+'.html'
       return c_notice(_('Add a comment.'), url){
-	[[:h2, _('Message is added.')],
+	[[:h2, _('Message has been added.')],
 	  [:p, [:a, {:href=>url}, _('Go back')]]]
       }
     end
@@ -268,7 +269,7 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
       user = _('Anonymous') if user.nil? || user.empty?
 
       msg = @req.query['m']
-      return c_nerror(_('No message')) if msg.nil? || msg.empty?
+      return c_nerror(_('No message.')) if msg.nil? || msg.empty?
       msg = msg.normalize_newline
       msg.gsub!("\n", "\\n")
 
@@ -293,7 +294,7 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 
       url = "#{@req.base}.html"
       return c_notice(_('Add a comment.'), url){
-	[[:h2, _('Message is added.')],
+	[[:h2, _('Message has been added.')],
 	  [:p, [:a, {:href=>url}, _('Go back')]]]
       }
     end
@@ -347,7 +348,7 @@ if defined?($test) && $test
 
       # The 1st comment.
       res = session('/test/1.comment?msg=Hi')
-      ok_title('Message is added.')
+      ok_title('Message has been added.')
 
       res = session('/test/1.html')
       ok_xp([:dl, [:dt, 'user@e... (1970-01-01 09:00:00)'], [:dd, [:br], 'Hi']],
@@ -358,7 +359,7 @@ if defined?($test) && $test
 
       # The 2nd comment.
       res = session('/test/1.comment?msg=hello%0aworld')
-      ok_title('Message is added.')
+      ok_title('Message has been added.')
 
       res = session('/test/1.html')
       ok_xp([:dl,

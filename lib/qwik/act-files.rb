@@ -1,4 +1,4 @@
-# -*- coding: cp932 -*-
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -60,10 +60,10 @@ You can show the list of attached files.
 	[:li, [:a, {:href=>"#{base}.files/#{encoded}"}, file.to_page_charset],
 	  [:span, {:class=>'delete'},
 	    ' (', [:a, {:href=>"#{base}.file_del/#{encoded}"},
-	      _('del')], ')'],
+	      _('Delete')], ')'],
 	  [:span, {:class=>'download'},
 	    ' (', [:a, {:href=>"#{base}.download/#{encoded}"},
-	      _('download')], ')'],
+	      _('Download')], ')'],
 	]
       }
     end
@@ -163,7 +163,7 @@ You can show the list of attached files.
     def files_delete_confirm(filename)
       encoded = Filename.encode(filename)
       action = "../#{@req.base}.file_del/#{encoded}"	# Bad...
-      return c_notice(_('Confirm to delete a file')) {
+      return c_notice(_('Confirm file deletion')) {
 	[:form, {:method=>'POST', :action=>action},
 	  [:p, _("Push 'Delete' to delete a file")],
 	  [:p, [:input, {:type=>'submit', :value=>_('Delete')}]]]
@@ -183,7 +183,7 @@ You can show the list of attached files.
 
       c_make_log('file delete')		# FILE DELETE
 
-      return c_notice(_('The file is deleted.'), url) {
+      return c_notice(_('The file has been deleted.'), url) {
 	[:p, [:a, {:href=>url}, _('Go back')]]
       }
     end
@@ -226,9 +226,9 @@ You can show the list of attached files.
 
 	max_size = @site.siteconfig['max_file_size'].to_i
 	if max_size < data.length
-	  list << [:p, [:strong, filename], [:em, _('Max size exceeded.')],
+	  list << [:p, [:strong, filename], [:em, _('Maximum size exceeded.')],
 	    [:br],
-	    _('Max size'), max_size, [:br],
+	    _('Maximum size'), max_size, [:br],
 	    _('File size'), data.length, [:br]]
 	  next
 	end
@@ -250,7 +250,7 @@ You can show the list of attached files.
 	[:hr],
 	[:p, _('Go next'), ' : ', [:a, {:href=>url}, url]],
       ]
-      return c_notice(_('Attach file done'), url) { ar }
+      return c_notice(_('File attachment completed'), url) { ar }
     end
 
     def self.get_basename(filename)
@@ -294,7 +294,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Check log.
       eq(",0.000000,user@e.com,file attach,1\n", @site['_SiteLog'].load)
@@ -315,14 +315,14 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't2'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_xp([:p, [:strong, '1-t.txt'], ' : ',
 	      'The file is saved.'],
 	    "//div[@class='section']/p")
 
       # Delete the second file.
       res = session('POST /test/1.file_del/1-t.txt')
-      ok_title('The file is deleted.')
+      ok_title('The file has been deleted.')
 
       # See the page again.
       ok_wi([:div, {:class=>'files'},
@@ -330,9 +330,9 @@ if defined?($test) && $test
 	      [:ul,
 		[:li, [:a, {:href=>'1.files/t.txt'}, 't.txt'],
 		  [:span, {:class=>'delete'},
-		    " (", [:a, {:href=>"1.file_del/t.txt"}, 'del'], ")"],
+		    " (", [:a, {:href=>"1.file_del/t.txt"}, 'Delete'], ")"],
 		  [:span, {:class=>'download'},
-		    " (", [:a, {:href=>'1.download/t.txt'}, 'download'],
+		    " (", [:a, {:href=>'1.download/t.txt'}, 'Download'],
 		    ")"]]]],
 	    '{{show_files}}')
 
@@ -340,7 +340,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('s.png', TEST_PNG_DATA))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # The reference is added too.
       ok_eq('{{show_files}}
@@ -355,25 +355,25 @@ if defined?($test) && $test
 	      [:ul,
 		[:li, [:a, {:href=>'1.files/s.png'}, 's.png'],
 		  [:span, {:class=>'delete'},
-		    " (", [:a, {:href=>"1.file_del/s.png"}, 'del'], ")"],
+		    " (", [:a, {:href=>"1.file_del/s.png"}, 'Delete'], ")"],
 		  [:span, {:class=>'download'},
 		    " (", [:a, {:href=>'1.download/s.png'},
-		      'download'], ")"]],
+		      'Download'], ")"]],
 		[:li, [:a, {:href=>'1.files/t.txt'}, 't.txt'],
 		  [:span, {:class=>'delete'},
-		    " (", [:a, {:href=>"1.file_del/t.txt"}, 'del'], ")"],
+		    " (", [:a, {:href=>"1.file_del/t.txt"}, 'Delete'], ")"],
 		  [:span, {:class=>'download'},
 		    " (", [:a, {:href=>'1.download/t.txt'},
-		      'download'], ")"]]]],
+		      'Download'], ")"]]]],
 	    "//div[@class='files']")
 
       # Show a form to delete the file.
       res = session('/test/1.file_del/t.txt')
-      ok_title('Confirm to delete a file')
+      ok_title('Confirm file deletion')
 
       # Delete it.
       res = session('POST /test/1.file_del/t.txt')
-      ok_title('The file is deleted.')
+      ok_title('The file has been deleted.')
 
       # Try to delete it again.  But the file is already deleted.
       res = session('POST /test/1.file_del/t.txt')
@@ -409,7 +409,7 @@ if defined?($test) && $test
 	req.query.update('content'=>content1)
       }
 
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_in([
 	      [:p, [:strong, 't1.txt'], ' : ', 'The file is saved.'],
 	      [:p, [:strong, 't2.txt'], ' : ', 'The file is saved.'],
@@ -442,7 +442,7 @@ if defined?($test) && $test
       res = session('POST /test/.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Check log.
       eq(",0.000000,user@e.com,file attach,FrontPage\n", @site['_SiteLog'].load)
@@ -468,7 +468,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('‚ .txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Check log.
       ok_eq(",0.000000,user@e.com,file attach,1\n", @site['_SiteLog'].load)
@@ -493,7 +493,7 @@ if defined?($test) && $test
 
       # Delete it.
       res = session('POST /test/1.file_del/=E3=81=82.txt')
-      ok_title('The file is deleted.')
+      ok_title('The file has been deleted.')
     end
 
     def test_download
@@ -506,7 +506,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Error check.
       res = session('/test/1.download')
@@ -522,7 +522,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('‚ .txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Download the file.
       res = session('/test/1.download/=E3=81=82.txt')
@@ -542,7 +542,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.doc', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Download the file.
       res = session('/test/1.download/t.doc')
@@ -567,7 +567,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('T.DOC', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Download the file.
       res = session('/test/1.download/T.DOC')
@@ -598,7 +598,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content("c:\\tmp\\t.txt", 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Download by files extension.
       res = session('/test/1.files/t.txt')
@@ -622,8 +622,8 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', big_content))
       }
-      ok_title('Attach file done')
-      ok_in(["Max size exceeded."],
+      ok_title('File attachment completed')
+      ok_in(['Maximum size exceeded.'],
 	    "//div[@class='section']/p/em")
 
       # Get the file.
@@ -641,7 +641,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t!.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Download the file.
       res = session('/test/1.download/t!.txt')

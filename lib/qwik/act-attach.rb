@@ -55,7 +55,7 @@ module Qwik
 
       backpage = '.attach'
 
-      return c_notice(_('Attach file done')) {
+      return c_notice(_('File attachment completed')) {
 	[[:p, [:strong, res], ' : ', _('The file is saved.')],
 	  [:p, [:a, {:href=>backpage}, _('Go back')]]]
       }
@@ -110,14 +110,14 @@ module Qwik
 	encoded = Filename.encode(file)
 	list << [:li, [:a, {:href=>"#{base}/#{encoded}"}, file.to_page_charset],
 	  [:span, {:class=>'delete'},
-	    ' (', [:a, {:href=>"#{base}?c=del&f=#{encoded}"}, _('del')], ')']]
+	    ' (', [:a, {:href=>"#{base}?c=del&f=#{encoded}"}, _('Delete')], ')']]
       }
       return nil if list.length == 0
       return list
     end
 
     def attach_delete_confirm(filename)
-      return c_notice(_('Confirm to delete a file')) {
+      return c_notice(_('Confirm file deletion')) {
 	[:form, {:method=>'POST', :action=>'.attach'},
 	  [:p, _("Push 'Delete' to delete a file")],
 	  [:input, {:type=>'hidden', :name=>'c', :value=>'del'}],
@@ -138,7 +138,7 @@ module Qwik
       rescue FailedToDelete
 	return c_nerror(_('Failed to delete.'), url)
       end
-      return c_notice(_('The file is deleted.')) {
+      return c_notice(_('The file has been deleted.')) {
 	[:p, [:a, {:href=>url}, _('Go back')]]
       }
     end
@@ -157,7 +157,7 @@ if defined?($test) && $test
     def test_attach
       # Only member can access attach form.
       res = session('/test/.attach')
-      ok_title('Member Only')
+      ok_title('Members Only')
 
       t_add_user
 
@@ -191,7 +191,7 @@ if defined?($test) && $test
       res = session('POST /test/.attach') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Get the file.
       res = session('/test/.attach/t.txt')
@@ -203,7 +203,7 @@ if defined?($test) && $test
       res = session('POST /test/.attach') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't2'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Show the list of attached files.
       res = session('/test/.attach')
@@ -215,19 +215,19 @@ if defined?($test) && $test
 	      [:input, {:value=>'attach', :type=>'submit'}]],
 	    "//div[@class='msg']/form")
       ok_xp([:a, {:href=>'/test/.attach/1-t.txt'}, '1-t.txt'], '//ul/li/a[1]')
-      ok_xp([:a, {:href=>'/test/.attach?c=del&f=1-t.txt'}, 'del'],
+      ok_xp([:a, {:href=>'/test/.attach?c=del&f=1-t.txt'}, 'Delete'],
 	    '//ul/li/a[2]')
       ok_xp([:a, {:href=>'/test/.attach/t.txt'}, 't.txt'], '//ul/li[2]/a[1]')
-      ok_xp([:a, {:href=>'/test/.attach?c=del&f=t.txt'}, 'del'],
+      ok_xp([:a, {:href=>'/test/.attach?c=del&f=t.txt'}, 'Delete'],
 	    '//ul/li[2]/a[2]')
 
       # Show a form to delete the file.
       res = session('/test/.attach?c=del&f=t.txt')
-      ok_title('Confirm to delete a file')
+      ok_title('Confirm file deletion')
 
       # Delete it.
       res = session('POST /test/.attach?c=del&f=t.txt')
-      ok_title('The file is deleted.')
+      ok_title('The file has been deleted.')
 
       # Try to delete it again.  But the file is already deleted.
       res = session('POST /test/.attach?c=del&f=t.txt')
@@ -254,7 +254,7 @@ if defined?($test) && $test
       res = session('POST /test/1.attach') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
       ok_eq('{{ref(t.txt)}}', page.load)
 
       res = session('/test/1.html')

@@ -17,12 +17,12 @@ module Qwik
       members = @site.member.list
       @req.query.each {|mail, v|
 	if ! MailAddress.valid?(mail) || v != 'on'
-	  status[mail] = _('Wrong format')
+	  status[mail] = _('Wrong format.')
 	  next
 	end
 
 	if ! members.include?(mail)
-	  status[mail] = _('Not a member')
+	  status[mail] = _('Not a member.')
 	  next
 	end
 
@@ -31,9 +31,9 @@ module Qwik
 				@config.test)
 	begin
 	  sendmail.send(passmail)
-	  status[mail] = _('Success')
+	  status[mail] = _('Succeeded.')
 	rescue
-	  status[mail] = _('Failed')
+	  status[mail] = _('Failed.')
 	end
       }
 

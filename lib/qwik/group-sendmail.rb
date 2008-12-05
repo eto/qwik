@@ -134,7 +134,7 @@ module QuickML
 		  ['Subject',	subject],
 		  ['Content-Type', content_type])
       max  = @group_config[:max_mail_length].commify
-      body =   _("Sorry, your mail exceeds the limitation of the length.\n")
+      body =   _("Sorry, your mail exceeds the length limitation.\n")
       body <<  _("The max length is %s bytes.\n\n", max)
       orig_subject = codeconv(Mail.decode_subject(mail['Subject']))
       body << "Subject: #{orig_subject}\n"
@@ -194,15 +194,15 @@ module QuickML
 
     def confirmation_message(address)
       body = ''
-      body += _("At the first, please read the agreement of this service.\n")
+      body += _("First, please read the agreement of this service.\n")
 
      #body += _("http://example.com/qwikjpAgreementE.html\n")
       body += _("http://qwik.jp/qwikjpAgreementE.html\n")
      #body += "http://#{@cnfig.domain}/"+_('AgreementE.html')+"\n"
 
-      body += _("You have to agree this agreement to use this service.\n")
+      body += _("You must agree with this agreement to use the service.\n")
       body += _("If you agree, then,\n")
-      body += _("Please simply reply this mail to create ML <%s>.\n", address)
+      body += _("Please simply reply to this mail to create ML <%s>.\n", address)
       body
     end
   end

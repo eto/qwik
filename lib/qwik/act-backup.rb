@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -73,7 +74,7 @@ You see the backup list of the page.
 
       msg = ''
       if index == 0
-	msg = [:p, _('The first page.')]
+	msg = [:p, _('This is the first page.')]
       else
 	diff = backup_diff(list, index-1, index)
 	msg = [:div, {:class=>'differ'}, *diff]
@@ -81,7 +82,7 @@ You see the backup list of the page.
 
       return c_plain("#{key} @ #{time.ymdax}") {
 	[[:div, {:class=>'day'},
-	    [:h2, _('Diff from the previous page')],
+	    [:h2, _('Difference from the previous page')],
 	    [:div, {:class=>'section'}, msg]],
 	  [:div, {:class=>'day'},
 	    [:h2, _('Original data')],
@@ -112,10 +113,10 @@ You see the backup list of the page.
 	    Time.at(time).format_date]]
       }
       if 0 < ul.length
-	ul.last << ' '+_('<-')+' '+ _('newest')
+	ul.last << ' '+_('<-')+' '+ _('Newest')
       end
 
-      return c_plain(_('backup list')) {
+      return c_plain(_('Backup list')) {
 	[:div, {:class=>'day'},
 	  [:div, {:class=>'section'},
 	    [:ul, ul]]]
@@ -144,9 +145,9 @@ if defined?($test) && $test
 
       # Only members can see the page.
       res = session '/test/1.html'
-      ok_title 'Member Only'
+      ok_title 'Members Only'
       res = session '/test/1.backup'
-      ok_title 'Member Only'
+      ok_title 'Members Only'
 
       t_add_user
 
@@ -154,7 +155,7 @@ if defined?($test) && $test
       res = session '/test/1.html'
       ok_title 'Page not found.'
       res = session '/test/1.backup'
-      ok_in ['backup list'], '//title'
+      ok_in ['Backup list'], '//title'
 
       page = @site.create_new
       page.put_with_time('t', 0)
@@ -162,11 +163,11 @@ if defined?($test) && $test
       res = session '/test/1.html'
       ok_title '1'
       res = session '/test/1.backup'
-      ok_in ['backup list'], '//title'
+      ok_in ['Backup list'], '//title'
 
       # Error check.
       res = session '/test/1.backup/0'
-      ok_title 'Require no path args'
+      ok_title 'Incorrect path arguments.'
       res = session '/test/1.100.200.backup'
       ok_title 'only one time stamp'
       res = session '/test/1.hoge.backup'

@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -51,7 +52,7 @@ by Mr. Eric Meyer for this presentation mode.  Thank you very much.
 
     def plg_presen_switch
       return nil if ! defined?(@req.base) || @req.base.nil?
-      return plg_ext('presen', _('Presen')) if /^Presen/ =~ @req.base
+      return plg_ext('presen', _('Present')) if /^Presen/ =~ @req.base
       return nil
     end
 
@@ -254,7 +255,7 @@ if defined?($test) && $test
       page = @site.create("PresenTest")
       page.store('{{presen_switch}}')
       res = session('/test/PresenTest.html')
-      ok_in([:a, {:href=>"PresenTest.presen"}, "Presen"],
+      ok_in([:a, {:href=>"PresenTest.presen"}, "Present"],
 	    "//div[@class='section']")
     end
 

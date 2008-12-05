@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -121,7 +122,7 @@ You can not use tag notation to specify date now.
       
       pagename = "plan_#{dateobj.ymd_s}"
       page = @site[pagename]
-      msg = _('Already Exist.')
+      msg = _('Already Exists.')
       if page.nil?
 	msg = _('Created.')
 	page = @site.create(pagename)	# CREATE

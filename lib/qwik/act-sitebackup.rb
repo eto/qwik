@@ -1,4 +1,4 @@
-# -*- coding: cp932 -*-
+# -*- coding: shift_jis -*-
 # Copyright (C) 2008 National Institute of
 #                    Advanced Industrial Science and Technology (AIST)
 # All rights reserved.
@@ -400,7 +400,7 @@ if defined?($test) && $test
       res = session('POST /test/1.files') {|req|
 	req.query.update('content'=>t_make_content('t.txt', 't'))
       }
-      ok_title('Attach file done')
+      ok_title('File attachment completed')
 
       # Remake backup
       res = session '/test/test.sitebackup'

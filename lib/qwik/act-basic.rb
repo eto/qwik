@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -179,8 +180,8 @@ This is {{br}} a test.
       return nil if @req.user.nil?
       diff = Time.now - @req.start_time
       diffsec = sprintf('%.2f', diff)
-      return [:span, {:class=>'attribute'}, _('Generate time'), ': ',
-	[:em, diffsec, _('sec.')]]
+      return [:span, {:class=>'attribute'}, _('Generation time'), ': ',
+	[:em, diffsec, _('seconds')]]
     end
 
     # ============================== member control
@@ -312,7 +313,7 @@ t
       ok_wi(/Last modified: /, '{{last_modified}}')
 
       # test_generate_time
-      ok_wi(/Generate time: /, '{{generate_time}}')
+      ok_wi(/Generation time: /, '{{generate_time}}')
 
       # test_only_member_or_guest
       t_site_open

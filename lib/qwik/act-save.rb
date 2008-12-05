@@ -63,7 +63,7 @@ module Qwik
 	[:h2, _('Password does not match.')],
 	[:div, {:class=>'section'},
 	  [:p, [:tt, '{{password('], _('Password'), [:tt, ')}}']],
-	  [:p, _('Please find a line like above, then input password in parentheses.')]]]
+	  [:p, _('Please find a line like that above, then input password in parentheses.')]]]
       return generate_edit_page(contents, message)
     end
 

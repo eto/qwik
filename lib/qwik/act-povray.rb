@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -162,7 +163,7 @@ light_source { <-9, 9, 0> rgb 1 }
       return c_nerror(_('Error')) if num < 1
 
       text = @req.query['t']
-      return c_nerror(_('No text')) if text.nil? || text.empty?
+      return c_nerror(_('No text.')) if text.nil? || text.empty?
       text = text.normalize_newline
 
       begin

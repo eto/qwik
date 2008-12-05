@@ -24,7 +24,7 @@ class CheckServer < Test::Unit::TestCase
     # In private mode.
     write_page('1', "* t\ns\n")
     str = get_path('1.html')
-    ok_in(['Member Only'], '//title', str)
+    ok_in(['Members Only'], '//title', str)
     #ok_in(['Login'], '//title', str)
     #ok_in([[:p, 'Please login.'], [:p, [:a, {:href=>'.login'}, 'Login']]],
 #	  "//div[@class='section']", str)
