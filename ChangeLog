@@ -1,3 +1,8 @@
+2008-12-08  Keiki Shimada  <shimada-k aist.go.jp>
+
+	*  lib/qwik/catalog-ja.rb, lib/qwik/catalog-ml-ja.rb, and other related files:
+	Correct some English messages.
+
 2008-12-01  Keiki Shimada  <shimada-k aist.go.jp>
 
 	* lib/qwik/page-get.rb: Fix bug: Ignore line start with ``#'' in
