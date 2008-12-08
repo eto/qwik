@@ -1,7 +1,8 @@
 2008-12-08  Keiki Shimada  <shimada-k aist.go.jp>
 
-	*  lib/qwik/catalog-ja.rb, lib/qwik/catalog-ml-ja.rb, and other related files:
+	* lib/qwik/catalog-ja.rb, lib/qwik/catalog-ml-ja.rb, and other related files:
 	Correct some English messages.
+	* lib/qwik/site-search.rb: Ignore a line which start with `#' in searching.
 
 2008-12-01  Keiki Shimada  <shimada-k aist.go.jp>
 
