@@ -1,3 +1,4 @@
+# -*- coding: shift_jis -*-
 # Copyright (C) 2003-2006 Kouichirou Eto, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
@@ -98,8 +99,10 @@ class Qwik::CatalogFactory
       'Backup list' => 'バックアップ一覧',
 
       # act-basic-plugin
-      'New page' => '新規作成',	# FIXME: not found
-      'Edit' => '編集',		# FIXME: not found
+#      'New page' => '新規作成',
+#      'Edit' => '編集',
+      'newpage' => '新規作成',
+      'edit' => '編集',
       'wysiwyg' => 'その場で編集',
       'Last modified' => '最終更新',
       'Generation time' => '生成時間',
