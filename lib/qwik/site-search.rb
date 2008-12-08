@@ -13,6 +13,7 @@ module Qwik
       self.each {|page|
 	str = page.load
 	str.each_with_index {|line, i|
+	  next if line =~ /^#/
 	  matched = true
 
 	  querys.each {|query|
@@ -67,5 +68,22 @@ if defined?($test) && $test
       res = @site.search('@', false)
       is [["2", "user@example.com", 0]], res
     end
+
+    def test_skip_sharp
+      page = @site.create_new
+      page.store('This is a test.')
+      page = @site.create_new
+      page.store('# This is a test start with sharp.')
+      page = @site.create_new
+      page.store("This is a test which have `#' in a middle of line.")
+      page = @site.create_new
+      page.store('This is a test, too.')
+
+      res = @site.search('test')
+      ok_eq([['1', 'This is a test.', 0],
+	     ["3", "This is a test which have `#' in a middle of line.", 0],
+	     ["4", "This is a test, too.", 0]], res)
+    end
+
   end
 end
