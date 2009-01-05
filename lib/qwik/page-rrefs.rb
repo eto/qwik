@@ -14,6 +14,12 @@ module Qwik
 
     def initialize(site_dir, key)
       @rref_file = site_dir.path+"#{key}.rrefs"
+
+      # fix me!
+      # the mutex works only in a process
+      # wiki server process is the process to update rrefs
+      # ml-server is not supposed to update rrefs
+      @lock = Mutex.new
     end
 
     def exist?
@@ -30,17 +36,19 @@ module Qwik
     end
 
     def delete(key)
-      #sould be atomic operation
-      rrefs = self.get
-      rrefs = rrefs.map {|r| r if r.chomp != key }.to_s
-      @rref_file.path.put(rrefs)
+      @lock.synchronize {
+        rrefs = self.get
+        rrefs = rrefs.map {|r| r if r.chomp != key }.to_s
+        @rref_file.path.put(rrefs)
+      }
     end
 
     def add(key)
-      #shoud be atmic operation
-      f = File.open(@rref_file,"a")
-      f.puts key
-      f.close
+      @lock.synchronize {
+        f = File.open(@rref_file,"a")
+        f.puts key
+        f.close
+      }
     end
 
     def put(keys)

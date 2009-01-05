@@ -150,7 +150,7 @@ if defined?($test) && $test
       ok_in(['Page is saved.'],'title')
 
       #check if page1's rrefs has page2
-      ok_eq(@site["page1"].rrefs.get,"page2" + $/)
+      ok_eq("page2" + $/, @site["page1"].rrefs.get)
 
       #load page1
       res = session('/test/page1.html')
@@ -169,17 +169,69 @@ if defined?($test) && $test
       ok_in(['Page is saved.'],'title')
 
       #check if page1's rrefs has no content
-      ok_eq(@site["page1"].rrefs.get,"")
+      ok_eq("",@site["page1"].rrefs.get)
 
-      ## assetion for deleting page
+      ## assetion for deleting page1
       res = session('/test/page1.edit')
       md5hex = session_md5(res.body)
-      res = session('/test/page2.save?contents=&md5hex=' + md5hex)
+      res = session('/test/page1.save?contents=&md5hex=' + md5hex)
       ok_in(['Page is deleted.'],'title')
       
-      #check if page1's rrefs has no content
-      ok_eq(@site["page1"].rrefs.get,"")
+      #check if page2's rrefs has no content
+      ok_eq("",@site["page2"].rrefs.get)
     end
+
+=begin
+    # check exclusive rrefs update
+    # this test takes too long to run as regression
+    # please uncomment when needed to test
+    def test_multi_pages_update
+      t_add_user
+
+     
+      # number of pages to update at once.
+      # This number should be even.
+      # Adequate number is upto the test environment.
+      num = 300
+
+      #create pages0~num
+      0.upto(num){|i|
+        t = "page#{i}"
+        res = session("POST /test/.new?t=#{t}")
+	if ((i&0x1) == 0x1) #odd pages have a link to page0
+          res = session("/test/#{t}.save?contents=%5b%5bpage0%5d%5d")
+	else #even pages have no links
+          res = session("/test/#{t}.save?contents=#{t}")
+	end
+      }
+
+      #update page1~num
+      1.upto(num) {|i|
+	  p = "page#{i}"
+	  res = session("/test/#{p}.edit")
+      }
+      sleep(1)
+
+      ths = []
+      1.upto(num) {|i|
+        ths[i] = Thread.new {
+	  p = "page#{i}"
+	  if ((i&0x1) == 0x1) #odd pages: remove a link to page0
+	    res = session("/test/#{p}.save?contents=page0")
+	  else #even pages: add a link to page0
+	    res = session("/test/#{p}.save?contents=%5b%5bpage0%5d%5d")
+	  end
+        }
+      }
+      1.upto(num){|i|
+        ths[i].join
+      }
+
+      #check if page0's rrefs has num/2 pages
+      r = @site["page0"].rrefs.get.sort
+      ok_eq(num/2,r.to_a.size)
+    end
+=end
 
     private
     def session_md5(body)
