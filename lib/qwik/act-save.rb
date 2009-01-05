@@ -8,6 +8,7 @@ require 'qwik/wabisabi-diff'
 require 'qwik/act-edit'
 require 'qwik/act-monitor'
 require 'qwik/act-event'
+require 'qwik/act-rrefs'
 
 module Qwik
   class Action
@@ -24,6 +25,7 @@ module Qwik
 	@site.delete(@req.base)	# DELETE
 	c_make_log('delete')	# DELETE
 	c_monitor('delete')	# DELETE
+        clear_rrefs(@req.base)
 	return save_page_deleted
       end
 
@@ -47,6 +49,9 @@ module Qwik
       c_event('save')		# STORE
 
       url = "#{@req.base}.#{ext}"
+
+      update_rrefs
+
       return save_page_is_saved(url)
     end
 

@@ -20,11 +20,13 @@ module Qwik
       
       # FIXME
       @files = nil
+      @rrefs = nil
       @cache = {}
     end
     attr_reader :key
 
     attr_accessor :files
+    attr_accessor :rrefs
     attr_reader :cache
 
     def inspect
