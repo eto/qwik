@@ -80,6 +80,13 @@ a.external {
   margin: 0 0.2em 0 0;
 }
 
+.files_site_total {
+  position: absolute;
+  right: 3em;
+  text-align: right;
+  clear: both;
+}
+
 /* ========== footer */
 .footer {
   margin: 0;

@@ -87,6 +87,9 @@ module Qwik
       :log_dir		=> '/var/log/qwik',
       :web_pid_file	=> '/var/run/qwikweb.pid',
       :ml_pid_file	=> '/var/run/quickml.pid',
+      # total size of attachments for each site
+      :max_total_file_size	=>	1 * 1024 * 1024 * 1024, # 1GB
+      :max_total_warn_size	=>	10 * 1024 * 1024 # 10MB
     }
 
     DebugConfig = {
@@ -184,6 +187,7 @@ module Qwik
       when /\A(\d+)w\z/;	return $1.to_i * 60 * 60 * 24 * 7
       when /\A(\d+)KB\z/;	return $1.to_i * 1024
       when /\A(\d+)MB\z/;	return $1.to_i * 1024 * 1024
+      when /\A(\d+)GB\z/;	return $1.to_i * 1024 * 1024 * 1024
       end
       v.gsub!('$BASEDIR') { DEBUG_BASEDIR }
       return v
@@ -273,6 +277,7 @@ if defined?($test) && $test
       assert_equal 604800, c.parse_value('1w')
       assert_equal   1024, c.parse_value('1KB')
       assert_equal 1048576, c.parse_value('1MB')
+      assert_equal 1073741824, c.parse_value('1GB')
 
       # test_parse_args
       assert_equal({:debug=>true}, c.parse_args('myprog', ['-d']))

@@ -11,6 +11,7 @@ require 'qwik/page-title'
 require 'qwik/util-string'
 require 'qwik/util-charset'
 require 'qwik/util-filename'
+require 'qwik/ml-gettext'
 
 module QuickML
   class Group
@@ -49,9 +50,19 @@ module QuickML
 	return ''	# Do not raise error
       end
     end
+
+    private
+    def total_file_size_exceeded?
+      @groupsite.total_file_size_exceeded
+    end
+
+    def total_file_size_reaching?
+      @groupsite.total_file_size_reaching
+    end
   end
 
   class GroupSite
+    include GetText
     def initialize(ml_config, sitename, test=false)
       @ml_config = ml_config
 
@@ -81,9 +92,13 @@ module QuickML
       @site = @memory.farm.get_site(@sitename)
       raise 'site does not exist' if @site.nil?	# Check if the site is exist.
       @key = nil
+      @total_file_size_exceeded = false
+      @total_file_size_reaching = false
     end
     attr_reader :key
     attr_reader :site
+    attr_reader :total_file_size_exceeded
+    attr_reader :total_file_size_reaching
 
     def post(mail)
       # Parse page title.
@@ -103,7 +118,7 @@ module QuickML
 
       # Get body text.
       now = $quickml_debug ? Time.at(0) : Time.now
-      content = GroupSite.make_content(@site, @key, mail, now)
+      content = make_content(@key, mail, now)
       page.add(content)
     end
 
@@ -114,10 +129,13 @@ module QuickML
     end
 
     private
-
-    def self.make_content(site, key, mail, now)
+    def make_content(key, mail, now)
       content = ''
       mail_default_charset = 'ISO-2022-JP'
+      site_files_total = @site.files_total
+      max_total_file_size = @config[:max_total_file_size].to_i
+      max_total_warn_size = @config[:max_total_warn_size].to_i
+
       mail.each_part {|sub_mail|
 	if sub_mail.plain_text_body?
 	  c = sub_mail.decoded_body.normalize_eol
@@ -128,8 +146,19 @@ module QuickML
 	  filename = sub_mail.filename
 	  decoded_body = sub_mail.decoded_body
 	  if filename && decoded_body
-	    msg = GroupSite.attach(site, key, filename, decoded_body)
-	    content << msg
+	    if max_total_file_size < site_files_total
+	      #do not attach file
+	      content << _("\nFile '%s' was not attached.\n",filename)
+	    else
+	      msg = GroupSite.attach(@site, key, filename, decoded_body)
+	      content << msg
+	      site_files_total += decoded_body.size
+	    end
+	    if max_total_file_size < site_files_total
+	      @total_file_size_exceeded = true
+	    elsif (max_total_file_size - max_total_warn_size) < site_files_total
+	      @total_file_size_reaching = true
+	    end
 	  end
 	end
       }
@@ -204,9 +233,10 @@ Subject: test
 
 test.
 '
+      t_make_public(QuickML::GroupSite, :make_content)
       mail = QuickML::Mail.generate { message }
       eq "{{mail(user@e.com,0)\ntest.\n}}\n",
-	c.make_content(@site, nil, mail, Time.at(0))
+	groupsite.make_content(nil, mail, Time.at(0))
 
       # test_attach
       eq '
@@ -244,6 +274,101 @@ test.
       eq true, files.exist?('t.txt')
       #eq true, files.exist?('=82=A0.txt')
       #eq ['1-t.txt', '=82=A0.txt', 't.txt'], files.list
+    end
+
+    def test_total_file_limit
+      c = QuickML::GroupSite
+
+      group = setup_group
+
+      t_make_readable(QuickML::Group, :groupsite)
+      groupsite = group.groupsite
+
+      #attach 712B file named 'ruby.png'
+      multi_part_message =
+'Date: Tue, 13 Jan 2009 21:51:41 +0900
+From: user@e.com
+To: test@example.com
+Subject: test
+Content-Type: multipart/mixed;
+ boundary="Multipart_Tue_Jan_13_21:58:38_2009-1"
+
+--Multipart_Tue_Jan_13_21:58:38_2009-1
+Content-Type: text/plain; charset=US-ASCII
+
+ruby
+
+--Multipart_Tue_Jan_13_21:58:38_2009-1
+Content-Type: image/png
+Content-Disposition: inline; filename="ruby.png"
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAIAAACp9tltAAAAAXNSR0IArs4c6QAAAoJJREFUKM8F
+wUlPE1EAAOC3zXSWbtMylBbaAEUsEKlQIkSlogkxRm9eSLx78Z94NSR6MzEuF42JejUx0URNMFAo
+RUJtEUqBCp1pO0unM+/5ffBxfum8XMaSbBsGkWSPUQqA03UoAIAQj1IAodE2cvfu4KU+Nf9gJdKv
+Dgyn9GJRxhjqWvbmjWQq1S4UFMEXQhBalokwMXRdGRk53NoeXpg/2ipKStgxTCJJA5MTWu0QEeJZ
+Fg6HWxjjqyFlLDcTHUsfbRQwxyWy06FEghN8Xq/Xn7mYXlyUlPB5rWZQhgDGsqoW3r1P5mbFcFgI
+BXm/zChzTKu2vr726nU0PXr+p0o4jjCEvj5ZbVT3TU33q31G4xRh7FgWdT29dgQRKn74yDyPIESs
+VrsF2MTt5cHhZGw8bRta8dNn5guKgaDV1Ox2+7j0GxMMAUPB5ODcyn3QqO++eL79dDW9fLdvPndQ
+KNT/VuO5LLUsSD2CEIIQX4vF7NLmWWUfCgIRJUi7zW9fui4oN/7F4nF4ckwwRJ7LIlHUOv3XdRw+
+qrSbWmBy+mCjdHLaCfqD2Xxejcc41xIJFDHjEEQMY8jzRrOpZi/NP3rYYsgR5UrjTFYiEYHDXlck
+QCKAQ5B4jLV0LZGZmLyeq755ptfrtb09JEu0Y3WOagGZI4RxPLMJIE7PHbqVT4VDWy/fYp8ojWda
+rjs1O+M2dey2RR5gjjKXmRigyFAiMze39/OX4490bNozrJGFK/rJMXJtwTVFHokEiBwQOYSnMN8q
+7XQs2wTAJFhNj2KO7Hz/cXlmKqZVcM8UOSgxx/ZHSCSZKlf3BdHn2QaDQF/bQJQCKbS5W6lblNCA
+ADFPoXIh8x8NLS3ZvcTDhQAAAABJRU5ErkJggg==
+
+--Multipart_Tue_Jan_13_21:58:38_2009-1--
+'
+
+      default_max_total_file_size = @config[:max_total_file_size]
+      default_max_total_warn_size = @config[:max_total_warn_size]
+
+      @config[:max_total_file_size] = 800 #total file size limit
+      @config[:max_total_warn_size] = 100 #warn if remaining is less than this
+
+      t_make_writable(QuickML::GroupSite, :total_file_size_exceeded)
+      t_make_writable(QuickML::GroupSite, :total_file_size_reaching)
+
+      mail = QuickML::Mail.generate { multi_part_message }
+
+
+      ##post first mail
+      groupsite.post(mail)
+      files = @site.files('test')
+
+      #check if attached file is saved on the web
+      eq ['ruby.png'], files.list
+
+      #check if warning is on
+      eq true,  groupsite.total_file_size_reaching
+
+      ##post second mail
+      groupsite.total_file_size_reaching = false
+      groupsite.post(mail)
+
+      # check if attached file is save on the web
+      eq ['1-ruby.png','ruby.png'], files.list
+
+      #check if total file size is exceeded the limit(800)
+      eq true, groupsite.total_file_size_exceeded
+
+      ##post second mail
+      groupsite.total_file_size_exceeded = false
+      groupsite.post(mail)
+
+      #check if file is not attached
+      eq ['1-ruby.png','ruby.png'], files.list
+
+      #check if total file size is exceeded the limit(800)
+      eq true, groupsite.total_file_size_exceeded
+
+
+      #check if the warning message is inserted on the web
+      eq "{{mail(user@e.com,0)\nruby\n\n\n{{file(ruby.png)}}\n}}\n{{mail(user@e.com,0)\nruby\n\n\n{{file(1-ruby.png)}}\n}}\n{{mail(user@e.com,0)\nruby\n\n\nFile 'ruby.png' was not attached.\n}}\n", @site['test'].get_body
+
+
+      @config[:max_total_file_size] = default_max_total_file_size
+      @config[:max_total_warn_size] = default_max_total_warn_size
     end
   end
 end

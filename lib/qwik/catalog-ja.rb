@@ -455,6 +455,16 @@ class Qwik::CatalogFactory
       # act-site-backup
       'Site backup' => 'サイトバックアップ',
 
+      # act-files
+      'Attached files total:' => '添付ファイル合計:',
+      'Exceeded limit.' => '最大容量を超えました',
+      '%s left' => '残り%s',
+      'Total file size exceeded.' => '総ファイルサイズの限界を超えています。',
+      'Reaching limit.' => '容量が少なくなってきています。',
+      'Maximum total size' => '添付ファイルの最大',
+      'Current total size' => '現在の添付ファイルの合計',
+
+
       # Add you catalog here.
       '' => '',
       '' => '',

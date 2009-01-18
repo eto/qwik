@@ -24,6 +24,21 @@ class Integer
     true while numstr.sub!(/^([-+]?\d+)(\d{3})/, '\1,\2')
     return numstr
   end
+
+  UNITS = ['Bytes','KB','MB','GB','TB','PB']
+  # 1024 => 1KB
+  def byte_format
+      n = self
+      UNITS.each {|unit|
+        t = n/1024
+        if t > 0
+          n = t
+        else
+          return n.to_s + unit
+        end
+      }
+      return n.to_s + _(unit)
+  end
 end
 
 # It preserves case information. but it accepts an
@@ -86,6 +101,11 @@ if defined?($test) && $test
     def test_integer
       assert_equal '12,345', 12345.commify
       assert_equal '123,456,789', 123456789.commify
+
+      assert_equal '1KB', (1024+1).byte_format
+      assert_equal '2MB', (2*1024*1024+2).byte_format
+      assert_equal '3GB', (3*1024*1024*1024+3).byte_format
+      assert_equal '4TB', (4*1024*1024*1024*1024+4).byte_format
     end
 
     def test_iscase_array

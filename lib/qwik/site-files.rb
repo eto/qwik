@@ -15,6 +15,16 @@ module Qwik
       return page.files
     end
 
+    def files_total
+      t = 0
+      self.each {|page|
+        # force to create page.files object for each page
+	# to count files in unaccecced pages after server rebooted
+        t+= files(page.key).total
+      }
+      return t
+    end
+
     # obsolete
     def attach
       @attach = SiteAttach.new(@path.to_s) unless defined? @attach

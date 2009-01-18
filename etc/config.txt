@@ -24,6 +24,10 @@
 :smtp_host:	127.0.0.1
 :smtp_port:	25
 
+# total size of attachments for each site
+:max_total_file_size:   1GB
+:max_total_warn_size:   10MB
+
 # Extra setting.
 # For Graphviz plugin.
 :graphviz_dot_path:	/usr/bin/dot

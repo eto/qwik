@@ -43,6 +43,14 @@ module Qwik
       return nil
     end
 
+    def total
+      t = 0
+      self.each {|f|
+        t += self.path(f).size?
+      }
+      return t
+    end
+
     def fput(filename, content, overwrite=nil, time=nil)	# obsolete
       # overwrite is always ignored.
       res = filename
@@ -218,5 +226,23 @@ if defined?($test) && $test
       teardown_files(dir)
     end
 
+    # test file size total
+    def test_total
+      dir, files = setup_files
+
+      # save file size 1
+      files.fput("size1.txt",'1')
+      ok_eq(1,files.total)
+
+      # save file size 10
+      files.fput("size10.txt",'1'*10)
+
+      # check if total file size is 1 + 10
+      ok_eq(11,files.total)
+
+      # delete file, size 1
+      files.delete("size1.txt")
+      ok_eq(10,files.total)
+    end
   end
 end

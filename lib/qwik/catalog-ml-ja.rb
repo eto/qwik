@@ -124,6 +124,21 @@ module QuickML
 
 	"Please simply reply to this mail to create ML <%s>.\n" =>
 	"このメールに返信すると <%s> メーリングリストが作られます。\n",
+
+	"WARNING: Total attached file size exceeded." =>
+	"警告: 添付ファイルの合計サイズが最大容量を超えています。",
+
+	'Files are not attached on the web.' =>
+	"添付ファイルはWebに保存されません。",
+
+	"WARNING: Total attached file size is reaching to the limit." =>
+	"警告: 添付ファイルの合計サイズが最大容量に近づいています。",
+
+	"%s left" =>
+	"残り%s",
+
+	"\nFile '%s' was not attached.\n" =>
+	"\nファイル '%s' は保存されませんでした。\n",
       }
     end
   end

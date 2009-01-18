@@ -76,6 +76,11 @@ module QuickML
       if member_added? || member_list_p
 	footer << "\n" + generate_member_list(@address, @members.list)
       end
+      if total_file_size_exceeded?
+        footer << generate_total_file_size_exceeded_info
+      elsif total_file_size_reaching?
+        footer << generate_total_file_size_reaching_info
+      end
       return footer
     end
 
@@ -92,6 +97,20 @@ module QuickML
       return _("Members of <%s>:\n", address) + list + "\n"
     end
 
+    def generate_total_file_size_exceeded_info
+        return "\n" + 
+	_('WARNING: Total attached file size exceeded.')  + " " +
+	_('Files are not attached on the web.') + "\n"
+    end
+
+    def generate_total_file_size_reaching_info
+	return "\n" +
+	_("WARNING: Total attached file size is reaching to the limit.") +
+	" "  +
+	_("%s left", (@config[:max_total_file_size] - @site.files_total).byte_format) +
+	"\n"
+    end
+    
   end
 end
 
@@ -136,6 +155,40 @@ ML-> test@example.com
       t_make_public(QuickML::Group, :generate_unsubscribe_info)
       ok_eq("\nHow to unsubscribe from the ML:\n- Just send an empty message to <test@example.com>.\n- Alternatively, if you cannot send an empty message for some reason,\n  please send a message just saying 'unsubscribe' to <test@example.com>.\n  (e.g., hotmail's advertisement, signature, etc.)\n",
 	    group.generate_unsubscribe_info('test@example.com'))
+
+    end
+
+    def test_footer_with_file_limits
+      group = setup_group
+
+      t_make_readable(QuickML::Group,:groupsite)
+      groupsite = group.groupsite
+
+      t_make_writable(QuickML::GroupSite,:total_file_size_exceeded)
+      t_make_writable(QuickML::GroupSite,:total_file_size_reaching)
+
+      # test if generate_footer generates warning message 
+      # when total file size exceeded
+      groupsite.total_file_size_exceeded = true
+      ok_eq("
+-- 
+archive-> http://example.com/test/ 
+ML-> test@example.com
+
+WARNING: Total attached file size exceeded. Files are not attached on the web.
+" , group.generate_footer)
+
+      # test if generate_footer generates warning message 
+      # when total file size reaching to the limit
+      groupsite.total_file_size_exceeded = false
+      groupsite.total_file_size_reaching = true
+      ok_eq("
+-- 
+archive-> http://example.com/test/ 
+ML-> test@example.com
+
+WARNING: Total attached file size is reaching to the limit. #{(@config[:max_total_file_size]-@site.files.total).byte_format} left
+", group.generate_footer)
 
     end
   end

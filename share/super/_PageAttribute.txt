@@ -3,3 +3,5 @@
 {{last_modified}}
 
 {{generate_time}}
+
+{{files_site_total}}

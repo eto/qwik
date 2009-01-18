@@ -188,6 +188,27 @@ You can show the list of attached files.
       }
     end
 
+    def plg_files_page_total
+      total = @site.files(@req.base).total
+      msg = sprintf(_("Total %s in this page"),total.byte_format)
+      return [:span, msg]
+    end
+
+    def plg_files_site_total
+      total = @site.files_total
+      max_total = @config[:max_total_file_size]
+      warn_size = @config[:max_total_warn_size]
+      msg = _("Attached files total:") + " #{total.byte_format}"
+      if max_total < total
+        msg = [msg + ", ", [:strong, _('Total file size exceeded.')]]
+      elsif max_total - warn_size < total
+        warn_msg = sprintf(_("%s left"), (max_total-total).byte_format)
+        msg = [msg + ", ", [:strong ,warn_msg]]
+      end
+      return [:span, {:class => 'files_site_total'}, msg]
+    end
+
+
     # ==============================
     def plg_files_form(upload_number=1)
       files_form(@req.base, upload_number)
@@ -215,6 +236,10 @@ You can show the list of attached files.
       c_require_member
       c_require_post
 
+      site_total = @site.files_total
+      max_total_file_size = @config[:max_total_file_size]
+      warn_size = @config[:max_total_warn_size]
+
       list = []
       content.each_data {|data|
 	fullfilename = data.filename
@@ -231,17 +256,39 @@ You can show the list of attached files.
 	    _('Maximum size'), max_size, [:br],
 	    _('File size'), data.length, [:br]]
 	  next
+	elsif max_total_file_size < site_total
+	  list << [:p, [:strong, filename], ' : ', [:em, _('The file is not saved.')],
+	    [:br],
+	    [:strong, _('Total file size exceeded.')],[:br],
+	    _('Maximum total size'), max_total_file_size.byte_format, [:br],
+	    _('Current total size'), site_total.byte_format, [:br]]
+	  #get next even total file size is exceeded
+	  #to display which files are not saved explicitly
+	  next
 	end
 
 	# If the file is saved as another name, you can use return value.
 	filename = @site.files(@req.base).fput(filename, data)
 
 	c_make_log('file attach')	# FILE ATTACH
+	site_total += data.length
 
 	page = @site[@req.base]
 	page.add("\n{{file(#{filename})}}\n")	# files_update_page
 
-	list << [:p, [:strong, filename], ' : ', _('The file is saved.')]
+	if max_total_file_size < site_total
+	  list << [:p, [:strong, filename], ' : ', _('The file is saved.'),
+	    [:br],
+	    [:strong, _('Exceeded limit.')]]
+	elsif max_total_file_size - warn_size < site_total
+	  msg = _("Reaching limit.") + " " + 
+	  sprintf(_("%s left"), (max_total_file_size - site_total).byte_format)
+	  list << [:p, [:strong, filename], ' : ', _('The file is saved.'),
+	    [:br],
+	    [:strong, msg]]
+	else
+	  list << [:p, [:strong, filename], ' : ', _('The file is saved.')]
+	end
       }
 
       url = "#{@req.base}.html"
@@ -652,6 +699,74 @@ if defined?($test) && $test
       res = session('/test/1.files/t!.txt')
       ok_eq("attachment; filename=\"t!.txt\"", res['Content-Disposition'])
       ok_eq('t', res.body)
+    end
+
+    def test_total_file_size_limit
+      t_add_user
+
+      def attach(size)
+        content = '0' * size
+        filename = "#{size.byte_format}.txt"
+        res = session('POST /test/1.files') {|req|
+	  req.query.update('content'=>t_make_content(filename, content))
+        }
+        ok_title('File attachment completed')
+	return filename,content
+      end
+      # Set max_total_file_size to 1MB and warn 256KB
+      default_max_total_file_size = @config[:max_total_file_size]
+      default_max_total_warn_size = @config[:max_total_warn_size]
+      @config[:max_total_file_size] =  1 * 1024 * 1024  # 1MB
+      @config[:max_total_warn_size] =  256 * 1024 # 256KB
+
+      page = @site.create_new
+      page.store('t')
+
+      ## Try to store a file with 512KB size.
+      filename,content = attach(512*1024)
+      ok_xp([:p, [:strong, filename], ' : ', 'The file is saved.'],
+            "//div[@class='section']/p")
+
+      # Get the file.
+      res = session("/test/1.files/#{filename}")
+      ok_eq(content,res.body)
+
+      ## Try to store a file with 300KB size. will get the warning
+      filename,content = attach(300*1024)
+      ok_xp([:p, [:strong, filename], ' : ', 'The file is saved.',
+             [:br], [:strong, "Reaching limit. 212KB left"]],
+            "//div[@class='section']/p")
+
+      # Get the file.
+      res = session("/test/1.files/#{filename}")
+      ok_eq(content,res.body)
+
+      ## Try to store a file with 300KB size. will exceeds the limit
+      filename,content = attach(256*1024)
+      ok_xp([:p, [:strong, filename], ' : ', 'The file is saved.',
+             [:br], [:strong, "Exceeded limit."]],
+            "//div[@class='section']/p")
+
+      # Get the file.
+      res = session("/test/1.files/#{filename}")
+      ok_eq(content,res.body)
+
+      ## Try to store a file with 300KB size. will exceeds the limit
+      filename,content = attach(1)
+      ok_xp([:p, [:strong, filename], ' : ', [:em, 'The file is not saved.'],
+            [:br],
+	    [:strong, "Total file size exceeded."],[:br],
+            'Maximum total size', @config[:max_total_file_size].byte_format, [:br],
+	     'Current total size', ((512+300+256)*1024).byte_format, [:br]],
+            "//div[@class='section']/p")
+
+      # Get the file.
+      res = session("/test/1.files/#{filename}")
+      ok_title('No such file')
+
+      #clean up
+      @config[:max_total_file_size] = default_max_total_file_size
+      @config[:max_total_warn_size] = default_max_total_warn_size  
     end
   end
 end
