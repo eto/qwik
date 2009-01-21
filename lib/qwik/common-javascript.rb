@@ -7,7 +7,7 @@ $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Action
    #JAVASCRIPT_FILES = %w(prototype scriptaculous base niftypp debugwindow)
-    JAVASCRIPT_FILES = %w(base niftypp)
+    JAVASCRIPT_FILES = %w(base niftypp se_hilite_jp)
 
     def self.generate_js
       return JAVASCRIPT_FILES.map {|f|

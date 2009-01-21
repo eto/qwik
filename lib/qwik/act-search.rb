@@ -68,7 +68,7 @@ module Qwik
 	return search_notfound_page(query)
       end
 
-      return search_result(@site, ar)
+      return search_result(@site, ar, query)
     end
     alias ext_search act_search
 
@@ -95,20 +95,20 @@ module Qwik
       return search_form_page(_('Search result'), _('No match.'), query)
     end
 
-    def search_result(site, ar)
+    def search_result(site, ar, query=nil)
       ul = [:ul]
       ar.each {|key, line, i|
 	page = site[key]
 	url = page.url
 	ul << [:li,
-	  [:a, {:href=>url}, page.get_title], ' : ',
-	  [:em, {:class=>'linenum'}, i.to_s], ' : ',
-	  [:span, {:class=>'content'}, line]]
+	  [:h3, [:a, {:href=>url}, page.get_title]], 
+	  [:span, {:class=>'content'}, line],
+	  [:div, [:a, {:href=>url}, url]]]
       }
       div = [:div, {:class=>'day'},
 	[:div, {:class=>'section'},
 	  [:div, {:class=>'search_result'}, ul]]]
-      title = _('Search result')
+      title = _('Search result') + ": " + query
       return c_plain(title) { div }
     end
 
@@ -196,32 +196,32 @@ if defined?($test) && $test
       page.store('This is a keyword.')
       res = session("/test/.search?q=keyword")
       ok_in([:ul, [:li,
-		[:a, {:href=>'1.html'}, '1'], ' : ',
-		[:em, {:class=>'linenum'}, '0'], ' : ',
-		[:span, {:class=>'content'}, 'This is a keyword.']]],
+		[:h3, [:a, {:href=>'1.html'}, '1']], 
+		[:span, {:class=>'content'}, 'This is a keyword.'],
+		[:div, [:a, {:href=>'1.html'},"1.html"]]]],
 	    "//div[@class='search_result']")
 
       res = session("/test/keyword.search")	# Both OK.
       ok_in([:ul, [:li,
-		[:a, {:href=>'1.html'}, '1'], ' : ',
-		[:em, {:class=>'linenum'}, '0'], ' : ',
-		[:span, {:class=>'content'}, 'This is a keyword.']]],
+		[:h3, [:a, {:href=>'1.html'}, '1']],
+		[:span, {:class=>'content'}, 'This is a keyword.'],
+		[:div, [:a, {:href => '1.html'},"1.html"]]]],
 	    "//div[@class='search_result']")
 
       page = @site.create_new	# 2.txt
       page.store("Š¿Žš")
       res = session("/test/.search?q=Žš")
       ok_in([:ul, [:li,
-		[:a, {:href=>'2.html'}, '2'], ' : ',
-		[:em, {:class=>'linenum'}, '0'], ' : ',
-		[:span, {:class=>'content'}, "Š¿Žš"]]],
+		[:h3, [:a, {:href=>'2.html'}, '2']], 
+		[:span, {:class=>'content'}, "Š¿Žš"],
+		[:div, [:a, {:href=>'2.html'}, '2.html']]]],
 	    "//div[@class='search_result']")
 
       res = session("/test/Žš.search")		# Both OK.
       ok_in([:ul, [:li,
-		[:a, {:href=>'2.html'}, '2'], ' : ',
-		[:em, {:class=>'linenum'}, '0'], ' : ',
-		[:span, {:class=>'content'}, "Š¿Žš"]]],
+		[:h3, [:a, {:href=>'2.html'}, '2']],
+		[:span, {:class=>'content'}, "Š¿Žš"],
+		[:div, [:a, {:href=>'2.html'}, '2.html']]]],
 	    "//div[@class='search_result']")
     end
 

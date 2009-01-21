@@ -333,3 +333,14 @@ License: Public Domain
 
 Author: Ms. rica
 
+
+Description: The File is originall by Scott Yang, japanized by yasi, 
+             hacked by Jiro Sekiba <jir@unicus.jp>
+
+Files:
+- share/theme/js/se_hilite_jp.js
+Origin:
+- http://staryasi.usamimi.info/blog/wp-content/uploads/se_hilite_jp.js
+
+Author: Scott Yang <http://scott.yang.id.au/>, 
+        yasi <http://staryasi.usamimi.info/blog/about>

@@ -8,6 +8,7 @@ $LOAD_PATH << 'compat' unless $LOAD_PATH.include? 'compat'
 require 'base64'
 
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
+require 'qwik/util-charset'
 
 class String
   def xchomp
@@ -71,6 +72,24 @@ class String
     }
   end
 
+  def mb_length
+    case self.charset || self.guess_charset
+    when 'UTF-8';       return self.split(//u).length
+    when 'Shift_JIS';   return self.split(//s).length
+    when 'EUC-JP';      return self.split(//e).length
+    end
+    return self.length
+  end
+
+  def mb_substring(s,e)
+    case self.charset || self.guess_charset
+    when 'UTF-8';       return self.split(//u)[s...e].to_s
+    when 'Shift_JIS';   return self.split(//s)[s...e].to_s
+    when 'EUC-JP';      return self.split(//e)[s...e].to_s
+    end
+    return self[s...e]
+  end
+ 
   # Copied from gonzui-0.1
   # Use this method instead of WEBrick::HTMLUtils.escape for performance reason.
   EscapeTable = {
@@ -162,6 +181,22 @@ if defined?($test) && $test
       assert_equal("&", "&amp;".unescapeHTML)
       assert_equal("<a href='http://e.com/'>e.com</a>",
 		   "&lt;a href=&quot;http://e.com/&quot;&gt;e.com&lt;/a&gt;".unescapeHTML)
+    end
+
+    def test_mb_length
+      str = "“ú–{Œê•¶Žš—ñ"
+      assert_equal(6,str.mb_length)
+
+      str = "English"
+      assert_equal(7,str.mb_length)
+    end
+
+    def test_mb_substring
+      str = "“ú–{Œê•¶Žš—ñ"
+      assert_equal("–{Œê•¶",str.mb_substring(1,4))
+
+      str = "English"
+      assert_equal("ngl",str.mb_substring(1,4))
     end
   end
 end
