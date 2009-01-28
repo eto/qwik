@@ -1,4 +1,4 @@
-# Copyright (C) 2009 Jiro SEKIBA <jir@unicus.jp>, All rights reserved.
+# Copyright (C) 2009 AIST, All rights reserved.
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
