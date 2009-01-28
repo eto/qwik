@@ -4,11 +4,26 @@
 
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
+require 'qwik/db-searchwords.rb'
+
 module Qwik
   class Site
     COMMENT=/^#.*$/
+    def init_site_search
+      @search_words_db = SearchWordsDB.new(@path,@config)
+    end
+
+    def get_search_words
+      @search_words_db.get_normalized
+    end
+
+    def delete_search_word(word)
+      @search_words_db.delete(word)
+    end
+    
     def search(query, obfuscate = true)
       querys = search_parse_query(query)
+      @search_words_db.put(querys)
       
       all_snippet_length = 120
       pre_snippet_length = all_snippet_length/querys.size/2

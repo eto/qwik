@@ -36,10 +36,20 @@ module Qwik
     }
 
     # ============================== search
+    def plg_search_word_cloud
+      list = @site.get_search_words
+      [:span] + list.map{|em| 
+        w = em.word.to_s.escape
+        [[:span, {:class => "search_word#{em.count}"}, [:a, {:href => ".search?q=#{w}"}, em.word]],
+	 [:span, {:class => "search_word_delete"}, [:a, {:href => ".delete?q=#{w}"}, [:img, {:src => ".theme/css/delete.png",:border =>"0", :alt => "del"}]]]]
+      }
+    end
+
     def plg_side_search_form
       return [
 	[:h2, _('Search')],
-	plg_search_form
+	plg_search_form,
+	plg_search_word_cloud
       ]
     end
 
@@ -55,6 +65,15 @@ module Qwik
       return [:form, {:action=>'.search'},
 	[:input, query_attr],
 	[:input, {:type=>'submit', :value=>_('Search')}]]
+    end
+
+    #search word delete action
+    def act_delete
+      query = search_get_query
+      if query
+        @site.delete_search_word(query)
+      end
+      return c_notice("Deleted",@req.header["referer"]) {"deleted"}
     end
 
     def act_search

@@ -89,7 +89,11 @@ module Qwik
       :ml_pid_file	=> '/var/run/quickml.pid',
       # total size of attachments for each site
       :max_total_file_size	=>	1 * 1024 * 1024 * 1024, # 1GB
-      :max_total_warn_size	=>	10 * 1024 * 1024 # 10MB
+      :max_total_warn_size	=>	10 * 1024 * 1024, # 10MB
+
+      # search word cloud
+      :search_word_display_num	=>  100,   #number of search words to display
+      :search_word_max_num	=>  10000, #number of search wrods to save
     }
 
     DebugConfig = {

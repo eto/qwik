@@ -752,4 +752,28 @@ table.qrcode {
   }
 }
 
+
+/* ================================================== search words cloud */
+.search_word0 {
+  font-size: 7pt;
+}
+.search_word1 {
+  font-size: 9pt;
+}
+.search_word2 {
+  font-size: 12pt;
+}
+.search_word3 {
+  font-size: 14pt;
+}
+.search_word4 {
+  font-size: 16pt;
+}
+.search_word5 {
+  font-size: 18pt;
+}
+.search_word_delete {
+  vertical-align: super;
+}
+
 /* end */

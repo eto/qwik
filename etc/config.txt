@@ -50,6 +50,10 @@
 :ml_alert_time:		24d
 :ml_life_time:		31d
 
+# search word cloud
+:search_word_display_num:	100   #number of search words to display
+:search_word_max_num:		10000 #number of search wrods to save
+
 # Setting for production mode.
 :sites_dir:	/var/lib/qwik/data
 :grave_dir:	/var/lib/qwik/grave

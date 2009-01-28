@@ -39,6 +39,8 @@ module Qwik
       @cache = {}
 
       init_group_config
+
+      init_site_search
     end
     attr_reader :sitename
     attr_reader :path
