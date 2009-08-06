@@ -1,5 +1,9 @@
 2009-07-26  Kouichirou Eto  <2009@eto.com.nospam.com>
 
+	* lib/qwik/check-many-pages.rb: Check performance for many pages.
+
+2009-07-26  Kouichirou Eto  <2009@eto.com.nospam.com>
+
 	* lib/qwik/site.rb: Add require "site-search".
 	* lib/qwik/util-webrick.rb: Fix test.
 	* lib/qwik/site-member.rb: Ditto.
