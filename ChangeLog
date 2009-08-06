@@ -1,5 +1,11 @@
 2009-07-26  Kouichirou Eto  <2009@eto.com.nospam.com>
 
+	* lib/qwik/site.rb: Add require "site-search".
+	* lib/qwik/util-webrick.rb: Fix test.
+	* lib/qwik/site-member.rb: Ditto.
+
+2009-07-26  Kouichirou Eto  <2009@eto.com.nospam.com>
+
 	* lib/qwik/check-htree-rexml.rb: Delete tests for deprecated method.
 
 2008-12-08  Keiki Shimada  <shimada-k aist.go.jp>

@@ -16,6 +16,7 @@ require 'qwik/site-pages'
 require 'qwik/site-group'
 require 'qwik/site-files'
 require 'qwik/site-rrefs'
+require 'qwik/site-search'
 
 module Qwik
   class Site

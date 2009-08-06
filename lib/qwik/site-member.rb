@@ -184,7 +184,8 @@ if defined?($test) && $test
       ok_eq(true,  member.exist?(guest))
 
       ok_eq(",user@e.com,\n,guest@example.com,user@e.com\n", page.load)
-      ok_eq([user, guest], member.list)
+      assert(member.list.include?(user))
+      assert(member.list.include?(guest))
       member.remove(guest)
       ok_eq(true, !member.exist?(guest))
 
@@ -218,7 +219,8 @@ if defined?($test) && $test
 
       member.add(user)
       member.add(guest)
-      ok_eq(['user@e...', 'guest@e...'], member.list)
+      assert(member.list.include?('user@e...'))
+      assert(member.list.include?('guest@e...'))
     end
 
     def store(content)	# quickml_member

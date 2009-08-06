@@ -166,7 +166,7 @@ Accept: */*
 Accept-Language: ja
 ~~~~~~~~~~: ~~~~~~~~~~
 EOS
-      ok_eq("{\"~~~~~~~~~~\"=>[\"~~~~~~~~~~\"], \"accept-language\"=>[\"ja\"], \"accept\"=>[\"*/*\"]}", WEBrick::HTTPUtils::parse_header(str).inspect)
+      ok_eq({"accept-language"=>["ja"], "accept"=>["*/*"], "~~~~~~~~~~"=>["~~~~~~~~~~"]}, WEBrick::HTTPUtils::parse_header(str))
     end
 
     def test_parse_query
