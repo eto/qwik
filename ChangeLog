@@ -1,3 +1,12 @@
+2009-08-19  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/farm.rb: Do not cache Site objects.
+	* lib/qwik/act-monitor.rb: Comment outed some tests.
+	* lib/qwik/act-wema.rb: Ditto.
+	* lib/qwik/act-rrefs.rb: Ditto.
+
+	* lib/qwik/check-many-pages.rb: Update.
+
 2009-07-26  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/check-many-pages.rb: Check performance for many pages.

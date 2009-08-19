@@ -46,7 +46,9 @@ module Qwik
 
       # Now, I am sure that we have the directory for the site.
       # Create a new site object and return it.
-      return @sites[sitename] ||= Site.new(@config, @memory, sitename)
+#      return @sites[sitename] ||= Site.new(@config, @memory, sitename)
+      @sites[sitename] = Site.new(@config, @memory, sitename)
+      return @sites[sitename]
     end
     alias exist? get_site
 

@@ -16,18 +16,28 @@ if defined?($test) && $test
     def test_all
       t_add_user
 
-      page = @site.create_new
-      page.store("* t")
-      res = session('/test/1.html')
-      ok_title('t')
+#      page = @site.create_new
+#      page.store("* t")
+#      res = session('/test/1.html')
+#      ok_title('t')
+#      page = @site['1']
 
-      page = @site['1']
-
-      1000.times {|n|
+#      num = 200
+      num = 10
+      (1..num).each {|n|
+	page = @site.create_new
 	page.store("* t#{n}")
-	res = session('/test/1.html')
+      }
+      (1..num).each {|n|
+	res = session("/test/#{n}.html")
 	ok_title("t#{n}")
       }
+
+#100 Finished in 28.170425 seconds.
+
+#100  Finished in 9.680146 seconds.
+#200  Finished in 28.170425 seconds.
+#1000 Finished in 603.93911 seconds.
 
 #100 Finished in 4.67007 seconds.
 #200 Finished in 9.030136 seconds.

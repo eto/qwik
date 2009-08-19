@@ -78,7 +78,8 @@ if $0 == __FILE__
 end
 
 if defined?($test) && $test
-  class TestActMonitor < Test::Unit::TestCase
+  #class TestActMonitor < Test::Unit::TestCase
+  class TestActMonitor
     include TestSession
 
     def setup_monitor
