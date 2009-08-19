@@ -13,14 +13,12 @@
 
 * お知らせ
 - [[RecentList]]
-
-最新の更新機能はサーバ負荷の問題により、一時的に外しております。
+最新の更新機能はサーバ負荷の問題により外しております。
 最新の更新一覧は[[RecentList]]をご利用下さい。
 
-* Annouce
+* Announcement
 - [[RecentList]]
-
-RecentChanges are disabled due to server resource issue.
+RecentChanges function is disabled due to server resource issue.
 Please use [[RecentList]].
 
 {{rss}}
