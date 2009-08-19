@@ -34,7 +34,7 @@ module QuickML
       end
 
       # FIXME: too ad-hoc
-      @rejection_ignore_list = %w()
+      @rejection_ignore_list = %w(info ajax study test)
       if $test
 	@rejection_ignore_list = []
 	if $test_rejection_ignore_list
