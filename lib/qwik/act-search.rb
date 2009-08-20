@@ -52,7 +52,7 @@ module Qwik
       return [
 	[:h2, _('Search')],
 	plg_search_form,
-	plg_search_word_cloud
+#	plg_search_word_cloud
       ]
     end
 
