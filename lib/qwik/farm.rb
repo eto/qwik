@@ -21,7 +21,7 @@ module Qwik
       @data_path = @config.sites_dir.path
       @grave_path = @config.grave_dir.path
       @top_sitename = @config.default_sitename
-      @sites = {}
+#      @sites = {}
       if $update_group_files
 	$update_group_files = false	# Set before to do it.
 	update_group_files
@@ -40,15 +40,16 @@ module Qwik
 
       # FIXME: Should we check the directory everytime?
       if ! sitepath.directory?	# At the first, check the directory.
-	@sites.delete(sitename) if @sites[sitename]	# Delete from hash.
+#	@sites.delete(sitename) if @sites[sitename]	# Delete from hash.
 	return nil	# No such site.
       end
 
       # Now, I am sure that we have the directory for the site.
       # Create a new site object and return it.
 #      return @sites[sitename] ||= Site.new(@config, @memory, sitename)
-      @sites[sitename] = Site.new(@config, @memory, sitename)
-      return @sites[sitename]
+#      @sites[sitename] = Site.new(@config, @memory, sitename)
+#      return @sites[sitename]
+      return Site.new(@config, @memory, sitename)
     end
     alias exist? get_site
 
@@ -58,8 +59,11 @@ module Qwik
 
     def each
       #p "each"
-      check_all_sites
-      @sites.keys.sort.each {|sitename|
+
+      sites = check_all_sites
+
+      # @sites.keys.sort.each {|sitename|
+      sites.keys.sort.each {|sitename|
 	yield(sitename)
       }
     end
@@ -114,10 +118,12 @@ module Qwik
     private
 
     def check_all_sites
+      sites = Hash.new
+
       # At the first, check obsolete sites.
-      @sites.keys.sort.each {|sitename|
-	dummy = get_site(sitename)
-      }
+#      @sites.keys.sort.each {|sitename|
+#	dummy = get_site(sitename)
+#      }
 
       # Then, check the direcotry entries.
       @data_path.each_entry {|entry|
@@ -127,9 +133,12 @@ module Qwik
 	next if sitename[0] == ?.	# begin with dot?
 	next if sitename == 'CVS'
 	#next if (pa + '_SiteConfig.txt').exist?	# check the site.
-	dummy = get_site(sitename)	# the site is added to @site
+	site = get_site(sitename)	# the site is added to @site
+	sites[sitename] = site
       }
-      return nil
+
+      return sites
+#      return nil
     end
 
     def bury(sitename)
