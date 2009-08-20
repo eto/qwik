@@ -40,6 +40,9 @@ module Qwik
       list = @site.get_search_words
       [:span] + list.map{|em| 
         w = em.word.to_s.escape
+	if em.nil?
+	  em = Word.new(w, 1, Time.new)
+	end
         [[:span, {:class => "search_word#{em.count}"}, [:a, {:href => ".search?q=#{w}"}, em.word]],
 	 [:span, {:class => "search_word_delete"}, [:a, {:href => ".delete?q=#{w}"}, [:img, {:src => ".theme/css/delete.png",:border =>"0", :alt => "del"}]]]]
       }

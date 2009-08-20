@@ -4,6 +4,8 @@
 
 	* super/_PageAttribute.txt: rrefs plugin is disabled.
 
+	* lib/qwik/act-search.rb: Debug for em nil case.
+
 2009-08-19  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/farm.rb: Do not cache Site objects.
