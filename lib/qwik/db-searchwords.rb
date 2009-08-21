@@ -110,6 +110,7 @@ module Qwik
     end
 
     def min_max
+      return [0, 0] if @recent_list[0].nil?
       min = max = @recent_list[0].count
       @recent_list[1...@config[:search_word_display_num]].each{|em|
         if max < em.count 

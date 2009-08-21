@@ -1,3 +1,7 @@
+2009-08-21  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/db-searchwords.rb: Debug.
+
 2009-08-20  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/farm.rb: Do not cache @sites.
