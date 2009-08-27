@@ -53,9 +53,11 @@ sup:
 	svn up Makefile lib share bin debian ext COPYING ChangeLog MANIFEST NEWS README
 # no update: etc go crontab supall
 
-# only for qwik.jp
 ps:
 	date; ps auxww | grep -in qwik
+
+showmemory:
+	ruby bin/showmemory
 
 chmod:
 	chmod 644 .cvsignore svnignore.txt
