@@ -1,5 +1,6 @@
 2009-08-27  Kouichirou Eto  <2009@eto.com.nospam.com>
 
+	* lib/qwik/farm.rb: Fix test cases.
 	* lib/qwik/act-rrefs.rb: Fix a test case.
 
 2009-08-21  Kouichirou Eto  <2009@eto.com.nospam.com>

@@ -15,7 +15,9 @@ module Qwik
 
       last_article_time = @pages.last_article_time
       if last_article_time.nil?		# No file here.
-	log.info("site #{@sitename}: last_article_time is nil") if log
+	unless $test
+	  log.info("site #{@sitename}: last_article_time is nil") if log
+	end
 	return true
       end
 
@@ -25,7 +27,9 @@ module Qwik
       result = last_article_time.to_i + ml_life_time.to_i <= now.to_i
       if result
 	ymdhms = last_article_time.strftime("%Y-%m-%d %H:%M:%S") 
-	log.info("site #{@sitename}: last_article_time is #{ymdhms}") if log
+	unless $test
+	  log.info("site #{@sitename}: last_article_time is #{ymdhms}") if log
+	end
       end
       return result
     end

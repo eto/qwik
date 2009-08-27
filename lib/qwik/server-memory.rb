@@ -22,8 +22,9 @@ module Qwik
 
     # farm
     def farm
-      @farm = Farm.new(@config, self) unless defined? @farm
-      @farm
+#      @farm = Farm.new(@config, self) unless defined? @farm
+#      @farm
+      return Farm.new(@config, self)
     end
 
     # template

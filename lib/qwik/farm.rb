@@ -88,7 +88,9 @@ module Qwik
       @logger.log(WEBrick::Log::INFO, 'start sweep') unless $test
 
       log = @memory[:bury_log]
-      log.info("start sweep")
+      unless $test
+	log.info("start sweep")
+      end
 
       inactive_sites = check_inactive_sites
       buried = []
@@ -97,7 +99,9 @@ module Qwik
 	buried << bury(sitename)
       }
 
-      log.info("end sweep")
+      unless $test
+	log.info("end sweep")
+      end
 
       return buried
     end
@@ -192,7 +196,9 @@ module Qwik
 	buff << path.basename.to_s
 	buff << "\n"
       end
-      log.info(buff.string)
+      unless $test
+	log.info(buff.string)
+      end
     end
 
     def delete(site)
