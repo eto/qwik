@@ -123,6 +123,9 @@ if defined?($test) && $test
       #test empty rrefs
       ok_wi([],'{{rrefs}}')
 
+      page = @site['_PageAttribute']
+      page.store('{{rrefs}}')
+
       ## assertion for a new page  
       #create page contatins a link to page2
       res = session('POST /test/.new?t=page1')
