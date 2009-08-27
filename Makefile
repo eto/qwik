@@ -50,8 +50,12 @@ svnprop:
 
 # only for qwik.jp
 sup:
-	svn up lib share bin debian ext COPYING ChangeLog MANIFEST Makefile NEWS README
+	svn up Makefile lib share bin debian ext COPYING ChangeLog MANIFEST NEWS README
 # no update: etc go crontab supall
+
+# only for qwik.jp
+ps:
+	date; ps auxww | grep -in qwik
 
 chmod:
 	chmod 644 .cvsignore svnignore.txt
