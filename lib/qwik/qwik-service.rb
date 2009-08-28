@@ -246,7 +246,7 @@ adding an initial user [#{mail}] is completed."
       end
 
       site.member.add(mail)
-      puts "Adding a new uesr [#{mail}] to site [#{sitename}] is completed."
+      puts "Adding a new user [#{mail}] to site [#{sitename}] is completed."
     end
 
     def showpassword(mail)

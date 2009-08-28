@@ -27,7 +27,7 @@ module Qwik
 	puts 'Error: The site does not exist.'
 	exit 1
       end
-      puts 'Adding a new uesr completed.'
+      puts 'Adding a new user completed.'
     end
   end
 end

@@ -1,4 +1,11 @@
+2009-08-28  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/periodic.rb: Do not cache farm on memory.
+
 2009-08-27  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/qwikweb-adduser.rb: Fix spell miss.
+	* lib/qwik/qwik-service.rb: Ditto.
 
 	* lib/qwik/server-memory.rb: Do not cache farm object.
 
