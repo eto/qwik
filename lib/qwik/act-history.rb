@@ -55,6 +55,7 @@ You see the interactive history of the page.
       list = backup_list(@site, key)
 
       divs = list.map {|v, time|
+	v = @site.backupdb.get(key, time)
 	[:div, {:class=>'era', :id=>time.to_s},
 	  [:div, {:class=>'period'}, c_res(v)]]
       }

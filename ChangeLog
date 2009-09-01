@@ -2,6 +2,11 @@
 
 	* lib/qwik/act-status.rb: Show status action.
 
+	* lib/qwik/db-backup.rb: Disable content of each function.
+	* lib/qwik/act-backup.rb: Ditto.
+	* lib/qwik/act-history.rb: Ditto.
+	* lib/qwik/pages.rb: Ditto.
+
 2009-08-28  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/periodic.rb: Do not cache farm on memory.
