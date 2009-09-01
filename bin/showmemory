@@ -3,21 +3,34 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-ps = `ps auxww | grep -i ruby`
-ps.each_line {|line|
-  user, pid, cpu, mem, vsz, rss, tty, stat, start, time, command =
-    line.split(nil, 11)
-  next if /^sh/ =~ command
-  next if /^grep/ =~ command
-  next if /^ruby/ =~ command
-  next if %r|^/bin/sh| =~ command
-  next if time == "0:00"
+def main
+  show_date
+  show_memory
+end
 
-  command = 'quickml-server' if /quickml-server/ =~ command
-  command = 'qwikweb-server' if /qwikweb-server/ =~ command
+def show_date
+  now = Time.now
+  puts "* "+now.strftime("%Y-%m-%dT%H:%M:%S")
+end
 
-  vsz = vsz.to_i / 1000
-  rss = rss.to_i / 1000
+def show_memory
+  ps = `ps auxww | grep -i ruby`
+  ps.each_line {|line|
+    user, pid, cpu, mem, vsz, rss, tty, stat, start, time, command =
+      line.split(nil, 11)
+    next if /^sh/ =~ command
+    next if /^grep/ =~ command
+    next if /^ruby/ =~ command
+    next if %r|^/bin/sh| =~ command
+    next if time == "0:00"
 
-  puts "#{vsz}MB	#{rss}MB	#{command}"
-}
+    command = 'quickml-server' if /quickml-server/ =~ command
+    command = 'qwikweb-server' if /qwikweb-server/ =~ command
+
+    vsz = vsz.to_i / 1000
+    rss = rss.to_i / 1000
+    puts "#{vsz}MB	#{rss}MB	#{command}"
+  }
+end
+
+main
