@@ -8,7 +8,7 @@ module Qwik
   class Action
     def status_get_date
       now = Time.now
-      puts "* "+now.strftime("%Y-%m-%dT%H:%M:%S")
+      return "* "+now.strftime("%Y-%m-%dT%H:%M:%S")+"\n"
     end
 
     def status_get_memory
@@ -36,8 +36,10 @@ module Qwik
 
     def status_get_objects
       ar = []
+      num = 0
       ObjectSpace.each_object {|obj|
         ar << obj.class.name
+        num += 1
       }
 
       hash = Hash.new(0)
@@ -47,28 +49,31 @@ module Qwik
 
       ar2 = []
       hash.each {|k, v|
-        ar2 << |k, v|
+        ar2 << [v, k]
       }
 
-      ar3 = ar2.sort
-#      ar3 = ar2.sort {|a, b|
-#        a[0] < b[0]
-#      }
+      ar3 = ar2.sort.reverse
 
       str = ''
-#      hash.each {|k, v|
-      ar3.each {|k, v|
+      str << "object num #{num}\n"
+
+      ar3.each {|v, k|
         str << "#{v}\t#{k}\n"
       }
       str
     end
 
-
     def act_status
       str = "status\n"
-#      str << status_get_date
+      str << status_get_date
       str << status_get_memory
       str << status_get_objects
+
+#      GC.start
+#      str << "GC done\n"
+#      str << status_get_memory
+#      str << status_get_objects
+
       return c_notice(_('Status')) {
 	[[:h2, _('Status')],
 	  [:pre, str]]
