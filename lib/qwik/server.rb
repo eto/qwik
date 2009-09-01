@@ -108,9 +108,9 @@ module Qwik
 
       threads = []
       threads <<            SweepThread.new(@qconfig, @memory)
-      threads << WeeklySendReportThread.new(@memory.farm)
-      threads <<  DailySendReportThread.new(@memory.farm)
-      threads << HourlySendReportThread.new(@memory.farm)
+      threads << WeeklySendReportThread.new(@memory)
+      threads <<  DailySendReportThread.new(@memory)
+      threads << HourlySendReportThread.new(@memory)
       @memory[:threads] = threads
       threads.each {|th|
 	t = Thread.new {

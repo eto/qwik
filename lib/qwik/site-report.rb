@@ -13,8 +13,8 @@ require 'qwik/util-pathname'
 
 module Qwik
   class SendReportThread
-    def initialize(farm)
-      @farm = farm
+    def initialize(memory)
+      @memory = memory
     end
 
     def start
@@ -30,7 +30,8 @@ module Qwik
     end
 
     def send(interval)
-      @farm.each {|sitename|
+      farm = @memory.farm
+      farm.each {|sitename|
 	site = @farm.get_site(sitename)
 	if site.siteconfig['reportmail'] == interval
 	  site.send_report
@@ -163,10 +164,10 @@ if defined?($test) && $test
     include TestSession
 
     def test_all
-      farm = @memory.farm
+      memory = @memory
 
       # test_weekly_thread
-      @day = Qwik::WeeklySendReportThread.new(farm)
+      @day = Qwik::WeeklySendReportThread.new(memory)
       t = Time.now
       eq(true, 0 < @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 0, 0)	# 2000-01-01T00:00:00
@@ -175,7 +176,7 @@ if defined?($test) && $test
       eq(603000, @day.calc_sleep_time(t))
 
       # test_daily_thread
-      @day = Qwik::DailySendReportThread.new(farm)
+      @day = Qwik::DailySendReportThread.new(memory)
       t = Time.now
       eq(true, 0 < @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 0, 0)	# 2000-01-01T00:00:00
@@ -184,7 +185,7 @@ if defined?($test) && $test
       eq(84600, @day.calc_sleep_time(t))
 
       # test_hourly_thread
-      @day = Qwik::HourlySendReportThread.new(farm)
+      @day = Qwik::HourlySendReportThread.new(memory)
       t = Time.now
       eq(true, 0 < @day.calc_sleep_time(t))
       t = Time.local(2000, 1, 1, 0, 0, 0)	# 2000-01-01T00:00:00
