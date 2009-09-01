@@ -1,3 +1,7 @@
+2009-09-01  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/act-status.rb: Show status action.
+
 2009-08-28  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/periodic.rb: Do not cache farm on memory.
