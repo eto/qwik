@@ -87,8 +87,8 @@ module Qwik
       str = "status\n"
       str << status_get_date
       str << status_get_memory
-#      str << status_get_objects
-      str << status_get_objects2
+      str << status_get_objects
+#      str << status_get_objects2
 
 #      GC.start
 #      str << "GC done\n"
