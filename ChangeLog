@@ -8,6 +8,14 @@
 	* lib/qwik/act-metadata.rb: Disable RSS 0.91 and RSS 1.0.
 	* lib/qwik/act-metadata.rb: Delete comments.
 
+	* lib/qwik/site-search.rb: Search function is disabled for now.
+	* lib/qwik/site.rb: Ditto.
+	* lib/qwik/act-search.rb: Ditto.
+
+	* lib/qwik/act-rrefs.rb: Reverse ref function is disabled for now.
+	* lib/qwik/act-new.rb: Ditto.
+	* lib/qwik/act-save.rb: Ditto.
+
 2009-09-01  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-status.rb: Show status action.

@@ -5,7 +5,7 @@
 
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-monitor'
-require 'qwik/act-rrefs'
+#require 'qwik/act-rrefs'
 require 'qwik/page-title'
 
 module Qwik
@@ -50,7 +50,7 @@ module Qwik
 
       url = "#{key}.edit"
 
-      create_rrefs(key)
+#      create_rrefs(key)
 
       return c_notice(_('New page'), url, 201) {	# 201, Created
 	[[:h2, _('Created.')],

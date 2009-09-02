@@ -163,6 +163,7 @@ Since this site is in private mode, the feed includes minimum data.'
       @generator = Server.server_name
       @generator = 'qwikWeb' if @config.test
     end
+
     def each
       # Limit the pages to 10 pages.
       @site.date_list.reverse[0..10].each {|page|

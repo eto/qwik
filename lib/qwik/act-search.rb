@@ -80,6 +80,14 @@ module Qwik
     end
 
     def act_search
+      return c_notice(_('Announcement')) {
+	[[:h2, _('Announcement')],
+	  [:p, "Search function is disabled for now."]]
+      }
+    end
+
+    # Search function is disabled for now.
+    def nu_act_search
       query = search_get_query
       if query.nil?
 	return search_form_page
@@ -200,7 +208,7 @@ if defined?($test) && $test
 	    "{{search_form(true)}}")
     end
 
-    def test_search
+    def nu_test_search
       t_add_user
 
       # test_act_search

@@ -15,8 +15,8 @@ require 'qwik/site-url'
 require 'qwik/site-pages'
 require 'qwik/site-group'
 require 'qwik/site-files'
-require 'qwik/site-rrefs'
-require 'qwik/site-search'
+#require 'qwik/site-rrefs'
+#require 'qwik/site-search'
 
 module Qwik
   class Site
@@ -41,7 +41,7 @@ module Qwik
 
       init_group_config
 
-      init_site_search
+#      init_site_search
     end
     attr_reader :sitename
     attr_reader :path

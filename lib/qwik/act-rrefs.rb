@@ -2,6 +2,7 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
+=begin
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 require 'qwik/act-backup'
@@ -187,7 +188,7 @@ if defined?($test) && $test
 #      ok_eq("",@site["page2"].rrefs.get)
     end
 
-=begin
+#=begin
     # check exclusive rrefs update
     # this test takes too long to run as regression
     # please uncomment when needed to test
@@ -237,7 +238,7 @@ if defined?($test) && $test
       r = @site["page0"].rrefs.get.sort
       ok_eq(num/2,r.to_a.size)
     end
-=end
+#=end
 
     private
     def session_md5(body)
@@ -251,3 +252,4 @@ if defined?($test) && $test
     end
   end
 end
+=end
