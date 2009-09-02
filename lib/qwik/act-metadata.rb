@@ -234,7 +234,7 @@ module Qwik
 	@site_url = @site.site_url
 	@description = 'a private qwikWeb site.
 Since this site is in private mode, the feed includes minimum data.'
-	@language = 'ja'		# should be configurable?
+	@language = 'ja'		# FIXME: should be configurable?
 	@pub_date = @site.last_page_time.rfc1123_date
       }
 
@@ -258,6 +258,7 @@ Since this site is in private mode, the feed includes minimum data.'
       @generator = 'qwikWeb' if @config.test
     end
 
+    # This method is not used for now. (2009/9/1)
     def page_init
       @pagedata = {}
       @site.date_list.reverse[0..10].each {|page|
@@ -297,14 +298,16 @@ Since this site is in private mode, the feed includes minimum data.'
     end
 
     def each
-      @site.date_list.each {|page|
+      # Limit the pages to 10 pages.
+#     @site.date_list.each {|page|
+      @site.date_list.reverse[0..10].each {|page|
 	title = page.key
 	url = @site.page_url(page.key)
 	description = page.mtime.rfc1123_date
 	pub_date = page.mtime.rfc1123_date
 	updated = page.mtime.rfc_date+'Z'
 
-	if @public
+#	if @public
 # Do not use page tile even if the site is public. (2009/9/1)
 #	  title = page.get_title
 
@@ -313,7 +316,7 @@ Since this site is in private mode, the feed includes minimum data.'
 #	  tokens = TextTokenizer.tokenize(str)
 #	  page_html = TextParser.make_tree(tokens)
 #	  description = page_html.format_xml
-	end
+#	end
 
 	yield(page, title, url, description, pub_date, updated)
       }
@@ -574,6 +577,19 @@ Since this site is in private mode, the feed includes minimum data.'],
      :rel=>'alternate'}],
    [:updated, '1970-01-01T09:00:00Z'],
    [:summary, '* t']]]], res.body)
+    end
+
+    def test_many_pages
+      (1..20).each {|n|
+        page = @site.create_new
+        page.put_with_time("* t#{n}", n)
+      }
+
+      # The RSS contains only 10 items.
+      res = session('/test/rss.xml')
+      ok_eq('application/xml', res['Content-Type'])
+      #eq 28, res.body[1][2].length
+      eq 19, res.body[1][2].length
     end
   end
 end

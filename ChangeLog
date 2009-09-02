@@ -3,6 +3,8 @@
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.
 	* lib/qwik/act-metadata.rb: Do not show page title.
 
+	* lib/qwik/act-metadata.rb: Limit only 10 items per feed.
+
 2009-09-01  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-status.rb: Show status action.
