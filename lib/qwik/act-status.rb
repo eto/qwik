@@ -63,11 +63,32 @@ module Qwik
       str
     end
 
+    def status_get_objects2
+      ar = []
+      num = 0
+      ObjectSpace.each_object {|obj|
+        ar << obj.class.name
+        num += 1
+      }
+
+      ar3 = ar.sort.uniq
+
+      str = ''
+      str << "object num #{num}\n"
+
+      ar3.each {|v|
+        str << "#{v}\n"
+      }
+
+      str
+    end
+
     def act_status
       str = "status\n"
       str << status_get_date
       str << status_get_memory
-      str << status_get_objects
+#      str << status_get_objects
+      str << status_get_objects2
 
 #      GC.start
 #      str << "GC done\n"
