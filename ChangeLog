@@ -6,6 +6,7 @@
 	* lib/qwik/act-metadata.rb: Limit only 10 items per feed.
 
 	* lib/qwik/act-metadata.rb: Disable RSS 0.91 and RSS 1.0.
+	* lib/qwik/act-metadata.rb: Delete comments.
 
 2009-09-01  Kouichirou Eto  <2009@eto.com.nospam.com>
 

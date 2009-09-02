@@ -19,20 +19,6 @@ module Qwik
 	[:span, msg]]
     end
 
-=begin
-    def pre_ext_rss
-      return metadata_rss091 if @req.base == @req.sitename
-      return c_nerror(_('Error'))
-    end
-
-    def metadata_rss091
-      @res['Content-Type'] = 'application/xml'
-      @res.body = @site.metadata.generate_rss091
-      @res.body = @res.body.format_xml.page_to_xml if ! @config.test
-    end
-=end
-
-#    def pre_ext_rdf
     def pre_ext_xml
       method = "metadata_#{@req.base}_#{@req.ext}"
       if self.respond_to?(method)
@@ -43,13 +29,6 @@ module Qwik
       end
       return c_nerror(_('Error'))
     end
-#    alias pre_ext_xml pre_ext_rdf
-
-=begin
-    def metadata_index_rdf
-      return @site.metadata.generate_rss10
-    end
-=end
 
     def metadata_rss_xml
       return @site.metadata.generate_rss20
@@ -62,8 +41,6 @@ module Qwik
 
   class Site
     def metadata
-      # @metadata = SiteMetaData.new(@config, self) unless defined? @metadata
-      # @metadata
       return SiteMetaData.new(@config, self)
     end
   end
@@ -79,84 +56,6 @@ module Qwik
     attr_reader :last_build_date
     attr_reader :pub_date
     attr_reader :generator
-
-=begin
-    def generate_rss091
-      init_internal
-
-      xml = []
-      xml << [:'?xml', '1.0', 'UTF-8']
-
-      rss = [:rss, {:version=>'0.91'}]
-
-      channel = [:channel,
-	[:title, @title],
-	[:link, @site_url],
-	[:description, @description],
-	[:language, 'ja']]
-
-      channel << [:image,
-	[:title, @title],
-	[:url, @image_url],
-	[:link, @site_url],
-      ]
-
-      each {|page, title, url, description, pub_date, updated|
-	channel << [:item,
-	  [:title, title],
-	  [:link, url],
-	  [:description, description]]
-      }
-
-      rss << channel
-      xml << rss
-
-      return xml
-    end
-
-    def generate_rss10
-      init_internal
-
-      xml = []
-      xml << [:'?xml', '1.0', 'UTF-8']
-
-      rdf = [:'rdf:RDF',
-	{'xmlns:rdf'=>'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-	  'xmlns'=>'http://purl.org/rss/1.0/',
-	  'xmlns:dc'=>'http://purl.org/dc/elements/1.1/'}]
-
-      channel = [:channel, {:'rdf:about'=>@site_url},
-	[:title, @title],
-	[:link, @site_url],
-	[:description, @description],
-	[:image, {:'rdf:resource'=>@image_url}]]
-
-      seq = [:'rdf:Seq']
-      each {|page, title, url, description, pub_date, updated|
-	seq << [:'rdf:li', {:'rdf:resource'=>url}]
-      }
-      channel << [:items, seq]
-
-      rdf << channel
-
-      rdf << [:image, {:'rdf:about'=>@image_url},
-	[:title, @title],
-	[:link, @site_url],
-	[:url, @image_url]]
-
-      each {|page, title, url, description, pub_date, updated|
-	rdf << [:item, {:'rdf:about'=>url},
-	  [:title, title],
-	  [:link, url],
-	  [:description, description],
-	  [:'dc:date', pub_date]]
-      }
-
-      xml << rdf
-
-      return xml
-    end
-=end
 
     def generate_rss20
       init_internal
@@ -264,68 +163,14 @@ Since this site is in private mode, the feed includes minimum data.'
       @generator = Server.server_name
       @generator = 'qwikWeb' if @config.test
     end
-
-=begin
-    # This method is not used for now. (2009/9/1)
-    def page_init
-      @pagedata = {}
-      @site.date_list.reverse[0..10].each {|page|
-	key = page.key
-	next if @pagedata[key]
-
-	title = page.key
-	url = @site.page_url(page.key)
-	description = page.mtime.rfc1123_date
-	pub_date = page.mtime.rfc1123_date
-	updated = page.mtime.rfc_date+'Z'
-
-	if @public
-	  title = page.get_title
-	  str = page.load
-	  description = str
-
-#	  tokens = TextTokenizer.tokenize(str)
-#	  page_html = TextParser.make_tree(tokens)
-#	  SiteMetaData.delete_plugin_info(page_html)
-#	  description = page_html.format_xml
-	end
-
-	@pagedata[key] = [page, title, url, description, pub_date, updated]
-      }
-    end
-
-    def self.delete_plugin_info(wabisabi)
-      wabisabi.make_index
-      wabisabi.index_each_tag(:plugin) {|e|
-	attr = e.attr
-	if attr
-	  e.delete_at(1)
-	end
-	e
-      }
-    end
-=end
-
     def each
       # Limit the pages to 10 pages.
-#     @site.date_list.each {|page|
       @site.date_list.reverse[0..10].each {|page|
 	title = page.key
 	url = @site.page_url(page.key)
 	description = page.mtime.rfc1123_date
 	pub_date = page.mtime.rfc1123_date
 	updated = page.mtime.rfc_date+'Z'
-
-#	if @public
-# Do not use page tile even if the site is public. (2009/9/1)
-#	  title = page.get_title
-
-#	  str = page.load
-#	  description = str
-#	  tokens = TextTokenizer.tokenize(str)
-#	  page_html = TextParser.make_tree(tokens)
-#	  description = page_html.format_xml
-#	end
 
 	yield(page, title, url, description, pub_date, updated)
       }
@@ -341,26 +186,6 @@ end
 if defined?($test) && $test
   class TestActMetadata < Test::Unit::TestCase
     include TestSession
-
-=begin
-    def test_class_method
-      c = Qwik::SiteMetaData
-
-      w = []
-      c.delete_plugin_info(w)
-      ok_eq([], w)
-
-      w = [[:plugin]]
-      ok_eq([[:plugin]], w)
-      c.delete_plugin_info(w)
-      ok_eq([[:plugin]], w)
-
-      w = [[:plugin, {:param=>'dummy'}]]
-      ok_eq([[:plugin, {:param=>'dummy'}]], w)
-      c.delete_plugin_info(w)
-      ok_eq([[:plugin]], w)
-    end
-=end
 
     def test_rss_button
       res = session
@@ -384,63 +209,6 @@ if defined?($test) && $test
     def test_all
       page = @site.create_new
       page.put_with_time('* t', 0)
-
-=begin
-      # test_get_rss091
-      res = session('/test/test.rss')
-      ok_eq('application/xml', res['Content-Type'])
-      ok_eq(
-[[:'?xml', '1.0', 'UTF-8'],
- [:rss,
-  {:version=>'0.91'},
-  [:channel,
-   [:title, 'example.com/test'],
-   [:link, 'http://example.com/test/'],
-   [:description,
-    'a private qwikWeb site.
-Since this site is in private mode, the feed includes minimum data.'],
-   [:language, 'ja'],
-   [:image,
-    [:title, 'example.com/test'],
-    [:url, 'http://qwik.jp/.theme/i/favicon.png'],
-    [:link, 'http://example.com/test/']],
-   [:item,
-    [:title, '1'],
-    [:link, 'http://example.com/test/1.html'],
-    [:description, 'Thu, 01 Jan 1970 09:00:00 GMT']]]]], res.body)
-
-      # test_get_rss10
-      res = session('/test/index.rdf')
-      ok_eq('application/xml', res['Content-Type'])
-      ok_eq(
-[[:'?xml', '1.0', 'UTF-8'],
- [:'rdf:RDF',
-  {'xmlns:rdf'=>'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-   'xmlns:dc'=>'http://purl.org/dc/elements/1.1/',
-   'xmlns'=>'http://purl.org/rss/1.0/'},
-  [:channel,
-   {:'rdf:about'=>'http://example.com/test/'},
-   [:title, 'example.com/test'],
-   [:link, 'http://example.com/test/'],
-   [:description,
-    'a private qwikWeb site.
-Since this site is in private mode, the feed includes minimum data.'],
-   [:image, {:'rdf:resource'=>'http://qwik.jp/.theme/i/favicon.png'}],
-   [:items,
-    [:'rdf:Seq',
-     [:'rdf:li', {:'rdf:resource'=>'http://example.com/test/1.html'}]]]],
-  [:image,
-   {:'rdf:about'=>'http://qwik.jp/.theme/i/favicon.png'},
-   [:title, 'example.com/test'],
-   [:link, 'http://example.com/test/'],
-   [:url, 'http://qwik.jp/.theme/i/favicon.png']],
-  [:item,
-   {:'rdf:about'=>'http://example.com/test/1.html'},
-   [:title, '1'],
-   [:link, 'http://example.com/test/1.html'],
-   [:description, 'Thu, 01 Jan 1970 09:00:00 GMT'],
-   [:'dc:date', 'Thu, 01 Jan 1970 09:00:00 GMT']]]], res.body)
-=end
 
       # test_get_rss20
       res = session('/test/rss.xml')
@@ -492,59 +260,6 @@ Since this site is in private mode, the feed includes minimum data.'],
    [:summary, 'Thu, 01 Jan 1970 09:00:00 GMT']]]], res.body)
 
       t_site_open	# Public site.
-
-=begin
-      # test_get_public_rss091
-      res = session('/test/test.rss')
-      ok_eq('application/xml', res['Content-Type'])
-      assert_not_equal(
-[[:'?xml', '1.0', 'UTF-8'],
- [:rss,
-  {:version=>'0.91'},
-  [:channel,
-   [:title, 'example.com/test'],
-   [:link, 'http://example.com/test/'],
-   [:description, 'a public qwikWe site.'],
-   [:language, 'ja'],
-   [:image,
-    [:title, 'example.com/test'],
-    [:url, 'http://qwik.jp/.theme/i/favicon.png'],
-    [:link, 'http://example.com/test/']],
-   [:item,
-    [:title, 't'],
-    [:link, 'http://example.com/test/1.html'],
-    [:description, '* t']]]]], res.body)
-
-      # test_get_public_rss10
-      res = session('/test/index.rdf')
-      ok_eq('application/xml', res['Content-Type'])
-      assert_not_equal(
-[[:'?xml', '1.0', 'UTF-8'],
- [:'rdf:RDF',
-  {'xmlns:rdf'=>'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-   'xmlns:dc'=>'http://purl.org/dc/elements/1.1/',
-   'xmlns'=>'http://purl.org/rss/1.0/'},
-  [:channel,
-   {:'rdf:about'=>'http://example.com/test/'},
-   [:title, 'example.com/test'],
-   [:link, 'http://example.com/test/'],
-   [:description, 'a public qwikWe site.'],
-   [:image, {:'rdf:resource'=>'http://qwik.jp/.theme/i/favicon.png'}],
-   [:items,
-    [:'rdf:Seq',
-     [:'rdf:li', {:'rdf:resource'=>'http://example.com/test/1.html'}]]]],
-  [:image,
-   {:'rdf:about'=>'http://qwik.jp/.theme/i/favicon.png'},
-   [:title, 'example.com/test'],
-   [:link, 'http://example.com/test/'],
-   [:url, 'http://qwik.jp/.theme/i/favicon.png']],
-  [:item,
-   {:'rdf:about'=>'http://example.com/test/1.html'},
-   [:title, 't'],
-   [:link, 'http://example.com/test/1.html'],
-   [:description, '* t'],
-   [:'dc:date', 'Thu, 01 Jan 1970 09:00:00 GMT']]]], res.body)
-=end
 
       # test_get_public_rss20
       res = session('/test/rss.xml')
@@ -603,7 +318,6 @@ Since this site is in private mode, the feed includes minimum data.'],
       # The RSS contains only 10 items.
       res = session('/test/rss.xml')
       ok_eq('application/xml', res['Content-Type'])
-      #eq 28, res.body[1][2].length
       eq 19, res.body[1][2].length
     end
   end
