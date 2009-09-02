@@ -1,3 +1,8 @@
+2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.
+	* lib/qwik/act-metadata.rb: Do not show page title.
+
 2009-09-01  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-status.rb: Show status action.

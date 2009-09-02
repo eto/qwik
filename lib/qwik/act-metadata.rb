@@ -57,8 +57,9 @@ module Qwik
 
   class Site
     def metadata
-      @metadata = SiteMetaData.new(@config, self) unless defined? @metadata
-      @metadata
+      # @metadata = SiteMetaData.new(@config, self) unless defined? @metadata
+      # @metadata
+      return SiteMetaData.new(@config, self)
     end
   end
 
@@ -304,7 +305,9 @@ Since this site is in private mode, the feed includes minimum data.'
 	updated = page.mtime.rfc_date+'Z'
 
 	if @public
-	  title = page.get_title
+# Do not use page tile even if the site is public. (2009/9/1)
+#	  title = page.get_title
+
 #	  str = page.load
 #	  description = str
 #	  tokens = TextTokenizer.tokenize(str)
