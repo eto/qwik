@@ -19,6 +19,7 @@ module Qwik
 	[:span, msg]]
     end
 
+=begin
     def pre_ext_rss
       return metadata_rss091 if @req.base == @req.sitename
       return c_nerror(_('Error'))
@@ -29,8 +30,10 @@ module Qwik
       @res.body = @site.metadata.generate_rss091
       @res.body = @res.body.format_xml.page_to_xml if ! @config.test
     end
+=end
 
-    def pre_ext_rdf
+#    def pre_ext_rdf
+    def pre_ext_xml
       method = "metadata_#{@req.base}_#{@req.ext}"
       if self.respond_to?(method)
 	@res['Content-Type'] = 'application/xml'
@@ -40,11 +43,13 @@ module Qwik
       end
       return c_nerror(_('Error'))
     end
-    alias pre_ext_xml pre_ext_rdf
+#    alias pre_ext_xml pre_ext_rdf
 
+=begin
     def metadata_index_rdf
       return @site.metadata.generate_rss10
     end
+=end
 
     def metadata_rss_xml
       return @site.metadata.generate_rss20
@@ -75,6 +80,7 @@ module Qwik
     attr_reader :pub_date
     attr_reader :generator
 
+=begin
     def generate_rss091
       init_internal
 
@@ -150,6 +156,7 @@ module Qwik
 
       return xml
     end
+=end
 
     def generate_rss20
       init_internal
@@ -258,6 +265,7 @@ Since this site is in private mode, the feed includes minimum data.'
       @generator = 'qwikWeb' if @config.test
     end
 
+=begin
     # This method is not used for now. (2009/9/1)
     def page_init
       @pagedata = {}
@@ -296,6 +304,7 @@ Since this site is in private mode, the feed includes minimum data.'
 	e
       }
     end
+=end
 
     def each
       # Limit the pages to 10 pages.
@@ -333,6 +342,7 @@ if defined?($test) && $test
   class TestActMetadata < Test::Unit::TestCase
     include TestSession
 
+=begin
     def test_class_method
       c = Qwik::SiteMetaData
 
@@ -350,6 +360,7 @@ if defined?($test) && $test
       c.delete_plugin_info(w)
       ok_eq([[:plugin]], w)
     end
+=end
 
     def test_rss_button
       res = session
@@ -374,6 +385,7 @@ if defined?($test) && $test
       page = @site.create_new
       page.put_with_time('* t', 0)
 
+=begin
       # test_get_rss091
       res = session('/test/test.rss')
       ok_eq('application/xml', res['Content-Type'])
@@ -428,6 +440,7 @@ Since this site is in private mode, the feed includes minimum data.'],
    [:link, 'http://example.com/test/1.html'],
    [:description, 'Thu, 01 Jan 1970 09:00:00 GMT'],
    [:'dc:date', 'Thu, 01 Jan 1970 09:00:00 GMT']]]], res.body)
+=end
 
       # test_get_rss20
       res = session('/test/rss.xml')
@@ -480,6 +493,7 @@ Since this site is in private mode, the feed includes minimum data.'],
 
       t_site_open	# Public site.
 
+=begin
       # test_get_public_rss091
       res = session('/test/test.rss')
       ok_eq('application/xml', res['Content-Type'])
@@ -530,6 +544,7 @@ Since this site is in private mode, the feed includes minimum data.'],
    [:link, 'http://example.com/test/1.html'],
    [:description, '* t'],
    [:'dc:date', 'Thu, 01 Jan 1970 09:00:00 GMT']]]], res.body)
+=end
 
       # test_get_public_rss20
       res = session('/test/rss.xml')
