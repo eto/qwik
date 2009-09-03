@@ -86,9 +86,17 @@ module Qwik
       return ar
     end
 
-    def each(all=false, with_super=false)
-      @db.each(with_super) {|key|
+    def list(all = false, with_super = false)
+      ar = []
+      @db.list(with_super).each {|key|
 	next if ! all && /\A_/ =~ key
+        ar << key
+      }
+      ar
+    end
+
+    def each(all = false, with_super = false)
+      list(all, with_super).each {|key|
 	page = self[key]
 	next if page.nil?	# What?
 	yield(page)

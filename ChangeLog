@@ -16,6 +16,9 @@
 	* lib/qwik/farm.rb: Do not use each method.
 	* lib/qwik/site-report.rb: Ditto.
 
+	* lib/qwik/db-filesystem.rb: Do not use Enumerable.
+	* lib/qwik/pages.rb: New method list.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

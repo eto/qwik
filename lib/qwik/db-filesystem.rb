@@ -7,7 +7,7 @@ require 'qwik/util-pathname'
 
 module Qwik
   class FileSystemDB
-    include Enumerable
+#    include Enumerable
 
     def initialize(path, spath)
       @path = path
@@ -106,10 +106,14 @@ module Qwik
       path(k).unlink if path(k).exist?
     end
 
-    def each(with_super=false)
+    def list(with_super = false)
       ar =  get_dir_list(@path.to_s)
       ar += get_dir_list(@spath.to_s) if with_super
-      ar.sort.each {|b|
+      return ar.sort
+    end
+
+    def each(with_super = false)
+      list(with_super).each {|b|
 	yield(b)
       }
     end
@@ -118,10 +122,19 @@ module Qwik
       each(true, &b)
     end
 
-    def last_page_time # mtime of the newest page
+    def nu_last_page_time # mtime of the newest page
       t = map {|k| mtime(k) }.max
       t = Time.at(0) if t.nil?
       return t
+    end
+
+    def last_page_time # mtime of the newest page
+      max = 0
+      list().each {|pagename|
+        t = mtime(pagename).to_i
+        max = t if max < t
+      }
+      return Time.at(max)
     end
 
     # QuickML support
@@ -172,6 +185,7 @@ module Qwik
       return h[k]
     end
 
+    # FIXME: I don't know why this method doesn't use Pathname.
     def get_dir_list(dir)
       ar = []
       Dir.foreach(dir) {|file|
