@@ -94,6 +94,24 @@ module Qwik
       str
     end
 
+    def status_show_httprequests(now)
+      ar = []
+      ObjectSpace.each_object {|obj|
+        ar << obj if obj.class.name == "WEBrick::HTTPRequest"
+      }
+
+      str = "* WEBrick::HTTPRequest\n"
+      ar.each {|req|
+        #diff = now - req.start_time
+        path = req.unparsed_uri
+        ua = req["user-agent"]
+        #str << "#{path}\t#{ua}\n"
+        str << "#{path}\n"
+        str << "#{ua}\n"
+      }
+      str
+    end
+
     def status_show_requests(now)
       ar = []
       ObjectSpace.each_object {|obj|
@@ -110,25 +128,28 @@ module Qwik
     end
 
     def act_status
-      str = "status\n"
+      str = ""
 
-      time = Time.now
-      str << status_get_date(time)
-      str << "\n"
+      now = @req.start_time
+
+      str << status_get_date(now)
 
       ps = `ps auxww | grep -i ruby`
       str << status_get_memory(ps)
       str << "\n"
 
-      now = Time.now
+      str << status_show_httprequests(now)
+      str << "\n"
+
       str << status_show_requests(now)
       str << "\n"
 
-      str << status_get_objects
+#      str << status_get_objects
 #      str << status_get_objects2
-      str << "\n"
+#      str << "\n"
 
-      return c_notice(_('Status')) {
+#      return c_notice(_('Status')) {
+      return c_plain(_('Status')) {
 	[[:h2, _('Status')],
 	  [:pre, str]]
       }
@@ -166,6 +187,9 @@ EOS
       is "12MB\t9MB\tquickml-server\n35MB\t29MB\tqwikweb-server\n", str
 
       now = Time.at(0)
+      str = @action.status_show_httprequests(now)
+      is "* WEBrick::HTTPRequest\n", str
+
       str = @action.status_show_requests(now)
       is "* Qwik::Request\n/test/\t0.0\n", str
     end
