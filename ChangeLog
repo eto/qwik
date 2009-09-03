@@ -43,6 +43,8 @@
 	* lib/qwik/act-html.rb: Add big page error.
 
 	* lib/qwik/act-archive.rb: Cache archive.
+	* lib/qwik/act-archive.rb: Do not start creating archive when the
+	process is running.
 
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 

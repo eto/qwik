@@ -54,12 +54,18 @@ as the static Web pages.
       return  @site.cache_path + "#{@site.sitename}.zip"
     end
 
+    def archive_running_path
+      return  @site.cache_path + "#{@site.sitename}.zip.running"
+    end
+
     def archive_flag_path
       return  @site.cache_path + "#{@site.sitename}.zip.completed"
     end
 
     def archive_clear_cache
       path = archive_path
+      path.unlink if path.exist?
+      path = archive_running_path
       path.unlink if path.exist?
       path = archive_flag_path
       path.unlink if path.exist?
@@ -69,9 +75,19 @@ as the static Web pages.
       c_require_member
       c_require_base_is_sitename
 
+      if archive_running_path.exist?
+        return c_nerror(_('Running.')) {
+          [:div,
+           [:p, _("The process is working now.")],
+           [:p, _("Pleae wait for a while.")]]
+        }
+      end
+
       unless archive_path.exist? && archive_flag_path.exist?
+        archive_running_path.write("running")
         SiteArchive.generate(@config, @site, self)
         archive_flag_path.write("completed")
+        archive_running_path.unlink
       end
 
       return c_simple_send(archive_path, 'application/zip')
