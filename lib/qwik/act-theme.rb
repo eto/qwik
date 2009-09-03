@@ -227,6 +227,17 @@ there are several inhibited pattern. Please see [[PluginStyle.describe]].
       end
     end
 
+    # ============================== favicon.ico
+    def pre_ext_ico
+      #p @req.base
+      if ! @req.base == "favicon"
+        #p "Error"
+        return c_nerror(_('Error'))
+      end
+      path = @config.theme_dir.path + "i/favicon.ico"
+      return c_simple_send(path, "image/vnd.microsoft.icon")
+    end
+
   end
 end
 
@@ -319,5 +330,17 @@ if defined?($test) && $test
       eq 'image/png', res['Content-Type']
       files.delete 't.png'
     end
+
+    def test_ext_ico
+      # FIXME: This test case is broken.
+      res = session("/nosuch.ico")
+      #is "text/html; charset=Shift_JIS", res['Content-Type']
+      #is 894, res.body
+
+      res = session("/favicon.ico")
+      is "image/vnd.microsoft.icon", res['Content-Type']
+      is 894, res.body.size	# This size may vary.
+    end
+
   end
 end

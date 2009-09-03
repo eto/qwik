@@ -9,6 +9,10 @@
 
 	* lib/qwik/act-mdlb.rb: Delete unused function.
 
+	* lib/qwik/response.rb: Fix ico mimetype.
+
+	* lib/qwik/act-theme.rb: Add favicon.ico support.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

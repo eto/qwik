@@ -15,7 +15,8 @@ module Qwik
     MIME_TYPES = {
       'smil'	=> 'application/smil',
       'swf'	=> 'application/x-shockwave-flash',
-      'ico'	=> 'image/bitmap',		# FIXME: Is this OK?
+#      'ico'	=> 'image/bitmap',		# FIXME: Is this OK?
+      'ico'	=> 'image/vnd.microsoft.icon',
       'png'	=> 'image/png',
       '3gp'	=> 'video/3gpp',
       'tgz'	=> 'application/octet-stream',
@@ -176,7 +177,7 @@ if defined?($test) && $test
       res.make_mimetypes(mt)
       ok_eq('application/x-shockwave-flash', mt['swf'])
       ok_eq('application/smil', mt['smil'])
-      ok_eq('image/bitmap', mt['ico'])
+      ok_eq('image/vnd.microsoft.icon', mt['ico'])
       ok_eq('image/png', mt['png'])
       ok_eq('video/3gpp', mt['3gp'])
 
