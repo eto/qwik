@@ -51,7 +51,9 @@ module Qwik
 
     def create(k)	# Create a new page.
       raise PageExistError if baseexist?(k)
-      return @pages[k] = Page.new(@config, self, k)
+      #return @pages[k] = Page.new(@config, self, k)
+      page = Page.new(@config, self, k)
+      return page
     end
 
     def create_new
@@ -63,23 +65,35 @@ module Qwik
     end
 
     def exist?(k)
-      return true if @pages[k]
+      #return true if @pages[k]
       return @db.exist?(k)
     end
 
+    def nu_get(k)
+      #return @pages[k] if @pages[k]
+      return nil if ! exist?(k)
+      @pages[k] = Page.new(@config, self, k) 
+      return @pages[k]
+    end
+
     def get(k)
-      return @pages[k] if @pages[k]
-      return @pages[k] = Page.new(@config, self, k) if @db.exist?(k)
-      return nil	# No page.
+      return nil if ! exist?(k)
+      page = Page.new(@config, self, k) 
+      return page
     end
 
     def [](k)
       return get(k)
     end
 
-    def delete(k)
+    def nu_delete(k)
       self[k].delete
       @pages[k] = nil
+    end
+
+    def delete(k)
+      page = get(k)
+      page.delete
     end
 
     def to_a(all=nil)

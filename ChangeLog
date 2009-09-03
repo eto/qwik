@@ -21,6 +21,8 @@
 
 	* lib/qwik/pages.rb: New method title_list_keys and date_list_keys.
 
+	* lib/qwik/pages.rb: Do not cache Page objects.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.
