@@ -38,8 +38,6 @@ module Qwik
 	@index = DBIndexer.new(dir)
 	@db.register_observer(@index)
       end
-
-      @pages = {}
     end
     attr_reader :db
     attr_reader :backupdb
@@ -51,7 +49,6 @@ module Qwik
 
     def create(k)	# Create a new page.
       raise PageExistError if baseexist?(k)
-      #return @pages[k] = Page.new(@config, self, k)
       page = Page.new(@config, self, k)
       return page
     end
@@ -65,15 +62,7 @@ module Qwik
     end
 
     def exist?(k)
-      #return true if @pages[k]
       return @db.exist?(k)
-    end
-
-    def nu_get(k)
-      #return @pages[k] if @pages[k]
-      return nil if ! exist?(k)
-      @pages[k] = Page.new(@config, self, k) 
-      return @pages[k]
     end
 
     def get(k)
@@ -84,11 +73,6 @@ module Qwik
 
     def [](k)
       return get(k)
-    end
-
-    def nu_delete(k)
-      self[k].delete
-      @pages[k] = nil
     end
 
     def delete(k)
