@@ -35,6 +35,11 @@
 
 	* lib/qwik/act-comment.rb: Guests cannot post comments.
 
+	* lib/qwik/db-filesystem.rb: New method size.
+	* lib/qwik/page-get.rb: Ditto.
+
+	* lib/qwik/act-html.rb: Prepare big page test case.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

@@ -12,6 +12,10 @@ module Qwik
     end
     alias load get
 
+    def size
+      return @db.size(@key)
+    end
+
     def mtime
       return @db.mtime(@key)
     end
@@ -153,6 +157,11 @@ if defined?($test) && $test
 
       # test_mtime
       assert_instance_of(Time, page.mtime)
+
+      # test_size
+      is 0, page.size
+      page.store('t')
+      is 1, page.size
     end
 
     def test_destructive

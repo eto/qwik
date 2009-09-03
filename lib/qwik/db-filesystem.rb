@@ -7,8 +7,6 @@ require 'qwik/util-pathname'
 
 module Qwik
   class FileSystemDB
-#    include Enumerable
-
     def initialize(path, spath)
       @path = path
       @path_h = {}
@@ -69,6 +67,11 @@ module Qwik
       end
       return spath(k).read if spath(k).exist?
       return ''		# Not nil.
+    end
+
+    def size(k)
+      return  path(k).size if  path(k).exist?
+      return 0
     end
 
     def mtime(k)
@@ -232,6 +235,9 @@ if defined?($test) && $test
       # test_put
       db.put('1', 't')
       assert_equal 't', db.get('1')
+
+      # test_size
+      assert_equal 1, db.size('1')
 
       # test_put_with_time
       db.put('1', 't', Time.at(0))

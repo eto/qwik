@@ -13,6 +13,9 @@ module Qwik
       if ! c_login?
 	c_set_html
 
+#        page = @site[pagename]
+#        page.size
+
 	if @config.test		# Only for test.
 	  @res.body = view_page_cache_generate(@req.base)
 	  return
@@ -167,6 +170,17 @@ if defined?($test) && $test
       res = session('/test/1.html') {|req| req.cookies.clear }
       ok_title '1'
 
+    end
+
+    def test_big_page
+      t_site_open
+
+      page = @site.create_new
+      page.store("a"*(100*1024*3))
+
+      res = session('/test/1.html') {|req| req.cookies.clear }
+      #ok_title '1'
+      #ok_title 'Error'
     end
 
     def test_superpre_sharp_mark
