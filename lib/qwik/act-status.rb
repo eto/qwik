@@ -94,6 +94,21 @@ module Qwik
       str
     end
 
+    def status_show_requests(now)
+      ar = []
+      ObjectSpace.each_object {|obj|
+        ar << obj if obj.class.name == "Qwik::Request"
+      }
+
+      str = "* Qwik::Request\n"
+      ar.each {|req|
+        diff = now - req.start_time
+        path = req.unparsed_uri
+        str << "#{path}\t#{diff}\n"
+      }
+      str
+    end
+
     def act_status
       str = "status\n"
 
@@ -103,6 +118,10 @@ module Qwik
 
       ps = `ps auxww | grep -i ruby`
       str << status_get_memory(ps)
+      str << "\n"
+
+      now = Time.now
+      str << status_show_requests(now)
       str << "\n"
 
       str << status_get_objects
@@ -145,6 +164,10 @@ qwik     14618  0.0  0.8 35792 29504 ?       S    17:19   0:00 /usr/bin/ruby -I/
 EOS
       str = @action.status_get_memory(ps)
       is "12MB\t9MB\tquickml-server\n35MB\t29MB\tqwikweb-server\n", str
+
+      now = Time.at(0)
+      str = @action.status_show_requests(now)
+      is "* Qwik::Request\n/test/\t0.0\n", str
     end
   end
 end
