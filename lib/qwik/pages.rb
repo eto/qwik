@@ -67,10 +67,14 @@ module Qwik
       return @db.exist?(k)
     end
 
-    def [](k)
+    def get(k)
       return @pages[k] if @pages[k]
       return @pages[k] = Page.new(@config, self, k) if @db.exist?(k)
       return nil	# No page.
+    end
+
+    def [](k)
+      return get(k)
     end
 
     def delete(k)
@@ -119,10 +123,30 @@ module Qwik
       }
     end
 
+    def title_list_keys
+      ar = []
+      list.each {|key|
+        page = get(key)
+        title = page.get_title.downcase
+        ar << [title, key]
+      }
+      return ar.sort
+    end
+
     def date_list
       return to_a.sort_by {|page|
 	page.mtime
       }
+    end
+
+    def date_list_keys
+      ar = []
+      list.each {|key|
+        page = get(key)
+        time = page.mtime.to_i
+        ar << [time, key]
+      }
+      return ar.sort
     end
 
     def find_title(title)
@@ -284,6 +308,9 @@ if defined?($test) && $test
       tlist.each {|page|
 	assert_instance_of(String, page.get_title)
       }
+      
+      list = pages.title_list_keys
+      is [["1", "1"], ["2", "2"], ["t1", "t1"], ["t2", "t2"]], list
     end
 
     def test_last_article_time
@@ -310,7 +337,7 @@ if defined?($test) && $test
     end
 
     def test_recent_list
-      pages = @site
+      pages = @site.get_pages
 
       pages.create('t1').put_with_time('t', Time.at(0))
       pages.create('t2').put_with_time('t', Time.at(1))
@@ -322,6 +349,9 @@ if defined?($test) && $test
       dlist.each {|page|
 	assert_instance_of(Time, page.mtime)
       }
+
+      list = pages.date_list_keys
+      is [[0, "t1"], [1, "t2"], [2, "1"], [3, "2"]], list
     end
 
     def nutest_cache
