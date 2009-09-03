@@ -20,16 +20,6 @@ module Qwik
       title, tags = Page.get_title(self.get)
       return title if title
 
-=begin
-      # FIXME: This is obsolete.
-      # Check reverse hash.
-      rev_hash = @pages.pagetitle.rev_hash
-      if rev_hash
-	title = rev_hash[@key]
-	return title if title
-      end
-=end
-
       # Abandon to get title and return the page key.
       return @key
     end

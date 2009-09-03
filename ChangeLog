@@ -24,7 +24,8 @@
 	* lib/qwik/pages.rb: Do not cache Page objects.
 	* lib/qwik/pages.rb: Clear unused code.
 
-	* lib/qwik/page-title.rb: Delete unused PageTitle function.
+	* lib/qwik/page-title.rb: Disable unused PageTitle function.
+	* lib/qwik/page-title.rb: Delete the code.
 
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
