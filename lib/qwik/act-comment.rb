@@ -110,6 +110,7 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 
     def ext_hcomment
       #c_require_login	# Guest can post.
+      c_require_login	# Guest cannot post.
       c_require_post
 
       date = @req.start_time.ymdx
@@ -254,6 +255,7 @@ Hikiのコメント・プラグインとほぼ同じ使い方ができます。
 
     def ext_mcomment
       #c_require_login	# Guest can also post comment.
+      c_require_login	# Guest cannot post.
       c_require_post
       c_require_page_exist
 

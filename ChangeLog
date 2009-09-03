@@ -33,6 +33,8 @@
 
 	* lib/qwik/act-history.rb: TimeMachine function is disabled.
 
+	* lib/qwik/act-comment.rb: Guests cannot post comments.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.
