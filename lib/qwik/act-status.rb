@@ -38,8 +38,21 @@ module Qwik
       ar = []
       num = 0
       ObjectSpace.each_object {|obj|
-        ar << obj.class.name
         num += 1
+
+        name = obj.class.name
+        if name == "String" ||
+            name == "Regexp" ||
+            name == "Class" ||
+            name == "Hash" ||
+            name == "Bignum" ||
+            name == "Module" ||
+            name == "Float" ||
+            name == "Array"
+          # do nothing
+        else
+          ar << name
+        end
       }
 
       hash = Hash.new(0)
