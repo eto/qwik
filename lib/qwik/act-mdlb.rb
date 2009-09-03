@@ -560,7 +560,7 @@ http://www.modulobe.com/
 	    res.body)
     end
 
-    def test_metadata_model_xml
+    def nu_test_metadata_model_xml
       setup_models
       res = session('/test/model.xml')
       ok_eq([[:'?xml', '1.0', 'utf-8'],

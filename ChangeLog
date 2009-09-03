@@ -1,3 +1,14 @@
+2009-09-03  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/act-metadata.rb: Cache feed file.
+
+	* lib/qwik/action.rb: New method site_updated. This method is
+	called when the site is updated.
+	* lib/qwik/act-new.rb: Ditto.
+	* lib/qwik/act-save.rb: Ditto.
+
+	* lib/qwik/act-mdlb.rb: Delete unused function.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

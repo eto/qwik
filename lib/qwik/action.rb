@@ -53,6 +53,15 @@ module Qwik
       @config, @memory, @req, @res = config, memory, req, res
     end
 
+    SITE_UPDATE_METHODS = %w(metadata_clear_cache)
+    def site_updated
+      SITE_UPDATE_METHODS.each {|method|
+        if self.respond_to?(method)
+          self.send(method)
+        end
+      }
+    end
+
     def run
       init_gettext
 

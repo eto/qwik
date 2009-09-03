@@ -26,6 +26,7 @@ module Qwik
 	c_make_log('delete')	# DELETE
 	c_monitor('delete')	# DELETE
 #        clear_rrefs(@req.base)
+        site_updated
 	return save_page_deleted
       end
 
@@ -51,6 +52,7 @@ module Qwik
       url = "#{@req.base}.#{ext}"
 
 #      update_rrefs
+      site_updated
 
       return save_page_is_saved(url)
     end

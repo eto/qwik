@@ -19,15 +19,29 @@ module Qwik
 	[:span, msg]]
     end
 
+    def metadata_clear_cache
+      path = @site.cache_path + "rss.xml"
+      path.unlink if path.exist?
+      path = @site.cache_path + "atom.xml"
+      path.unlink if path.exist?
+    end
+
     def pre_ext_xml
       method = "metadata_#{@req.base}_#{@req.ext}"
-      if self.respond_to?(method)
-	@res['Content-Type'] = 'application/xml'
-	@res.body = self.send(method)
-	@res.body = @res.body.format_xml.page_to_xml if ! @config.test
-	return
+      return c_nerror(_('Error')) if ! self.respond_to?(method)
+      
+      site_cache_path = @site.cache_path
+      site_cache_path.check_directory
+      feed_filename = "#{@req.base}.#{@req.ext}"
+      feed_path = site_cache_path + feed_filename
+
+      if ! feed_path.exist?
+        feed = self.send(method)
+        feed_string = feed.format_xml.page_to_xml
+        feed_path.write(feed_string)
       end
-      return c_nerror(_('Error'))
+
+      return c_simple_send(feed_path, 'application/xml')
     end
 
     def metadata_rss_xml
@@ -214,6 +228,7 @@ if defined?($test) && $test
       # test_get_rss20
       res = session('/test/rss.xml')
       ok_eq('application/xml', res['Content-Type'])
+      result = HTree(res.body).to_wabisabi
       ok_eq(
 [[:'?xml', '1.0', 'utf-8'],
  [:rss,
@@ -233,38 +248,19 @@ Since this site is in private mode, the feed includes minimum data.'],
     [:link, 'http://example.com/test/1.html'],
     [:description, 'Thu, 01 Jan 1970 09:00:00 GMT'],
     [:pubdate, 'Thu, 01 Jan 1970 09:00:00 GMT'],
-    [:guid, 'http://example.com/test/1.html']]]]], res.body)
+    [:guid, 'http://example.com/test/1.html']]]]], result)
 
       # test_get_atom
       res = session('/test/atom.xml')
       ok_eq('application/xml', res['Content-Type'])
-      ok_eq(
-[[:'?xml', '1.0', 'utf-8'],
- [:feed,
-  {:xmlns=>'http://www.w3.org/2005/atom'},
-  [:title, 'example.com/test'],
-  [:link,
-   {:rel=>'alternate', :href=>'http://example.com/test/', :type=>'text/html'}],
-  [:link,
-   {:rel=>'self',
-    :href=>'http://example.com/test/atom.xml',
-    :type=>'application/atom+xml'}],
-  [:generator, {:uri=>'http://qwik.jp/'}, 'qwikWeb'],
-  [:updated, '1970-01-01T09:00:00Z'],
-  [:entry,
-   [:title, '1'],
-   [:link,
-    {:rel=>'alternate',
-     :href=>'http://example.com/test/1.html',
-     :type=>'text/html'}],
-   [:updated, '1970-01-01T09:00:00Z'],
-   [:summary, 'Thu, 01 Jan 1970 09:00:00 GMT']]]], res.body)
+      is "<?xml version=\"1.0\" encoding=\"utf-8\"?><feed xmlns=\"http://www.w3.org/2005/atom\"\n><title\n>example.com/test</title\n><link href=\"http://example.com/test/\" rel=\"alternate\" type=\"text/html\"\n/><link href=\"http://example.com/test/atom.xml\" rel=\"self\" type=\"application/atom+xml\"\n/><generator uri=\"http://qwik.jp/\"\n>qwikWeb</generator\n><updated\n>1970-01-01T09:00:00Z</updated\n><entry\n><title\n>1</title\n><link href=\"http://example.com/test/1.html\" rel=\"alternate\" type=\"text/html\"\n/><updated\n>1970-01-01T09:00:00Z</updated\n><summary\n>Thu, 01 Jan 1970 09:00:00 GMT</summary\n></entry\n></feed\n>", res.body
 
       t_site_open	# Public site.
 
       # test_get_public_rss20
       res = session('/test/rss.xml')
       ok_eq('application/xml', res['Content-Type'])
+      result = HTree(res.body).to_wabisabi
       assert_not_equal(
 [[:'?xml', '1.0', 'utf-8'],
  [:rss,
@@ -282,11 +278,12 @@ Since this site is in private mode, the feed includes minimum data.'],
     [:link, 'http://example.com/test/1.html'],
     [:description, '* t'],
     [:pubdate, 'Thu, 01 Jan 1970 09:00:00 GMT'],
-    [:guid, 'http://example.com/test/1.html']]]]], res.body)
+    [:guid, 'http://example.com/test/1.html']]]]], result)
 
       # test_get_public_atom
       res = session('/test/atom.xml')
       ok_eq('application/xml', res['Content-Type'])
+      result = HTree(res.body).to_wabisabi
       assert_not_equal(
 [[:'?xml', '1.0', 'utf-8'],
  [:feed,
@@ -307,7 +304,7 @@ Since this site is in private mode, the feed includes minimum data.'],
      :type=>'text/html',
      :rel=>'alternate'}],
    [:updated, '1970-01-01T09:00:00Z'],
-   [:summary, '* t']]]], res.body)
+   [:summary, '* t']]]], result)
     end
 
     def test_many_pages
@@ -319,7 +316,8 @@ Since this site is in private mode, the feed includes minimum data.'],
       # The RSS contains only 10 items.
       res = session('/test/rss.xml')
       ok_eq('application/xml', res['Content-Type'])
-      eq 19, res.body[1][2].length
+      result = HTree(res.body).to_wabisabi
+      eq 19, result[1][2].length
     end
   end
 end

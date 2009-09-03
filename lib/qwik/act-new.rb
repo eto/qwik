@@ -51,6 +51,7 @@ module Qwik
       url = "#{key}.edit"
 
 #      create_rrefs(key)
+      site_updated
 
       return c_notice(_('New page'), url, 201) {	# 201, Created
 	[[:h2, _('Created.')],
