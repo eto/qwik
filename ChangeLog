@@ -29,6 +29,8 @@
 	* lib/qwik/pages.rb: FIX: add page-wikidb again.
 	* lib/qwik/page-wikidb.rb: Do not cache WikiDB object.
 
+	* lib/qwik/act-status.rb: Add test cases.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

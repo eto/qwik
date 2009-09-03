@@ -6,13 +6,11 @@ $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
-    def status_get_date
-      now = Time.now
-      return "* "+now.strftime("%Y-%m-%dT%H:%M:%S")+"\n"
+    def status_get_date(time)
+      return "* " + time.strftime("%Y-%m-%dT%H:%M:%S") + "\n"
     end
 
-    def status_get_memory
-      ps = `ps auxww | grep -i ruby`
+    def status_get_memory(ps)
       str = ''
       ps.each_line {|line|
 	user, pid, cpu, mem, vsz, rss, tty, stat, start, time, command =
@@ -98,15 +96,18 @@ module Qwik
 
     def act_status
       str = "status\n"
-      str << status_get_date
-      str << status_get_memory
+
+      time = Time.now
+      str << status_get_date(time)
+      str << "\n"
+
+      ps = `ps auxww | grep -i ruby`
+      str << status_get_memory(ps)
+      str << "\n"
+
       str << status_get_objects
 #      str << status_get_objects2
-
-#      GC.start
-#      str << "GC done\n"
-#      str << status_get_memory
-#      str << status_get_objects
+      str << "\n"
 
       return c_notice(_('Status')) {
 	[[:h2, _('Status')],
@@ -126,6 +127,24 @@ if defined?($test) && $test
     include TestSession
 
     def test_all
+      res = session
+
+      time = Time.at(0)
+      str = @action.status_get_date(time)
+      is "* 1970-01-01T09:00:00\n", str
+
+      ps = <<'EOS'
+qwik     14611  0.0  0.0  3468 1260 ?        Ss   17:19   0:00 /bin/sh -c /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/quickml-server -d -c /home/qwik/qwik/etc/config-debug.txt >> /home/qwik/qwik/log/quickml-out 2>&1
+qwik     14612  0.0  0.0  3468 1260 ?        Ss   17:19   0:00 /bin/sh -c /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/qwikweb-server -d -c /home/qwik/qwik/etc/config-debug.txt >> /home/qwik/qwik/log/out 2>&1
+qwik     14613  0.5  0.2 12964 9520 ?        S    17:19   0:01 /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/quickml-server -d -c /home/qwik/qwik/etc/config-debug.txt
+qwik     14614  6.9  0.8 35792 29504 ?       S    17:19   0:15 /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/qwikweb-server -d -c /home/qwik/qwik/etc/config-debug.txt
+qwik     14615  0.0  0.2 12964 9520 ?        S    17:19   0:00 /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/quickml-server -d -c /home/qwik/qwik/etc/config-debug.txt
+qwik     14616  0.0  0.2 12964 9520 ?        S    17:19   0:00 /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/quickml-server -d -c /home/qwik/qwik/etc/config-debug.txt
+qwik     14617  0.0  0.8 35792 29504 ?       S    17:19   0:00 /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/qwikweb-server -d -c /home/qwik/qwik/etc/config-debug.txt
+qwik     14618  0.0  0.8 35792 29504 ?       S    17:19   0:00 /usr/bin/ruby -I/home/qwik/qwik/lib /home/qwik/qwik/bin/qwikweb-server -d -c /home/qwik/qwik/etc/config-debug.txt
+EOS
+      str = @action.status_get_memory(ps)
+      is "12MB\t9MB\tquickml-server\n35MB\t29MB\tqwikweb-server\n", str
     end
   end
 end
