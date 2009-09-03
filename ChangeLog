@@ -40,6 +40,8 @@
 
 	* lib/qwik/act-html.rb: Prepare big page test case.
 
+	* lib/qwik/act-html.rb: Add big page error.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

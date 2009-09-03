@@ -6,15 +6,24 @@ $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    MAX_PAGE_SIZE = 100 * 1024
+
     def ext_html
       c_require_page_exist
       c_require_member if Action.private_page?(@req.base)
 
+      page = @site[@req.base]
+      if MAX_PAGE_SIZE < page.size
+        return c_nerror(_('Page too big.')) {
+          [:div,
+           [:p, _('The page is too big to show.')],
+           [:p, _('Max is 100K bytes. Please truncate it.')],
+           [:p, [:a, {:href=>"#{@req.base}.edit"}, _('Edit')]]]
+        }
+      end
+
       if ! c_login?
 	c_set_html
-
-#        page = @site[pagename]
-#        page.size
 
 	if @config.test		# Only for test.
 	  @res.body = view_page_cache_generate(@req.base)
@@ -176,11 +185,10 @@ if defined?($test) && $test
       t_site_open
 
       page = @site.create_new
-      page.store("a"*(100*1024*3))
+      page.store("a" * (100 * 1024 + 1))
 
       res = session('/test/1.html') {|req| req.cookies.clear }
-      #ok_title '1'
-      #ok_title 'Error'
+      ok_title "Page too big."
     end
 
     def test_superpre_sharp_mark
