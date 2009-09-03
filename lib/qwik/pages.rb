@@ -171,23 +171,27 @@ module Qwik
       return @db.last_article_time
     end
 
+=begin
     # FIXME: Make this obsolete.
     # page title support
     def pagetitle
       @pagetitle = PageTitle.new(@config, self) unless defined? @pagetitle
       return @pagetitle
     end
+=end
 
     def get_by_title(title)
       page = self[title] rescue nil
       return page if page
 
+=begin
       # FIXME: This is obsolete.
       hash = pagetitle.hash
       if hash
 	key = hash[title]
 	return self[key[0]] if key
       end
+=end
 
       page = self.find_title(title)
       return page if page

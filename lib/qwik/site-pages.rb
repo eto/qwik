@@ -23,7 +23,7 @@ module Qwik
     def date_list();	@pages.date_list;	end
 #   def path(f)		@pages.path(f);		end
     def close();	@pages.close;		end
-    def pagetitle();	@pages.pagetitle;	end
+#    def pagetitle();	@pages.pagetitle;	end
     def get_by_title(t)	@pages.get_by_title(t);	end
 
     def get_superpage(k)
