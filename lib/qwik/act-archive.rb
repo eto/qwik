@@ -50,11 +50,31 @@ as the static Web pages.
       return page_attribute('zip', _('Site archive'), @site.sitename)
     end
 
+    def archive_path
+      return  @site.cache_path + "#{@site.sitename}.zip"
+    end
+
+    def archive_flag_path
+      return  @site.cache_path + "#{@site.sitename}.zip.completed"
+    end
+
+    def archive_clear_cache
+      path = archive_path
+      path.unlink if path.exist?
+      path = archive_flag_path
+      path.unlink if path.exist?
+    end
+
     def ext_zip
       c_require_member
       c_require_base_is_sitename
-      path = SiteArchive.generate(@config, @site, self)
-      return c_simple_send(path, 'application/zip')
+
+      unless archive_path.exist? && archive_flag_path.exist?
+        SiteArchive.generate(@config, @site, self)
+        archive_flag_path.write("completed")
+      end
+
+      return c_simple_send(archive_path, 'application/zip')
     end
   end
 
