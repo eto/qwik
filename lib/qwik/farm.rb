@@ -21,7 +21,6 @@ module Qwik
       @data_path = @config.sites_dir.path
       @grave_path = @config.grave_dir.path
       @top_sitename = @config.default_sitename
-#      @sites = {}
       if $update_group_files
 	$update_group_files = false	# Set before to do it.
 	update_group_files
@@ -40,15 +39,11 @@ module Qwik
 
       # FIXME: Should we check the directory everytime?
       if ! sitepath.directory?	# At the first, check the directory.
-#	@sites.delete(sitename) if @sites[sitename]	# Delete from hash.
 	return nil	# No such site.
       end
 
       # Now, I am sure that we have the directory for the site.
       # Create a new site object and return it.
-#      return @sites[sitename] ||= Site.new(@config, @memory, sitename)
-#      @sites[sitename] = Site.new(@config, @memory, sitename)
-#      return @sites[sitename]
       return Site.new(@config, @memory, sitename)
     end
     alias exist? get_site
@@ -58,11 +53,7 @@ module Qwik
     end
 
     def each
-      #p "each"
-
       sites = check_all_sites
-
-      # @sites.keys.sort.each {|sitename|
       sites.keys.sort.each {|sitename|
 	yield(sitename)
       }
@@ -124,12 +115,7 @@ module Qwik
     def check_all_sites
       sites = Hash.new
 
-      # At the first, check obsolete sites.
-#      @sites.keys.sort.each {|sitename|
-#	dummy = get_site(sitename)
-#      }
-
-      # Then, check the direcotry entries.
+      # Check the direcotry entries.
       @data_path.each_entry {|entry|
 	pa = @data_path + entry
 	next if ! pa.directory?	# is not a directory?
@@ -142,7 +128,6 @@ module Qwik
       }
 
       return sites
-#      return nil
     end
 
     def bury(sitename)

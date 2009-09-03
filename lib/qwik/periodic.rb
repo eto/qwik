@@ -32,12 +32,10 @@ module Qwik
   class SweepThread < PeriodicThread
     def initialize(config, memory)
       super(config, memory, 60*60) # 1hour
-#      @farm = @memory.farm
     end
 
     def process
       sleep 30*60 # 30min
-#      @farm.sweep
       farm = @memory.farm
       farm.sweep
     end
