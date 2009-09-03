@@ -13,6 +13,9 @@
 
 	* lib/qwik/act-theme.rb: Add favicon.ico support.
 
+	* lib/qwik/farm.rb: Do not use each method.
+	* lib/qwik/site-report.rb: Ditto.
+
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Do not cache SiteMetadata object.

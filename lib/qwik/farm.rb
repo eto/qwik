@@ -28,7 +28,7 @@ module Qwik
     end
 
     def update_group_files
-      each {|sitename|
+      list().each {|sitename|
 	site = get_site(sitename)
 	site.member.update_group_files
       }
@@ -52,15 +52,12 @@ module Qwik
       return get_site(@top_sitename)
     end
 
-    def each
-      sites = check_all_sites
-      sites.keys.sort.each {|sitename|
-	yield(sitename)
-      }
+    def list
+      return check_all_sites.sort
     end
 
     def close_all
-      self.each {|sitename|
+      list().each {|sitename|
 	site = self.get_site(sitename)
 	site.close if site
       }
@@ -99,7 +96,7 @@ module Qwik
 
     def check_inactive_sites
       inactive_sites = []
-      self.each {|sitename|
+      list().each {|sitename|
 	# Do not bury default site.
 	next if sitename == @top_sitename
 	site = get_site(sitename)
@@ -113,7 +110,7 @@ module Qwik
     private
 
     def check_all_sites
-      sites = Hash.new
+      sites = Array.new
 
       # Check the direcotry entries.
       @data_path.each_entry {|entry|
@@ -123,8 +120,7 @@ module Qwik
 	next if sitename[0] == ?.	# begin with dot?
 	next if sitename == 'CVS'
 	#next if (pa + '_SiteConfig.txt').exist?	# check the site.
-	site = get_site(sitename)	# the site is added to @site
-	sites[sitename] = site
+        sites << sitename
       }
 
       return sites
@@ -247,10 +243,8 @@ if defined?($test) && $test
       site = farm.get_top_site
       eq @config.default_sitename, site.sitename
 
-      # test_each
-      farm.each {|s|
-	assert_instance_of(String, s)
-      }
+      # test_list
+      is "Array", farm.list.class.name
 
       #assert_equal false, (@dir+"test").exist?
     end
