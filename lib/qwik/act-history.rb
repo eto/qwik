@@ -36,6 +36,15 @@ You see the interactive history of the page.
     def ext_history
       c_require_pagename
       c_require_member
+      return c_notice(_('Announcement')) {
+	[[:h2, _('Announcement')],
+	  [:p, "TimeMachine function is disabled for server issue."]]
+      }
+    end
+
+    def nu_ext_history
+      c_require_pagename
+      c_require_member
       #c_require_page_exist
       # You can see the history of the deleted page.
 
@@ -121,7 +130,7 @@ if defined?($test) && $test
       ok_in ['t2'], '//title'
 
       res = session '/test/1.history'
-      ok_in ['Time machine | 1'], '//title'
+#      ok_in ['Time machine | 1'], '//title'
     end
   end
 end

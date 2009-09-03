@@ -82,7 +82,7 @@ module Qwik
     def act_search
       return c_notice(_('Announcement')) {
 	[[:h2, _('Announcement')],
-	  [:p, "Search function is disabled for now."]]
+	  [:p, "Search function is disabled for server issue."]]
       }
     end
 
