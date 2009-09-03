@@ -26,6 +26,7 @@
 
 	* lib/qwik/page-title.rb: Disable unused PageTitle function.
 	* lib/qwik/page-title.rb: Delete the code.
+	* lib/qwik/pages.rb: FIX: add page-wikidb again.
 
 2009-09-02  Kouichirou Eto  <2009@eto.com.nospam.com>
 

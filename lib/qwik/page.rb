@@ -5,6 +5,7 @@
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/page-get'
 require 'qwik/page-put'
+require 'qwik/page-wikidb'
 
 module Qwik
   class Page

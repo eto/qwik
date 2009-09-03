@@ -15,8 +15,9 @@ end
 module Qwik
   class Page
     def wikidb
-      @wikidb = WikiDB.new(self) unless defined?(@wikidb)
-      return @wikidb
+#      @wikidb = WikiDB.new(self) unless defined?(@wikidb)
+#      return @wikidb
+      WikiDB.new(self)
     end
   end
 
