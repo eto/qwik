@@ -33,7 +33,10 @@ module Qwik
     def pagelist_get
       pagelist_path =  @site.cache_path + "pagelist.dat"
 
-      return [] unless pagelist_path.exist?
+      unless pagelist_path.exist?
+        pagelist_update
+        return [] 
+      end
 
       dat = pagelist_path.read
       ar = Marshal.load(dat)
