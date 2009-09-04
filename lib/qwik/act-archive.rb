@@ -58,16 +58,10 @@ as the static Web pages.
       return  @site.cache_path + "#{@site.sitename}.zip.running"
     end
 
-    def archive_flag_path
-      return  @site.cache_path + "#{@site.sitename}.zip.completed"
-    end
-
     def archive_clear_cache
       path = archive_path
       path.unlink if path.exist?
       path = archive_running_path
-      path.unlink if path.exist?
-      path = archive_flag_path
       path.unlink if path.exist?
     end
 
@@ -88,7 +82,7 @@ as the static Web pages.
         return c_simple_send(archive_path, 'application/zip')
       end
 
-      # Create New thread.
+      # Start New thread.
       Thread.new {
         archive_running_path.write("running")
         SiteArchive.generate(@config, @site, self)
