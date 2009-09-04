@@ -6,6 +6,40 @@ $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module Qwik
   class Action
+    def pagelist_update
+      running_path =  @site.cache_path + "pagelist.dat.running"
+      pagelist_path =  @site.cache_path + "pagelist.dat"
+
+      return if running_path.exist?
+
+      Thread.new {
+        running_path.write("running")
+
+        ar = []
+        list = @site.date_list
+        list.reverse.each {|page|
+          key = page.key
+          time = page.mtime.to_i
+          title = page.get_title
+          ar << [key, time, title]
+        }
+        dat = Marshal.dump(ar)
+        pagelist_path.write(dat)
+
+        running_path.unlink
+      }
+    end
+
+    def pagelist_get
+      pagelist_path =  @site.cache_path + "pagelist.dat"
+
+      return [] unless pagelist_path.exist?
+
+      dat = pagelist_path.read
+      ar = Marshal.load(dat)
+      return ar
+    end
+
     def act_list
       c_surface(_('Page List'), true) {
 	[:div, {:class=>'day'},
@@ -42,6 +76,38 @@ module Qwik
     end
 
     def plg_srecent(max = -1)
+      max = max.to_i
+      ar = []
+
+      now = @req.start_time
+      
+      list = pagelist_get
+      overflow = nil
+      list.each_with_index {|a, i|
+	if 0 <= max && max < (i += 1)
+	  overflow = [:p,{:class=>'recent'},
+	    [:a, {:href=>'RecentList.html'}, [:em, _('more...')]]]
+	  break
+	end
+
+        key, t, title = a
+        time = Time.at(t)
+	difftime = now.to_i - time.to_i
+	timestr = time.ymdx.to_s
+	li = [:li,
+	  [:a, {:href=>"#{key}.html", :title=>timestr}, title]]
+	if @req.user
+	  li += [' ', [:span, {:class=>'ago'},
+	      int_to_time(difftime)+_(' ago')]]
+	end
+	ar << li
+      }
+      div = [:div, {:class=>'recent'}, [:ul, ar]]
+      div << overflow if overflow
+      return div
+    end
+
+    def nu_plg_srecent(max = -1)
       max = max.to_i
       ar = []
       now = @req.start_time
@@ -124,6 +190,41 @@ if defined?($test) && $test
       ok_wi(/<h3>/, "{{recent_list}}")
       ok_wi(%r|<li><a href=\"1.html\">1</a></li>|, "{{recent}}")
       ok_wi(/<h3>/, "{{recent_list(1)}}")
+    end
+
+    def test_srecent
+      t_add_user
+
+      # test with no pages.
+      ok_wi [:div, {:class=>"recent"}, [:ul, []]], "{{srecent}}"
+      
+      # test with a page.
+      page = @site["1"]
+      page.put_with_time("* t1", 1)
+      @action.pagelist_update
+      ok_wi [:div, {:class=>"recent"},
+             [:ul,
+              [[:li,
+                [:a, {:href=>"1.html", :title=>"1970-01-01 09:00:01"}, "t1"],
+                " ",
+                [:span, {:class=>"ago"}, "-1sec. ago"]]]]], "{{srecent}}"
+
+      # test with two pages.
+      page = @site.create("2")
+      page.put_with_time("* t2", 2)
+      @action.pagelist_update
+=begin
+      ok_wi [:div, {:class=>"recent"},
+             [:ul,
+              [[:li,
+                [:a, {:href=>"1.html", :title=>"2009-09-04 10:16:25"}, "1"],
+                " ",
+                [:span, {:class=>"ago"}, "-1252026985sec. ago"]],
+               [:li,
+                [:a, {:href=>"2.html", :title=>"1970-01-01 09:00:02"}, "t2"],
+                " ",
+                [:span, {:class=>"ago"}, "-2sec. ago"]]]]], "{{srecent}}"
+=end
     end
 
     def ok_time(e, n)

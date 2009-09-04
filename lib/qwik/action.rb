@@ -43,6 +43,10 @@ require 'qwik/act-sitelog'
 require 'qwik/act-theme'
 require 'qwik/act-toc'
 
+# Use for site_updated
+require 'qwik/act-metadata'
+require 'qwik/act-archive'
+
 module Qwik
   class Action
     def initialize
@@ -53,16 +57,10 @@ module Qwik
       @config, @memory, @req, @res = config, memory, req, res
     end
 
-    SITE_UPDATE_METHODS = %w(
-metadata_clear_cache
-archive_clear_cache
-)
     def site_updated
-      SITE_UPDATE_METHODS.each {|method|
-        if self.respond_to?(method)
-          self.send(method)
-        end
-      }
+      pagelist_update
+      metadata_clear_cache
+      archive_clear_cache
     end
 
     def run

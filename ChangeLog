@@ -3,6 +3,8 @@
 	* lib/qwik/act-archive.rb: Use Thread.
 	* lib/qwik/act-archive.rb: Delete flag related methods.
 
+	* lib/qwik/act-pagelist.rb: Use Thread for page list.
+
 2009-09-03  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-metadata.rb: Cache feed file.
