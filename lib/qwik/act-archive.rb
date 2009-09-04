@@ -76,21 +76,31 @@ as the static Web pages.
       c_require_base_is_sitename
 
       if archive_running_path.exist?
-        return c_nerror(_('Running.')) {
+        return c_notice(_('Running.')) {
           [:div,
            [:p, _("The process is working now.")],
-           [:p, _("Pleae wait for a while.")]]
+           [:p, _("Pleae wait for a while.")],
+           [:p, [:a, {:href=>"#{@req.base}.zip"}, _('Again')]]]
         }
       end
 
-      unless archive_path.exist? && archive_flag_path.exist?
-        archive_running_path.write("running")
-        SiteArchive.generate(@config, @site, self)
-        archive_flag_path.write("completed")
-        archive_running_path.unlink
+      if archive_path.exist?
+        return c_simple_send(archive_path, 'application/zip')
       end
 
-      return c_simple_send(archive_path, 'application/zip')
+      # Create New thread.
+      Thread.new {
+        archive_running_path.write("running")
+        SiteArchive.generate(@config, @site, self)
+        archive_running_path.unlink
+      }
+
+      return c_notice(_('Start.')) {
+        [:div,
+         [:p, _("The archive process sgtarted.")],
+         [:p, _("Pleae wait for a while.")],
+         [:p, [:a, {:href=>"#{@req.base}.zip"}, _('Again')]]]
+      }
     end
   end
 
@@ -141,7 +151,8 @@ as the static Web pages.
     end
 
     def self.add_entry(zos, filename, content, mtime = Time.new)
-      e = Zip::ZipEntry.new('', filename, '', '', 0,0, Zip::ZipEntry::DEFLATED, 0, mtime)
+      e = Zip::ZipEntry.new('', filename, '', '', 0,0,
+                            Zip::ZipEntry::DEFLATED, 0, mtime)
       zos.put_next_entry(e)
       zos.write(content)
     end
@@ -205,11 +216,6 @@ if defined?($test) && $test
   class TestActArchive < Test::Unit::TestCase
     include TestSession
 
-#     def ok_nx(zis, f)
-#       e = zis.get_next_entry
-#       assert_equal_or_match(f, e.name)
-#     end
-
     def test_act_zip
       t_add_user
 
@@ -234,11 +240,19 @@ if defined?($test) && $test
       mtime[page.key] = page.mtime
 
       res = session '/test/test.zip'
+      ok_title "Start."
+
+      res = session '/test/test.zip'
+      ok_title "Running."
+
+      sleep(1)		# I hope this might work...
+
+      res = session '/test/test.zip'
       ok_eq 'application/zip', res['Content-Type']
       str = res.body
       assert_match(/\APK/, str)
 
-      'testtemp.zip'.path.open('wb') {|f| f.print str }
+      'testtemp.zip'.path.write(str)
 
       list = []
       Zip::ZipInputStream.open('testtemp.zip') {|zis|
