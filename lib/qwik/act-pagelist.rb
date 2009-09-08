@@ -26,7 +26,7 @@ module Qwik
         dat = Marshal.dump(ar)
         pagelist_path.write(dat)
 
-        running_path.unlink
+        running_path.unlink if running_path.exist?
       }
     end
 
