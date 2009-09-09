@@ -35,12 +35,12 @@ module Qwik
       ]
     end
 
-    def plg_search_form(focus=false)
+    def plg_search_form(focus = false)
       return search_form(focus)
     end
     alias plg_search plg_search_form
 
-    def search_form(focus=false, query=nil)
+    def search_form(focus = false, query = nil)
       query_attr = {:name=>'q'}
       query_attr[:class] = 'focus' if focus
       query_attr[:value] = query if query
@@ -49,15 +49,14 @@ module Qwik
 	[:input, {:type=>'submit', :value=>_('Search')}]]
     end
 
-    def act_search
+    def nu_act_search
       return c_notice(_('Announcement')) {
 	[[:h2, _('Announcement')],
 	  [:p, "Search function is disabled for server issue."]]
       }
     end
 
-    # Search function is disabled for now.
-    def nu_act_search
+    def act_search
       query = search_get_query
       if query.nil?
 	return search_form_page
@@ -95,19 +94,19 @@ module Qwik
       return search_form_page(_('Search result'), _('No match.'), query)
     end
 
-    def search_result(site, ar, query=nil)
+    def search_result(site, ar, query = nil)
       ul = [:ul]
       ar.each {|key, line, i|
 	page = site[key]
 	url = page.url
 	ul << [:li,
-	  [:h3, [:a, {:href=>url}, page.get_title]], 
-	  [:span, {:class=>'content'}, line],
-	  [:div, [:a, {:href=>url}, url]]]
+	  [:h3, [:a, {:href => url}, page.get_title]], 
+	  [:span, {:class => 'content'}, line],
+	  [:div, [:a, {:href => url}, url]]]
       }
-      div = [:div, {:class=>'day'},
-	[:div, {:class=>'section'},
-	  [:div, {:class=>'search_result'}, ul]]]
+      div = [:div, {:class => 'day'},
+	[:div, {:class => 'section'},
+	  [:div, {:class => 'search_result'}, ul]]]
       title = _('Search result') + ": " + query
       return c_plain(title) { div }
     end
@@ -134,7 +133,7 @@ if defined?($test) && $test
 	    "{{search_form(true)}}")
     end
 
-    def nu_test_search
+    def test_search
       t_add_user
 
       # test_act_search

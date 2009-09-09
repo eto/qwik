@@ -10,6 +10,7 @@ module Qwik
   class Site
     COMMENT = /^#.*$/
 
+=begin
     def init_site_search
       @search_words_db = SearchWordsDB.new(@path, @config)
     end
@@ -21,10 +22,11 @@ module Qwik
     def delete_search_word(word)
       @search_words_db.delete(word)
     end
-    
+=end
+
     def search(query, obfuscate = true)
       queries = search_parse_query(query)
-      @search_words_db.put(queries)
+#      @search_words_db.put(queries)
       
       all_snippet_length = 120
       pre_snippet_length = all_snippet_length / queries.size / 2
@@ -136,7 +138,7 @@ if defined?($test) && $test
     def test_dummy
     end
 
-    def nu_test_all
+    def test_all
       res = session
 
       page = @site.create_new
@@ -157,7 +159,7 @@ if defined?($test) && $test
       is [["2", "user@example.com"]], res
     end
 
-    def nu_test_skip_sharp
+    def test_skip_sharp
       page = @site.create_new
       page.store('This is a test.')
       page = @site.create_new
