@@ -12,10 +12,10 @@ module Qwik
  [:html,
   [:head,
    [:link,
-    {:rel=>"stylesheet",
+    {:media=>"screen,tv",
      :href=>".theme/css/base.css",
      :type=>"text/css",
-     :media=>"screen,tv"}]],
+     :rel=>"stylesheet"}]],
   [:body,
    {:onload=>"qwik_onload();"},
    [:div,
@@ -39,7 +39,8 @@ module Qwik
     [:div,
      {:class=>"footer"},
      "powered by ",
-     [:a, {:href=>"http://qwik.jp/"}, "qwikWeb"]],
+     [:a, {:href=>"http://qwik.jp/"}, "qwikWeb"],
+     [:span, {:title=>"__qwik_page_generate_time__"}, " "]],
     [:"!--", "footer"]],
    [:"!--", "container"]]]]
 
