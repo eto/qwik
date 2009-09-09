@@ -30,12 +30,10 @@ module Qwik
 
       @sitename = sitename
       @path = "#{@config.sites_dir}/#{sitename}".path
-      #qp @path
       @pages = Pages.new(@config, @path)
 
       @cache_path = @path+CACHE_DIR
       @cache_path.check_directory
-      #qp @cache_path
 
       @cache = {}
 

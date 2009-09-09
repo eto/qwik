@@ -35,7 +35,7 @@ module Qwik
       farm.list.each {|sitename|
         site = farm.get_site(sitename)
         li = [:li]
-        li << "open " if site.siteconfig[:open]
+        li << "open " if site.is_open?
         li << "forward " if site.forward?
         li << "permanent " if site.permanent?
         #li << "inactive" if site.inactive?
