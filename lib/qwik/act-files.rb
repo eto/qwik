@@ -190,7 +190,7 @@ You can show the list of attached files.
 
     def plg_files_page_total
       total = @site.files(@req.base).total
-      msg = sprintf(_("Total %s in this page"),total.byte_format)
+      msg = sprintf(_("Total %s in this page"), total.byte_format)
       return [:span, msg]
     end
 
@@ -202,12 +202,11 @@ You can show the list of attached files.
       if max_total < total
         msg = [msg + ", ", [:strong, _('Total file size exceeded.')]]
       elsif max_total - warn_size < total
-        warn_msg = sprintf(_("%s left"), (max_total-total).byte_format)
+        warn_msg = sprintf(_("%s left"), (max_total - total).byte_format)
         msg = [msg + ", ", [:strong ,warn_msg]]
       end
       return [:span, {:class => 'files_site_total'}, msg]
     end
-
 
     # ==============================
     def plg_files_form(upload_number=1)
