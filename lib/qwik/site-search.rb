@@ -2,16 +2,16 @@
 # This is free software with ABSOLUTELY NO WARRANTY.
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
-=begin
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 require 'qwik/db-searchwords.rb'
 
 module Qwik
   class Site
-    COMMENT=/^#.*$/
+    COMMENT = /^#.*$/
+
     def init_site_search
-      @search_words_db = SearchWordsDB.new(@path,@config)
+      @search_words_db = SearchWordsDB.new(@path, @config)
     end
 
     def get_search_words
@@ -27,13 +27,12 @@ module Qwik
       @search_words_db.put(queries)
       
       all_snippet_length = 120
-      pre_snippet_length = all_snippet_length/queries.size/2
-
+      pre_snippet_length = all_snippet_length / queries.size / 2
 
       ar = []
       self.each {|page|
 	str = page.load
-	str = str.gsub(COMMENT,'')
+	str = str.gsub(COMMENT, '')
 	str = wiki_to_string(str)
 	matched = true
 
@@ -41,7 +40,8 @@ module Qwik
 	snippet = ""
 
 	queries.each {|query|
-	  regexp = Regexp.new(Regexp.escape(query), Regexp::IGNORECASE|Regexp::MULTILINE)
+	  regexp = Regexp.new(Regexp.escape(query),
+                              Regexp::IGNORECASE|Regexp::MULTILINE)
 	  md = regexp.match(str)
 	  if ! md
 	    matched = false
@@ -67,21 +67,21 @@ module Qwik
 
     private
     def wiki_to_string(wiki)
-      tokens = Qwik::TextTokenizer.tokenize(wiki,true)
+      tokens = Qwik::TextTokenizer.tokenize(wiki, true)
       wabisabi = Qwik::TextParser.make_tree(tokens)
       return wabisabi.flatten.select{|a| a.class == String}.join
     end
 
     def create_snippet(mds)
       #sort as first hit keyword goes first
-      mds = mds.sort{|i,j| i.begin(0)<=>j.begin(0)}
+      mds = mds.sort {|i, j| i.begin(0) <=> j.begin(0) }
       max_width = 400
 
       # merge snippets of each search key
       #
       #        snip[s,      e] 
       #|============|1st key|=============|
-      snip = [mds[0].begin(0),mds[0].end(0)]
+      snip = [mds[0].begin(0), mds[0].end(0)]
 
       mds[1..-1].each {|md|
         #|=====|1st key|==...==|last key|========|a key|===..===|
@@ -102,24 +102,24 @@ module Qwik
       all_string = mds[0].string
 
       snippet = all_string[snip[0]...snip[1]]
-      len = snippet.mb_length #character length
-      rest = (max_width - len)/2
+      len = snippet.mb_length # character length
+      rest = (max_width - len) / 2
       if 0 < rest
-        #we have shot snippet, adding additional strings
+        # we have shot snippet, adding additional strings
 	pre = all_string[0...snip[0]]
 	post = all_string[snip[1]..-1]
 
         if rest < pre.size
-	  pre = pre.mb_substring(-rest,pre.length)
+	  pre = pre.mb_substring(-rest, pre.length)
 	end
 
         if rest < post.size
-	  post = post.mb_substring(0,rest)
+	  post = post.mb_substring(0, rest)
 	end
 	snippet = pre + snippet + post
       end
       
-      return snippet 
+      return snippet
     end
   end
 end
@@ -133,7 +133,10 @@ if defined?($test) && $test
   class TestSiteSearch < Test::Unit::TestCase
     include TestSession
 
-    def test_all
+    def test_dummy
+    end
+
+    def nu_test_all
       res = session
 
       page = @site.create_new
@@ -154,7 +157,7 @@ if defined?($test) && $test
       is [["2", "user@example.com"]], res
     end
 
-    def test_skip_sharp
+    def nu_test_skip_sharp
       page = @site.create_new
       page.store('This is a test.')
       page = @site.create_new
@@ -172,4 +175,3 @@ if defined?($test) && $test
 
   end
 end
-=end

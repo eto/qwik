@@ -5,7 +5,7 @@
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/site-search'
 require 'qwik/site-index'
-require 'qwik/act-search'
+#require 'qwik/act-search'
 
 module Qwik
   class Action
@@ -43,8 +43,12 @@ module Qwik
 	if em.nil?
 	  em = Word.new(w, 1, Time.new)
 	end
-        [[:span, {:class => "search_word#{em.count}"}, [:a, {:href => ".search?q=#{w}"}, em.word]],
-	 [:span, {:class => "search_word_delete"}, [:a, {:href => ".delete?q=#{w}"}, [:img, {:src => ".theme/css/delete.png",:border =>"0", :alt => "del"}]]]]
+        [[:span, {:class => "search_word#{em.count}"},
+          [:a, {:href => ".search?q=#{w}"}, em.word]],
+	 [:span, {:class => "search_word_delete"},
+          [:a, {:href => ".delete?q=#{w}"},
+           [:img, {:src => ".theme/css/delete.png",:border =>"0",
+              :alt => "del"}]]]]
       }
     end
 
@@ -70,13 +74,13 @@ module Qwik
 	[:input, {:type=>'submit', :value=>_('Search')}]]
     end
 
-    #search word delete action
+    # search word delete action
     def act_delete
       query = search_get_query
       if query
         @site.delete_search_word(query)
       end
-      return c_notice("Deleted",@req.header["referer"]) {"deleted"}
+      return c_notice("Deleted",@req.header["referer"]) { "deleted" }
     end
 
     def act_search

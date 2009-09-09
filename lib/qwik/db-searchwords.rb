@@ -9,8 +9,8 @@ require 'thread'
 
 module Qwik
   class SearchWordsDB
+    Word = Struct.new("Word", :word, :count, :time)
 
-    Word = Struct.new("Word",:word,:count,:time)
     def initialize(path, config)
       @config = config
       @path = path
@@ -45,7 +45,7 @@ module Qwik
 	    @recent_list.delete(em)
 	    em.count +=1 
 	  else
-	    em = Word.new(w,1,Time.new)
+	    em = Word.new(w, 1, Time.new)
 	    if @config[:search_word_max_num] < @recent_list.size
 	      em = @recent_list.delete_at(-1)
 	      @word_index.delete(em.word)
@@ -82,8 +82,8 @@ module Qwik
         cont = File.new(path).read
         @lock.synchronize {
           cont.each_line {|line|
-            time,count,word = line.chomp.split(/ /)
-	    em = Word.new(word.to_sym,count.to_i,Time.at(time.to_i))
+            time, count, word = line.chomp.split(/ /)
+	    em = Word.new(word.to_sym, count.to_i, Time.at(time.to_i))
 	    @recent_list.push(em)
 	    @word_index[em.word] = em
           }
@@ -102,10 +102,10 @@ module Qwik
     def normalize
       min,max = min_max
       diff = max - min + 0.1
-      @normalized_list = @recent_list[0...@config[:search_word_display_num]].map{|em|
-        norm = (em.count - min)/diff * NUM_SIZE
-        Word.new(em.word,norm.to_i,em.time)
-        
+      @normalized_list =
+        @recent_list[0...@config[:search_word_display_num]].map{|em|
+        norm = (em.count - min) / diff * NUM_SIZE
+        Word.new(em.word, norm.to_i, em.time)
       }
     end
 
@@ -119,7 +119,7 @@ module Qwik
 	  min = em.count
 	end
       }
-      return [min,max]
+      return [min, max]
     end
   end
 end
