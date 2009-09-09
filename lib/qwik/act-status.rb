@@ -127,12 +127,17 @@ module Qwik
       str
     end
 
+    def is_administrator?
+      file = @config.etc_dir.path + "administrator.txt"
+      return false if ! file.exist?
+      admin = file.read.chomp
+      return false if @req.user != admin
+      return true
+    end
+
     def act_status
       c_require_login
-      file = @config.etc_dir.path + "administrator.txt"
-      return c_nerror("No administrator file.") if ! file.exist?
-      admin = file.read.chomp
-      return c_nerror("You are not administrator.") if @req.user != admin
+      return c_nerror("You are not administrator.") if ! is_administrator?
 
       str = ""
 
