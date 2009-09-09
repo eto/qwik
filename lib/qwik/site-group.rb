@@ -8,6 +8,15 @@ require 'qwik/group-config'
 module Qwik
   class Site
     ML_LIFE_TIME_ALLOWANCE = 60*60*24*31*2 # 2 months
+
+    def forward?
+      return @group_config.forward?
+    end
+
+    def permanent?
+      return @group_config.permanent?
+    end
+
     def inactive?(now = Time.now)
       return false if @group_config.forward? || @group_config.permanent?
 

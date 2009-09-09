@@ -7,12 +7,18 @@ $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 module Qwik
   class Site
     def siteconfig
-      @siteconfig = SiteConfig.new(@config, self) unless defined? @siteconfig
-      return @siteconfig
+      # @siteconfig = SiteConfig.new(@config, self) unless defined? @siteconfig
+      #return @siteconfig
+      return SiteConfig.new(@config, self)
     end
 
     def is_open?
       return (siteconfig['open'] == 'true')
+    end
+
+    def is_blessed?
+      file = @path + ",blessed"
+      return file.exist?
     end
   end
 
@@ -29,7 +35,8 @@ module Qwik
     end
 
     def get_page
-      page = @site.get_superpage('SiteConfig')
+      #page = @site.get_superpage('SiteConfig')
+      page = @site['_SiteConfig']
       return page if page
       return @site.create('_SiteConfig')
     end
@@ -61,6 +68,7 @@ module Qwik
       }
     end
 
+=begin
     # Read default site config from super/_SiteConfig.txt
     def read_default_config
       dir = @config.super_dir.path
@@ -69,6 +77,7 @@ module Qwik
       hash = array.to_hash
       return hash
     end
+=end
   end
 end
 
@@ -119,6 +128,12 @@ if defined?($test) && $test
 #      eq '1 - TestSite', @site.title('1')
       page.store('* TestTitle')
 #      eq 'TestTitle - TestSite', @site.title('1')
+
+      # test_bless
+      is false, @site.is_blessed?
+      file = @site.path + ",blessed"
+      file.write("")
+      is true, @site.is_blessed?
     end
 
     def test_siteconfig_class

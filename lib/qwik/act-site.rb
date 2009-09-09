@@ -7,7 +7,7 @@ require "qwik/act-status"
 
 module Qwik
   class Action
-    def create_site_list
+    def nu_create_site_list
       cache_path = @config.sites_dir.path + ".cache"
       cache_path.mkdir if ! cache_path.exist?
 
@@ -18,6 +18,7 @@ module Qwik
       farm.list.each {|sitename|
         str << "#{sitename}\n"
       }
+
       out.write(str)
     end
 
@@ -26,14 +27,20 @@ module Qwik
       return c_nerror("You are not administrator.") if ! is_administrator?
 
       #create_site_list
+      #sitelist_path = @config.sites_dir.path + ".cache/sitelist.txt"
+      #str = sitelist_path.read
 
-      sitelist_path = @config.sites_dir.path + ".cache/sitelist.txt"
-      str = sitelist_path.read
-
+      farm = @memory.farm
       ul = [:ul]
-      str.each_line {|line|
-        line.chomp!
-        ul << [:li, line]        
+      farm.list.each {|sitename|
+        site = farm.get_site(sitename)
+        li = [:li]
+        li << "open " if site.siteconfig[:open]
+        li << "forward " if site.forward?
+        li << "permanent " if site.permanent?
+        #li << "inactive" if site.inactive?
+        li << [:a, {:href=>"/#{sitename}/"}, "/#{sitename}/"]
+        ul << li
       }
 
       div = [:div, {:class => 'day'},
@@ -48,6 +55,7 @@ module Qwik
 end
 
 if $0 == __FILE__
+  require "pp"
   require 'qwik/test-common'
   $test = true
 end
@@ -57,8 +65,18 @@ if defined?($test) && $test
     include TestSession
 
     def test_all
-      res = session
-      #ok_title("Site list..")
+      t_add_user
+
+      file = @config.etc_dir.path + "administrator.txt"
+      file.write("")
+
+      res = session("/test/.site")
+      ok_title("You are not administrator.")
+
+      file.write("user@e.com\n")
+
+      res = session("/test/.site")
+      ok_title("Site list.")
     end
   end
 end
