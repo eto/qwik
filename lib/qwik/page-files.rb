@@ -46,7 +46,8 @@ module Qwik
     def total
       t = 0
       self.each {|f|
-        t += self.path(f).size?
+        s = self.path(f).size?
+        t += s if s
       }
       return t
     end
