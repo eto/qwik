@@ -49,13 +49,6 @@ module Qwik
 	[:input, {:type=>'submit', :value=>_('Search')}]]
     end
 
-    def nu_act_search
-      return c_notice(_('Announcement')) {
-	[[:h2, _('Announcement')],
-	  [:p, "Search function is disabled for server issue."]]
-      }
-    end
-
     def act_search
       query = search_get_query
       if query.nil?
@@ -82,10 +75,10 @@ module Qwik
       return nil
     end
 
-    def search_form_page(title=_('Search'), notice=nil, query=nil)
+    def search_form_page(title = _('Search'), notice = nil, query = nil)
       body = []
       body << [:h2, notice] if notice
-      body << [:div, {:class=>'form'}, search_form(true, query)]
+      body << [:div, {:class => 'form'}, search_form(true, query)]
       return c_notice(title) { body }
     end
 
@@ -104,7 +97,11 @@ module Qwik
 	  [:span, {:class => 'content'}, line],
 	  [:div, [:a, {:href => url}, url]]]
       }
-      div = [:div, {:class => 'day'},
+      div = []
+      div << [:div, {:class => 'day'},
+	[:div, {:class => 'section'},
+          [:div, {:class=>'form'}, search_form(true, query)]]]
+      div << [:div, {:class => 'day'},
 	[:div, {:class => 'section'},
 	  [:div, {:class => 'search_result'}, ul]]]
       title = _('Search result') + ": " + query

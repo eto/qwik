@@ -68,10 +68,11 @@ module Qwik
     end
 
     private
+
     def wiki_to_string(wiki)
       tokens = Qwik::TextTokenizer.tokenize(wiki, true)
       wabisabi = Qwik::TextParser.make_tree(tokens)
-      return wabisabi.flatten.select{|a| a.class == String}.join
+      return wabisabi.flatten.select{|a| a.class == String}.join(" ")
     end
 
     def create_snippet(mds)
