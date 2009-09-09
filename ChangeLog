@@ -4,6 +4,10 @@
 	* lib/qwik/site-search.rb: Ditto.
 	* lib/qwik/db-searchword.rb: Ditto.
 
+	* lib/qwik/act-isearch.rb: Splited.
+	* lib/qwik/act-searchwords.rb: Ditto.
+	* lib/qwik/act-search.rb: Ditto.
+
 2009-09-08  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-pagelist.rb: Fix bug.
