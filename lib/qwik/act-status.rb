@@ -128,6 +128,12 @@ module Qwik
     end
 
     def act_status
+      c_require_login
+      file = @config.etc_dir.path + "administrator.txt"
+      return c_nerror("No administrator file.") if ! file.exist?
+      admin = file.read.chomp
+      return c_nerror("You are not administrator.") if @req.user != admin
+
       str = ""
 
       now = @req.start_time
@@ -151,7 +157,8 @@ module Qwik
 #      return c_notice(_('Status')) {
       return c_plain(_('Status')) {
 	[[:h2, _('Status')],
-	  [:pre, str]]
+#	  [:pre, str]]
+	  [:pre, c_pre_text { str }]]
       }
     end
   end
