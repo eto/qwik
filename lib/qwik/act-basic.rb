@@ -178,10 +178,8 @@ This is {{br}} a test.
 
     def plg_generate_time
       return nil if @req.user.nil?
-      diff = Time.now - @req.start_time
-      diffsec = sprintf('%.2f', diff)
       return [:span, {:class=>'attribute'}, _('Generation time'), ': ',
-	[:em, diffsec, _('seconds')]]
+	[:em, "__qwik_page_generate_time__", _('seconds')]]
     end
 
     # ============================== member control

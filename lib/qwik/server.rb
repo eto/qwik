@@ -182,7 +182,7 @@ module Qwik
       res.setback(response)
 
       diff = Time.now - start_time
-      diffsec = sprintf("%.2fsec.", diff)
+      diffsec = sprintf("%.2f", diff)
 
       if response.body.is_a? String
         response.body.gsub!(/__qwik_page_generate_time__/, diffsec)
