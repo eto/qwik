@@ -182,8 +182,12 @@ module Qwik
       res.setback(response)
 
       diff = Time.now - start_time
-      #qp diff
+      diffsec = sprintf("%.2fsec.", diff)
 
+      if response.body.is_a? String
+        response.body.gsub!(/__qwik_page_generate_time__/, diffsec)
+      end
+      
       qlog = memory[:qwik_access_log]
       logline = Logger.format_log_line(req, response, diff)
       if qlog && ! Logger::IGNORE_ACTION.include?(req.plugin)

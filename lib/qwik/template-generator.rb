@@ -12,10 +12,13 @@ require 'qwik/util-pathname'
 module Qwik
   class TemplateGenerator
     def self.main(args)
+=begin
       config = Config.new
       Config.load_args_and_config(config, $0, args)
       path = config.template_dir.path
       generate_all(path)
+=end
+      generate_all(".")
     end
 
     def self.generate_all(path)

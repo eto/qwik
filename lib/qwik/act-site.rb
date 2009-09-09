@@ -25,7 +25,7 @@ module Qwik
       c_require_login
       return c_nerror("You are not administrator.") if ! is_administrator?
 
-      create_site_list
+      #create_site_list
 
       sitelist_path = @config.sites_dir.path + ".cache/sitelist.txt"
       str = sitelist_path.read
