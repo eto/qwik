@@ -33,7 +33,7 @@ module Qwik
       @backupdb = BackupDB.new(dir)
       @db.register_observer(@backupdb)
 
-      # Regist Senna indexer	# Notice: This setting is experimental.
+      # Register Senna indexer	# Notice: This setting is experimental.
       if config[:use_senna] == 'true'
 	@index = DBIndexer.new(dir)
 	@db.register_observer(@index)

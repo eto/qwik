@@ -65,7 +65,7 @@ module Qwik
 
       ar3 = ar2.sort.reverse
 
-      str = ''
+      str = "* get_objects\n"
       str << "object num #{num}\n"
 
       ar3.each {|v, k|
@@ -155,9 +155,9 @@ module Qwik
       str << status_show_requests(now)
       str << "\n"
 
-#      str << status_get_objects
+      str << status_get_objects
 #      str << status_get_objects2
-#      str << "\n"
+      str << "\n"
 
 #      return c_notice(_('Status')) {
       return c_plain(_('Status')) {

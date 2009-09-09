@@ -36,7 +36,8 @@ module Qwik
 
     def unconfirmed?
       member.list.empty? &&
-	@pages.exist?('_GroupWaitingMembers') && @pages.exist?('_GroupWaitingMessage')
+	@pages.exist?('_GroupWaitingMembers') &&
+        @pages.exist?('_GroupWaitingMessage')
     end
 
     private
