@@ -38,9 +38,10 @@ module Qwik
     [:"!--", "sidebar"],
     [:div,
      {:class=>"footer"},
-     "powered by ",
-     [:a, {:href=>"http://qwik.jp/"}, "qwikWeb"],
-     [:span, {:title=>"__qwik_page_generate_time__"}, " "]],
+     [:span,
+      {:title=>"__qwik_page_generate_time__"},
+      "powered by ",
+      [:a, {:href=>"http://qwik.jp/"}, "qwikWeb"]]],
     [:"!--", "footer"]],
    [:"!--", "container"]]]]
 
