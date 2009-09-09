@@ -111,6 +111,9 @@
 	* lib/qwik/farm.rb: Fix test cases.
 	* lib/qwik/act-rrefs.rb: Fix a test case.
 
+	* lib/qwik/farm.rb: Clean comments.
+	* lib/qwik/periodic.rb: Ditto.
+
 2009-08-21  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/db-searchwords.rb: Debug.

@@ -53,8 +53,8 @@ sup:
 	svn up Makefile lib share bin debian ext COPYING ChangeLog MANIFEST NEWS README
 # no update: etc go crontab supall
 
-showps:
-	date; ps auxww | grep qwik
+ps:
+	date; ps auxww | grep qwik | grep ruby
 
 showmemory:
 	ruby bin/showmemory
