@@ -7,10 +7,7 @@ require "qwik/act-status"
 
 module Qwik
   class Action
-    def act_site
-      c_require_login
-      return c_nerror("You are not administrator.") if ! is_administrator?
-
+    def site_delete_unused_config_files
       files1 = %w{
 ,members
 ,count
@@ -24,6 +21,21 @@ module Qwik
 ,waiting-message
 }
 
+        files1.each {|f1, i|
+          p1 = (sitepath + f1)
+          if p1.exist?
+            p1.unlink
+            li << "deleted. "
+            li << [:a, {:href=>"/#{sitename}/"}, "/#{sitename}/"]
+            ul << li
+          end
+        }
+    end
+
+    def act_site
+      c_require_login
+      return c_nerror("You are not administrator.") if ! is_administrator?
+
       farm = @memory.farm
       ul = [:ul]
 
@@ -34,18 +46,8 @@ module Qwik
         sitepath = "#{@config.sites_dir}/#{sitename}".path
 
         li = [:li]
-
-        files1.each {|f1, i|
-          p1 = (sitepath + f1)
-          if p1.exist?
-            p1.unlink
-        li << "deleted. "
         li << [:a, {:href=>"/#{sitename}/"}, "/#{sitename}/"]
         ul << li
-
-          end
-        }
-
       }
 
       div = [:div, {:class => 'day'},
