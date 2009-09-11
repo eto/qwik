@@ -6,6 +6,7 @@ $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 
 module QuickML
   class GroupDB
+=begin
     FILENAME = {
       :Members		=> ',members',
       :Count		=> ',count',
@@ -18,6 +19,7 @@ module QuickML
       :WaitingMembers	=> ',waiting-members',
       :WaitingMessage	=> ',waiting-message',
     }
+=end
 
     PAGENAME = {
       :Members		=> '_GroupMembers',
@@ -43,6 +45,7 @@ module QuickML
       @site = site
     end
 
+=begin
     def update_files
       if false
 	FILENAME.keys.each {|s|
@@ -50,13 +53,14 @@ module QuickML
 	}
       end
     end
+=end
 
     # read
     def exist?(s)
       #sync(s)
 
-      f = get_filepath(s)
-      return true if f.exist?
+#      f = get_filpath(s)
+#      return true if f.exist?
 
       pagename = get_pagename(s)
       page = @site[pagename]
@@ -66,66 +70,68 @@ module QuickML
     end
 
     def mtime(s)
-      return [file_mtime(s), page_mtime(s)].max
+#      return [file_mtime(s), page_mtime(s)].max
+      return page_mtime(s)
     end
 
     def get(s)	# with sync.
       #sync(s)
 
-      file_content = nil
-      f = get_filepath(s)
-      file_content = f.read if f.exist?
+#      file_content = nil
+#      f = get_filepath(s)
+#      file_content = f.read if f.exist?
 
       page_content = nil
       pagename = get_pagename(s)
       page = @site[pagename]
       page_content = page.get if page
+      return page_content
 
       # Both is nil.
-      return nil if file_content.nil? && page_content.nil?	# Do nothing.
+#      return nil if file_content.nil? && page_content.nil?	# Do nothing.
 
-      fmt = file_mtime(s)
-      pmt = page_mtime(s)
+#      fmt = file_mtime(s)
+#      pmt = page_mtime(s)
 
       # File is exist, but the page is not exist.
-      if file_content && page_content.nil?
-	page = @site.create(pagename)
-	page.put_with_time(file_content, fmt)
-	# FIXME: delete file?
-	return file_content
-      end
+#      if file_content && page_content.nil?
+#	page = @site.create(pagename)
+#	page.put_with_time(file_content, fmt)
+#	# FIXME: delete file?
+#	return file_content
+#      end
 
       # File is not exist, but page is exist.
-      if file_content.nil? && page_content
-	# Do not create file.
-	#f.put(page_content)
-	#f.utime(pmt, pmt)
-	return page_content
-      end
+#      if file_content.nil? && page_content
+#	# Do not create file.
+#	#f.put(page_content)
+#	#f.utime(pmt, pmt)
+#	return page_content
+#      end
 
       # Both exist.
-      if file_content == page_content
-	return page_content
-      end
+#      if file_content == page_content
+#	return page_content
+#      end
 
-      if fmt < pmt	# The page is new.
-	f.put(page_content)
-	begin
-	  f.utime(pmt, pmt)
-	rescue
-	  p 'error to set time'
-	end
-	return page_content
-      end
+#      if fmt < pmt	# The page is new.
+#	f.put(page_content)
+#	begin
+#	  f.utime(pmt, pmt)
+#	rescue
+#	  p 'error to set time'
+#	end
+#	return page_content
+#      end
 
-      page.put_with_time(file_content, fmt)
-      return file_content
+#      page.put_with_time(file_content, fmt)
+#      return file_content
     end
 
     # write
     def put(s, content)
-      f = get_filepath(s)
-      f.put(content)
+#      f = get_filepath(s)
+#      f.put(content)
 
       pagename = get_pagename(s)
       page = @site[pagename]
@@ -134,8 +140,8 @@ module QuickML
     end
 
     def add(s, content)
-      f = get_filepath(s)
-      f.add(content)
+#      f = get_filepath(s)
+#      f.add(content)
 
       pagename = get_pagename(s)
       page = @site[pagename]
@@ -145,8 +151,8 @@ module QuickML
 
     def delete(s)
       return if ! exist?(s)
-      f = get_filepath(s)
-      f.unlink
+#      f = get_filepath(s)
+#      f.unlink
 
       pagename = get_pagename(s)
       page = @site[pagename]
@@ -161,9 +167,9 @@ module QuickML
 	fs = f.to_s
 
 	next if /\A\./ =~ fs ||
-	  /,config/ =~ fs ||
+#	  /,config/ =~ fs ||
 	  /_GroupConfig.txt/ =~ fs ||
-	  /,charset/ =~ fs ||
+#	  /,charset/ =~ fs ||
 	  /_GroupCharset.txt/ =~ fs
 
 	file = dir+f
@@ -185,6 +191,7 @@ module QuickML
       return "#{@sites_dir}/#{@group_name}".path
     end
 
+=begin
     def get_filepath(symbol)
       dir = get_dirpath
       base = FILENAME[symbol]
@@ -197,6 +204,7 @@ module QuickML
       return f.mtime if f.exist?
       return Time.at(0)
     end
+=end
 
     def page_mtime(s)
       pagename = get_pagename(s)
@@ -205,6 +213,7 @@ module QuickML
       return Time.at(0)
     end
 
+=begin
     def sync(s)
       file_content = nil
       f = get_filepath(s)
@@ -250,6 +259,7 @@ module QuickML
       page.put_with_time(file_content, fmt)
       return
     end
+=end
   end
 end
 
