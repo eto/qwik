@@ -35,10 +35,18 @@ module Qwik
     def status_get_objects
       ar = []
       num = 0
+      string_length = 0
       ObjectSpace.each_object {|obj|
         num += 1
 
         name = obj.class.name
+        ar << name
+
+        if name == "String"
+          string_length += obj.length
+        end
+        
+=begin
         if name == "String" ||
             name == "Regexp" ||
             name == "Class" ||
@@ -51,6 +59,7 @@ module Qwik
         else
           ar << name
         end
+=end
       }
 
       hash = Hash.new(0)
@@ -66,7 +75,8 @@ module Qwik
       ar3 = ar2.sort.reverse
 
       str = "* get_objects\n"
-      str << "object num #{num}\n"
+      str << "object num #{num.commify}\n"
+      str << "string_length #{string_length.commify}\n"
 
       ar3.each {|v, k|
         str << "#{v}\t#{k}\n"

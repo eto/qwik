@@ -32,12 +32,12 @@ module Qwik
       @path = "#{@config.sites_dir}/#{sitename}".path
       @pages = Pages.new(@config, @path)
 
-      @cache_path = @path+CACHE_DIR
+      @cache_path = @path + CACHE_DIR
       @cache_path.check_directory
 
       @cache = {}
 
-      init_group_config
+      init_group_config		# site-group.rb
 
 #      init_site_search
     end

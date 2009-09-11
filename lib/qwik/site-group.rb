@@ -3,6 +3,7 @@
 # You can redistribute it and/or modify it under the terms of the GNU GPL 2.
 
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
+require 'qwik/group-db'
 require 'qwik/group-config'
 
 module Qwik
@@ -52,8 +53,10 @@ module Qwik
     private
 
     def init_group_config
+      # in group-db.rb
       db = QuickML::GroupDB.new(@config.sites_dir.to_s, @sitename)
       db.set_site(self)
+      # in group-config.rb
       @group_config = QuickML::GroupConfig.new(db)
     end
   end
