@@ -171,9 +171,9 @@ if defined?($test) && $test
       page.store('This is a test, too.')
 
       res = @site.search('test')
-      ok_eq([['1', 'This is a test.'],
-	     ["3", "This is a test which have `#' in a middle of line."],
-	     ["4", "This is a test, too."]], res)
+      ok_eq([["1", "This is a test."],
+             ["3", "This is a test which have `# '  in a middle of line."],
+             ["4", "This is a test, too."]], res)
     end
 
   end

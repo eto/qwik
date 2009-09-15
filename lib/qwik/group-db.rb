@@ -139,16 +139,6 @@ module QuickML
       page.put(content)
     end
 
-    def add(s, content)
-#      f = get_filepath(s)
-#      f.add(content)
-
-      pagename = get_pagename(s)
-      page = @site[pagename]
-      page = @site.create(pagename) if page.nil?
-      page.add(content)
-    end
-
     def delete(s)
       return if ! exist?(s)
 #      f = get_filepath(s)
@@ -284,10 +274,6 @@ if defined?($test) && $test
 
       db.set_site(@site)
 
-      # test_get_filepath
-      t_make_public(QuickML::GroupDB, :get_filepath)
-      ok_eq('./.test/data/test/,count', db.get_filepath(:Count).to_s)
-
       t_make_public(QuickML::GroupDB, :get_dirpath)
       ok_eq('./.test/data/test', db.get_dirpath.to_s)
 
@@ -299,10 +285,6 @@ if defined?($test) && $test
 
       # test_get
       ok_eq('v', db.get(:Count))
-
-      # test_add
-      db.add(:Count, 'w')
-      ok_eq('vw', db.get(:Count))
 
       # test_last_article_time
       t = db.last_article_time

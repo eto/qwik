@@ -83,7 +83,7 @@ if defined?($test) && $test
       file.write("user@e.com\n")
 
       res = session("/test/.site")
-      ok_title("Site list.")
+      ok_title "Site list. __qwik_page_generate_time__ sec. past."
     end
   end
 end
