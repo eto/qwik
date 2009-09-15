@@ -1,3 +1,9 @@
+2009-09-15  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/group-db.rb: Delete add method.
+	* lib/qwik/act-site.rb: Fix a test case.
+	* lib/qwik/site-search.rb: Fix a test case.
+
 2009-09-09  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/act-search.rb: Refactoring.
