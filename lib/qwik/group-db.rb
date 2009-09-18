@@ -139,6 +139,16 @@ module QuickML
       page.put(content)
     end
 
+    def add(s, content)
+#      f = get_filepath(s)
+#      f.add(content)
+
+      pagename = get_pagename(s)
+      page = @site[pagename]
+      page = @site.create(pagename) if page.nil?
+      page.add(content)
+    end
+
     def delete(s)
       return if ! exist?(s)
 #      f = get_filepath(s)
@@ -285,6 +295,11 @@ if defined?($test) && $test
 
       # test_get
       ok_eq('v', db.get(:Count))
+
+      # test_add
+      db.add(:Count, 'w')
+      #ok_eq('vw', db.get(:Count))
+      ok_eq("v\nw\n", db.get(:Count))
 
       # test_last_article_time
       t = db.last_article_time

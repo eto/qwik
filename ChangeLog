@@ -1,3 +1,7 @@
+2009-09-18  Kouichirou Eto  <2009@eto.com.nospam.com>
+
+	* lib/qwik/group-db.rb: Revert add method. (Sorry for mistake.)
+
 2009-09-15  Kouichirou Eto  <2009@eto.com.nospam.com>
 
 	* lib/qwik/group-db.rb: Delete add method.
