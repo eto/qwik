@@ -32,6 +32,7 @@ module Qwik
     def send(interval)
       farm = @memory.farm
       farm.list.each {|sitename|
+        # Try to fix bug.
 	site = @farm.get_site(sitename)
 	if site.siteconfig['reportmail'] == interval
 	  site.send_report
