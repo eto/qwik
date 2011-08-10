@@ -104,7 +104,7 @@ If you change anything on the site, it\'ll recreate the archive.
   class SiteBackup
     TAR_CMD = `which tar`.chomp # path to tar command (GNU version is required)
     def self.command_exist?
-      !TAR_CMD.empty?
+      !TAR_CMD.empty? && TAR_CMD.path.executable?
     end
 
     def initialize(site, config)
