@@ -220,18 +220,18 @@ if defined?($test) && $test
       page.store '* ‚ '
 
       page = @site.create_new
-      page.store '* A Presentation Page
+      page_contents = '* A Presentation Page
 {{presen}}
 * Header 2
 '
-      mtime = {}
-      mtime[page.key] = page.mtime
-
-      sleep(1)			# let mtime be odd value
+      page.store page_contents
+      contents = {}
+      contents[page.key] = page_contents
 
       page = @site.create('PresenTest')
-      page.store '* A presentation test page'
-      mtime[page.key] = page.mtime
+      page_content = '* A presentation test page'
+      page.store page_content
+      contents[page.key] = page_content
 
       res = session '/test/test.zip'
       ok_title "Start."
@@ -307,9 +307,9 @@ test/1-presen.html
       Zip::ZipInputStream.open('testtemp.zip') {|zis|
 	while e = zis.get_next_entry
 	  e_name = File.basename(e.name,'.txt')
-	  if mtime.has_key? e_name
-	    expected = mtime[e_name].to_i / 2 * 2
-	    actual = e.time.to_i / 2 * 2
+	  if contents.has_key? e_name
+	    expected = contents[e_name]
+	    actual = e.get_input_stream {|f| f.read }
 	    ok_eq(expected, actual)
 	  end
 	end
