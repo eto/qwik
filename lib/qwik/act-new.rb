@@ -6,7 +6,6 @@
 $LOAD_PATH.unshift '..' unless $LOAD_PATH.include? '..'
 require 'qwik/act-monitor'
 #require 'qwik/act-rrefs'
-require 'qwik/page-title'
 
 module Qwik
   class Action
